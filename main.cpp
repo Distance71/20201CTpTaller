@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 void initializeProgram(int argc, char* args[]) {
