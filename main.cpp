@@ -1,21 +1,22 @@
 #include <iostream>
+#include "services/logger.h"
+#include "providers/GameProvider.h"
+#include "game.h"
 
-using namespace std;
-
-void initializeProgram(int argc, char* args[]) {
+//Sets bullshit of config.json and logger
+void initializeGameConfig(int argc, char* args[]) {
 
 }
 
 int main(int argc, char *args[]) {
 
-    //Call initializeProgram
+    //Call initializeGameConfig
 
-    // Juego juego
-    // SDL_Renderer *renderer = juego.renderer();
+    GameProvider::getLogger()->log(INFO, "Juego iniciado");
 
-    // juego.loop();
-    // juego.fin();
+    Game game;
 
-    cout << "Perro";
-    return 0;
+    game.loop();
+
+    return EXIT_SUCCESS;
 }
