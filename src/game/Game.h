@@ -3,6 +3,7 @@
 
 #include "../providers/GameProvider.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 #include "../services/Logger.h"
 
 //Consts
@@ -11,19 +12,20 @@
 
 class Game {
 
-    SDL_Window *window = nullptr;
+    SDL_Window *window_ = nullptr;
     SDL_Renderer *renderer_ = nullptr;
 
+    void processEvent();
+    void updateState();
+    void updateGraphics();
+
     void initializeGraphics();
-    void handleInput();
-    void generateGraphics();
 
     public:
     Game();
     ~Game();
 
     void loop();
-
 };
 
 #endif

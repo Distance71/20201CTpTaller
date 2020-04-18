@@ -6,6 +6,15 @@ namespace GameProvider {
     ConfigurationHandler *configuration_;
     status_t status_;
     SDL_Renderer *renderer_;
+    SDL_Event lastEvent_;
+
+    SDL_Event getLastEvent() {
+        return lastEvent_;
+    }
+
+    void setLastEvent(SDL_Event lastEvent) {
+        lastEvent_ = lastEvent;
+    }
 
     Logger* getLogger() {
         return logger_;
@@ -25,6 +34,10 @@ namespace GameProvider {
 
     status_t& getStatus(){
         return status_;
+    }
+
+    void setNormalExitStatus() {
+        status_.normalStatus = false;
     }
 
     void setErrorStatus(string error){

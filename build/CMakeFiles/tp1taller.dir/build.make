@@ -159,6 +159,9 @@ tp1taller: CMakeFiles/tp1taller.dir/src/providers/GameProvider.cpp.o
 tp1taller: CMakeFiles/tp1taller.dir/src/services/ConfigurationHandler.cpp.o
 tp1taller: CMakeFiles/tp1taller.dir/src/services/Logger.cpp.o
 tp1taller: CMakeFiles/tp1taller.dir/build.make
+tp1taller: /usr/lib/x86_64-linux-gnu/libSDL2.so
+tp1taller: /usr/lib/x86_64-linux-gnu/libSDL2main.a
+tp1taller: /usr/lib/x86_64-linux-gnu/libSDL2_image.so
 tp1taller: CMakeFiles/tp1taller.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable tp1taller"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tp1taller.dir/link.txt --verbose=$(VERBOSE)

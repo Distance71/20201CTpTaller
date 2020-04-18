@@ -13,12 +13,14 @@ struct status_t {
 };
 
 namespace GameProvider {
-    
+    SDL_Event getLastEvent();
+    void setLastEvent(SDL_Event lastEvent);
     Logger* getLogger();
     void setLog(Logger *logger);
     ConfigurationHandler* getConfig();
     void setConfig(ConfigurationHandler *configuration);
     status_t& getStatus();
+    void setNormalExitStatus();
     void setErrorStatus(string error);
     SDL_Renderer* getRenderer();
     void setRenderer(SDL_Renderer *renderer);
