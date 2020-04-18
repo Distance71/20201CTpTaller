@@ -1,18 +1,24 @@
-cmake_minimum_required(VERSION 3.10.2)
-project(game)
-set(CMAKE_CXX_STANDARD 17)
+cmake_minimum_required(VERSION 3.16)
+project(tp1taller)
 
-#Bring the headers, such as Student.h into the project
-include_directories(src/*)
-
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/vendor/cmake-sl2-image/)
+set(CMAKE_CXX_STANDARD 14)
 
 find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIR})
+include_directories(${SDL2_INCLUDE_DIRS})
 
-file(GLOB GeneralSources "src/game/*.cpp")
-file(GLOB ProvidersSources src/providers/*.cpp)
-file(GLOB ServicesSources src/services/*.cpp)
+include_directories(src/game)
+include_directories(src/providers)
+include_directories(src/services)
 
-add_executable(game ${GeneralSources} ${ProvidersSources} ${ServicesSources})
-target_link_libraries(game ${SDL2_LIBRARY} ${SDL2MAIN_LIBRARY})
+add_executable(tp1taller
+        src/game/Game.cpp
+        src/game/Game.h
+        src/game/main.cpp
+        src/providers/GameProvider.cpp
+        src/providers/GameProvider.h
+        src/services/ConfigurationHandler.cpp
+        src/services/ConfigurationHandler.h
+        src/services/Logger.cpp
+        src/services/Logger.h
+        Configuration.json)
+target_link_libraries(tp1taller ${SDL2_LIBRARIES})

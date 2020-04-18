@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 Game::Game(){
     initializeGraphics();
@@ -19,22 +19,22 @@ void Game::initializeGraphics() {
         return;
     }
 
-    // window = SDL_CreateWindow("Gley Lancer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
-    //                               SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Gley Lancer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
+                                  SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
-    // if(!window) {
-    //     GameProvider::getLogger()->log(ERROR, string("Error al crear la ventana! SDL_Error: ").append(SDL_GetError()));
-    //     GameProvider::setErrorStatus(SDL_GetError());
-    //     return;
-    // }
+    if(!window) {
+        GameProvider::getLogger()->log(ERROR, string("Error al crear la ventana! SDL_Error: ").append(SDL_GetError()));
+        GameProvider::setErrorStatus(SDL_GetError());
+        return;
+    }
 
-    // renderer_ = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    renderer_ = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    // if(!renderer_) {
-    //     GameProvider::getLogger()->log(ERROR, string("Error al crear el renderer SDL! Error: ").append(SDL_GetError()));
-    //     GameProvider::setErrorStatus(SDL_GetError());
-    //     return;
-    // }
+    if(!renderer_) {
+        GameProvider::getLogger()->log(ERROR, string("Error al crear el renderer SDL! Error: ").append(SDL_GetError()));
+        GameProvider::setErrorStatus(SDL_GetError());
+        return;
+    }
 }
 
 void Game::loop() {

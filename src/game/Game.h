@@ -2,7 +2,7 @@
 #define _GAME_H_
 
 #include "../providers/GameProvider.h"
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "../services/Logger.h"
 
 //Consts

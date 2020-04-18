@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/tp1taller.dir/src/game/Game.cpp.o CMakeFiles/tp1taller.dir/src/game/main.cpp.o CMakeFiles/tp1taller.dir/src/providers/GameProvider.cpp.o CMakeFiles/tp1taller.dir/src/services/ConfigurationHandler.cpp.o CMakeFiles/tp1taller.dir/src/services/Logger.cpp.o  -o tp1taller  -lSDL2 
