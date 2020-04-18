@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/game.dir/src/game/Game.cpp.o CMakeFiles/game.dir/src/game/main.cpp.o CMakeFiles/game.dir/src/providers/GameProvider.cpp.o CMakeFiles/game.dir/src/services/ConfigurationHandler.cpp.o CMakeFiles/game.dir/src/services/Logger.cpp.o  -o game 

@@ -1,0 +1,56 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/Game.cpp
+Game.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/Game.h
+SDL.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/SDL.h
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/Game.h
+../providers/GameProvider.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/providers/GameProvider.h
+SDL.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/SDL.h
+../services/Logger.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/main.cpp
+Game.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/Game.h
+../services/Logger.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
+../providers/GameProvider.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/providers/GameProvider.h
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/providers/GameProvider.cpp
+GameProvider.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/providers/GameProvider.h
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/providers/GameProvider.h
+../services/Logger.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
+../services/ConfigurationHandler.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/ConfigurationHandler.h
+SDL.h
+-
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/ConfigurationHandler.cpp
+ConfigurationHandler.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/ConfigurationHandler.h
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/ConfigurationHandler.h
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.cpp
+Logger.h
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
+
+/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
+string
+-
+

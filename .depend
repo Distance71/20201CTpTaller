@@ -1,0 +1,12 @@
+logger.o: src/services/logger.cpp src/services/logger.h
+configurationHandler.o: src/services/configurationHandler.cpp \
+ src/services/configurationHandler.h
+main.o: src/main.cpp src/main.h src/services/logger.h \
+ src/providers/gameProvider.h \
+ src/providers/../services/configurationHandler.h src/game.h
+game.o: src/game.cpp src/game.h src/providers/gameProvider.h \
+ src/providers/../services/logger.h \
+ src/providers/../services/configurationHandler.h
+gameProvider.o: src/providers/gameProvider.cpp \
+ src/providers/gameProvider.h src/providers/../services/logger.h \
+ src/providers/../services/configurationHandler.h
