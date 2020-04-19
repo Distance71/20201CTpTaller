@@ -3,6 +3,8 @@
 
 using namespace std;
 
+//Encargado de manejar la configuracion inicial del programa
+
 class ConfigurationHandler {
 
     public:

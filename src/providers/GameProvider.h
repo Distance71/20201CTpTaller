@@ -12,6 +12,9 @@ struct status_t {
     string errorLog;
 };
 
+// Contiene todas las variables que pueden ser comunes a todo el programa
+// y su manejo.
+
 namespace GameProvider {
     SDL_Event getLastEvent();
     void setLastEvent(SDL_Event lastEvent);

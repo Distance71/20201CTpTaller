@@ -71,7 +71,11 @@ void Game::processEvent() {
 }
 
 void Game::updateState() {
-    //Model
+    auto mapElements = map_.getElements();
+
+    // for (auto element : mapElements) {
+        
+    // }
 }
 
 void Game::updateGraphics() {

@@ -15,8 +15,22 @@ include_directories(src/providers)
 include_directories(src/services)
 
 add_executable( tp1taller
-        src/game/Game.cpp
-        src/game/Game.h
+        src/game/models/Game.cpp
+        src/game/models/Game.h
+        src/game/models/Map.cpp
+        src/game/models/Map.h
+        src/game/models/MapElement.cpp
+        src/game/models/MapElement.h
+        src/game/models/Orientation.cpp
+        src/game/models/Orientation.h
+        src/game/models/Position.cpp
+        src/game/models/Position.h
+        src/game/graphics/Graphics.cpp
+        src/game/graphics/Graphics.h
+        src/game/graphics/GraphicsScenario.cpp
+        src/game/graphics/GraphicsScenario.h
+        src/game/graphics/GraphicsSpacecraft.cpp
+        src/game/graphics/GraphicsSpacecraft.h
         src/game/main.cpp
         src/providers/GameProvider.cpp
         src/providers/GameProvider.h
@@ -24,5 +38,6 @@ add_executable( tp1taller
         src/services/ConfigurationHandler.h
         src/services/Logger.cpp
         src/services/Logger.h
-        Configuration.json)
+        src/services/SpriteGenerator.cpp
+        src/services/SpriteGenerator.h)
 target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
