@@ -6,7 +6,7 @@ Game::Game(){
 
 Game::~Game(){
     GameProvider::getLogger()->log(INFO, "Fin del juego");
-    GameProvider::getLogger()->log(DEBUG, "Se destruye renderer y window.");
+    GameProvider::getLogger()->log(DEBUG, "Se destruye renderer y window");
 
     SDL_DestroyRenderer(renderer_);
     SDL_DestroyWindow(window_);
@@ -17,7 +17,7 @@ Game::~Game(){
 }
 
 void Game::initializeGraphics() {
-    GameProvider::getLogger()->log(DEBUG, "Se inicializan los graficos de render");
+    GameProvider::getLogger()->log(DEBUG, "Se inicializan los graficos de renderer y la window");
 
     //Inicializo SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {

@@ -20,14 +20,6 @@ SDL2/SDL_image.h
 ../services/Logger.h
 /home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
 
-/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/main.cpp
-Game.h
-/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/game/Game.h
-../services/Logger.h
-/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
-../providers/GameProvider.h
-/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/providers/GameProvider.h
-
 /home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/providers/GameProvider.h
 ../services/Logger.h
 /home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/src/services/Logger.h
