@@ -1,3 +1,0 @@
-/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/build/CMakeFiles/rebuild_cache.dir
-/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/build/CMakeFiles/tp1taller.dir
-/home/agus/Escritorio/Proyectos/Este Cuatri/P75.42 Taller 1/tp1taller/build/CMakeFiles/edit_cache.dir
