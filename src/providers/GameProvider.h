@@ -5,7 +5,7 @@
 
 #include "../services/Logger.h"
 #include "../services/ConfigurationHandler.h"
-#include <SDL.h>
+#include "SDL2/SDL.h"
 
 struct status_t {
     bool normalStatus = true;
