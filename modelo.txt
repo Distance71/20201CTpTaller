@@ -55,7 +55,7 @@ MapElement: Cualquier elemento del mapa. Tiene como atributos:
 -String: ID
 -int:damage
 -speed
--Orientation orientacion  Tendriamos un objeto del tipo orientación, al cual le podríamos decir girate y cosas asi
+-Orientation orientación  Tendríamos un objeto del tipo orientación, al cual le podríamos decir girate y cosas asi
 -int life
 
 Todo elemento del mapa puede realizar los siguientes métodos o acciones:
@@ -71,18 +71,18 @@ get_orientation
 
 Heredan de map element:
 Nave: Es la nave principal del juego
-Metodos adicionales a los demás:
+Métodos adicionales a los demás:
 Shoot: (Disparar): Genera en su posición un nuevo Mapelement bala de vida casi nula y un determinado daño.
--OTRAS COSAS QUE AGREGEN DESPUES, POR EJEMPLO AUMENTAR SU VIDA Y COSAS ASI
+-OTRAS COSAS QUE AGREGUEN DESPUES, POR EJEMPLO AUMENTAR SU VIDA Y COSAS ASI
 
-Bala: Le pasa por parámetro el daño y la orientación en la cual se tiene que mover. El objeto bala estará en el mapa hasta que colisione con otro objeto o se salga del mismo. El objeto se mueve en línea recta desde el punto en que se crea en la orientación pasada por parámero. EN PRINCIPIO SERIAN LAS BALAS DE LA NAVE PRINCIPAL, SI HAY OTRO TIPO DESPUES SE VERÁ
+Bala: Le pasa por parámetro el daño y la orientación en la cual se tiene que mover. El objeto bala estará en el mapa hasta que colisione con otro objeto o se salga del mismo. El objeto se mueve en línea recta desde el punto en que se crea en la orientación pasada por parámetro. EN PRINCIPIO SERIAN LAS BALAS DE LA NAVE PRINCIPAL, SI HAY OTRO TIPO DESPUES SE VERÁ
 
 Veremos depende lo que hagan los enemigos que cosas tienen que tener
 
 
 #VER MANEJO DE ERRORS:
 CUALQUIER ERROR FATAL LANZA UN MENSAJE CIERRA EL JUEGO 
-CUALQUIER ERROR DE PROGRAMACION SE TRABAJARIA CON MANEJO DE EXEPCIONES
+CUALQUIER ERROR DE PROGRAMACION SE TRABAJARIA CON MANEJO DE EXCEPCIONES
 
 
 #SI DOS OBJETOS COLISIONAN, EN PRINCIPIO SE HACEN DAÑO DEPUES CONTROLAEREMOS QUE PASA SI SON DEL MISMO BANDO, NO SERIA UN PROBLEMA
