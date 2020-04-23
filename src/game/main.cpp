@@ -16,7 +16,7 @@ int main(int argc, char *args[]) {
 
     Game game;
 
-    game.loop();
+    game.run();
 
     return EXIT_SUCCESS;
 }

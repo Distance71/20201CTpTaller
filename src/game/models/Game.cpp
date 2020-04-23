@@ -48,10 +48,46 @@ void Game::initializeGraphics() {
         GameProvider::setErrorStatus(SDL_GetError());
         return;
     }
+
+    GameProvider::setRenderer(renderer_);
 }
 
-void Game::loop() {
-    if(!GameProvider::getStatus().normalStatus)
+bool Game::login() {
+    string srcSpriteLoginScreen = "loginScreen.png"; //services -> configurationHandler->get('/loginScreen')
+    size_t height = GameProvider::getHeight();
+    size_t width = GameProvider::getWidth();
+    //auto *login = map_.createMapElement(); //Debi hacer con esto, pero no tenia tiempo
+
+    bool loginDone = false, exit = false;
+
+    GameProvider::getLogger()->log(INFO, "Se ha entrado en la pantalla de login");
+
+    auto *spriteLoginScreen = new SpriteGenerator(srcSpriteLoginScreen);
+    SDL_Rect spriteLoginPositionInScreen = {0, 0, (int) width, (int) height};
+    SDL_RenderCopy(renderer_, spriteLoginScreen->getTexture(), NULL, &spriteLoginPositionInScreen);
+
+    while(!loginDone && GameProvider::getStatus().normalStatus) {
+        SDL_Event event;
+        SDL_WaitEvent(&event);
+        if(event.type == SDL_QUIT) {
+            GameProvider::setNormalExitStatus();
+            GameProvider::getLogger()->log(INFO, "El usuario ha cerrado el juego");        
+        }
+        
+        switch (event.key.keysym.sym) {
+            case SDLK_KP_ENTER:
+                loginDone = true;
+            default:;
+        }
+
+        updateGraphics();
+    }
+
+    GameProvider::getLogger()->log(DEBUG, "Se ha pasado la pantalla de login");
+}
+
+void Game::run() {
+    if(!GameProvider::getStatus().normalStatus || !login())
         return;
     
     while(GameProvider::getStatus().normalStatus) {
@@ -79,10 +115,11 @@ void Game::updateState() {
 }
 
 void Game::updateGraphics() {
-    SDL_RenderClear(renderer_); //borra el renderer previo
-    
-    SDL_Renderer *actualRenderer = GameProvider::getRenderer();
+    //SDL_RenderClear(renderer_); //borra el renderer previo
 
-    SDL_RenderPresent(actualRenderer);
-    renderer_ = actualRenderer;
+    //SDL_Renderer *actualRenderer = GameProvider::getRenderer();
+
+    //SDL_SetRenderDrawColor(actualRenderer, 255, 0, 0, 255);
+    SDL_RenderPresent(renderer_);
+    //renderer_ = actualRenderer;
 }
