@@ -10,8 +10,8 @@ using namespace std;
 
 // Es una abstraccion de "cosas" que pueda contener el mapa del juego
 
-class State; 
-class Action;
+class State; // -> void *
+class Action; // -> void *
 
 class MapElement {
 

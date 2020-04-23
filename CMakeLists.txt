@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.10)
 project(tp1taller)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -13,6 +13,8 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(src/game)
 include_directories(src/providers)
 include_directories(src/services)
+
+file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})
 
 add_executable( tp1taller
         src/game/models/Game.cpp
@@ -38,6 +40,8 @@ add_executable( tp1taller
         src/services/ConfigurationHandler.h
         src/services/Logger.cpp
         src/services/Logger.h
+        src/services/ParserJson.cpp
+        src/services/ParserJson.h
         src/services/SpriteGenerator.cpp
         src/services/SpriteGenerator.h)
 target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

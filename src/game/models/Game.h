@@ -5,11 +5,8 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "../../services/Logger.h"
+#include "../../services/SpriteGenerator.h"
 #include "Map.h"
-
-//Consts
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
 
 // Maneja la secuencia logica del juego
 
@@ -29,7 +26,8 @@ class Game {
     Game();
     ~Game();
 
-    void loop();
+    void run();
+    bool login();
 };
 
 #endif

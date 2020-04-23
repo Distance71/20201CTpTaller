@@ -8,6 +8,14 @@ namespace GameProvider {
     SDL_Renderer *renderer_;
     SDL_Event lastEvent_;
 
+    size_t getWidth() {
+        return SCREEN_WIDTH;
+    }
+
+    size_t getHeight(){
+        return SCREEN_HEIGHT;
+    }
+
     SDL_Event getLastEvent() {
         return lastEvent_;
     }

@@ -7,6 +7,13 @@ MapElement::~MapElement() {
 
 }
 
+//Personaje::addAction("controller", Controller); -> 
+// controller: HandlerEvents
+//             IAEnemy
+//Personaje::addState("position", Position);
+//Personaje::addState("orientation", Orientation);
+//Personaje::addAction("graphics", Graphics);
+
 
 vector<Action *> MapElement::getActions() {
     vector<Action *> actions(actions_.size());
@@ -23,13 +30,13 @@ vector<State *> MapElement::getStates() {
 }
 
 template<typename T>
-void MapElement::addState(const string &name, T *state){
+void MapElement::addState(const string &name, T *state) {
     states_[name] = state;
 }
 
 template<typename T>
-T* MapElement::getState(const string &name){
-    return (T *) states_[name] ;
+T* MapElement::getState(const string &name) {
+    return (T *) states_[name];
 }
 
 template<typename T>
