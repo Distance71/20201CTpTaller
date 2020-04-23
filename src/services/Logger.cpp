@@ -41,7 +41,7 @@ void Logger::log(LOG_LEVEL level, const string& message){
 	time(&timestamp);
 	string timestamp_transform(ctime(&timestamp),24);
 
-	*(this->logFile) << timestamp_transform << " - " << message;
+	*(this->logFile) << timestamp_transform << " - " << message << " \n";
 	this->logFile->flush();
 }
 
