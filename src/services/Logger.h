@@ -2,22 +2,32 @@
 #define _LOGGER_H_
 
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <ctime>
+#include <stdlib.h>
+//TODO check includes
 
-enum LOGLEVEL {ERROR, INFO, DEBUG};
+enum LOG_LEVEL {INVALID, ERROR, INFO, DEBUG};
+//#define LOG_FOLDER "../logs/"
+#define LOG_NAME "../logs/corona_logs.txt"
+//TODO name dinamico
 
 using namespace std;
 
-//Encargado de escribir los logs en un archivo segun configuracion
-// Hay varias opciones. Se puede setear un nivel de log en GameProvider o bien
-// invocar a ConfigurationHandler y pedir datos.
-
 class Logger {
-
-    public:
+    private:
+    static Logger* instance;
+    LOG_LEVEL level;
+    ofstream* logFile;
     Logger();
-    //~Logger();
-    void log(LOGLEVEL level_, const string& message);
 
+    public:   
+    static Logger* getInstance();
+    void log(LOG_LEVEL level, const string& message);
+    void setLevel(const string& level);
+    virtual ~Logger();
 };
 
 
