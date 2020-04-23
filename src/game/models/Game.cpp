@@ -53,7 +53,7 @@ void Game::initializeGraphics() {
 }
 
 bool Game::login() {
-    string srcSpriteLoginScreen = "loginScreen.png"; //services -> configurationHandler->get('/loginScreen')
+    string srcSpriteLoginScreen = "assets/LoginScreen/loginScreen.png"; //services -> configurationHandler->get('/loginScreen')
     size_t height = GameProvider::getHeight();
     size_t width = GameProvider::getWidth();
     //auto *login = map_.createMapElement(); //Debi hacer con esto, pero no tenia tiempo
@@ -64,7 +64,9 @@ bool Game::login() {
 
     auto *spriteLoginScreen = new SpriteGenerator(srcSpriteLoginScreen);
     SDL_Rect spriteLoginPositionInScreen = {0, 0, (int) width, (int) height};
+    //Note: Should write an only method
     SDL_RenderCopy(renderer_, spriteLoginScreen->getTexture(), NULL, &spriteLoginPositionInScreen);
+    GameProvider::setRenderer(renderer_);
 
     while(!loginDone && GameProvider::getStatus().normalStatus) {
         SDL_Event event;
@@ -91,6 +93,7 @@ void Game::run() {
         return;
     
     while(GameProvider::getStatus().normalStatus) {
+        SDL_RenderClear(renderer_); //borra el renderer previo
         processEvent();
         updateState();
         updateGraphics();
@@ -115,11 +118,8 @@ void Game::updateState() {
 }
 
 void Game::updateGraphics() {
-    //SDL_RenderClear(renderer_); //borra el renderer previo
+    SDL_Renderer *actualRenderer = GameProvider::getRenderer();
 
-    //SDL_Renderer *actualRenderer = GameProvider::getRenderer();
-
-    //SDL_SetRenderDrawColor(actualRenderer, 255, 0, 0, 255);
-    SDL_RenderPresent(renderer_);
-    //renderer_ = actualRenderer;
+    SDL_RenderPresent(actualRenderer);
+    renderer_ = actualRenderer;
 }

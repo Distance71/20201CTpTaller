@@ -14,6 +14,8 @@ include_directories(src/game)
 include_directories(src/providers)
 include_directories(src/services)
 
+file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})
+
 add_executable( tp1taller
         src/game/models/Game.cpp
         src/game/models/Game.h

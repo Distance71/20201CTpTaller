@@ -1,18 +1,19 @@
 #include "SpriteGenerator.h"
 
+#include <iostream>
+using namespace std;
+
 SpriteGenerator::SpriteGenerator(const string &source){
     ifstream infile(source);
     if(infile.good()) {
         GameProvider::getLogger()->log(DEBUG, "Se va a crear el sprite: " + source);
-        
         SDL_Surface *sprite = IMG_Load(source.c_str());
         texture_ = SDL_CreateTextureFromSurface(GameProvider::getRenderer(), sprite);
         SDL_FreeSurface(sprite);
     }
 
-    //else aca pueden incluir codigo para el caso de no encontrar imagen
+    else cout << source << endl;
 }
-
 SDL_Texture *SpriteGenerator::getTexture() {
     return this->texture_;
 }
