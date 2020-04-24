@@ -8,7 +8,7 @@
             "name": "(gdb) Iniciar",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main",
+            "program": "${workspaceFolder}/build/tp1taller",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

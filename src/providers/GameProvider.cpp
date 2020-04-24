@@ -25,6 +25,8 @@ namespace GameProvider {
     }
 
     Logger* getLogger() {
+        //TODO quitar la siguiente linea es provisorio
+        logger_ = Logger::getInstance();
         return logger_;
     }
 
