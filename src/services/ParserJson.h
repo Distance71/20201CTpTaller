@@ -5,9 +5,14 @@
 #include <stdio.h>
 #include <fstream>
 #include "nlohmann/json.hpp"
+#include "Logger.h"
 
-#define DEFAULT_CONFIGURATION "Configuration.json"
+#define DEFAULT_CONFIGURATION "../../Configuration.json"
+#define DEFAULT_LOG_LEVEL "INFO"
 #define DEFAULT_LEVEL ".json"
+
+#define DEFAULT_ENEMY_TYPE "Class_Default"
+#define DEFAULT_ENEMY_QUANTITY 10
 
 using namespace std;
 using json = nlohmann::json;
@@ -23,6 +28,9 @@ class ParserJson {
 
     public:
         ParserJson();
+
+        void setLogLevel();
+        void setEnemies();
 
         void loadLevel(string pathFileLevel);
 
