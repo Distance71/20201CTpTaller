@@ -11,6 +11,8 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
+#define MS_PER_UPDATE 16.67
+
 struct status_t {
     bool normalStatus = true;
     string errorLog;
@@ -35,6 +37,7 @@ namespace GameProvider {
     //Could go later on configurationHandler
     size_t getWidth();
     size_t getHeight();
+    float getElaptedTimeFPS();
 };
 
 #endif

@@ -53,6 +53,11 @@ namespace GameProvider {
         status_.errorLog = error;
     }
 
+    //Should go in a config file or related to configurationHandler
+    float getElaptedTimeFPS() {
+        return MS_PER_UPDATE;
+    }
+
     SDL_Renderer* getRenderer(){
         return renderer_;
     }

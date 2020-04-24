@@ -17,14 +17,14 @@ ifstream ParserJson::loadFile(string pathFile, string valueDefault){
 void ParserJson::loadConfiguration(string pathFileConfiguration){
     
     ifstream i = loadFile(pathFileConfiguration, DEFAULT_CONFIGURATION);
-    //i >> jsonConfiguration;
+    i >> jsonConfiguration;
     i.close(); 
 };
 
 void ParserJson::loadLevel(string pathFileLevel){
 
     ifstream i = loadFile(pathFileLevel, DEFAULT_LEVEL);
-    //i >> jsonConfiguration;
+    i >> jsonConfiguration;
     i.close();
 }
 

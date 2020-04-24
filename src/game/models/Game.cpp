@@ -56,7 +56,7 @@ bool Game::login() {
     string srcSpriteLoginScreen = "assets/LoginScreen/loginScreen.png"; //services -> configurationHandler->get('/loginScreen')
     size_t height = GameProvider::getHeight();
     size_t width = GameProvider::getWidth();
-    //auto *login = map_.createMapElement(); //Debi hacer con esto, pero no tenia tiempo
+    auto *login = map_.createMapElement();
 
     bool loginDone = false, exit = false;
 
@@ -64,25 +64,26 @@ bool Game::login() {
 
     auto *spriteLoginScreen = new SpriteGenerator(srcSpriteLoginScreen);
     SDL_Rect spriteLoginPositionInScreen = {0, 0, (int) width, (int) height};
+    
+    
     //Note: Should write an only method
     SDL_RenderCopy(renderer_, spriteLoginScreen->getTexture(), NULL, &spriteLoginPositionInScreen);
     GameProvider::setRenderer(renderer_);
 
+    updateGraphics();
+    
     while(!loginDone && GameProvider::getStatus().normalStatus) {
         SDL_Event event;
-        SDL_WaitEvent(&event);
-        if(event.type == SDL_QUIT) {
+        if(SDL_PollEvent(&event) && (event.type == SDL_QUIT)) {
             GameProvider::setNormalExitStatus();
             GameProvider::getLogger()->log(INFO, "El usuario ha cerrado el juego");        
         }
         
         switch (event.key.keysym.sym) {
-            case SDLK_KP_ENTER:
+            case SDLK_RETURN:
                 loginDone = true;
             default:;
         }
-
-        updateGraphics();
     }
 
     GameProvider::getLogger()->log(DEBUG, "Se ha pasado la pantalla de login");
@@ -91,13 +92,28 @@ bool Game::login() {
 void Game::run() {
     if(!GameProvider::getStatus().normalStatus || !login())
         return;
-    
-    while(GameProvider::getStatus().normalStatus) {
-        SDL_RenderClear(renderer_); //borra el renderer previo
-        processEvent();
-        updateState();
-        updateGraphics();
-    }
+
+    // double previous = time(NULL);
+    // double lag = 0;
+
+    // while(GameProvider::getStatus().normalStatus) {
+    //     double current = time(NULL);
+    //     double elapsed = current - previous;
+    //     previous = current;
+    //     lag += elapsed;
+
+    //     SDL_RenderClear(renderer_); //borra el renderer previo
+    //     processEvent();
+
+    //     double elaptedTimeMS = GameProvider::getElaptedTimeFPS(); 
+
+    //     while(lag >= elaptedTimeMS) {
+    //         updateState();
+    //         lag -= elaptedTimeMS;
+    //     }
+        
+    //     updateGraphics();
+    // }
 }
 
 void Game::processEvent() {

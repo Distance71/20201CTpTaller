@@ -4,20 +4,20 @@
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
-//#include "nlohmann/json.hpp"
+#include "nlohmann/json.hpp"
 
 #define DEFAULT_CONFIGURATION "Configuration.json"
 #define DEFAULT_LEVEL ".json"
 
 using namespace std;
-//using json = nlohmann::json;
+using json = nlohmann::json;
 
 //Encargado de manejar el parseo de JSON
 
 class ParserJson {
 
     private:
-        //json jsonConfiguration;
+        json jsonConfiguration;
 
         ifstream loadFile(string pathFile, string valueDefault);
 
