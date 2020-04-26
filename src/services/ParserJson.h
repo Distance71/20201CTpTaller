@@ -7,7 +7,7 @@
 #include "nlohmann/json.hpp"
 #include "Logger.h"
 
-#define DEFAULT_CONFIGURATION "../../Configuration.json"
+#define DEFAULT_CONFIGURATION "../default/ConfigurationDefault.json"
 #define DEFAULT_LOG_LEVEL "INFO"
 #define DEFAULT_LEVEL ".json"
 
@@ -24,7 +24,7 @@ class ParserJson {
     private:
         json jsonConfiguration;
 
-        ifstream loadFile(string pathFile, string valueDefault);
+        ifstream loadFile(const string &pathFile, string valueDefault);
 
     public:
         ParserJson();
@@ -32,9 +32,8 @@ class ParserJson {
         void setLogLevel();
         void setEnemies();
 
-        void loadLevel(string pathFileLevel);
-
-        void loadConfiguration(string pathFileConfiguration);
+        void loadLevel(const string &pathFileLevel);
+        void loadConfiguration(const string &pathFileConfiguration);
 };
 
 

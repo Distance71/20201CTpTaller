@@ -4,11 +4,11 @@ ParserJson::ParserJson(){
 
 };
 
-ifstream ParserJson::loadFile(string pathFile, string valueDefault){
-    ifstream i(pathFile, ifstream::binary);
+ifstream ParserJson::loadFile(const string &pathFile, string valueDefault){
+    ifstream i(pathFile, ifstream::in);
     
     if (!i.is_open()){
-        i.open(valueDefault, ifstream::binary);
+        i.open(valueDefault, ifstream::in);
     }
 
     return i;
@@ -27,14 +27,17 @@ void ParserJson::setLogLevel(){
     Logger::getInstance()->setLevel(logLevel);
 };
 
-void ParserJson::loadConfiguration(string pathFileConfiguration){
+void ParserJson::loadConfiguration(const string &pathFileConfiguration){
     
-    ifstream i = loadFile(pathFileConfiguration, DEFAULT_CONFIGURATION);
-    i >> jsonConfiguration;
-    i.close(); 
+    ifstream fileConfiguration = loadFile(pathFileConfiguration, DEFAULT_CONFIGURATION);
+
+    fileConfiguration >> jsonConfiguration;
+    jsonConfiguration = jsonConfiguration["configuracion"];
+
+    fileConfiguration.close(); 
 };
 
-void ParserJson::loadLevel(string pathFileLevel){
+void ParserJson::loadLevel(const string &pathFileLevel){
 
     ifstream i = loadFile(pathFileLevel, DEFAULT_LEVEL);
     //i >> jsonConfiguration;

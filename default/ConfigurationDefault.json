@@ -1,0 +1,31 @@
+{
+    "configuracion": {
+        "log":{
+            "level":"ERROR"
+        },
+        "game":{
+            "enemies":[
+                {
+                    "type": "class_1",
+                    "quantity": "5"
+                },
+                {
+                    "type": "class_2",
+                    "quantity": "10"
+                }
+            ],
+            "stages":[
+                {
+                    "fondo1": "/",
+                    "fondo2": "/",
+                    "fondo3": "/"
+                },
+                {
+                    "fondo1": "/",
+                    "fondo2": "/",
+                    "fondo3": "/"
+                }
+            ]
+        }
+    }
+  }
