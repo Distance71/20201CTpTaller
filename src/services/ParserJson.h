@@ -34,6 +34,7 @@ class ParserJson {
 
         void setLogLevel();
         void setEnemies();
+        void setStages();
 
         void loadLevel(const string &pathFileLevel);
         void loadConfiguration(const string &pathFileConfiguration);

@@ -61,8 +61,8 @@ void ParserJson::setEnemies(){
 
     json jsonEnemies;
 
-    if (jsonConfiguration["enemies"]["game"].is_array()){
-        jsonEnemies = jsonConfiguration["enemies"]["game"].get<json>();
+    if (jsonConfiguration["game"]["enemies"].is_array()){
+        jsonEnemies = jsonConfiguration["game"]["enemies"].get<json>();
     } else {
         // Falta avisarle al Logger de lo ocurrido
         jsonEnemies = getJsonDefaultEnemies();
@@ -99,5 +99,20 @@ void ParserJson::setEnemies(){
         }  
 
         //Faltaria settearle al encargado de distribuir los enemigos
+    }
+};
+
+void ParserJson::setStages(){
+
+    json jsonStages;
+
+    if (jsonConfiguration["game"]["stages"].is_array()){
+        jsonStages = jsonConfiguration["game"]["stages"].get<json>();
+    } else {
+        // Leer Stages por defecto y avisarle al Logger
+    }
+
+    for (auto& oneStage: json::iterator_wrapper(jsonStages)){
+
     }
 };
