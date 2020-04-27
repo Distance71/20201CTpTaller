@@ -27,6 +27,12 @@ add_executable( tp1taller
         src/game/models/Orientation.h
         src/game/models/Position.cpp
         src/game/models/Position.h
+	src/game/models/MovementHandler.h
+	src/game/models/MovementHandler.cpp
+	src/game/models/PlayerController.cpp
+	src/game/models/PlayerController.h
+	src/game/models/Action.cpp
+	src/game/models/Action.h
         src/game/graphics/Graphics.cpp
         src/game/graphics/Graphics.h
         src/game/graphics/GraphicsScenario.cpp
@@ -44,4 +50,5 @@ add_executable( tp1taller
         src/services/ParserJson.h
         src/services/SpriteGenerator.cpp
         src/services/SpriteGenerator.h)
+	
 target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
