@@ -13,6 +13,7 @@
 
 #define DEFAULT_ENEMY_TYPE "Class_Default"
 #define DEFAULT_ENEMY_QUANTITY 10
+#define DEFAULT_ENEMY_SPRITE "..default/"
 
 using namespace std;
 using json = nlohmann::json;
@@ -25,6 +26,8 @@ class ParserJson {
         json jsonConfiguration;
 
         ifstream loadFile(const string &pathFile, string valueDefault);
+
+        json getJsonDefaultEnemies();
 
     public:
         ParserJson();
