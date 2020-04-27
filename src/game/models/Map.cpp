@@ -14,7 +14,7 @@ MapElement* Map::createMapElement(){
 void Map::clearMap() {
     mapElements_.clear();
     lastId_ = 0;
-    GameProvider::getLogger()->log(DEBUG, "Se vaciaron los elementos del mapa");
+    Logger::getInstance()->log(DEBUG, "Se vaciaron los elementos del mapa");
 }
 
 vector<MapElement*> Map::getElements(){

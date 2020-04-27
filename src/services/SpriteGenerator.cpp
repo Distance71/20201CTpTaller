@@ -6,7 +6,7 @@ using namespace std;
 SpriteGenerator::SpriteGenerator(const string &source){
     ifstream infile(source);
     if(infile.good()) {
-        GameProvider::getLogger()->log(DEBUG, "Se va a crear el sprite: " + source);
+        Logger::getInstance()->log(DEBUG, "Se va a crear el sprite: " + source);
         SDL_Surface *sprite = IMG_Load(source.c_str());
         texture_ = SDL_CreateTextureFromSurface(GameProvider::getRenderer(), sprite);
         SDL_FreeSurface(sprite);

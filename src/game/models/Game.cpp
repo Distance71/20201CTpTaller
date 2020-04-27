@@ -5,8 +5,8 @@ Game::Game(){
 }
 
 Game::~Game(){
-    GameProvider::getLogger()->log(INFO, "Fin del juego");
-    GameProvider::getLogger()->log(DEBUG, "Se destruye renderer y window");
+    Logger::getInstance()->log(INFO, "Fin del juego");
+    Logger::getInstance()->log(DEBUG, "Se destruye renderer y window");
 
     SDL_DestroyRenderer(renderer_);
     SDL_DestroyWindow(window_);
@@ -17,11 +17,11 @@ Game::~Game(){
 }
 
 void Game::initializeGraphics() {
-    GameProvider::getLogger()->log(DEBUG, "Se inicializan los graficos de renderer y la window");
+    Logger::getInstance()->log(DEBUG, "Se inicializan los graficos de renderer y la window");
 
     //Inicializo SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-        GameProvider::getLogger()->log(ERROR, string("Error al inicializar SDL! Error: ").append(SDL_GetError()));
+        Logger::getInstance()->log(ERROR, string("Error al inicializar SDL! Error: ").append(SDL_GetError()));
         GameProvider::setErrorStatus(SDL_GetError());
         return;
     }
@@ -30,7 +30,7 @@ void Game::initializeGraphics() {
                                   SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
     if(!window_) {
-        GameProvider::getLogger()->log(ERROR, string("Error al crear la ventana! SDL_Error: ").append(SDL_GetError()));
+        Logger::getInstance()->log(ERROR, string("Error al crear la ventana! SDL_Error: ").append(SDL_GetError()));
         GameProvider::setErrorStatus(SDL_GetError());
         return;
     }
@@ -38,13 +38,13 @@ void Game::initializeGraphics() {
     renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if(!renderer_) {
-        GameProvider::getLogger()->log(ERROR, string("Error al crear el renderer SDL! Error: ").append(SDL_GetError()));
+        Logger::getInstance()->log(ERROR, string("Error al crear el renderer SDL! Error: ").append(SDL_GetError()));
         GameProvider::setErrorStatus(SDL_GetError());
         return;
     }
 
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-        GameProvider::getLogger()->log(ERROR, string("SDL_image no se pudo iniciar! SDL_Error: ").append(IMG_GetError()));
+        Logger::getInstance()->log(ERROR, string("SDL_image no se pudo iniciar! SDL_Error: ").append(IMG_GetError()));
         GameProvider::setErrorStatus(SDL_GetError());
         return;
     }
@@ -60,7 +60,7 @@ bool Game::login() {
 
     bool loginDone = false, exit = false;
 
-    GameProvider::getLogger()->log(INFO, "Se ha entrado en la pantalla de login");
+    Logger::getInstance()->log(INFO, "Se ha entrado en la pantalla de login");
 
     auto *spriteLoginScreen = new SpriteGenerator(srcSpriteLoginScreen);
     SDL_Rect spriteLoginPositionInScreen = {0, 0, (int) width, (int) height};
@@ -76,7 +76,7 @@ bool Game::login() {
         SDL_Event event;
         if(SDL_PollEvent(&event) && (event.type == SDL_QUIT)) {
             GameProvider::setNormalExitStatus();
-            GameProvider::getLogger()->log(INFO, "El usuario ha cerrado el juego");        
+            Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego");        
         }
         
         switch (event.key.keysym.sym) {
@@ -86,7 +86,7 @@ bool Game::login() {
         }
     }
 
-    GameProvider::getLogger()->log(DEBUG, "Se ha pasado la pantalla de login");
+    Logger::getInstance()->log(DEBUG, "Se ha pasado la pantalla de login");
 }
 
 void Game::run() {
@@ -119,7 +119,7 @@ void Game::run() {
 void Game::processEvent() {
     SDL_Event lastEvent;
     if(SDL_PollEvent(&lastEvent) && (lastEvent.type == SDL_QUIT)) {
-        GameProvider::getLogger()->log(INFO, "Cierre del juego voluntario");
+        Logger::getInstance()->log(INFO, "Cierre del juego voluntario");
         GameProvider::setNormalExitStatus();
     }
     GameProvider::setLastEvent(lastEvent);

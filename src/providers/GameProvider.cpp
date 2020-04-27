@@ -2,7 +2,6 @@
 
 namespace GameProvider {
 
-    Logger *logger_;
     ConfigurationHandler *configuration_;
     status_t status_;
     SDL_Renderer *renderer_;
@@ -22,16 +21,6 @@ namespace GameProvider {
 
     void setLastEvent(SDL_Event lastEvent) {
         lastEvent_ = lastEvent;
-    }
-
-    Logger* getLogger() {
-        //TODO quitar la siguiente linea es provisorio
-        logger_ = Logger::getInstance();
-        return logger_;
-    }
-
-    void setLog(Logger *logger){
-        logger_ = logger;
     }
 
     ConfigurationHandler* getConfig() {

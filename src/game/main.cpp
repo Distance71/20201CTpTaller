@@ -6,22 +6,30 @@
 #define PATH_CONFIGURATION "../Configuration.json"
 
 //Sets bullshit of config.json and logger
-void initializeGameConfig(int argc, char* args[]) {
+bool initializeGameConfig(int argc, char* args[]) {
     ParserJson *parserJson = new ParserJson();
     parserJson->loadConfiguration(PATH_CONFIGURATION);
 
-    if (argc > 1){
-        Logger::getInstance()->setLevel(args[1]);
-    } else {
-        parserJson->setLogLevel();
+    switch (argc){
+        case 1:
+            parserJson->setLogLevel();
+            return true;
+        case 2:
+            Logger::getInstance()->setLevel(args[1]);
+            return true;
+        default:
+            cout << "Verifique que haya escrito los parametros correctamente." << endl;
+            return false;
     }
 }
 
 int main(int argc, char *args[]) {
 
-    initializeGameConfig(argc, args);
+    if (!initializeGameConfig(argc, args)){
+        return EXIT_FAILURE;
+    }
 
-    GameProvider::getLogger()->log(INFO, "Juego iniciado");
+    Logger::getInstance()->log(INFO, "Juego iniciado");
 
     Game game;
 
