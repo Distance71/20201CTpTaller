@@ -1,10 +1,7 @@
 #include "Map.h"
+#include <string>
 
 Map::Map() {}
-
-Map::~Map() {
-    clearMap();
-}
 
 MapElement* Map::createMapElement(){
     auto *mapElement = new MapElement();
@@ -25,4 +22,11 @@ vector<MapElement*> Map::getElements(){
     auto value_selector = [](auto pair) { return pair.second; };
     transform(mapElements_.begin(), mapElements_.end(), mapElements.begin(), value_selector);
     return mapElements;
+}
+
+int Map:: move_in_direction( string movement_instruction,int id){
+    // si devuelve 0 todo ok, ante cualquier problema que devuelva 1 
+    //para poder registrarlo en el logger
+    return 0;
+    
 }

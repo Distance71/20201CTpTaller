@@ -3,13 +3,11 @@
 
 #include "MovementHandler.h"
 
-// Se encarga del manejo interno del state de posicion
-
-class PlayerController: MovementHandler {
-
-    public:
-    PlayerController();
-    //~PlayerController();
+class PlayerController : MovementHandler{
+    
+	public:
+	PlayerController(int id,Map map);
+    int detect_event();
 };
 
 #endif
