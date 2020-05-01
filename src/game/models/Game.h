@@ -16,7 +16,7 @@ class Game {
 
     SDL_Window *window_ = nullptr;
     SDL_Renderer *renderer_ = nullptr;
-    Map map_;
+    Map *map_;
 
     void processEvent();
     void updateState();

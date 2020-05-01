@@ -8,11 +8,10 @@
 class MovementHandler : Action{
 
 	private:
-	int id;
-	Map map;
+	    int id;
 
     public:
-    MovementHandler(int id_map_element, Map _map);
+    MovementHandler(int id_map_element);
     void move_in_direction(string movement_instruction); 
 };
 

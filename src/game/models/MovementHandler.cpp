@@ -2,13 +2,12 @@
 #include "Map.h"
 #include <string>
 
-MovementHandler::MovementHandler(int id_map_element, Map _map){
-	map = _map;
+MovementHandler::MovementHandler(int id_map_element){
 	id = id_map_element;
 }
 
 void MovementHandler::move_in_direction(string direction){
-	int ok = map.move_in_direction(direction,id);
+	/*int ok = map.move_in_direction(direction,id);
 	string s_id="";
 	s_id = std::to_string(id);
 	if (ok==0){
@@ -16,5 +15,5 @@ void MovementHandler::move_in_direction(string direction){
 	}
 	else{
 		Logger::getInstance()->log(INFO,"Se ha producido un error al intentar mover al elemento " + s_id + "en la dirección  " + direction);
-	}
+	}*/
 }

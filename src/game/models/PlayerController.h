@@ -6,8 +6,8 @@
 class PlayerController : MovementHandler{
     
 	public:
-	PlayerController(int id,Map map);
-    int detect_event();
+		PlayerController(int id);
+		int detect_event();
 };
 
 #endif

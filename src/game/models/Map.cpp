@@ -3,12 +3,20 @@
 
 Map::Map() {}
 
-MapElement* Map::createMapElement(){
+/*MapElement* Map::createMapElement(){
     auto *mapElement = new MapElement();
     IdElement lastId = lastId_;
 
     mapElements_[++lastId_] = mapElement;
     return mapElement;
+}*/
+
+void Map::addMapElement(MapElement *newMapElement){
+    IdElement lastId = this->lastId_;
+    this->lastId_++;
+    
+    newMapElement->setIdElement(lastId);
+    this->mapElements_[lastId] = newMapElement;
 }
 
 void Map::clearMap() {

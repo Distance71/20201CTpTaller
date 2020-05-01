@@ -3,10 +3,10 @@
 
 //PlayerController::~PlayerController();
 
-PlayerController::PlayerController(int id, Map map): MovementHandler(id,map){
+PlayerController::PlayerController(int id): MovementHandler(id){
 }
 
-int PlayerController :: detect_event(){
+int PlayerController::detect_event(){
 
     const Uint8 *keystate = SDL_GetKeyboardState(NULL);  //Me da un arreglo con el estado de todas las teclas (1 presionada, 0 no presionada)
     

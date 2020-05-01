@@ -8,8 +8,6 @@
 #include "MapElement.h"
 #include "../../providers/GameProvider.h"
 
-using IdElement = size_t;
-
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 
 class Map {
@@ -17,13 +15,13 @@ class Map {
     unordered_map<IdElement, MapElement*> mapElements_;
     IdElement lastId_ = 0;
     void clearMap();
-    
 
     public:
-    Map();
-    int move_in_direction(string movement_instruction,int id);
-    vector<MapElement* > getElements();
-    MapElement* createMapElement();
+        Map();
+        int move_in_direction(string movement_instruction,int id);
+        vector<MapElement* > getElements();
+        // MapElement* createMapElement();
+        void addMapElement(MapElement *newMapElement);
 };
 
 #endif

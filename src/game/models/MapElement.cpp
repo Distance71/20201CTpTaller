@@ -48,3 +48,11 @@ template<typename T>
 T* MapElement::getAction(const string &name) {
     return (T *) actions_[name];
 }
+
+void MapElement::setIdElement(IdElement oneIdElement){
+    this->id_ = oneIdElement;
+}
+
+IdElement MapElement::getIdElement(){
+    return this->id_;
+}

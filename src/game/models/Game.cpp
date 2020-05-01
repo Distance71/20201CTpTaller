@@ -50,13 +50,13 @@ void Game::initializeGraphics() {
     }
 
     GameProvider::setRenderer(renderer_);
+    this->map_ = new Map();
 }
 
 bool Game::login() {
     string srcSpriteLoginScreen = "assets/LoginScreen/loginScreen.png"; //services -> configurationHandler->get('/loginScreen')
     size_t height = GameProvider::getHeight();
     size_t width = GameProvider::getWidth();
-    auto *login = map_.createMapElement();
 
     bool loginDone = false, exit = false;
 
@@ -87,6 +87,8 @@ bool Game::login() {
     }
 
     Logger::getInstance()->log(DEBUG, "Se ha pasado la pantalla de login");
+    
+    return loginDone;
 }
 
 void Game::run() {
@@ -126,7 +128,7 @@ void Game::processEvent() {
 }
 
 void Game::updateState() {
-    auto mapElements = map_.getElements();
+    auto mapElements = map_->getElements();
 
     // for (auto element : mapElements) {
         
