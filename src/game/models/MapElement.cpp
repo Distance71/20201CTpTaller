@@ -45,6 +45,6 @@ void MapElement::addAction(const string &name, T *action) {
 }
 
 template<typename T>
-void MapElement::getAction(const string &name) {
+T* MapElement::getAction(const string &name) {
     return (T *) actions_[name];
 }

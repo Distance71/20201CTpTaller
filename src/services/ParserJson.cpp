@@ -32,12 +32,10 @@ void ParserJson::setLogLevel(){
     string logLevel;
 
     if (jsonConfiguration["log"]["level"].is_string()){
-        logLevel = jsonConfiguration["log"]["level"].get<string>();
-    } else {
-        logLevel = DEFAULT_LOG_LEVEL;
+        
+        logLevel = jsonConfiguration["log"]["level"].get<string>();        
+        Logger::getInstance()->setLevel(logLevel);
     }
-
-    Logger::getInstance()->setLevel(logLevel);
 };
 
 void ParserJson::loadConfiguration(const string &pathFileConfiguration){

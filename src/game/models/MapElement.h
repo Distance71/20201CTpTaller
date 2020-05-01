@@ -22,9 +22,9 @@ class MapElement {
     MapElement();
     ~MapElement();
     template<typename T> void addState(const string &name, T *t);
-    template<typename T>void addAction(const string &name, T *t);
+    template<typename T> void addAction(const string &name, T *t);
     template<typename T> T* getState(const string &name);
-    template<typename T> void getAction(const string &name);
+    template<typename T> T* getAction(const string &name);
     vector<Action *> getActions();
     vector<State *> getStates();
 };
