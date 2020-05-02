@@ -26,13 +26,15 @@ class Logger {
         ofstream* logFile;
 
         Logger();
-        string getTime(bool full);
+        string getTime();
+        string getFullTime();
         string levelToString(LOG_LEVEL);
 
     public:   
         static Logger* getInstance();
         void log(LOG_LEVEL level, const string& message);
-        void setLevel(const string& level);
+        // setLevel devuelve false si hubo error, true en caso satisfactorio
+        bool setLevel(const string& level);
         virtual ~Logger();
 };
 

@@ -7,7 +7,7 @@ Logger::Logger(){
 	mkdir(LOG_FOLDER, 0777);
 	this->logFile = new ofstream();
 	// crea el log con la fecha actual
-	this->logFile->open(LOG_FOLDER + getTime(false) + "_log.txt");
+	this->logFile->open(LOG_FOLDER + getTime() + "_log.txt");
 	if (!this->logFile){
 	    std::cerr << "ERROR creando archivo log. No se puede continuar. \n";
 	    exit(1);
@@ -15,7 +15,7 @@ Logger::Logger(){
 	// inicializa el log con una cabecera
 	 *(this->logFile) << "##################################################\n"
 	 				  << "# TALLER DE PROGRAMACIÓN I - CATEDRA AZCURRA \n"
-					  << "# 1° Cuatrimestre 2020 - " << getTime(true)
+					  << "# 1° Cuatrimestre 2020 - " << getFullTime()
 					  << "##################################################\n\n";
 	this->logFile->flush();
 	// setea nivel por defecto al nivel mas alto
@@ -29,31 +29,36 @@ Logger* Logger::getInstance()
   return instance;
 }
 
-string Logger::getTime(bool full){
+string Logger::getFullTime(){
 	time_t timestamp;
 	time(&timestamp);
 	string timestamp_transform(ctime(&timestamp));
-	if (full) return timestamp_transform;
-	return timestamp_transform.substr(4,15);
+	return timestamp_transform;
+}
+
+string Logger::getTime(){
+	return (getFullTime()).substr(4,15);
 }
 
 void Logger::log(LOG_LEVEL level, const string& message){
 	if (this->level >= level) {
-		*(this->logFile) << getTime(false) << " - " << levelToString(level) << " - "  << message << " \n";
+		*(this->logFile) << getTime() << " - " << levelToString(level) << " - "  << message << " \n";
 		this->logFile->flush();
 	}
 }
 
- void Logger::setLevel(const string& level){
+ bool Logger::setLevel(const string& level){
 	// busca level en el mapa para ver si existe
 	auto result = string2Enum.find(level);
  	if (result != std::end(string2Enum)) {
 		// setea el level del log
         this->level = result->second;
+		return true;
     } 
 	else {
-		log(ERROR, "Nivel de log invalido: " + level);
+		log(ERROR, "Nivel de log invalido: " + level);		
 	}
+	return false;
  }
 
  string Logger::levelToString(LOG_LEVEL level) {
