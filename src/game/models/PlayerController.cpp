@@ -15,7 +15,7 @@ int PlayerController::detect_event(){
     Uint8 right =  keystate[SDL_SCANCODE_RIGHT];
     Uint8 left = keystate[SDL_SCANCODE_LEFT];
 
-    if (up && down && right && left){ //arriba
+    if (up && !down && !right && !left){ //arriba
        move_in_direction("up");
     }else if(!up && down && !right && !left){ // abajo
         move_in_direction("down");

@@ -3,7 +3,7 @@
 
 #include "MovementHandler.h"
 
-class PlayerController : MovementHandler{
+class PlayerController : public MovementHandler{
     
 	public:
 		PlayerController(int id);
