@@ -34,4 +34,24 @@ class MapElement {
         IdElement getIdElement();
 };
 
+template<typename T>
+void MapElement::addState(const string &name, T *state) {
+    states_[name] = state;
+}
+
+template<typename T>
+T* MapElement::getState(const string &name) {
+    return (T *) states_[name];
+}
+
+template<typename T>
+void MapElement::addAction(const string &name, T *action) {
+    actions_[name] = action;
+}
+
+template<typename T>
+T* MapElement::getAction(const string &name) {
+    return (T *) actions_[name];
+}
+
 #endif
