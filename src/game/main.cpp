@@ -1,18 +1,17 @@
 #include "models/Game.h"
 #include "../services/Logger.h"
-#include "../services/ParserJson.h"
+#include "../services/ConfigurationHandler.h"
 #include "../providers/GameProvider.h"
 
 #define PATH_CONFIGURATION "../Configuration.json"
 
 //Sets bullshit of config.json and logger
 bool initializeGameConfig(int argc, char* args[]) {
-    ParserJson *parserJson = new ParserJson();
-    parserJson->loadConfiguration(PATH_CONFIGURATION);
+    ConfigurationHandler::getInstance()->loadFileConfiguration(PATH_CONFIGURATION);
 
     switch (argc){
         case 1:
-            parserJson->setLogLevel();
+            ConfigurationHandler::getInstance()->setLogLevel();
             return true;
         case 2:
             Logger::getInstance()->setLevel(args[1]);

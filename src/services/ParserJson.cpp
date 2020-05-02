@@ -38,7 +38,7 @@ void ParserJson::setLogLevel(){
     }
 };
 
-void ParserJson::loadConfiguration(const string &pathFileConfiguration){
+bool ParserJson::loadConfiguration(const string &pathFileConfiguration){
     
     ifstream fileConfiguration = loadFile(pathFileConfiguration, DEFAULT_CONFIGURATION);
 
@@ -46,6 +46,8 @@ void ParserJson::loadConfiguration(const string &pathFileConfiguration){
     jsonConfiguration = jsonConfiguration["configuracion"];
 
     fileConfiguration.close(); 
+
+    return (!jsonConfiguration.is_null());
 };
 
 void ParserJson::loadLevel(const string &pathFileLevel){

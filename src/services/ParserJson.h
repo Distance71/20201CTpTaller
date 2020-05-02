@@ -37,7 +37,7 @@ class ParserJson {
         void setStages();
 
         void loadLevel(const string &pathFileLevel);
-        void loadConfiguration(const string &pathFileConfiguration);
+        bool loadConfiguration(const string &pathFileConfiguration);
 };
 
 
