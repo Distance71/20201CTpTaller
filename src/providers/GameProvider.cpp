@@ -6,6 +6,7 @@ namespace GameProvider {
     status_t status_;
     SDL_Renderer *renderer_;
     SDL_Event lastEvent_;
+    SDL_Window* _window;
 
     size_t getWidth() {
         return SCREEN_WIDTH;
@@ -52,6 +53,15 @@ namespace GameProvider {
     SDL_Renderer* getRenderer(){
         return renderer_;
     }
+
+    SDL_Window* getWindow(){
+        return _window;
+    }
+
+    void setWindow(SDL_Window* window){
+        _window= window;
+    }
+
 
     void setRenderer(SDL_Renderer *renderer){
         renderer_ = renderer;

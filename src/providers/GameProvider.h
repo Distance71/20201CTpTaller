@@ -8,8 +8,8 @@
 #include "SDL2/SDL.h"
 
 //Consts: should go in a config file
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 800
 
 #define MS_PER_UPDATE 16.67
 
@@ -31,6 +31,9 @@ namespace GameProvider {
     void setErrorStatus(string error);
     SDL_Renderer* getRenderer();
     void setRenderer(SDL_Renderer *renderer);
+    void setWindow(SDL_Window* window);
+    SDL_Window* getWindow();
+    
     
     //Could go later on configurationHandler
     size_t getWidth();

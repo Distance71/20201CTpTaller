@@ -1,7 +1,8 @@
 #include "Map.h"
 #include <string>
 
-Map::Map() {}
+Map::Map() {
+}
 
 /*MapElement* Map::createMapElement(){
     auto *mapElement = new MapElement();

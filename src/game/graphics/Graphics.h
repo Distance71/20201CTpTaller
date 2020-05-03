@@ -12,6 +12,7 @@ class Graphics: Action {
     public:
     Graphics();
     //~Graphics();
+    
 };
 
 #endif

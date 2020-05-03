@@ -11,7 +11,6 @@
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 
 class Map {
-
     unordered_map<IdElement, MapElement*> mapElements_;
     IdElement lastId_ = 0;
     void clearMap();

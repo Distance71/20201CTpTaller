@@ -5,6 +5,7 @@
 
 #define PATH_CONFIGURATION "../Configuration.json"
 
+
 //Sets bullshit of config.json and logger
 bool initializeGameConfig(int argc, char* args[]) {
     ConfigurationHandler::getInstance()->loadFileConfiguration(PATH_CONFIGURATION);
@@ -23,16 +24,16 @@ bool initializeGameConfig(int argc, char* args[]) {
 }
 
 int main(int argc, char *args[]) {
-
     if (!initializeGameConfig(argc, args)){
         return EXIT_FAILURE;
     }
 
     Logger::getInstance()->log(INFO, "Juego iniciado");
-
     Game game;
 
     game.run();
 
+    game.~Game();
+    
     return EXIT_SUCCESS;
 }
