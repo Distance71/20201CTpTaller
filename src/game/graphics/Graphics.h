@@ -8,7 +8,7 @@
 // Notar que renderer grafica solo una parte del mapa -> debe calcularse la posicion en la pantalla
 // Mirar SDL_Rect SDL_RenderCopy SDL_Texture
 
-enum level_t {LEVEL_ONE = 1};
+enum LEVEL_NUMBER {LEVEL_ONE = 0};
 
 class Graphics: Action {
 

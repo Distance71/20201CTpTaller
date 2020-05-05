@@ -8,9 +8,9 @@
 
 //Sets bullshit of config.json and logger
 bool initializeGameConfig(int argc, char* args[]) {
+
     ConfigurationHandler *configurationHandler = new ConfigurationHandler();
     configurationHandler->loadFileConfiguration(PATH_CONFIGURATION);
-    //ConfigurationHandler::getInstance()->loadFileConfiguration(PATH_CONFIGURATION);
 
     switch (argc){
         case 1:

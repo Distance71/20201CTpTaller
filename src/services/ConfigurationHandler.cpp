@@ -34,3 +34,7 @@ void ConfigurationHandler::initializeData(){
 void ConfigurationHandler::setLogLevel(){
     this->parserJson->setLogLevel();
 }
+
+Stage_t ConfigurationHandler::getStageData(int oneLevel){
+    return this->levelData->at(oneLevel).stage_;
+}

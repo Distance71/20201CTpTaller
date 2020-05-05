@@ -19,7 +19,7 @@ class GraphicsScenario: public Graphics {
     vector<Position *> layersPositions_;
 
     public:
-    GraphicsScenario(level_t level);
+    GraphicsScenario(LEVEL_NUMBER level);
     //~GraphicsScenario();
     void update(); //Add override later
 };

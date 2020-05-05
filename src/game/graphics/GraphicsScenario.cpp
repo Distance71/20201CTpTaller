@@ -1,18 +1,20 @@
 #include "GraphicsScenario.h"
 #include <string>
 
-GraphicsScenario::GraphicsScenario(level_t level){
+GraphicsScenario::GraphicsScenario(LEVEL_NUMBER level){
     /*Creo las variables donde se cargaran  las rutas de las imagenes dependiendo el nivel*/
     /*Leo las imagenes segun el nivel*/
     string layer1Path= "";
     string layer2Path = "";
     string layer3Path = "";
-    
+    Stage_t stageData;
+
     switch(level){
         case LEVEL_ONE:
-            layer1Path = "assets/Stage/Level1/layer_1.png";
-            layer2Path = "assets/Stage/Level1/layer_2.png";
-            layer3Path = "assets/Stage/Level1/layer_3.png";
+            stageData = GameProvider::getConfig()->getStageData(LEVEL_ONE);
+            layer1Path = stageData.layer1;
+            layer2Path = stageData.layer2;
+            layer3Path = stageData.layer3;
             break;
         
         default:

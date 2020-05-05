@@ -16,10 +16,12 @@ class ConfigurationHandler {
     public:
         ConfigurationHandler();
         ~ConfigurationHandler();
-        
+
         bool loadFileConfiguration(const string &pathFileConfiguration);
         void initializeData();
         void setLogLevel();
+
+        Stage_t getStageData(int oneLevel);
 };
 
 
