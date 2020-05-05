@@ -4,6 +4,10 @@ ParserJson::ParserJson(){
 
 };
 
+ParserJson::~ParserJson(){
+    
+}
+
 ifstream ParserJson::loadFile(const string &pathFile, string valueDefault){
     ifstream i(pathFile, ifstream::in);
     
@@ -19,9 +23,11 @@ void ParserJson::setLogLevel(){
     string logLevel;
 
     if (jsonConfiguration["log"]["level"].is_string()){
-        
         logLevel = jsonConfiguration["log"]["level"].get<string>();        
         Logger::getInstance()->setLevel(logLevel);
+    } else {      
+        Logger::getInstance()->setLevel(logLevel);
+        Logger::getInstance()->log(ERROR, "Hubo un error al leer el nivel del Log en el archivo de configuracion.");
     }
 };
 
@@ -105,13 +111,14 @@ vector<Enemy_t> ParserJson::getEnemies(json jsonEnemies, string numberLevel){
         if (oneEnemy.value()["quantity"].is_number_unsigned()){
             enemy_t.quantity = oneEnemy.value()["quantity"].get<unsigned int>();
         } else {
-
+            enemy_t.quantity = 0;
+            Logger::getInstance()->log(ERROR, "Error al leer la cantidad del enemigo " + oneEnemy.key() + " para el nivel " + numberLevel);
         }
 
         if (oneEnemy.value()["sprite"].is_string()){
             enemy_t.sprite = oneEnemy.value()["sprite"].get<string>();    
         } else {
-            
+            Logger::getInstance()->log(ERROR, "Error al leer la ruta del sprite del enemigo " + oneEnemy.key() + " para el nivel " + numberLevel);
         }  
 
         dataEnemies.push_back(enemy_t);

@@ -47,6 +47,7 @@ class ParserJson {
 
     public:
         ParserJson();
+        ~ParserJson();
 
         void loadLevelsData(vector<Level_t> *levelData);
         bool loadConfiguration(const string &pathFileConfiguration);
