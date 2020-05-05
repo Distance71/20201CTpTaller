@@ -33,6 +33,12 @@ add_executable( tp1taller
 	src/game/models/PlayerController.h
 	src/game/models/Action.cpp
 	src/game/models/Action.h
+	src/game/models/State.cpp
+	src/game/models/State.h
+	src/game/models/Sprite.cpp
+	src/game/models/Sprite.h
+	src/game/models/Speed.cpp
+	src/game/models/Speed.h
         src/game/graphics/Graphics.cpp
         src/game/graphics/Graphics.h
         src/game/graphics/GraphicsScenario.cpp
@@ -47,8 +53,6 @@ add_executable( tp1taller
         src/services/Logger.cpp
         src/services/Logger.h
         src/services/ParserJson.cpp
-        src/services/ParserJson.h
-        src/services/SpriteGenerator.cpp
-        src/services/SpriteGenerator.h)
+        src/services/ParserJson.h)
 	
 target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})

@@ -62,8 +62,16 @@ namespace GameProvider {
         _window= window;
     }
 
-
     void setRenderer(SDL_Renderer *renderer){
         renderer_ = renderer;
+    }
+
+    unordered_map<layer_t, size_t> getLayersSpeeds(){
+        unordered_map<layer_t, size_t> layersSpeeds = {
+            {LAYER_1, STAGE1LAYER1SPEED}, 
+            {LAYER_2, STAGE1LAYER2SPEED}, 
+            {LAYER_3, STAGE1LAYER3SPEED}};
+
+        return layersSpeeds;
     }
 }

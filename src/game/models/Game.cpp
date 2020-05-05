@@ -74,23 +74,14 @@ bool Game::login() {
         GameProvider::setErrorStatus("Error al cargar el menu principal" );
         return true;
     }
-    SDL_Event e;
+    SDL_BlitSurface( loginscreen, NULL, surface, NULL );
+    SDL_UpdateWindowSurface(window);
     while (true){
-        SDL_PollEvent( &e );
-        if( e.type == SDL_QUIT){
-                quit = true;
-                return quit;
-        }
-        else if (e.type=SDL_KEYDOWN){
-            if (e.key.keysym.sym == SDLK_RETURN){
-                return quit;
-            }
-        }
-        SDL_BlitSurface( loginscreen, NULL, surface, NULL );
-        SDL_UpdateWindowSurface(window);
+        processEvent();
+        SDL_Event e = GameProvider::getLastEvent();
+        if(e.type == SDL_KEYDOWN & e.key.keysym.sym == SDLK_RETURN)
+            return quit;
     }
-
-
 }
 
     /*LOGIN ANTERIOR:
@@ -134,13 +125,12 @@ bool Game::login() {
     return loginDone;
 }*/
 
-bool Game::play_level(int stage){
+GraphicsScenario Game::play_level(int stage){
     /* Cuando se incia el nivel lo primero que se hace es crear el mapa
     para ese nivel*/
-    Map map_();
-    GraphicsScenario graphics_scenario(1);
-
-    return true;
+    //Map map_;
+    // static GraphicsScenario graphics_scenario(LEVEL_ONE);
+    // return graphics_scenario;
 }
 
 
@@ -155,48 +145,60 @@ void Game::run(){
     bool quit = login();
     /* Si entramos  es porque el usuario presiono enter e iniciamos el
     ciclo principal del juego. sino entramos es porque el usuario decidió cerrar el juego*/
-    if (!quit){
+    //if (!quit){
         int number_of_stages = 1; /* obenerlo de la configuración despues*/
         int stage = 0;
         /* si en algun momento se cerro el juego quit pasara a ser true*/
-        while (!quit){
-            stage += 1;
-            if (stage > number_of_stages){
-                /* aca podemos preguntar si quiere volver a jugar*/
-                quit = true;
-            }
-            quit = play_level(stage);
+        GraphicsScenario graphicsScenario(LEVEL_ONE);
+        //while (!quit){
+            // stage += 1;
+            // if (stage > number_of_stages){
+            //     /* aca podemos preguntar si quiere volver a jugar*/
+            //     quit = true;
+            // }
+            
+            //GraphicsScenario graphics_scenario = play_level(stage);
+          //  graphics_scenario.update();
             /*si completa el nivel pasamos al siguiente a menos que no haya más*/
-        }
+        //}
         /* Se salio del while porque el usuario decidió cerrar el juego
         o lo terminó y no quiere volver a jugar*/
-    }
-}
+    //}
+//}
    
     /*if(!GameProvider::getStatus().normalStatus || !login())
         return;*/
 
-    // double previous = time(NULL);
-    // double lag = 0;
+    //  double previous = time(NULL);
+    //double lag = 0;
 
-    // while(GameProvider::getStatus().normalStatus) {
-    //     double current = time(NULL);
-    //     double elapsed = current - previous;
-    //     previous = current;
-    //     lag += elapsed;
+    double elaptedTimeMS = GameProvider::getElaptedTimeFPS(); 
 
-    //     SDL_RenderClear(renderer_); //borra el renderer previo
-    //     processEvent();
+    while(GameProvider::getStatus().normalStatus) {
+        auto begin = chrono::high_resolution_clock::now();
+        auto end = chrono::high_resolution_clock::now();   
+        auto dur = end - begin;
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
 
-    //     double elaptedTimeMS = GameProvider::getElaptedTimeFPS(); 
+         //double elapsed = current - previous;
+         //previous = current;
+         //lag += elapsed;
+        renderer_ = GameProvider::getRenderer();
+        SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(renderer_); //borra el renderer previo
+        GameProvider::setRenderer(renderer_);
+        processEvent();
 
-    //     while(lag >= elaptedTimeMS) {
-    //         updateState();
-    //         lag -= elaptedTimeMS;
-    //     }
-        
-    //     updateGraphics();
-    // 
+        while(0 >= (ms - elaptedTimeMS)) {
+            //updateState();
+            end = chrono::high_resolution_clock::now();
+            dur = end - begin;
+            ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+        }
+        graphicsScenario.update();
+        updateGraphics();
+    }
+}
 
 void Game::processEvent() {
     SDL_Event lastEvent;

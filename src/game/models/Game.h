@@ -6,9 +6,10 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "../../services/Logger.h"
-#include "../../services/SpriteGenerator.h"
+#include "Sprite.h"
 #include "Map.h"
-
+#include "../graphics/GraphicsScenario.h"
+#include <chrono>
 
 // Maneja la secuencia logica del juego
 
@@ -30,7 +31,7 @@ class Game {
 
     void run();
     bool login();
-    bool play_level(int level);
+    GraphicsScenario play_level(int level);
 };
 
 #endif

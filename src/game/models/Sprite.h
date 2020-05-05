@@ -1,10 +1,10 @@
-#ifndef _SPRITEGENERATOR_H_
-#define _SPRITEGENERATOR_H_
+#ifndef _SPRITE_H_
+#define _SPRITE_H_
 
 #include <string>
 #include <fstream>
 #include <SDL2/SDL_image.h>
-#include "../providers/GameProvider.h"
+#include "../../providers/GameProvider.h"
 
 using namespace std;
 
@@ -18,13 +18,13 @@ using namespace std;
 //SDL_CreateTextureFromSurface -> Crear textura
 
 
-class SpriteGenerator {
+class Sprite {
 
     SDL_Texture *texture_;
 
     public:
-    SpriteGenerator(const string &source);
-    ~SpriteGenerator();
+    Sprite(const string &source);
+    ~Sprite();
     SDL_Texture* getTexture();
 };
 

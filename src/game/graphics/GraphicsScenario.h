@@ -4,14 +4,24 @@
 #include "Graphics.h"
 #include "../../providers/GameProvider.h"
 #include "SDL2/SDL_image.h"
+#include "../../game/models/Speed.h"
+#include "../../game/models/Position.h"
+#include <vector>
+
+using namespace std;
 
 class GraphicsScenario: public Graphics {
     private:
-    int level;
+    //size_t level_;
+    //Asumo que respetan el orden
+    vector<Sprite *> sprites_; //refactor if add more levels
+    vector<Speed *> layersSpeeds_;
+    vector<Position *> layersPositions_;
 
     public:
-    GraphicsScenario(int stage);
+    GraphicsScenario(level_t level);
     //~GraphicsScenario();
+    void update(); //Add override later
 };
 
 #endif
