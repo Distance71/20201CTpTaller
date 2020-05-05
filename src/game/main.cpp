@@ -8,11 +8,13 @@
 
 //Sets bullshit of config.json and logger
 bool initializeGameConfig(int argc, char* args[]) {
-    ConfigurationHandler::getInstance()->loadFileConfiguration(PATH_CONFIGURATION);
+    ConfigurationHandler *configurationHandler = new ConfigurationHandler();
+    configurationHandler->loadFileConfiguration(PATH_CONFIGURATION);
+    //ConfigurationHandler::getInstance()->loadFileConfiguration(PATH_CONFIGURATION);
 
     switch (argc){
         case 1:
-            ConfigurationHandler::getInstance()->setLogLevel();
+            configurationHandler->setLogLevel();
             break;
         case 2:
             Logger::getInstance()->setLevel(args[1]);
@@ -22,7 +24,8 @@ bool initializeGameConfig(int argc, char* args[]) {
             return false;
     }
 
-    ConfigurationHandler::getInstance()->initializeData();
+    configurationHandler->initializeData();
+    GameProvider::setConfig(configurationHandler);
     return true;
 }
 
@@ -38,5 +41,7 @@ int main(int argc, char *args[]) {
 
     game.~Game();
     
+    //GameProvider::getConfig()->~ConfigurationHandler();
+
     return EXIT_SUCCESS;
 }

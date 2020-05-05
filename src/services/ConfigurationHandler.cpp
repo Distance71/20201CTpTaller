@@ -1,17 +1,13 @@
 #include "ConfigurationHandler.h"
 
-ConfigurationHandler* ConfigurationHandler::instance = nullptr;
-
 ConfigurationHandler::ConfigurationHandler(){
     this->parserJson = new ParserJson();
     this->levelData = new vector<Level_t>();
 }
 
-ConfigurationHandler* ConfigurationHandler::getInstance(){
-    if (instance == nullptr)
-        instance = new ConfigurationHandler();
-        
-    return instance;
+ConfigurationHandler::~ConfigurationHandler(){
+    delete this->parserJson;
+    delete this->levelData;
 }
 
 bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfiguration){
@@ -28,7 +24,9 @@ void ConfigurationHandler::initializeData(){
         cout << it->stage_.layer2 << endl;
         cout << it->stage_.layer3 << endl;
         for (Enemy_t oneEnemy : it->enemies_){
-            cout << oneEnemy.type << endl;
+            oneEnemy.type;
+            oneEnemy.quantity;
+            oneEnemy.sprite;
         }
     }*/
 }

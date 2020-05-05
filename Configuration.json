@@ -1,17 +1,17 @@
 {
   "configuracion": {
   	"log":{
-  		"level":"INFO"
+  		"level": "DEBUG"
 	},
 	"level": [
 		{
-			"layer1": 1,
+			"layer1": "nivel 1 - layer 1",
 			"layer2": "nivel 1 - layer 2",
 			"layer3": "nivel 1 - layer 3",
 			"enemies": [
 				{
 					"type": "class_1",
-					"quantity": "5",
+					"quantity": 5,
 					"sprite": ""				  
 				},
 				{
@@ -28,12 +28,12 @@
 			"enemies": [
 				{
 					"type": "class_1",
-					"quantity": "5",
-					"sprite": ""				  
+					"quantity": 50,
+					"sprite": ""		  
 				},
 				{
 					"type": "class_2",
-					"quantity": "10",
+					"quantity": 12,
 					"sprite": ""
 				}
 			]

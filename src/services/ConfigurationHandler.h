@@ -10,15 +10,13 @@ using namespace std;
 class ConfigurationHandler {
 
     private: 
-        static ConfigurationHandler* instance;
-        
         vector<Level_t> *levelData;
         ParserJson *parserJson;
 
-        ConfigurationHandler();
     public:
-        static ConfigurationHandler* getInstance();
-        //~ConfigurationHandler();
+        ConfigurationHandler();
+        ~ConfigurationHandler();
+        
         bool loadFileConfiguration(const string &pathFileConfiguration);
         void initializeData();
         void setLogLevel();
