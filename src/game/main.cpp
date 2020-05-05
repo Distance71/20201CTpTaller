@@ -13,14 +13,17 @@ bool initializeGameConfig(int argc, char* args[]) {
     switch (argc){
         case 1:
             ConfigurationHandler::getInstance()->setLogLevel();
-            return true;
+            break;
         case 2:
             Logger::getInstance()->setLevel(args[1]);
-            return true;
+            break;
         default:
             cout << "Verifique que haya escrito los parametros correctamente." << endl;
             return false;
     }
+
+    ConfigurationHandler::getInstance()->initializeData();
+    return true;
 }
 
 int main(int argc, char *args[]) {

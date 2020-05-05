@@ -18,6 +18,23 @@
 using namespace std;
 using json = nlohmann::json;
 
+typedef struct {
+    string type;
+    unsigned int quantity;
+    string sprite;
+} Enemy_t;
+
+typedef struct {
+    string layer1;
+    string layer2;
+    string layer3;
+} Stage_t;
+
+typedef struct {
+    Stage_t stage_;
+    vector<Enemy_t> enemies_;
+} Level_t;
+
 //Encargado de manejar el parseo de JSON
 
 class ParserJson {
@@ -26,18 +43,15 @@ class ParserJson {
         json jsonConfiguration;
 
         ifstream loadFile(const string &pathFile, string valueDefault);
-
-        json getJsonDefaultEnemies();
+        vector<Enemy_t> getEnemies(json jsonEnemies, string numberLevel);
 
     public:
         ParserJson();
 
-        void setLogLevel();
-        void setEnemies();
-        void setStages();
-
-        void loadLevel(const string &pathFileLevel);
+        void loadLevelsData(vector<Level_t> *levelData);
         bool loadConfiguration(const string &pathFileConfiguration);
+
+        void setLogLevel();
 };
 
 

@@ -14,19 +14,6 @@ ifstream ParserJson::loadFile(const string &pathFile, string valueDefault){
     return i;
 };
 
-json ParserJson::getJsonDefaultEnemies(){
-    json defaultEnemies = json::array();
-    json oneEnemy = json::object();
-    
-    oneEnemy["type"] = DEFAULT_ENEMY_TYPE;
-    oneEnemy["quantity"] = (unsigned int) DEFAULT_ENEMY_QUANTITY *3;
-    oneEnemy["sprite"] = DEFAULT_ENEMY_SPRITE;
-    
-    defaultEnemies.insert(defaultEnemies.end(), {oneEnemy});;
-
-    return defaultEnemies;
-};
-
 void ParserJson::setLogLevel(){
 
     string logLevel;
@@ -50,69 +37,85 @@ bool ParserJson::loadConfiguration(const string &pathFileConfiguration){
     return (!jsonConfiguration.is_null());
 };
 
-void ParserJson::loadLevel(const string &pathFileLevel){
+void ParserJson::loadLevelsData(vector<Level_t> *levelData){
 
-    ifstream i = loadFile(pathFileLevel, DEFAULT_LEVEL);
-    //i >> jsonConfiguration;
-    i.close();
-};
+    json jsonLevels;
 
-void ParserJson::setEnemies(){
+    Logger::getInstance()->log(DEBUG, "Se comienza a cargan la informacion de los niveles del archivo de configuracion.");
 
-    json jsonEnemies;
+    if (!jsonConfiguration["level"].is_array()){
+        Logger::getInstance()->log(ERROR, "No se pudo leer la informacion de los niveles del archivo de configuracion.");
+        return;    
+    } 
 
-    if (jsonConfiguration["game"]["enemies"].is_array()){
-        jsonEnemies = jsonConfiguration["game"]["enemies"].get<json>();
-    } else {
-        // Falta avisarle al Logger de lo ocurrido
-        jsonEnemies = getJsonDefaultEnemies();
+    jsonLevels = jsonConfiguration["level"].get<json>();
+
+    for (auto& oneLevel: json::iterator_wrapper(jsonLevels)){
+        Level_t level;
+        json jsonEnemies;
+        unsigned int numberLevel = atoi(oneLevel.key().c_str());
+
+        if (oneLevel.value()["layer1"].is_string()){
+            level.stage_.layer1 = oneLevel.value()["layer1"].get<string>();
+        } else {
+            Logger::getInstance()->log(ERROR, "El layer1 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
+        }
+
+        if (oneLevel.value()["layer2"].is_string()){
+            level.stage_.layer2 = oneLevel.value()["layer2"].get<string>();
+        } else {
+            Logger::getInstance()->log(ERROR, "El layer2 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
+        }
+
+        if (oneLevel.value()["layer3"].is_string()){
+            level.stage_.layer3 = oneLevel.value()["layer3"].get<string>();
+        } else {
+            Logger::getInstance()->log(ERROR, "El layer3 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
+        }
+
+        if (oneLevel.value()["enemies"].is_array()){
+            jsonEnemies = oneLevel.value()["enemies"].get<json>();
+            level.enemies_ = getEnemies(jsonEnemies, oneLevel.key());
+        } else {
+            Logger::getInstance()->log(ERROR, "Los enemigos para el nivel " + oneLevel.key() + " no se encontraron en el archivo de configuracion.");
+        }
+
+        levelData->push_back(level);
     }
 
-    for (auto& oneEnemy: json::iterator_wrapper(jsonEnemies)){
+    return;
+};
 
+vector<Enemy_t> ParserJson::getEnemies(json jsonEnemies, string numberLevel){
+
+    vector<Enemy_t> dataEnemies;
+
+    for (auto& oneEnemy: json::iterator_wrapper(jsonEnemies)){
+        Enemy_t enemy_t;
         string typeEnemy;
         unsigned int qunatityEnemy;
         string pathEnemy;
 
         if (oneEnemy.value()["type"].is_string()){
-            typeEnemy = oneEnemy.value()["type"].get<string>();
+            enemy_t.type = oneEnemy.value()["type"].get<string>();
         } else {
-            typeEnemy = DEFAULT_ENEMY_TYPE;
+            Logger::getInstance()->log(ERROR, "Error al leer el tipo del enemigo " + oneEnemy.key() + " para el nivel " + numberLevel);
         }
 
         if (oneEnemy.value()["quantity"].is_number_unsigned()){
-            qunatityEnemy = oneEnemy.value()["quantity"].get<unsigned int>();
+            enemy_t.quantity = oneEnemy.value()["quantity"].get<unsigned int>();
         } else {
-            qunatityEnemy = DEFAULT_ENEMY_QUANTITY;
+
         }
 
         if (oneEnemy.value()["sprite"].is_string()){
-            ifstream j(oneEnemy.value()["sprite"].get<string>(), ifstream::in);
-            if (j.is_open()){
-                pathEnemy = oneEnemy.value()["sprite"].get<string>();
-                j.close();
-            } else {
-                pathEnemy = DEFAULT_ENEMY_SPRITE; 
-            }      
+            enemy_t.sprite = oneEnemy.value()["sprite"].get<string>();    
         } else {
-            pathEnemy = DEFAULT_ENEMY_SPRITE;
+            
         }  
 
-        //Faltaria settearle al encargado de distribuir los enemigos
-    }
-};
-
-void ParserJson::setStages(){
-
-    json jsonStages;
-
-    if (jsonConfiguration["game"]["stages"].is_array()){
-        jsonStages = jsonConfiguration["game"]["stages"].get<json>();
-    } else {
-        // Leer Stages por defecto y avisarle al Logger
+        dataEnemies.push_back(enemy_t);
     }
 
-    for (auto& oneStage: json::iterator_wrapper(jsonStages)){
-
-    }
-};
+    return dataEnemies;
+}

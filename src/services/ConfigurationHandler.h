@@ -11,7 +11,8 @@ class ConfigurationHandler {
 
     private: 
         static ConfigurationHandler* instance;
-
+        
+        vector<Level_t> *levelData;
         ParserJson *parserJson;
 
         ConfigurationHandler();
@@ -19,6 +20,7 @@ class ConfigurationHandler {
         static ConfigurationHandler* getInstance();
         //~ConfigurationHandler();
         bool loadFileConfiguration(const string &pathFileConfiguration);
+        void initializeData();
         void setLogLevel();
 };
 

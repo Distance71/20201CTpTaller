@@ -2,32 +2,42 @@
   "configuracion": {
   	"log":{
   		"level":"INFO"
-  	},
-  	"game":{
-  		"enemies":[
-  			{
-				"type": "class_1",
-				"quantity": "5",
-				"sprite": ""				  
-  			},
-  			{
-  				"type": "class_2",
-  				"quantity": "10",
-				"sprite": ""
-  			}
-  		],
-  		"stages":[
-  			{
-  				"fondo1": "/",
-  				"fondo2": "/",
-  				"fondo3": "/"
-  			},
-  			{
-  				"fondo1": "/",
-  				"fondo2": "/",
-  				"fondo3": "/"
-  			}
-  		]
-  	}
+	},
+	"level": [
+		{
+			"layer1": 1,
+			"layer2": "nivel 1 - layer 2",
+			"layer3": "nivel 1 - layer 3",
+			"enemies": [
+				{
+					"type": "class_1",
+					"quantity": "5",
+					"sprite": ""				  
+				},
+				{
+					"type": "class_2",
+					"quantity": "10",
+					"sprite": ""
+				}
+			]
+		},
+		{
+			"layer1": "nivel 2 - layer 1",
+			"layer2": "nivel 2 - layer 2",
+			"layer3": "nivel 2 - layer 3",
+			"enemies": [
+				{
+					"type": "class_1",
+					"quantity": "5",
+					"sprite": ""				  
+				},
+				{
+					"type": "class_2",
+					"quantity": "10",
+					"sprite": ""
+				}
+			]
+		}
+	] 
   }
 }
