@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "../graphics/GraphicsScenario.h"
 
 Game::Game(){
     initializeGraphics();
@@ -125,13 +124,13 @@ bool Game::login() {
     return loginDone;
 }*/
 
-GraphicsScenario Game::play_level(int stage){
-    /* Cuando se incia el nivel lo primero que se hace es crear el mapa
-    para ese nivel*/
-    //Map map_;
-    // static GraphicsScenario graphics_scenario(LEVEL_ONE);
-    // return graphics_scenario;
-}
+// GraphicsScenario Game::play_level(int stage){
+//     /* Cuando se incia el nivel lo primero que se hace es crear el mapa
+//     para ese nivel*/
+//     //Map map_;
+//     // static GraphicsScenario graphics_scenario(LEVEL_ONE);
+//     // return graphics_scenario;
+// }
 
 
 
@@ -179,25 +178,25 @@ void Game::run(){
         auto end = chrono::high_resolution_clock::now();   
         auto dur = end - begin;
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-
-         //double elapsed = current - previous;
-         //previous = current;
-         //lag += elapsed;
-        renderer_ = GameProvider::getRenderer();
-        SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderClear(renderer_); //borra el renderer previo
-        GameProvider::setRenderer(renderer_);
+        
+        clearScene();
         processEvent();
 
         while(0 >= (ms - elaptedTimeMS)) {
-            //updateState();
+            updateState();
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
         }
-        graphicsScenario.update();
         updateGraphics();
     }
+}
+
+void Game::clearScene(){
+    renderer_ = GameProvider::getRenderer();
+    SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(renderer_);
+    GameProvider::setRenderer(renderer_);
 }
 
 void Game::processEvent() {
@@ -210,7 +209,9 @@ void Game::processEvent() {
 }
 
 void Game::updateState() {
-    auto mapElements = map_->getElements();
+    //graphicsScenario.update();
+
+    map_->update();
 
     // for (auto element : mapElements) {
         

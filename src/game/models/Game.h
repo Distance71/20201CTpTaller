@@ -10,11 +10,13 @@
 #include "Map.h"
 #include "../graphics/GraphicsScenario.h"
 #include <chrono>
+#include <string>
 
 // Maneja la secuencia logica del juego
 
 class Game {
 
+    private:
     SDL_Window *window_ = nullptr;
     SDL_Renderer *renderer_ = nullptr;
     Map * map_;
@@ -22,7 +24,7 @@ class Game {
     void processEvent();
     void updateState();
     void updateGraphics();
-
+    void clearScene();
     void initializeGraphics();
 
     public:
@@ -31,7 +33,7 @@ class Game {
 
     void run();
     bool login();
-    GraphicsScenario play_level(int level);
+    //GraphicsScenario play_level(int level);
 };
 
 #endif

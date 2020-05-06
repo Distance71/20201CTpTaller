@@ -12,6 +12,7 @@ class Position: State  {
     int x, y;
 
     public:
+    Position();
     Position(int x, int y);
     int getXPosition();
     int getYPosition();

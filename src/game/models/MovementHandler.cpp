@@ -7,7 +7,7 @@ MovementHandler::MovementHandler(int id_map_element){
 }
 
 void MovementHandler::move_in_direction(string direction){
-	/*int ok = map.move_in_direction(direction,id);
+	/*int ok = map.move_in_direction(direction, id);
 	string s_id="";
 	s_id = std::to_string(id);
 	if (ok==0){

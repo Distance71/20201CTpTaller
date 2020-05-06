@@ -7,20 +7,22 @@
 #include <algorithm>
 #include "MapElement.h"
 #include "../../providers/GameProvider.h"
+#include "Stage.h"
 
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 
 class Map {
-    unordered_map<IdElement, MapElement*> mapElements_;
-    IdElement lastId_ = 0;
+    vector<Stage *> stages_;
+    //IdElement lastId_ = 0;
     void clearMap();
 
     public:
         Map();
         int move_in_direction(string movement_instruction,int id);
-        vector<MapElement* > getElements();
+        //vector<MapElement* > getElements();
         // MapElement* createMapElement();
-        void addMapElement(MapElement *newMapElement);
+        void addStage(Stage *Stage);
+        void update();
 };
 
 #endif
