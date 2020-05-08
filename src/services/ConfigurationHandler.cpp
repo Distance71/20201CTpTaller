@@ -2,7 +2,7 @@
 
 ConfigurationHandler::ConfigurationHandler(){
     this->parserJson = new ParserJson();
-    this->levelData = new vector<Level_t>();
+    this->levelData = new vector<levelContent_t>();
 }
 
 ConfigurationHandler::~ConfigurationHandler(){
@@ -19,11 +19,11 @@ void ConfigurationHandler::initializeData(){
 
     /*
     Como se iteraria:
-    for (vector<Level_t>::iterator it = this->levelData->begin(); it != this->levelData->end(); it++){
+    for (vector<levelContent_t>::iterator it = this->levelData->begin(); it != this->levelData->end(); it++){
         cout << it->stage_.layer1 << endl;
         cout << it->stage_.layer2 << endl;
         cout << it->stage_.layer3 << endl;
-        for (Enemy_t oneEnemy : it->enemies_){
+        for (enemy_t oneEnemy : it->enemies_){
             oneEnemy.type;
             oneEnemy.quantity;
             oneEnemy.sprite;
@@ -35,6 +35,6 @@ void ConfigurationHandler::setLogLevel(){
     this->parserJson->setLogLevel();
 }
 
-Stage_t ConfigurationHandler::getStageData(int oneLevel){
+stage_t ConfigurationHandler::getStageData(int oneLevel){
     return this->levelData->at(oneLevel).stage_;
 }

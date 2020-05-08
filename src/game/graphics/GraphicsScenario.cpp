@@ -7,7 +7,7 @@ GraphicsScenario::GraphicsScenario(LEVEL_NUMBER level){
     string layer1Path= "";
     string layer2Path = "";
     string layer3Path = "";
-    Stage_t stageData;
+    stage_t stageData;
 
     switch(level){
         case LEVEL_ONE:

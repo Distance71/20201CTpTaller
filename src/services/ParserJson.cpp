@@ -43,7 +43,7 @@ bool ParserJson::loadConfiguration(const string &pathFileConfiguration){
     return (!jsonConfiguration.is_null());
 };
 
-void ParserJson::loadLevelsData(vector<Level_t> *levelData){
+void ParserJson::loadLevelsData(vector<levelContent_t> *levelData){
 
     json jsonLevels;
 
@@ -57,7 +57,7 @@ void ParserJson::loadLevelsData(vector<Level_t> *levelData){
     jsonLevels = jsonConfiguration["level"].get<json>();
 
     for (auto& oneLevel: json::iterator_wrapper(jsonLevels)){
-        Level_t level;
+        levelContent_t level;
         json jsonEnemies;
         unsigned int numberLevel = atoi(oneLevel.key().c_str());
 
@@ -92,12 +92,12 @@ void ParserJson::loadLevelsData(vector<Level_t> *levelData){
     return;
 };
 
-vector<Enemy_t> ParserJson::getEnemies(json jsonEnemies, string numberLevel){
+vector<enemy_t> ParserJson::getEnemies(json jsonEnemies, string numberLevel){
 
-    vector<Enemy_t> dataEnemies;
+    vector<enemy_t> dataEnemies;
 
     for (auto& oneEnemy: json::iterator_wrapper(jsonEnemies)){
-        Enemy_t enemy_t;
+        enemy_t enemy_t;
         string typeEnemy;
         unsigned int qunatityEnemy;
         string pathEnemy;

@@ -2,6 +2,7 @@
 #define _CONFIGURATIONHANDLER_H_
 
 #include "ParserJson.h"
+#include "../game/type.h"
 
 using namespace std;
 
@@ -10,7 +11,7 @@ using namespace std;
 class ConfigurationHandler {
 
     private: 
-        vector<Level_t> *levelData;
+        vector<levelContent_t> *levelData;
         ParserJson *parserJson;
 
     public:
@@ -21,7 +22,7 @@ class ConfigurationHandler {
         void initializeData();
         void setLogLevel();
 
-        Stage_t getStageData(int oneLevel);
+        stage_t getStageData(int oneLevel);
 };
 
 
