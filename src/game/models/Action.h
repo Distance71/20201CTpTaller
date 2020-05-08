@@ -2,6 +2,10 @@
 #define _ACTION_H_
 
 #include <unordered_map>
+#include <string>
+#include "State.h"
+
+using namespace std;
 
 // Se encarga del manejo interno del state de posicion
 

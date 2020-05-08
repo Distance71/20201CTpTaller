@@ -2,15 +2,19 @@
 #define _CONFIGURATIONHANDLER_H_
 
 #include "ParserJson.h"
+#include <vector>
+#include "../game/types.h"
 
 using namespace std;
+
+class ParserJson;
 
 //Encargado de manejar la configuracion inicial del programa
 
 class ConfigurationHandler {
 
     private: 
-        vector<Level_t> *levelData;
+        //vector<Level_t> *levelData;
         ParserJson *parserJson;
 
     public:
@@ -21,7 +25,7 @@ class ConfigurationHandler {
         void initializeData();
         void setLogLevel();
 
-        Stage_t getStageData(int oneLevel);
+        stage_t getStageData(int oneLevel);
 };
 
 

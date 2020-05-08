@@ -2,12 +2,11 @@
 #define _ORIENTATION_H_
 
 #include "State.h"
+#include "../types.h"
 
 // Se encarga del manejo interno del state de posicion
 
-enum orientation_t {FRONT, BACK, UP, DOWN, FRONT_UP, FRONT_DOWN, BACK_DOWN, BACK_UP};
-
-class Orientation: State {
+class Orientation: virtual State {
     orientation_t orientation_;
 
     public:

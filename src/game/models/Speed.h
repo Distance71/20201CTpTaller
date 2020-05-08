@@ -2,9 +2,8 @@
 #define _SPEED_H_
 
 #include "State.h"
-#include <cmath>
 
-class Speed: State {
+class Speed: virtual State {
     private:
     int x, y;
 

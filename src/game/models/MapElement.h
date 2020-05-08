@@ -1,5 +1,5 @@
-#ifndef _MAPELEMENT_H_
-#define _MAPELEMENT_H_
+#ifndef _MAP_ELEMENT_H_
+#define _MAP_ELEMENT_H_
 
 #include <iostream>
 #include <vector>
@@ -7,17 +7,15 @@
 #include <unordered_map>
 #include "State.h"
 #include "Action.h"
+#include "../types.h"
 
 using namespace std;
-using IdElement = size_t;
-
-enum type_t {PLAYER, ENEMY, BACKGROUND};
 
 class MapElement {
 
     private:
         IdElement id_;
-        type_t type;
+        elementType_t type;
         unordered_map<string, State *> states_;
         unordered_map<string, Action *> actions_;
 
@@ -26,7 +24,7 @@ class MapElement {
         
 
     public:
-        MapElement(type_t type);
+        MapElement(elementType_t type);
         ~MapElement();
         template<typename T> void addState(const string name, T *t);
         template<typename T> void addAction(const string name, T *t);
@@ -39,24 +37,24 @@ class MapElement {
         IdElement getIdElement();
 };
 
-// template<typename T>
-// void MapElement::addState(const string &name, T *state) {
-//     states_[name] = state;
-// }
+template<typename T>
+void MapElement::addState(const string name, T *state) {
+    states_[name] = (State *) state;
+}
 
-// template<typename T>
-// T* MapElement::getState(const string &name) {
-//     return (T *) states_[name];
-// }
+template<typename T>
+T* MapElement::getState(const string name) {
+    return (T *) states_[name];
+}
 
-// template<typename T>
-// void MapElement::addAction(const string &name, T *action) {
-//     actions_[name] = action;
-// }
+template<typename T>
+void MapElement::addAction(const string name, T *action) {
+    actions_[name] = (Action *) action;
+}
 
-// template<typename T>
-// T* MapElement::getAction(const string &name) {
-//     return (T *) actions_[name];
-// }
+template<typename T>
+T* MapElement::getAction(const string name) {
+    return (T *) actions_[name];
+}
 
 #endif

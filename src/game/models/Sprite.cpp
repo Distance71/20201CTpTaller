@@ -1,8 +1,5 @@
 #include "Sprite.h"
 
-#include <iostream>
-using namespace std;
-
 Sprite::Sprite(const string &source){
     ifstream infile(source);
     if(infile.good()) {

@@ -17,28 +17,28 @@ include_directories(src/services)
 file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})
 
 add_executable( tp1taller
-        src/game/models/Game.cpp
+	src/game/models/Action.cpp
+	src/game/models/Action.h        
+	src/game/models/Game.cpp
         src/game/models/Game.h
         src/game/models/Map.cpp
         src/game/models/Map.h
         src/game/models/MapElement.cpp
         src/game/models/MapElement.h
-        src/game/models/Orientation.cpp
-        src/game/models/Orientation.h
-        src/game/models/Position.cpp
-        src/game/models/Position.h
 	src/game/models/MovementHandler.h
-	src/game/models/MovementHandler.cpp
+	src/game/models/MovementHandler.cpp        
+	src/game/models/Orientation.cpp
+        src/game/models/Orientation.h
 	src/game/models/PlayerController.cpp
 	src/game/models/PlayerController.h
-	src/game/models/Action.cpp
-	src/game/models/Action.h
-	src/game/models/State.cpp
-	src/game/models/State.h
-	src/game/models/Sprite.cpp
-	src/game/models/Sprite.h
+        src/game/models/Position.cpp
+        src/game/models/Position.h
 	src/game/models/Speed.cpp
 	src/game/models/Speed.h
+	src/game/models/Sprite.cpp
+	src/game/models/Sprite.h
+	src/game/models/State.cpp
+	src/game/models/State.h
         src/game/graphics/Graphics.cpp
         src/game/graphics/Graphics.h
         src/game/graphics/GraphicsScenario.cpp
@@ -46,6 +46,7 @@ add_executable( tp1taller
         src/game/graphics/GraphicsSpacecraft.cpp
         src/game/graphics/GraphicsSpacecraft.h
         src/game/main.cpp
+	src/game/types.h
         src/providers/GameProvider.cpp
         src/providers/GameProvider.h
         src/services/ConfigurationHandler.cpp

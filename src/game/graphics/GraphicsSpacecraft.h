@@ -3,7 +3,7 @@
 
 #include "Graphics.h"
 
-class GraphicsSpacecraft: public Graphics  {
+class GraphicsSpacecraft{
 
     public:
     GraphicsSpacecraft();

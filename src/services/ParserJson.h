@@ -4,8 +4,12 @@
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
+#include <string>
+#include <vector>
 #include "nlohmann/json.hpp"
 #include "Logger.h"
+#include "../game/models/Map.h"
+#include "../game/types.h"
 
 #define DEFAULT_CONFIGURATION "../default/ConfigurationDefault.json"
 #define DEFAULT_LOG_LEVEL "INFO"
@@ -18,23 +22,6 @@
 using namespace std;
 using json = nlohmann::json;
 
-typedef struct {
-    string type;
-    unsigned int quantity;
-    string sprite;
-} Enemy_t;
-
-typedef struct {
-    string layer1;
-    string layer2;
-    string layer3;
-} Stage_t;
-
-typedef struct {
-    Stage_t stage_;
-    vector<Enemy_t> enemies_;
-} Level_t;
-
 //Encargado de manejar el parseo de JSON
 
 class ParserJson {
@@ -43,13 +30,13 @@ class ParserJson {
         json jsonConfiguration;
 
         ifstream loadFile(const string &pathFile, string valueDefault);
-        vector<Enemy_t> getEnemies(json jsonEnemies, string numberLevel);
+        vector<enemy_t> getEnemies(json jsonEnemies, string numberLevel);
 
     public:
         ParserJson();
         ~ParserJson();
 
-        void loadLevelsData(vector<Level_t> *levelData);
+        void loadLevelsData(); //vector<Level_t> *levelData
         bool loadConfiguration(const string &pathFileConfiguration);
 
         void setLogLevel();

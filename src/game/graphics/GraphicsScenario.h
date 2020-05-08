@@ -1,16 +1,19 @@
-#ifndef _GRAPHICSSCENARIO_H_
-#define _GRAPHICSSCENARIO_H_
+#ifndef _GRAPHICS_SCENARIO_H_
+#define _GRAPHICS_SCENARIO_H_
 
-#include "Graphics.h"
+class Sprite;
+
 #include "../../providers/GameProvider.h"
+#include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "../../game/models/Speed.h"
 #include "../../game/models/Position.h"
+#include "../../game/models/Sprite.h"
 #include <vector>
+#include "../types.h"
+#include "Graphics.h"
 
-using namespace std;
-
-class GraphicsScenario: public Graphics {
+class GraphicsScenario {
     private:
     //size_t level_;
     //Asumo que respetan el orden
@@ -19,7 +22,7 @@ class GraphicsScenario: public Graphics {
     vector<Position *> layersPositions_;
 
     public:
-    GraphicsScenario(LEVEL_NUMBER level);
+    GraphicsScenario(level_t level);
     //~GraphicsScenario();
     void update(); //Add override later
 };

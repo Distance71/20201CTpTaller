@@ -1,18 +1,19 @@
-#ifndef _MOVEMENTHANDLER_H_
-#define _MOVEMENTHANDLER_H_
-#include "Map.h"
+#ifndef _MOVEMENT_HANDLER_H_
+#define _MOVEMENT_HANDLER_H_
+
 #include "Action.h"
+#include <string>
 
 // Se encarga del manejo interno del state de posicion
 
-class MovementHandler : Action{
+class MovementHandler : virtual Action{
 
 	private:
-	    int id;
+    int id;
 
     public:
     MovementHandler(int id_map_element);
-    void move_in_direction(string movement_instruction); 
+    void move_in_direction(string movement_instruction);
 };
 
 #endif

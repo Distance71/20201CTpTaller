@@ -1,6 +1,4 @@
 #include "MovementHandler.h"
-#include "Map.h"
-#include <string>
 
 MovementHandler::MovementHandler(int id_map_element){
 	id = id_map_element;
