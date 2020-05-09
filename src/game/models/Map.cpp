@@ -11,7 +11,8 @@ Map::Map() {
     return mapElement;
 }*/
 
-void Map::addStage(Stage *stage){
+void Map::addStage(size_t quantityEnemies){ 
+    Stage *stage = new Stage();
     if(!stage) {
         Logger::getInstance()->log(ERROR, "Se intentó agregar un stage invalido");
         return;

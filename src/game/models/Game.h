@@ -12,6 +12,9 @@
 #include <chrono>
 #include <string>
 
+#define LEVEL_ONE_N_STAGES 5
+#define LEVEL_TWO_N_STAGES 4
+
 // Maneja la secuencia logica del juego
 
 class Game {
@@ -26,6 +29,7 @@ class Game {
     void updateGraphics();
     void clearScene();
     void initializeGraphics();
+    void Game::initializeLevelOne();
 
     public:
     Game();

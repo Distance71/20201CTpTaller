@@ -30,7 +30,7 @@ class Map {
         int move_in_direction(string movement_instruction,int id);
         //vector<MapElement* > getElements();
         // MapElement* createMapElement();
-        void addStage(Stage* Stage);
+        void addStage(size_t quantityEnemies);
         void update();
 };
 

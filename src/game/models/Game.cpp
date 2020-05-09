@@ -62,67 +62,25 @@ void Game::initializeGraphics() {
     GameProvider::setWindow(window_);
 }
 
+//Returns true if normal login
 bool Game::login() {
-    bool quit=false;
-    SDL_Window* window= GameProvider::getWindow();
+    SDL_Window* window = GameProvider::getWindow();
     SDL_Surface* surface = SDL_GetWindowSurface(window);
-    SDL_Surface* loginscreen = NULL;
-    loginscreen = IMG_Load( "assets/LoginScreen/loginscreen.png");
+    SDL_Surface* loginscreen = IMG_Load( "assets/LoginScreen/loginscreen.png");
     if (!loginscreen){
         Logger::getInstance()->log(ERROR, string("Error al cargar el menu principal: ").append(IMG_GetError()));
         GameProvider::setErrorStatus("Error al cargar el menu principal" );
-        return true;
+        return false;
     }
-    SDL_BlitSurface( loginscreen, NULL, surface, NULL );
+    SDL_BlitSurface(loginscreen, NULL, surface, NULL);
     SDL_UpdateWindowSurface(window);
-    while (true){
+    while (GameProvider::getStatus().normalStatus){
         processEvent();
         SDL_Event e = GameProvider::getLastEvent();
-        if(e.type == SDL_KEYDOWN & e.key.keysym.sym == SDLK_RETURN)
-            return quit;
+        if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
+            return true;
     }
 }
-
-    /*LOGIN ANTERIOR:
-bool Game::login() {
-    bool loginDone = false, exit = false;
-    
-    string srcSpriteLoginScreen = "assets/LoginScreen/loginScreen.png"; //services -> configurationHandler->get('/loginScreen')
-    size_t height = GameProvider::getHeight();
-    size_t width = GameProvider::getWidth();
-
-    
-
-    Logger::getInstance()->log(INFO, "Se ha entrado en la pantalla de login");
-
-    auto *spriteLoginScreen = new SpriteGenerator(srcSpriteLoginScreen);
-    SDL_Rect spriteLoginPositionInScreen = {0, 0, (int) width, (int) height};
-    
-    
-    //Note: Should write an only method
-    SDL_RenderCopy(renderer_, spriteLoginScreen->getTexture(), NULL, &spriteLoginPositionInScreen);
-    GameProvider::setRenderer(renderer_);
-
-    updateGraphics();
-    
-    while(!loginDone && GameProvider::getStatus().normalStatus) {
-        SDL_Event event;
-        if(SDL_PollEvent(&event) && (event.type == SDL_QUIT)) {
-            GameProvider::setNormalExitStatus();
-            Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego");        
-        }
-        
-        switch (event.key.keysym.sym) {
-            case SDLK_RETURN:
-                loginDone = true;
-            default:;
-        }
-    }
-
-    Logger::getInstance()->log(DEBUG, "Se ha pasado la pantalla de login");
-    
-    return loginDone;
-}*/
 
 // GraphicsScenario Game::play_level(int stage){
 //     /* Cuando se incia el nivel lo primero que se hace es crear el mapa
@@ -132,44 +90,23 @@ bool Game::login() {
 //     // return graphics_scenario;
 // }
 
+void Game::initializeLevelOne(){
+    
+    for(size_t i = 0; i < LEVEL_ONE_N_STAGES; i++)
+    map_->addStage(); //params: quantEnemies, qu
+}
 
 
-void Game::run(){
-    /*Luego de inicializados SDL y creados la ventana y el renderer
+/*Luego de inicializados SDL y creados la ventana y el renderer
     se llama al metodo run. EL metodo run tendrá el ciclo principal
     del juego.*/
+void Game::run(){
+    bool normalLogin = login(); //Menu de inicio
+    if (!normalLogin || !GameProvider::getStatus().normalStatus)
+        return;
 
-    /* En primer lugar se muestra el menu principal hasta el que usuario
-    desee comenzar la partida*/
-    bool quit = login();
-    /* Si entramos  es porque el usuario presiono enter e iniciamos el
-    ciclo principal del juego. sino entramos es porque el usuario decidió cerrar el juego*/
-    //if (!quit){
-        int number_of_stages = 1; /* obenerlo de la configuración despues*/
-        int stage = 0;
-        /* si en algun momento se cerro el juego quit pasara a ser true*/
-        GraphicsScenario graphicsScenario(LEVEL_ONE);
-        //while (!quit){
-            // stage += 1;
-            // if (stage > number_of_stages){
-            //     /* aca podemos preguntar si quiere volver a jugar*/
-            //     quit = true;
-            // }
-            
-            //GraphicsScenario graphics_scenario = play_level(stage);
-          //  graphics_scenario.update();
-            /*si completa el nivel pasamos al siguiente a menos que no haya más*/
-        //}
-        /* Se salio del while porque el usuario decidió cerrar el juego
-        o lo terminó y no quiere volver a jugar*/
-    //}
-//}
-   
-    /*if(!GameProvider::getStatus().normalStatus || !login())
-        return;*/
-
-    //  double previous = time(NULL);
-    //double lag = 0;
+    // //int number_of_stages = 1; /* obenerlo de la configuración despues*/
+    // GraphicsScenario graphicsScenario(LEVEL_ONE);
 
     double elaptedTimeMS = GameProvider::getElaptedTimeFPS(); 
 
@@ -211,7 +148,7 @@ void Game::processEvent() {
 void Game::updateState() {
     //graphicsScenario.update();
 
-    map_->update();
+    //map_->update();
 
     // for (auto element : mapElements) {
         
