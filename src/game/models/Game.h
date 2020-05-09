@@ -29,7 +29,7 @@ class Game {
     void updateGraphics();
     void clearScene();
     void initializeGraphics();
-    void Game::initializeLevelOne();
+    void initializeLevelOne();
 
     public:
     Game();

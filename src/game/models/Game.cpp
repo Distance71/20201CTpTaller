@@ -92,8 +92,8 @@ bool Game::login() {
 
 void Game::initializeLevelOne(){
     
-    for(size_t i = 0; i < LEVEL_ONE_N_STAGES; i++)
-    map_->addStage(); //params: quantEnemies, qu
+    //for(size_t i = 0; i < LEVEL_ONE_N_STAGES; i++)
+    //map_->addStage(); //params: quantEnemies, qu
 }
 
 

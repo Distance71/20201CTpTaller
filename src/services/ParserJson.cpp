@@ -45,7 +45,7 @@ bool ParserJson::loadConfiguration(const string &pathFileConfiguration){
 
 void ParserJson::loadLevelsData(vector<levelContent_t> *levelData){
 
-    // json jsonLevels;
+    json jsonLevels;
 
     // Logger::getInstance()->log(DEBUG, "Se comienza a cargan la informacion de los niveles del archivo de configuracion.");
 
@@ -87,9 +87,7 @@ void ParserJson::loadLevelsData(vector<levelContent_t> *levelData){
     //     }
 
     //     levelData->push_back(level);
-    // }
-
-    // return;
+    }
 };
 
 vector<enemy_t> ParserJson::getEnemies(json jsonEnemies, string numberLevel){
