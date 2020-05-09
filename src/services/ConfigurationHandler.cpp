@@ -7,7 +7,7 @@ ConfigurationHandler::ConfigurationHandler(){
 
 ConfigurationHandler::~ConfigurationHandler(){
     delete this->parserJson;
-    delete this->levelData;
+    //delete this->levelData;
 }
 
 bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfiguration){
@@ -15,7 +15,7 @@ bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfigura
 }
 
 void ConfigurationHandler::initializeData(){
-    this->parserJson->loadLevelsData(this->levelData);
+    //this->parserJson->loadLevelsData(this->levelData);
 
     /*
     Como se iteraria:

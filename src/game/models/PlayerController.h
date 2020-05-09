@@ -1,9 +1,12 @@
-#ifndef _PLAYERCONTROLLER_H_
-#define _PLAYERCONTROLLER_H_
+#ifndef _PLAYER_CONTROLLER_H_
+#define _PLAYER_CONTROLLER_H_
 
 #include "MovementHandler.h"
+#include "SDL2/SDL.h"
 
-class PlayerController : public MovementHandler{
+class MovementHandler;
+
+class PlayerController: public MovementHandler{
     
 	public:
 		PlayerController(int id);

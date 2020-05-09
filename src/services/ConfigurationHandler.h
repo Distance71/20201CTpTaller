@@ -3,8 +3,11 @@
 
 #include "ParserJson.h"
 #include "../game/type.h"
+#include <vector>
 
 using namespace std;
+
+class ParserJson;
 
 //Encargado de manejar la configuracion inicial del programa
 

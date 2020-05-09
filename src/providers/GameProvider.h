@@ -3,9 +3,12 @@
 
 //Libraries inclusion
 
+class ConfigurationHandler;
+
 #include "../services/Logger.h"
 #include "../services/ConfigurationHandler.h"
 #include "SDL2/SDL.h"
+#include <string>
 #include <unordered_map>
 
 //Consts: should go in a config file

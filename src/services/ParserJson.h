@@ -4,9 +4,16 @@
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
+#include <string>
+#include <vector>
 #include "nlohmann/json.hpp"
 #include "Logger.h"
+<<<<<<< HEAD
 #include "../game/type.h"
+=======
+#include "../game/models/Map.h"
+#include "../game/types.h"
+>>>>>>> branch_temporal_no_comp
 
 #define DEFAULT_CONFIGURATION "../default/ConfigurationDefault.json"
 #define DEFAULT_LOG_LEVEL "INFO"
@@ -33,7 +40,11 @@ class ParserJson {
         ParserJson();
         ~ParserJson();
 
+<<<<<<< HEAD
         void loadLevelsData(vector<levelContent_t> *levelData);
+=======
+        void loadLevelsData(); //vector<Level_t> *levelData
+>>>>>>> branch_temporal_no_comp
         bool loadConfiguration(const string &pathFileConfiguration);
 
         void setLogLevel();

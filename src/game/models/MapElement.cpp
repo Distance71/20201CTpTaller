@@ -1,20 +1,12 @@
 #include "MapElement.h"
 
 
-MapElement::MapElement() {
+MapElement::MapElement(elementType_t type) {
 }
 
 MapElement::~MapElement() {
 
 }
-
-//Personaje::addAction("controller", Controller); -> 
-// controller: HandlerEvents
-//             IAEnemy
-//Personaje::addState("position", Position);
-//Personaje::addState("orientation", Orientation);
-//Personaje::addAction("graphics", Graphics);
-
 
 vector<Action *> MapElement::getActions() {
     vector<Action *> actions(actions_.size());
@@ -36,4 +28,10 @@ void MapElement::setIdElement(IdElement oneIdElement){
 
 IdElement MapElement::getIdElement(){
     return this->id_;
+}
+
+void MapElement::update(){
+    for(auto action : actions_){
+        action.second->update(this->states_); //execute action
+    }
 }

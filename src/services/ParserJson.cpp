@@ -45,51 +45,51 @@ bool ParserJson::loadConfiguration(const string &pathFileConfiguration){
 
 void ParserJson::loadLevelsData(vector<levelContent_t> *levelData){
 
-    json jsonLevels;
+    // json jsonLevels;
 
-    Logger::getInstance()->log(DEBUG, "Se comienza a cargan la informacion de los niveles del archivo de configuracion.");
+    // Logger::getInstance()->log(DEBUG, "Se comienza a cargan la informacion de los niveles del archivo de configuracion.");
 
-    if (!jsonConfiguration["level"].is_array()){
-        Logger::getInstance()->log(ERROR, "No se pudo leer la informacion de los niveles del archivo de configuracion.");
-        return;    
-    } 
+    // if (!jsonConfiguration["level"].is_array()){
+    //     Logger::getInstance()->log(ERROR, "No se pudo leer la informacion de los niveles del archivo de configuracion.");
+    //     return;    
+    // } 
 
-    jsonLevels = jsonConfiguration["level"].get<json>();
+    // jsonLevels = jsonConfiguration["level"].get<json>();
 
     for (auto& oneLevel: json::iterator_wrapper(jsonLevels)){
         levelContent_t level;
         json jsonEnemies;
         unsigned int numberLevel = atoi(oneLevel.key().c_str());
 
-        if (oneLevel.value()["layer1"].is_string()){
-            level.stage_.layer1 = oneLevel.value()["layer1"].get<string>();
-        } else {
-            Logger::getInstance()->log(ERROR, "El layer1 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
-        }
+    //     if (oneLevel.value()["layer1"].is_string()){
+    //         level.stage_.layer1 = oneLevel.value()["layer1"].get<string>();
+    //     } else {
+    //         Logger::getInstance()->log(ERROR, "El layer1 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
+    //     }
 
-        if (oneLevel.value()["layer2"].is_string()){
-            level.stage_.layer2 = oneLevel.value()["layer2"].get<string>();
-        } else {
-            Logger::getInstance()->log(ERROR, "El layer2 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
-        }
+    //     if (oneLevel.value()["layer2"].is_string()){
+    //         level.stage_.layer2 = oneLevel.value()["layer2"].get<string>();
+    //     } else {
+    //         Logger::getInstance()->log(ERROR, "El layer2 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
+    //     }
 
-        if (oneLevel.value()["layer3"].is_string()){
-            level.stage_.layer3 = oneLevel.value()["layer3"].get<string>();
-        } else {
-            Logger::getInstance()->log(ERROR, "El layer3 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
-        }
+    //     if (oneLevel.value()["layer3"].is_string()){
+    //         level.stage_.layer3 = oneLevel.value()["layer3"].get<string>();
+    //     } else {
+    //         Logger::getInstance()->log(ERROR, "El layer3 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
+    //     }
 
-        if (oneLevel.value()["enemies"].is_array()){
-            jsonEnemies = oneLevel.value()["enemies"].get<json>();
-            level.enemies_ = getEnemies(jsonEnemies, oneLevel.key());
-        } else {
-            Logger::getInstance()->log(ERROR, "Los enemigos para el nivel " + oneLevel.key() + " no se encontraron en el archivo de configuracion.");
-        }
+    //     if (oneLevel.value()["enemies"].is_array()){
+    //         jsonEnemies = oneLevel.value()["enemies"].get<json>();
+    //         level.enemies_ = getEnemies(jsonEnemies, oneLevel.key());
+    //     } else {
+    //         Logger::getInstance()->log(ERROR, "Los enemigos para el nivel " + oneLevel.key() + " no se encontraron en el archivo de configuracion.");
+    //     }
 
-        levelData->push_back(level);
-    }
+    //     levelData->push_back(level);
+    // }
 
-    return;
+    // return;
 };
 
 vector<enemy_t> ParserJson::getEnemies(json jsonEnemies, string numberLevel){
