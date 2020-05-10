@@ -82,35 +82,68 @@ bool Game::login() {
     }
 }
 
-// GraphicsScenario Game::play_level(int stage){
-//     /* Cuando se incia el nivel lo primero que se hace es crear el mapa
-//     para ese nivel*/
-//     //Map map_;
-//     // static GraphicsScenario graphics_scenario(LEVEL_ONE);
-//     // return graphics_scenario;
-// }
-
-void Game::initializeLevelOne(){
-    
-    //for(size_t i = 0; i < LEVEL_ONE_N_STAGES; i++)
-    //map_->addStage(); //params: quantEnemies, qu
-}
-
-
 /*Luego de inicializados SDL y creados la ventana y el renderer
     se llama al metodo run. EL metodo run tendrá el ciclo principal
     del juego.*/
-void Game::run(){
+void Game::run() {
     bool normalLogin = login(); //Menu de inicio
     if (!normalLogin || !GameProvider::getStatus().normalStatus)
         return;
 
-    // //int number_of_stages = 1; /* obenerlo de la configuración despues*/
-    // GraphicsScenario graphicsScenario(LEVEL_ONE);
+    initializeGameParams();
 
-    double elaptedTimeMS = GameProvider::getElaptedTimeFPS(); 
+    //auto gameSettings = GameProvider::getConfig()->getGameSettings();
+    //size_t quantityLevels = gameSettings.size(); //See later this, syntax
+    //HOTFIX
+    size_t quantityLevels = 1;
 
-    while(GameProvider::getStatus().normalStatus) {
+    vector<Level *> levels = map_->getLevels();
+
+    //Make a convertion with actual step to integer
+
+    for(size_t i = 0; i < quantityLevels; i++){
+        //runLevel(i, levels[i]);
+    }
+}
+
+void Game::initializeGameParams(){
+    //auto gameSettings = GameProvider::getConfig()->getGameSettings();
+
+    //map_ = new Map(gameSettings);
+}
+
+void Game::runLevel(currentStep_t actualStep, Level *level){
+    //auto gameSettings = GameProvider::getConfig()->getGameSettings();
+    //size_t quantityStages = gameSettings[actualStep.level].stagesParams.size();
+    //HOTFIX
+    size_t quantityStages = 1;
+    auto stages = level->getStages();
+    
+    //Make a convertion with actual step to integer
+
+    for(size_t i = 0; i < quantityStages; i++){
+        //runStage(i, stages[i]);
+    }
+}
+
+void Game::runStage(currentStep_t actualStep, Stage *stage){
+    //auto gameSettings = GameProvider::getConfig()->getGameSettings();
+    //size_t quantitySteps = gameSettings[actualStep.level][actualStep.step].stepsParams.size();
+    //HOTFIX
+    size_t quantitySteps = 3;
+    vector<Step *> steps = stage->getSteps();
+
+    //Make a convertion with actual step to integer
+
+    for(size_t i = 0; i < quantitySteps; i++){
+        //runStep(i, steps[i]);
+    }
+}
+
+void Game::runStep(currentStep_t actualStep){
+    double elaptedTimeMS = GameProvider::getElaptedTimeFPS();
+
+    while(GameProvider::getStatus().normalStatus){ // || funcionFinStep) {
         auto begin = chrono::high_resolution_clock::now();
         auto end = chrono::high_resolution_clock::now();   
         auto dur = end - begin;
@@ -120,7 +153,7 @@ void Game::run(){
         processEvent();
 
         while(0 >= (ms - elaptedTimeMS)) {
-            updateState();
+            updateState(actualStep);
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
@@ -145,14 +178,8 @@ void Game::processEvent() {
     GameProvider::setLastEvent(lastEvent);
 }
 
-void Game::updateState() {
-    //graphicsScenario.update();
-
-    //map_->update();
-
-    // for (auto element : mapElements) {
-        
-    // }
+void Game::updateState(currentStep_t actualStep) {
+    map_->update(actualStep);
 }
 
 void Game::updateGraphics() {

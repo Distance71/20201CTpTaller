@@ -6,6 +6,16 @@
 
 using namespace std;
 
+typedef enum level {
+    LEVEL_ONE = 0,
+    LEVEL_TWO = 1,
+} level_t;
+
+typedef enum stage {
+    STAGE_ONE = 0,
+    STAGE_TWO = 1,
+} stage_t;
+
 typedef struct {
     string type;
     unsigned int quantity;
@@ -16,12 +26,12 @@ typedef struct {
     string layer1;
     string layer2;
     string layer3;
-} stage_t;
+} stageSource_t;
 
 typedef struct {
-    stage_t stage_;
-    vector<enemy_t> enemies_;
-} levelContent_t;
+    stage_t stage;
+    vector<enemy_t> enemies;
+} stepContent_t;
 
 typedef enum {
     FRONT,
@@ -42,8 +52,28 @@ typedef enum {
 
 typedef size_t IdElement;
 
-typedef enum LEVEL_NUMBER {
-    LEVEL_ONE = 0
-} level_t;
+typedef struct {
+    level_t level;
+    stage_t stage;
+    size_t step;
+} currentStep_t;
+
+typedef struct {
+    size_t quantEnemiesType1; //Refactor this later
+    size_t quantEnemiesType2;
+} stepParams_t;
+
+typedef struct {
+    stageSource_t backgroundSources;
+    vector<stepParams_t> stepsParams;
+} stageParams_t;
+
+typedef struct {
+    vector<stageParams_t> stagesParams;
+} levelParams_t;
+
+typedef struct {
+    vector<levelParams_t> levelParams;
+} gameParams_t;
 
 #endif

@@ -12,9 +12,6 @@
 #include <chrono>
 #include <string>
 
-#define LEVEL_ONE_N_STAGES 5
-#define LEVEL_TWO_N_STAGES 4
-
 // Maneja la secuencia logica del juego
 
 class Game {
@@ -22,14 +19,18 @@ class Game {
     private:
     SDL_Window *window_ = nullptr;
     SDL_Renderer *renderer_ = nullptr;
-    Map * map_;
+    Map *map_;
+
+    void initializeGameParams();
+    void runLevel(currentStep_t actualStep, Level *level);
+    void runStage(currentStep_t actualStep, Stage *stage);
+    void runStep(currentStep_t actualStep);
 
     void processEvent();
-    void updateState();
+    void updateState(currentStep_t actualStep);
     void updateGraphics();
     void clearScene();
     void initializeGraphics();
-    void initializeLevelOne();
 
     public:
     Game();

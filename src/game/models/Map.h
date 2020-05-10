@@ -14,40 +14,72 @@
 #include "../graphics/GraphicsScenario.h"
 #include "MovementHandler.h"
 #include "PlayerController.h"
+#include "../types.h"
 
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 
+class Step;
 class Stage;
+class Level;
 
 class Map {
     private:
+    vector<Level *> levels_;
+    //void clearMap();
+
+    public:
+    Map();
+    Map(gameParams_t &gameSettings);
+    void update(currentStep_t currentStep);
+    void addLevel(Level *level);
+    vector<Level *> getLevels();
+};
+
+class Level: public Map {
+    private:
     vector<Stage *> stages_;
+    //void clearStage();
+
+    public:
+    Level();
+    Level(levelParams_t &params);
+    void addStage(Stage *stage);
+    vector<Stage *> getStages();
+    void update(currentStep_t currentStep);
+};
+
+class Stage: public Level {
+    private:
+    vector<Step *> steps_;
     //IdElement lastId_ = 0;
     void clearMap();
 
     public:
-        Map();
-        int move_in_direction(string movement_instruction,int id);
-        //vector<MapElement* > getElements();
-        // MapElement* createMapElement();
-        void addStage(size_t quantityEnemies);
-        void update();
+    Stage();
+    Stage(stageParams_t &params);
+    // MapElement* createMapElement();
+    // void createBackground(stageSource_t backgroundSource);
+    void addStep(Step *step);
+    vector<Step *> getSteps();
+    void update(currentStep_t currentStep);
 };
 
-class Stage: public Map {
+class Step: public Stage {
     private:
     unordered_map<IdElement, MapElement*> mapElements_;
     IdElement lastId_ = 0;
 
     public:
-    // Stage();
-    //~Stage();
+    Step();
+    Step(stepParams_t params);
+    //~Step();
 
     void update();
-    void createPlayer();
-    void createEnemy();
-    void createBackground(level_t level);
-    void killMapElement(IdElement id);
+    // int move_in_direction(string movement_instruction,int id);
+    // void createPlayer();
+    // void createEnemy();
+    // //void createBackground(level_t level);
+    // void killMapElement(IdElement id);
 };
 
 #endif

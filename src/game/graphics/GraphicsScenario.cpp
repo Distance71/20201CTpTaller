@@ -1,26 +1,26 @@
 #include "GraphicsScenario.h"
 
-GraphicsScenario::GraphicsScenario(level_t level){
+GraphicsScenario::GraphicsScenario(stageSource_t background){
     /*Creo las variables donde se cargaran  las rutas de las imagenes dependiendo el nivel*/
     /*Leo las imagenes segun el nivel*/
-    string layer1Path= "";
-    string layer2Path = "";
-    string layer3Path = "";
-    stage_t stageData;
+    string layer1Path= background.layer1;
+    string layer2Path = background.layer2;
+    string layer3Path = background.layer3;
+    stageSource_t stageData;
 
-    switch(level){
-        case LEVEL_ONE:
-            stageData = GameProvider::getConfig()->getStageData(LEVEL_ONE);
-            layer1Path = stageData.layer1;
-            layer2Path = stageData.layer2;
-            layer3Path = stageData.layer3;
-            break;
+    // switch(level){
+    //     case LEVEL_ONE:
+    //         
+    //         layer1Path = stageData.layer1;
+    //         layer2Path = stageData.layer2;
+    //         layer3Path = stageData.layer3;
+    //         break;
         
-        default:
-            Logger::getInstance()->log(ERROR, string("No existe el nivel seleccionado. No se puedo acceder a las rutas de las capas del escenario"));
-            GameProvider::setErrorStatus("No existe el nivel seleccionado. No se pudo acceder a las rutas de las capas del escenario" );
-            return;
-    }   
+    //     default:
+    //         Logger::getInstance()->log(ERROR, string("No existe el nivel seleccionado. No se puedo acceder a las rutas de las capas del escenario"));
+    //         GameProvider::setErrorStatus("No existe el nivel seleccionado. No se pudo acceder a las rutas de las capas del escenario" );
+    //         return;
+    // }   
 
     sprites_.push_back(new Sprite(layer1Path));
     sprites_.push_back(new Sprite(layer2Path));

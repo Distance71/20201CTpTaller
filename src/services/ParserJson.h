@@ -8,7 +8,7 @@
 #include <vector>
 #include "nlohmann/json.hpp"
 #include "Logger.h"
-#include "../game/type.h"
+#include "../game/types.h"
 #include "../game/models/Map.h"
 
 #define DEFAULT_CONFIGURATION "../default/ConfigurationDefault.json"
@@ -36,7 +36,7 @@ class ParserJson {
         ParserJson();
         ~ParserJson();
 
-        void loadLevelsData(vector<levelContent_t> *levelData);
+        void loadLevelsData(vector<stepContent_t> *levelData);
         bool loadConfiguration(const string &pathFileConfiguration);
 
         void setLogLevel();

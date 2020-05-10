@@ -22,7 +22,7 @@ class GraphicsScenario {
     vector<Position *> layersPositions_;
 
     public:
-    GraphicsScenario(level_t level);
+    GraphicsScenario(stageSource_t stageSource);
     //~GraphicsScenario();
     void update(); //Add override later
 };

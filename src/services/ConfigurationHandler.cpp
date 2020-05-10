@@ -2,7 +2,7 @@
 
 ConfigurationHandler::ConfigurationHandler(){
     this->parserJson = new ParserJson();
-    this->levelData = new vector<levelContent_t>();
+    this->levelData = new vector<stepContent_t>();
 }
 
 ConfigurationHandler::~ConfigurationHandler(){
@@ -35,6 +35,6 @@ void ConfigurationHandler::setLogLevel(){
     this->parserJson->setLogLevel();
 }
 
-stage_t ConfigurationHandler::getStageData(int oneLevel){
-    return this->levelData->at(oneLevel).stage_;
+stageSource_t ConfigurationHandler::getStageData(int oneLevel){
+    //return this->levelData->at(oneLevel).stage;
 }
