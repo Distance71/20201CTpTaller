@@ -178,6 +178,19 @@ void ConfigurationHandler::setLogLevel(){
     Logger::getInstance()->log(INFO, "Se settea nivel del Logger desde el archivo de configuracion.");
 }
 
-stageSource_t ConfigurationHandler::getStageData(int oneLevel){
-    //return this->levelData->at(oneLevel).stage;
+stageSource_t ConfigurationHandler::getSourcesForStage(int oneLevel, int oneStage){
+
+    stageSource_t stageSource;
+
+    if (oneLevel >= this->gameData.levelParams.size()){
+        Logger::getInstance()->log(ERROR, "Se quiere acceder al stageSource de un nivel invalido. Level: " + to_string(oneLevel));
+        return stageSource;
+    }
+    
+    if (oneStage >= this->gameData.levelParams[oneLevel].stagesParams.size()){
+        Logger::getInstance()->log(ERROR, "Se quiere acceder al stageSource de un stage invalido. Level: " + to_string(oneLevel) + " - Stage: " + to_string(oneStage));
+        return stageSource;
+    }
+
+    return this->gameData.levelParams[oneLevel].stagesParams[oneStage].backgroundSources;
 }

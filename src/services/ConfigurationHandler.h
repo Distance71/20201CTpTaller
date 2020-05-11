@@ -44,7 +44,7 @@ class ConfigurationHandler {
         void initializeData();
         void setLogLevel();
 
-        stageSource_t getStageData(int oneLevel);
+        stageSource_t getSourcesForStage(int oneLevel, int oneStage);
 };
 
 
