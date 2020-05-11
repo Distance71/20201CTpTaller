@@ -35,11 +35,12 @@ int main(int argc, char *args[]) {
     }
 
     Logger::getInstance()->log(INFO, "Juego iniciado");
+
     Game game;
 
-    game.run();
+    //game.run();
 
-    game.~Game();
+    //game.~Game();
     
     //GameProvider::getConfig()->~ConfigurationHandler();
 
