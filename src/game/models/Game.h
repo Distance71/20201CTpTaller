@@ -12,6 +12,9 @@
 #include <chrono>
 #include <string>
 
+//para probar
+#include "MapElement.h"
+
 // Maneja la secuencia logica del juego
 
 class Game {

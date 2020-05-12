@@ -8,6 +8,7 @@
 #include "State.h"
 #include "Action.h"
 #include "../types.h"
+#include "../graphics/GraphicsMapElement.h"
 
 using namespace std;
 
@@ -24,8 +25,10 @@ class MapElement {
         
 
     public:
-        MapElement(elementType_t type);
+        MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed);
         ~MapElement();
+       
+       
         template<typename T> void addState(const string name, T *t);
         template<typename T> void addAction(const string name, T *t);
         template<typename T> T* getState(const string name);

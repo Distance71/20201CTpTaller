@@ -25,6 +25,7 @@ class GraphicsScenario {
     GraphicsScenario(stageSource_t stageSource);
     //~GraphicsScenario();
     void update(); //Add override later
+    
 };
 
 #endif

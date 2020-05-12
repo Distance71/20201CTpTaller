@@ -3,13 +3,12 @@
 
 #include "MovementHandler.h"
 #include "SDL2/SDL.h"
+#include "MapElement.h"
 
-class MovementHandler;
-
-class PlayerController: public MovementHandler{
+class PlayerController{
     
 	public:
-		PlayerController(int id);
+		PlayerController(Position* position, Speed* speed);
 		int detect_event();
 };
 

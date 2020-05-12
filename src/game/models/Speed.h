@@ -8,8 +8,7 @@ class Speed: virtual State {
     int x, y;
 
     public:
-    Speed();
-    Speed(int x, int y);
+    Speed(int x_speed,int y_speed);
     int getXSpeed();
     int getYSpeed();
     void setXSpeed(int x);

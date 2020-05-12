@@ -16,15 +16,22 @@
 #include "PlayerController.h"
 #include "../types.h"
 
-// Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 
+//Para probar
+#include "Speed.h"
+#include "Position.h"
+#include "Sprite.h"
+#include "../graphics/GraphicsMapElement.h"
+
+// Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
+class MapElement;
 class Step;
 class Stage;
 class Level;
 
 class Map {
     private:
-    vector<Level *> levels_;
+    vector <Level *> levels_;
     //void clearMap();
 
     public:

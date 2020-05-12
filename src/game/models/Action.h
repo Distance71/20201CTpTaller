@@ -9,13 +9,15 @@ using namespace std;
 
 // Se encarga del manejo interno del state de posicion
 
-class Action {
+class  Action {
 
     public:
     Action();
+    virtual void update(unordered_map<string, State *> states_);
     //~Action();
-
-    void update(unordered_map<string, State *> states_);
+    
+    private:
+    
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "Map.h"
-
 Map::Map(){
     //Necesitaba crearlo para compilar   
 }

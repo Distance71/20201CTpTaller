@@ -91,19 +91,47 @@ void Game::run() {
         return;
 
     initializeGameParams();
+    
+    /***  TODO ESTO ES PARA PROBAR NADA MAS */
+    stageSource_t background;
+    background.layer1="assets/Stage/Level1/layer_1.png";
+    background.layer2="assets/Stage/Level1/layer_2.png";
+    background.layer3="assets/Stage/Level1/layer_3.png";
+    GraphicsScenario escenario= GraphicsScenario(background);
+    
+    MapElement element = MapElement(PLAYER,500,500,0,0);
+
+    Position position = Position(500,500);
+    Speed speed = Speed(0,0);
+    Sprite sprite = Sprite("assets/player.png");
+    GraphicsMapElement graficador = GraphicsMapElement(&sprite,&position);
+    
+    
+    while (true){
+        SDL_Event e;
+        while (SDL_PollEvent(&e)){
+            if (e.type==SDL_QUIT){
+                return;
+            }
+        }
+        escenario.update();
+        element.update();
+        //graficador.update();
+        updateGraphics();  
+    }
+
 
     //auto gameSettings = GameProvider::getConfig()->getGameSettings();
     //size_t quantityLevels = gameSettings.size(); //See later this, syntax
     //HOTFIX
-    size_t quantityLevels = 1;
+    //size_t quantityLevels = 1;
 
-    vector<Level *> levels = map_->getLevels();
-
+    //vector<Level *> levels = map_->getLevels();
     //Make a convertion with actual step to integer
 
-    for(size_t i = 0; i < quantityLevels; i++){
+    //for(size_t i = 0; i < quantityLevels; i++){
         //runLevel(i, levels[i]);
-    }
+    //}
 }
 
 void Game::initializeGameParams(){

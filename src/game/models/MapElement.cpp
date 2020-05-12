@@ -1,7 +1,14 @@
 #include "MapElement.h"
 
+MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed){
 
-MapElement::MapElement(elementType_t type) {
+    Position* position =new Position(x_pos,y_pos);
+    Speed* speed = new Speed(x_speed,y_speed);
+    addState("Position", position);
+    addState("Speed", speed);
+    Sprite* sprite =new Sprite("assets/player.png");
+    GraphicsMapElement* graficador = new GraphicsMapElement(sprite,position);
+    addAction("Graphics", graficador);
 }
 
 MapElement::~MapElement() {
@@ -31,7 +38,10 @@ IdElement MapElement::getIdElement(){
 }
 
 void MapElement::update(){
+     /*GraphicsMapElement *graficador = dynamic_cast<GraphicsMapElement*>(actions_.at("Graphics")); 
+     graficador->update(states_);*/
     for(auto action : actions_){
-        action.second->update(this->states_); //execute action
+        action.second->update(states_); 
     }
 }
+

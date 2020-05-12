@@ -45,6 +45,8 @@ add_executable( tp1taller
         src/game/graphics/GraphicsScenario.h
         src/game/graphics/GraphicsSpacecraft.cpp
         src/game/graphics/GraphicsSpacecraft.h
+        src/game/graphics/GraphicsMapElement.h
+        src/game/graphics/GraphicsMapElement.cpp
         src/game/main.cpp
 	src/game/types.h
         src/providers/GameProvider.cpp
