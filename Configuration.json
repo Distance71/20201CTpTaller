@@ -1,43 +1,65 @@
 {
-  "configuracion": {
-  	"log":{
-  		"level": "DEBUG"
-	},
-	"level": [
-		{
-			"layer1": "assets/Stage/Level1/layer_1.png",
-			"layer2": "assets/Stage/Level1/layer_2.png",
-			"layer3": "assets/Stage/Level1/layer_3.png",
-			"enemies": [
-				{
-					"type": "class_1",
-					"quantity": 5,
-					"sprite": ""				  
-				},
-				{
-					"type": "class_2",
-					"quantity": "10",
-					"sprite": ""
-				}
-			]
-		},
-		{
-			"layer1": "nivel 2 - layer 1",
-			"layer2": "nivel 2 - layer 2",
-			"layer3": "nivel 2 - layer 3",
-			"enemies": [
-				{
-					"type": "class_1",
-					"quantity": 50,
-					"sprite": ""		  
-				},
-				{
-					"type": "class_2",
-					"quantity": 12,
-					"sprite": ""
-				}
-			]
-		}
-	] 
+    "configuracion": {
+        "log":{
+            "level": "INFO"
+      },
+      "level": [
+          [
+              {
+                "layer1": "assets/Stage/Level1/layer_1.png",
+                "layer2": "assets/Stage/Level1/layer_2.png",
+                "layer3": "assets/Stage/Level1/layer_3.png",
+                "enemies": [
+                    {
+                        "type": "class_1",
+                        "quantity": "5",
+                        "sprite": ""				  
+                    },
+                    {
+                        "type": 1,
+                        "quantity": "10",
+                        "sprite": ""
+                    }
+                ]
+              },
+              {
+                "layer1": "assets/Stage/Level1/layer_1.png",
+                "layer2": "assets/Stage/Level1/layer_2.png",
+                "layer3": "assets/Stage/Level1/layer_3.png",
+                "enemies": [
+                    {
+                        "type": "class_1",
+                        "quantity": 20,
+                        "sprite": ""				  
+                    },
+                    {
+                        "type": 1,
+                        "quantity": 50,
+                        "sprite": ""
+                    }
+                ]
+              }
+          ],
+          [
+              {
+                "layer1": "assets/Stage/Level2/layer_1.png",
+                "layer2": "assets/Stage/Level2/layer_2.png",
+                "layer3": "assets/Stage/Level2/layer_3.png",
+                "enemies": [
+                    {
+                        "type": 0,
+                        "quantity": 5,
+                        "sprite": ""				  
+                    },
+                    {
+                        "type": 1,
+                        "quantity": "10",
+                        "sprite": ""
+                    }
+                ]
+              }
+          ]
+      ]
+    }
   }
-}
+  

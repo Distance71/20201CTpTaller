@@ -18,109 +18,65 @@ ifstream ParserJson::loadFile(const string &pathFile, string valueDefault){
     return i;
 };
 
-void ParserJson::setLogLevel(){
-
-    string logLevel;
-
-    if (jsonConfiguration["log"]["level"].is_string()){
-        logLevel = jsonConfiguration["log"]["level"].get<string>();        
-        Logger::getInstance()->setLevel(logLevel);
-    } else {      
-        Logger::getInstance()->setLevel(logLevel);
-        Logger::getInstance()->log(ERROR, "Hubo un error al leer el nivel del Log en el archivo de configuracion.");
-    }
-};
-
 bool ParserJson::loadConfiguration(const string &pathFileConfiguration){
     
     ifstream fileConfiguration = loadFile(pathFileConfiguration, DEFAULT_CONFIGURATION);
 
     fileConfiguration >> jsonConfiguration;
-    jsonConfiguration = jsonConfiguration["configuracion"];
 
     fileConfiguration.close(); 
 
     return (!jsonConfiguration.is_null());
 };
 
-void ParserJson::loadLevelsData(vector<stepContent_t> *levelData){
 
-    json jsonLevels;
+int ParserJson::getSizeArray(string pathJson){
 
-    // Logger::getInstance()->log(DEBUG, "Se comienza a cargan la informacion de los niveles del archivo de configuracion.");
+    json::json_pointer jsonPointerPath(pathJson);
 
-    // if (!jsonConfiguration["level"].is_array()){
-    //     Logger::getInstance()->log(ERROR, "No se pudo leer la informacion de los niveles del archivo de configuracion.");
-    //     return;    
-    // } 
-
-    // jsonLevels = jsonConfiguration["level"].get<json>();
-
-    for (auto& oneLevel: json::iterator_wrapper(jsonLevels)){
-        stepContent_t level;
-        json jsonEnemies;
-        unsigned int numberLevel = atoi(oneLevel.key().c_str());
-
-    //     if (oneLevel.value()["layer1"].is_string()){
-    //         level.stage_.layer1 = oneLevel.value()["layer1"].get<string>();
-    //     } else {
-    //         Logger::getInstance()->log(ERROR, "El layer1 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
-    //     }
-
-    //     if (oneLevel.value()["layer2"].is_string()){
-    //         level.stage_.layer2 = oneLevel.value()["layer2"].get<string>();
-    //     } else {
-    //         Logger::getInstance()->log(ERROR, "El layer2 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
-    //     }
-
-    //     if (oneLevel.value()["layer3"].is_string()){
-    //         level.stage_.layer3 = oneLevel.value()["layer3"].get<string>();
-    //     } else {
-    //         Logger::getInstance()->log(ERROR, "El layer3 para el nivel " + oneLevel.key() + " no se encontro en el archivo de configuracion.");
-    //     }
-
-    //     if (oneLevel.value()["enemies"].is_array()){
-    //         jsonEnemies = oneLevel.value()["enemies"].get<json>();
-    //         level.enemies_ = getEnemies(jsonEnemies, oneLevel.key());
-    //     } else {
-    //         Logger::getInstance()->log(ERROR, "Los enemigos para el nivel " + oneLevel.key() + " no se encontraron en el archivo de configuracion.");
-    //     }
-
-    //     levelData->push_back(level);
+    if (!jsonConfiguration[jsonPointerPath].is_array()){
+        if (jsonConfiguration[jsonPointerPath].is_null()){
+            Logger::getInstance()->log(ERROR, "No se encontro la ruta " + jsonPointerPath.to_string() + " en el archivo de configuracion.");
+        } else {
+            Logger::getInstance()->log(ERROR, "Error al leer la ruta " + jsonPointerPath.to_string() + " del archivo de configuracion. Se esperaba un dato del tipo array.");
+        }
+        
+        return -1;
     }
+
+    return jsonConfiguration[jsonPointerPath].size();
 };
 
-vector<enemy_t> ParserJson::getEnemies(json jsonEnemies, string numberLevel){
+string ParserJson::getString(string pathJson){
 
-    vector<enemy_t> dataEnemies;
+    json::json_pointer jsonPointerPath(pathJson);
 
-    for (auto& oneEnemy: json::iterator_wrapper(jsonEnemies)){
-        enemy_t enemy_t;
-        string typeEnemy;
-        unsigned int qunatityEnemy;
-        string pathEnemy;
-
-        if (oneEnemy.value()["type"].is_string()){
-            enemy_t.type = oneEnemy.value()["type"].get<string>();
+    if (!jsonConfiguration[jsonPointerPath].is_string()){
+        if (jsonConfiguration[jsonPointerPath].is_null()){
+            Logger::getInstance()->log(ERROR, "No se encontro la ruta " + jsonPointerPath.to_string() + " en el archivo de configuracion.");
         } else {
-            Logger::getInstance()->log(ERROR, "Error al leer el tipo del enemigo " + oneEnemy.key() + " para el nivel " + numberLevel);
+            Logger::getInstance()->log(ERROR, "Error al leer la ruta " + jsonPointerPath.to_string() + " del archivo de configuracion. Se esperaba un dato del tipo string.");
         }
-
-        if (oneEnemy.value()["quantity"].is_number_unsigned()){
-            enemy_t.quantity = oneEnemy.value()["quantity"].get<unsigned int>();
-        } else {
-            enemy_t.quantity = 0;
-            Logger::getInstance()->log(ERROR, "Error al leer la cantidad del enemigo " + oneEnemy.key() + " para el nivel " + numberLevel);
-        }
-
-        if (oneEnemy.value()["sprite"].is_string()){
-            enemy_t.sprite = oneEnemy.value()["sprite"].get<string>();    
-        } else {
-            Logger::getInstance()->log(ERROR, "Error al leer la ruta del sprite del enemigo " + oneEnemy.key() + " para el nivel " + numberLevel);
-        }  
-
-        dataEnemies.push_back(enemy_t);
+        
+        return "";
     }
 
-    return dataEnemies;
-}
+    return jsonConfiguration[jsonPointerPath].get<string>();
+};
+
+int ParserJson::getUnsignedInt(string pathJson){
+    
+    json::json_pointer jsonPointerPath(pathJson);
+
+    if (!jsonConfiguration[jsonPointerPath].is_number_unsigned()){
+        if (jsonConfiguration[jsonPointerPath].is_null()) {
+            Logger::getInstance()->log(ERROR, "No se encontro la ruta " + jsonPointerPath.to_string() + " en el archivo de configuracion.");
+        } else {
+            Logger::getInstance()->log(ERROR, "Error al leer la ruta " + jsonPointerPath.to_string() + " del archivo de configuracion. Se esperaba un dato del tipo unsigned int.");
+        }
+        
+        return -1;
+    }
+    
+    return jsonConfiguration[jsonPointerPath].get<unsigned int>(); 
+};
