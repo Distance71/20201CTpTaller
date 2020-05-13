@@ -26,6 +26,8 @@ class Sprite {
     Sprite(const string &source);
     ~Sprite();
     SDL_Texture* getTexture();
+    int getTextureWidth();
+    int getTextureHeight();
 };
 
 #endif

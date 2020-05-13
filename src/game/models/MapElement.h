@@ -9,6 +9,8 @@
 #include "Action.h"
 #include "../types.h"
 #include "../graphics/GraphicsMapElement.h"
+#include "PlayerController.h"
+#include "EnemyIA.h"
 
 using namespace std;
 

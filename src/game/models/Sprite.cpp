@@ -22,6 +22,18 @@ SDL_Texture *Sprite::getTexture() {
     return this->texture_;
 }
 
+int Sprite::getTextureWidth(){
+    int width;
+    SDL_QueryTexture(texture_, nullptr, nullptr, &width,NULL);
+    return width;
+}
+
+int Sprite::getTextureHeight(){
+    int height;
+    SDL_QueryTexture(texture_, nullptr, nullptr,NULL,&height);
+    return height;
+}
+
 Sprite::~Sprite(){
     SDL_DestroyTexture(this->texture_);
     texture_ = NULL;

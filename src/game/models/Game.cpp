@@ -98,16 +98,22 @@ void Game::run() {
     background.layer2="assets/Stage/Level1/layer_2.png";
     background.layer3="assets/Stage/Level1/layer_3.png";
     GraphicsScenario escenario= GraphicsScenario(background);
-    
-    MapElement element = MapElement(PLAYER,500,500,0,0);
 
-    Position position = Position(500,500);
-    Speed speed = Speed(0,0);
-    Sprite sprite = Sprite("assets/player.png");
-    GraphicsMapElement graficador = GraphicsMapElement(&sprite,&position);
+
     
-    
+    int screen_widht = GameProvider::getWidth();
+    int screen_height = GameProvider::getHeight();
+
+        
+    MapElement nave= MapElement(PLAYER,500,500,4,4);
+    MapElement enemigo1 = MapElement(ENEMY_1,screen_widht+100,200,2,2);
+    MapElement enemigo2 = MapElement(ENEMY_2,screen_widht+400,screen_height-200,2,2);
+    MapElement enemigo3 = MapElement(ENEMY_1,screen_widht+800,200,2,2);
+    MapElement enemigo4 = MapElement(ENEMY_2,screen_widht+100,screen_height-200,2,2);
+    MapElement enemigo5 = MapElement(ENEMY_1,screen_widht+400,200,2,2);
+    MapElement enemigo6 = MapElement(ENEMY_2,screen_widht+900,screen_height-200,2,2);
     while (true){
+        
         SDL_Event e;
         while (SDL_PollEvent(&e)){
             if (e.type==SDL_QUIT){
@@ -115,8 +121,14 @@ void Game::run() {
             }
         }
         escenario.update();
-        element.update();
-        //graficador.update();
+        nave.update();
+        enemigo1.update();
+        enemigo2.update();
+        enemigo3.update();
+        enemigo4.update();
+        enemigo5.update();
+        enemigo6.update();
+
         updateGraphics();  
     }
 

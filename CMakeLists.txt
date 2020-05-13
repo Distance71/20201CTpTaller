@@ -31,6 +31,8 @@ add_executable( tp1taller
         src/game/models/Orientation.h
 	src/game/models/PlayerController.cpp
 	src/game/models/PlayerController.h
+	src/game/models/EnemyIA.h
+	src/game/models/EnemyIA.cpp
         src/game/models/Position.cpp
         src/game/models/Position.h
 	src/game/models/Speed.cpp

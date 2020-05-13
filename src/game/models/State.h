@@ -5,8 +5,16 @@
 
 class State {
 
+    protected:
+    int x;
+    int y;
+
     public:
-    //State();
+    State(int x_, int y_);
+    virtual int getX();
+    virtual int getY();
+    virtual void setX(int x_);
+    virtual void setY(int y_);
     //~State();
 };
 

@@ -1,4 +1,4 @@
-#ifndef _ORIENTATION_H_
+/*#ifndef _ORIENTATION_H_
 #define _ORIENTATION_H_
 
 #include "State.h"
@@ -15,4 +15,4 @@ class Orientation: virtual State {
     //~Orientation();
 };
 
-#endif
+#endif*/

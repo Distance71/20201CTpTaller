@@ -1,18 +1,35 @@
 #include "MapElement.h"
 
 MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed){
-
     Position* position =new Position(x_pos,y_pos);
     Speed* speed = new Speed(x_speed,y_speed);
     addState("Position", position);
     addState("Speed", speed);
-    Sprite* sprite =new Sprite("assets/player.png");
-    GraphicsMapElement* graficador = new GraphicsMapElement(sprite,position);
-    addAction("Graphics", graficador);
+    
+    if (type == PLAYER){
+        Sprite* sprite =new Sprite("assets/player.png");
+        GraphicsMapElement* graficador = new GraphicsMapElement(sprite);
+        addAction("Graphics", graficador);
+        PlayerController* playercontroller= new PlayerController(sprite);
+        addAction("PlayerController", playercontroller);
+    }   
+    else if(type==ENEMY_1){
+        Sprite* sprite = new Sprite("assets/Enemies/enemigo1.png");
+        GraphicsMapElement* graficador = new GraphicsMapElement(sprite);
+        addAction("Graphics", graficador);
+        EnemyIA* enemyia = new EnemyIA();
+        addAction("EnemyIA", enemyia);
+    }
+    else if(type==ENEMY_2){
+        Sprite* sprite =new Sprite("assets/Enemies/enemigo2.png");
+        GraphicsMapElement* graficador = new GraphicsMapElement(sprite);
+        addAction("Graphics", graficador);
+        EnemyIA* enemyia = new EnemyIA();
+        addAction("EnemyIA", enemyia);
+    }
 }
 
 MapElement::~MapElement() {
-
 }
 
 vector<Action *> MapElement::getActions() {

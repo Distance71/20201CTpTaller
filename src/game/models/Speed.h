@@ -4,15 +4,13 @@
 #include "State.h"
 
 class Speed: virtual State {
-    private:
-    int x, y;
 
     public:
-    Speed(int x_speed,int y_speed);
-    int getXSpeed();
-    int getYSpeed();
-    void setXSpeed(int x);
-    void setYSpeed(int y);
+    Speed(int x_,int y_);
+    int getX()override;
+    int getY()override;
+    void setX(int x_)override;
+    void setY(int y_)override;
 };
 
 #endif

@@ -1,22 +1,21 @@
 #include "Speed.h"
 
-Speed::Speed(int x, int y) {
-    this->x = x;
-    this->y = y;
+Speed::Speed(int x_, int y_):State(x_,y_) {
+
 }
 
-int Speed::getXSpeed(){
-    return this->x;
+int Speed::getX(){
+    return x;
 }
 
-int Speed::getYSpeed(){
-    return this->y;
+int Speed::getY(){
+    return y;
 }
 
-void Speed::setXSpeed(int x){
-    this->x = x;
+void Speed::setX(int x_){
+    x = x_;
 }
 
-void Speed::setYSpeed(int y){
-    this->y = y;
+void Speed::setY(int y_){
+    y = y_;
 }

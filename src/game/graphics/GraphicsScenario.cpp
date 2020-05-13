@@ -49,13 +49,13 @@ void GraphicsScenario::update(){
 
     for(size_t i = 0; i < sprites_.size(); i++) {
         SDL_Texture* layerTexture = sprites_[i]->getTexture();
-        int step = layersPositions_[i]->getXPosition();
-        step += layersSpeeds_[i]->getXSpeed();
+        int step = layersPositions_[i]->getX();
+        step += layersSpeeds_[i]->getX();
         if (step >= screenWidht) {
-            layersPositions_[i]->setXPosition(0);
+            layersPositions_[i]->setX(0);
             step = 0;
         }
-        layersPositions_[i]->setXPosition(step);
+        layersPositions_[i]->setX(step);
             
         SDL_Rect auxParallax = { step, 0, (int)screenWidht, (int)screenHeight};
     

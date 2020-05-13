@@ -3,18 +3,15 @@
 
 #include "Action.h"
 #include <string>
-#include "MapElement.h"
+#include "State.h"
 
-// Se encarga del manejo interno del state de posicion
-class MovementHandler : virtual Action{
 
-	private:
-        Position* position_;
-        Speed * speed_;
+class MovementHandler : public Action{
 
     public:
-        MovementHandler(Position* position, Speed*speed);
-        void move_in_direction(string movement_instruction);
+        MovementHandler();
+        void update(string direction,unordered_map<string, State *> states_);
+
 };
 
 #endif
