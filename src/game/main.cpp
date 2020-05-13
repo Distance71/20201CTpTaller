@@ -38,7 +38,7 @@ int main(int argc, char *args[]) {
 
     Game game;
 
-    //game.run();
+    game.run();
 
     //game.~Game();
     
