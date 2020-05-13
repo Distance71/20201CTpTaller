@@ -17,7 +17,7 @@ typedef enum stage {
 } stage_t;
 
 typedef struct {
-    string type;
+    unsigned int type;
     unsigned int quantity;
     string sprite;
 } enemy_t;
@@ -67,6 +67,7 @@ typedef struct {
 typedef struct {
     stageSource_t backgroundSources;
     vector<stepParams_t> stepsParams;
+    vector<enemy_t> totalEnemies;
 } stageParams_t;
 
 typedef struct {
