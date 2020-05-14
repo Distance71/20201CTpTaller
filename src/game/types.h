@@ -60,8 +60,9 @@ typedef struct {
 } currentStep_t;
 
 typedef struct {
-    size_t quantEnemiesType1; //Refactor this later
-    size_t quantEnemiesType2;
+    vector<enemy_t> enemies;
+    //size_t quantEnemiesType1; //Refactor this later
+    //size_t quantEnemiesType2;
 } stepParams_t;
 
 typedef struct {

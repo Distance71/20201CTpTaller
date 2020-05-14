@@ -34,7 +34,7 @@ class ConfigurationHandler {
         string getPathStageLayer(string pathStage, int numberLayer);
         string getPathStageEnemy(string pathStage, int numberEnemy, string paramEnemy);
 
-        vector<stepParams_t> getStep(unsigned int totalQuantityType1, unsigned int totalQuantityType2);
+        vector<stepParams_t> getStep(vector<enemy_t> &totalEnemies);
 
     public:
         ConfigurationHandler();

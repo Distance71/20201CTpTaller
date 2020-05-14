@@ -39,57 +39,57 @@ string ConfigurationHandler::getPathStageEnemy(string pathStage, int numberEnemy
     return pathStageEnemy;
 }
 
-vector<stepParams_t> ConfigurationHandler::getStep(unsigned int cantTotalType1, unsigned int cantTotalType2){
+bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfiguration){
+    return this->parserJson->loadConfiguration(pathFileConfiguration);
+}
+
+vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies){
     vector<stepParams_t> stepsParams;
 
-    unsigned int cantPuestaType1 = 0;
-    unsigned int cantPuestaType2 = 0;
-
+    unsigned int cantEnemies = totalEnemies.size();
+    vector<unsigned int> cantPuesta (cantEnemies); 
+    vector<unsigned int> cantTotal (cantEnemies); 
     srand(time(NULL)); 
 
-    for(int step = 0; step < STEP_FOR_STAGE; step++){
+    // Guardamos el Total de Enemigos que debemos poner en todo el Stage
+    for(int posEnemy = 0; posEnemy < cantEnemies; posEnemy++){
+        cantTotal[posEnemy] = totalEnemies[posEnemy].quantity;
+    }
+
+    for(int step = 0; step < 6; step++){
         stepParams_t oneStepParam;
 
-        if (step == STEP_FOR_STAGE - 1){
-            oneStepParam.quantEnemiesType1 = cantTotalType1 - cantPuestaType1;
-            oneStepParam.quantEnemiesType2 = cantTotalType2 - cantPuestaType2; 
-        } else {
-            unsigned int cantType1 = 0;
-            unsigned int cantType2 = 0;
+        for(int i = 0; i < cantEnemies; i++){
+            enemy_t oneEnemy;
+            oneEnemy.type = totalEnemies[i].type;
+            oneEnemy.sprite = totalEnemies[i].sprite;
 
-            unsigned int cotaSupType1 = min((unsigned int)MAX_ENEMY_STEP, (cantTotalType1 - cantPuestaType1));
-            unsigned int cotaMinType1 = min((unsigned int)MIN_ENEMY_STEP, (cantTotalType1 - cantPuestaType1));
+            if (step == STEP_FOR_STAGE - 1){
+                // Si es el ultimo Step debo poner todos los enemigos restantes para completar
+                oneEnemy.quantity = cantTotal[i] - cantPuesta[i];
+            } else {
+                unsigned int cantAPoner = 0;
+                unsigned int cotaSup = min((unsigned int)MAX_ENEMY_STEP, (cantTotal[i] - cantPuesta[i]));
+                unsigned int cotaInf = min((unsigned int)MIN_ENEMY_STEP, (cantTotal[i] - cantPuesta[i]));
 
-            unsigned int cotaSupType2 = min((unsigned int)MAX_ENEMY_STEP, (cantTotalType2 - cantPuestaType2));
-            unsigned int cotaMinType2 = min((unsigned int)MIN_ENEMY_STEP, (cantTotalType2 - cantPuestaType2));
-
-            while ((cantType1 + cantType2 == 0) && ((cotaSupType1 != 0) || (cotaSupType2 != 0))){
-                if (cotaSupType1 != 0){
-                    cantType1 = cotaMinType1 + rand()%(cotaSupType1 + 1 - cotaMinType1);
+                /* Si la cota Superior no es cero y la cantAPoner es cero. Quiere decir que tenemos enemigos para
+                   poner, entonces ejecutamos hasta que la funcion rand() nos de un numero mayor a cero.
+                */
+                while ((cotaSup != 0) && (cantAPoner == 0)){
+                    cantAPoner = cotaInf + rand()%(cotaSup + 1 - cotaInf);
                 }
 
-                if (cotaSupType2 != 0){
-                    cantType2 = cotaMinType2 + rand()%(cotaSupType2 + 1 - cotaMinType2);
-                }
+                oneEnemy.quantity = cantAPoner;
+                cantPuesta[i] += cantAPoner;
             }
-
-
-            oneStepParam.quantEnemiesType1 = cantType1;
-            oneStepParam.quantEnemiesType2 = cantType2; 
-
-            cantPuestaType1 += cantType1;
-            cantPuestaType2 += cantType2;
+            
+            oneStepParam.enemies.push_back(oneEnemy);
         }
 
         stepsParams.push_back(oneStepParam);
-
     }
 
-    return stepsParams;
-}
-
-bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfiguration){
-    return this->parserJson->loadConfiguration(pathFileConfiguration);
+    return stepsParams;    
 }
 
 void ConfigurationHandler::initializeData(){
@@ -148,11 +148,12 @@ void ConfigurationHandler::initializeData(){
                     oneEnemy.quantity = DEFAULT_ENEMY_QUANTITY;
                 }
 
+                /*
                 if (oneEnemy.type == 0){
                     cantTotalType1 += oneEnemy.quantity;
                 } else {
                     cantTotalType2 += oneEnemy.quantity;
-                }
+                }*/
 
                 string pathEnemySprite = getPathStageEnemy(pathStage, numberEnemy, "sprite");
                 oneEnemy.sprite = this->parserJson->getString(pathEnemySprite);
@@ -160,8 +161,8 @@ void ConfigurationHandler::initializeData(){
                 oneStageParams.totalEnemies.push_back(oneEnemy);
             }
 
-            oneStageParams.stepsParams = getStep(cantTotalType1, cantTotalType2);
-
+            //oneStageParams.stepsParams = getStep(cantTotalType1, cantTotalType2);
+            oneStageParams.stepsParams = getStep(oneStageParams.totalEnemies);
             oneLevelParams.stagesParams.push_back(oneStageParams);
         }
 
@@ -191,6 +192,8 @@ stageSource_t ConfigurationHandler::getSourcesForStage(int oneLevel, int oneStag
         Logger::getInstance()->log(ERROR, "Se quiere acceder al stageSource de un stage invalido. Level: " + to_string(oneLevel) + " - Stage: " + to_string(oneStage));
         return stageSource;
     }
+
+    Logger::getInstance()->log(DEBUG, "Se devuelve el stageSource del stage "  + to_string(oneStage) + " del nivel " + to_string(oneLevel));
 
     return this->gameData.levelParams[oneLevel].stagesParams[oneStage].backgroundSources;
 }
