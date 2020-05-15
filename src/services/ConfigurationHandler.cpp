@@ -197,3 +197,7 @@ stageSource_t ConfigurationHandler::getSourcesForStage(int oneLevel, int oneStag
 
     return this->gameData.levelParams[oneLevel].stagesParams[oneStage].backgroundSources;
 }
+
+gameParams_t ConfigurationHandler::getGameParams(){
+    return this->gameData;
+}

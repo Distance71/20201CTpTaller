@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "INFO"
+            "level": "DEBUG"
       },
       "level": [
           [
@@ -11,14 +11,14 @@
                 "layer3": "assets/Stage/Level1/layer_3.png",
                 "enemies": [
                     {
-                        "type": "class_1",
-                        "quantity": "5",
-                        "sprite": ""				  
+                        "type": 0,
+                        "quantity": 30,
+                        "sprite": "assets/Enemies/enemigo1.png"				  
                     },
                     {
                         "type": 1,
-                        "quantity": "10",
-                        "sprite": ""
+                        "quantity": 50,
+                        "sprite": "assets/Enemies/enemigo2.png"
                     }
                 ]
               },
@@ -28,14 +28,14 @@
                 "layer3": "assets/Stage/Level1/layer_3.png",
                 "enemies": [
                     {
-                        "type": "class_1",
-                        "quantity": 20,
-                        "sprite": ""				  
+                        "type": 0,
+                        "quantity": 60,
+                        "sprite": "assets/Enemies/enemigo1.png"				  
                     },
                     {
                         "type": 1,
-                        "quantity": 50,
-                        "sprite": ""
+                        "quantity": 80,
+                        "sprite": "assets/Enemies/enemigo2.png"
                     }
                 ]
               }
@@ -48,13 +48,8 @@
                 "enemies": [
                     {
                         "type": 0,
-                        "quantity": 5,
-                        "sprite": ""				  
-                    },
-                    {
-                        "type": 1,
-                        "quantity": "10",
-                        "sprite": ""
+                        "quantity": 100,
+                        "sprite": "assets/Enemies/enemigo1.png"				  
                     }
                 ]
               }

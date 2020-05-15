@@ -45,6 +45,7 @@ class ConfigurationHandler {
         void setLogLevel();
 
         stageSource_t getSourcesForStage(int oneLevel, int oneStage);
+        gameParams_t getGameParams();
 };
 
 
