@@ -27,7 +27,7 @@ class MapElement {
         
 
     public:
-        MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed);
+        MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sprite);
         ~MapElement();
        
        

@@ -4,12 +4,15 @@ Map::Map(){
 }
 
 Map::Map(gameParams_t &gameSettings){
-    size_t nLevels = 1; //gameSettings.levelParams.size();
+    size_t nLevels = gameSettings.levelParams.size();
 
-    // for(size_t i = 0; i < nLevels; i++){
-    //     Level *newLevel = new Level(gameSettings.levelParams[i]);
-    //     this->addLevel(newLevel);
-    // }
+    Logger::getInstance()->log(DEBUG, "Se crea entidad Map.");
+    Logger::getInstance()->log(DEBUG, "Se procesa el Game Setting.");
+
+    for(size_t i = 0; i < nLevels; i++){
+        Level *newLevel = new Level(gameSettings.levelParams[i]);
+        this->addLevel(newLevel);
+    }
 }
 
 Level::Level(){
@@ -17,12 +20,13 @@ Level::Level(){
 }
 
 Level::Level(levelParams_t &params){
-    size_t nStages = 1; //params.stagesParams.size();
+    
+    size_t nStages = params.stagesParams.size();
 
-    // for(size_t i = 0; i < nStages; i++){
-    //     //Stage *newStage = new Stage(params.stageParams[i]);
-    //     //this->addStage(newStage);
-    // }
+    for(size_t i = 0; i < nStages; i++){
+        Stage *newStage = new Stage(params.stagesParams[i]);
+        this->addStage(newStage);
+    }
 }
 
 Stage::Stage(){
@@ -30,11 +34,11 @@ Stage::Stage(){
 }
 
 Stage::Stage(stageParams_t &params){
-    size_t quantitySteps = 1; //params.stepsParams.size();
+    size_t quantitySteps = params.stepsParams.size();
     
     for(size_t i = 0; i < quantitySteps; i++) {
-        //Step *step = new Step(params.stepsParams[i]);
-        //this->addStep(step);
+        Step *step = new Step(params.stepsParams[i]);
+        this->addStep(step);
     }
 }
 
@@ -44,13 +48,26 @@ Step::Step(){
 
 Step::Step(stepParams_t params) {
     //Do something -> create enemies of different types, rocks, etc
+    size_t nEnemies = params.enemies.size();
+
+    for(size_t i = 0; i < nEnemies; i++){
+        unsigned int nEnemiesIguales = params.enemies[i].quantity;
+        string sprite = params.enemies[i].sprite;
+        for(unsigned int i = 0; nEnemiesIguales; i++){
+            MapElement *newEnemy = new MapElement(ENEMY_1,800+2*i,200,2,2,sprite);
+            this->mapElements_[this->lastId_] = newEnemy;
+            this->lastId_++;
+        }
+    }
 }
 
 void Map::addLevel(Level *level){
     if(!level){
         //Validate
     }
-    levels_[levels_.size()] = level;
+    
+    this->levels_.push_back(level);
+    //levels_[levels_.size()] = level;
 }
 
 void Level::addStage(Stage *stage){
@@ -58,7 +75,8 @@ void Level::addStage(Stage *stage){
         //Validate
     }
 
-    stages_[stages_.size()] = stage;
+    this->stages_.push_back(stage);
+    //stages_[stages_.size()] = stage;
 }
 
 void Stage::addStep(Step *step){
@@ -66,7 +84,7 @@ void Stage::addStep(Step *step){
         //Validate
     }
 
-    this->steps_[this->steps_.size()] = step;
+    this->steps_.push_back(step);
 }
 
 vector<Level *> Map::getLevels(){
@@ -88,21 +106,21 @@ vector<Step *> Stage::getSteps(){
 // // }
 
 void Map::update(currentStep_t currentStep){
-    //size_t actualLevel = currentStep.level;
+    size_t actualLevel = currentStep.level;
         
-    //levels_[actualLevel]->update();
+    levels_[actualLevel]->update(currentStep);
 }
 
 void Level::update(currentStep_t currentStep){
     size_t actualStage = currentStep.stage;
         
-    //stages_[actualStage]->update();
+    stages_[actualStage]->update(currentStep);
 }
 
 void Stage::update(currentStep_t currentStep){
     size_t actualStep = currentStep.step;
     
-    //steps_[actualStep]->update();
+    steps_[actualStep]->update();
 }
 
 void Step::update(){

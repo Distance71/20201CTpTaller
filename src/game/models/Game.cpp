@@ -92,26 +92,33 @@ void Game::run() {
 
     initializeGameParams();
     
-    /***  TODO ESTO ES PARA PROBAR NADA MAS */
-    stageSource_t background;
-    background.layer1="assets/Stage/Level1/layer_1.png";
-    background.layer2="assets/Stage/Level1/layer_2.png";
-    background.layer3="assets/Stage/Level1/layer_3.png";
+    /***  TODO ESTO ES PARA PROBAR NADA MAS -> Se cambio a ver si funciona el getSourcesForStage */
+    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(0,0);
+    //background.layer1="assets/Stage/Level1/layer_1.png";
+    //background.layer2="assets/Stage/Level1/layer_2.png";
+    //background.layer3="assets/Stage/Level1/layer_3.png";
     GraphicsScenario escenario= GraphicsScenario(background);
 
-
-    
     int screen_widht = GameProvider::getWidth();
     int screen_height = GameProvider::getHeight();
-
         
-    MapElement nave= MapElement(PLAYER,500,500,4,4);
-    MapElement enemigo1 = MapElement(ENEMY_1,screen_widht+100,200,2,2);
-    MapElement enemigo2 = MapElement(ENEMY_2,screen_widht+400,screen_height-200,2,2);
-    MapElement enemigo3 = MapElement(ENEMY_1,screen_widht+800,200,2,2);
-    MapElement enemigo4 = MapElement(ENEMY_2,screen_widht+100,screen_height-200,2,2);
-    MapElement enemigo5 = MapElement(ENEMY_1,screen_widht+400,200,2,2);
-    MapElement enemigo6 = MapElement(ENEMY_2,screen_widht+900,screen_height-200,2,2);
+    gameParams_t gameParams = GameProvider::getConfig()->getGameParams();
+
+    //this->map_ = new Map(gameParams);
+
+    MapElement nave= MapElement(PLAYER,500,500,4,4,"assets/player.png");
+    MapElement enemigo1 = MapElement(ENEMY_1,screen_widht+100,200,2,2,"assets/Enemies/enemigo1.png");
+    MapElement enemigo2 = MapElement(ENEMY_2,screen_widht+400,screen_height-200,2,2,"assets/Enemies/enemigo2.png");
+    MapElement enemigo3 = MapElement(ENEMY_1,screen_widht+800,200,2,2,"assets/Enemies/enemigo1.png");
+    MapElement enemigo4 = MapElement(ENEMY_2,screen_widht+100,screen_height-200,2,2,"assets/Enemies/enemigo2.png");
+    MapElement enemigo5 = MapElement(ENEMY_1,screen_widht+400,200,2,2,"assets/Enemies/enemigo1.png");
+    MapElement enemigo6 = MapElement(ENEMY_2,screen_widht+900,screen_height-200,2,2,"assets/Enemies/enemigo2.png");
+
+    currentStep_t current;
+    current.level = LEVEL_ONE;
+    current.stage = STAGE_ONE;
+    current.step = 0;
+
     while (true){
         
         SDL_Event e;
@@ -122,6 +129,7 @@ void Game::run() {
         }
         escenario.update();
         nave.update();
+        //sthis->map_->update(current);
         enemigo1.update();
         enemigo2.update();
         enemigo3.update();
