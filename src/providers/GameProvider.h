@@ -12,8 +12,8 @@ class ConfigurationHandler;
 #include <unordered_map>
 
 //Consts: should go in a config file
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 #define STAGE1LAYER1SPEED 0
 #define STAGE1LAYER2SPEED 2

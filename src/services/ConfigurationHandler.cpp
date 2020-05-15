@@ -56,7 +56,7 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
         cantTotal[posEnemy] = totalEnemies[posEnemy].quantity;
     }
 
-    for(int step = 0; step < 6; step++){
+    for(int step = 0; step < STEP_FOR_STAGE; step++){
         stepParams_t oneStepParam;
 
         for(int i = 0; i < cantEnemies; i++){
@@ -82,13 +82,12 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
                 oneEnemy.quantity = cantAPoner;
                 cantPuesta[i] += cantAPoner;
             }
-            
             oneStepParam.enemies.push_back(oneEnemy);
         }
-
+        
         stepsParams.push_back(oneStepParam);
     }
-
+    
     return stepsParams;    
 }
 

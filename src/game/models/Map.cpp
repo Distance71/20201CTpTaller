@@ -49,12 +49,13 @@ Step::Step(){
 Step::Step(stepParams_t params) {
     //Do something -> create enemies of different types, rocks, etc
     size_t nEnemies = params.enemies.size();
-
+    
     for(size_t i = 0; i < nEnemies; i++){
         unsigned int nEnemiesIguales = params.enemies[i].quantity;
         string sprite = params.enemies[i].sprite;
-        for(unsigned int i = 0; nEnemiesIguales; i++){
-            MapElement *newEnemy = new MapElement(ENEMY_1,800+2*i,200,2,2,sprite);
+        for(unsigned int j = 0; j < nEnemiesIguales; j++){
+            //Las posiciones y demas son de prueba
+            MapElement *newEnemy = new MapElement(ENEMY_1,i*100 + j*100,j*40,2,2,sprite);
             this->mapElements_[this->lastId_] = newEnemy;
             this->lastId_++;
         }
@@ -124,7 +125,7 @@ void Stage::update(currentStep_t currentStep){
 }
 
 void Step::update(){
-    for(auto mapElement : mapElements_) {
+    for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
     }
 }
