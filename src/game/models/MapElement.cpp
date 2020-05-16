@@ -26,10 +26,6 @@ MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
     }
-    // else if(type==BACKGROUND){
-    //     Sprite* sprite =new Sprite(sourceSprite);
-    //     GraphicsMapElement* graficador = new GraphicsMapElement(sprite);
-    // }
 }
 
 MapElement::~MapElement() {

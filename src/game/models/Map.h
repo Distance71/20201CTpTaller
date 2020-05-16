@@ -28,18 +28,23 @@ class MapElement;
 class Step;
 class Stage;
 class Level;
+class GraphicsScenario;
 
 class Map {
     private:
-    vector <Level *> levels_;
+    vector <Level *> levels_;  
+   
     //void clearMap();
 
-    public:
+    public:    
     Map();
     Map(gameParams_t &gameSettings);
     void update(currentStep_t currentStep);
     void addLevel(Level *level);
     vector<Level *> getLevels();
+    //GraphicsScenario* getCurrentScenario();
+    //void setCurrentScenario(GraphicsScenario *escenario);
+      GraphicsScenario *escenario_;//fix momentaneo
 };
 
 class Level: public Map {
@@ -58,17 +63,21 @@ class Level: public Map {
 class Stage: public Level {
     private:
     vector<Step *> steps_;
+    GraphicsScenario *escenario_;
     //IdElement lastId_ = 0;
     void clearMap();
 
     public:
+    
     Stage();
     Stage(stageParams_t &params);
     // MapElement* createMapElement();
-    // void createBackground(stageSource_t backgroundSource);
+    void createBackground(int oneLevel, int oneStage);
     void addStep(Step *step);
     vector<Step *> getSteps();
     void update(currentStep_t currentStep);
+    GraphicsScenario* getCurrentScenario();
+    void setCurrentScenario(GraphicsScenario *escenario);
 };
 
 class Step: public Stage {
@@ -81,11 +90,11 @@ class Step: public Stage {
     Step(stepParams_t params);
     //~Step();
 
+
     void update();
     // int move_in_direction(string movement_instruction,int id);
     // void createPlayer();
-    // void createEnemy();
-    //void createBackground(stageSource_t stageSource);
+    // void createEnemy();    
     // void killMapElement(IdElement id);
 };
 

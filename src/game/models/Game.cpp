@@ -99,7 +99,7 @@ void Game::run() {
 
 
     /***  TODO ESTO ES PARA PROBAR NADA MAS -> Se cambio a ver si funciona el getSourcesForStage */
-     currentStep_t currentprueba;
+/*      currentStep_t currentprueba;
     currentprueba.level = LEVEL_ONE;
     currentprueba.stage = STAGE_ONE;
     currentprueba.step = 0;
@@ -144,7 +144,7 @@ void Game::run() {
 
         updateGraphics();  
     }
-
+ */
 
     //comentar lo de arriba para terminar esto (el posta)
 
@@ -152,6 +152,7 @@ void Game::run() {
 
 
     currentStep_t current;
+    // TODO investigar por q si sacas estas 3 lineas de abajo se cuelga al cerrar la ventana
     current.level = LEVEL_ONE;
     current.stage = STAGE_ONE;
     current.step = 0;
@@ -181,6 +182,15 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
 
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
+
+
+                stageSource_t background = GameProvider::getConfig()->getSourcesForStage(0,0);
+            background.layer1="assets/Stage/Level1/layer_1.png";
+            background.layer2="assets/Stage/Level1/layer_2.png";
+            background.layer3="assets/Stage/Level1/layer_3.png";
+            map_->escenario_= new GraphicsScenario(background);
+        
+
         runStage(actualStep, stages[i]);
     }
 }
@@ -189,10 +199,11 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
 
+
     vector<Step *> steps = stage->getSteps();
 
     for(size_t i = 0; i < quantitySteps; i++){
-        actualStep.step = i; 
+        actualStep.step = i;
         runStep(actualStep);
     }
 }
@@ -208,13 +219,14 @@ void Game::runStep(currentStep_t actualStep){
         
         clearScene();
         processEvent();
-
-        while(0 >= (ms - elaptedTimeMS)) {
-            updateState(actualStep);
+        (map_->escenario_)->update();
+        while(0 >= (ms - elaptedTimeMS)) { // TODO Revisar esta logica
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
         }
+        updateState(actualStep);
+        
         updateGraphics();
     }
 }

@@ -25,6 +25,7 @@ Level::Level(levelParams_t &params){
 
     for(size_t i = 0; i < nStages; i++){
         Stage *newStage = new Stage(params.stagesParams[i]);
+        //newStage->createBackground(0,0);
         this->addStage(newStage);
     }
 }
@@ -60,11 +61,17 @@ Step::Step(stepParams_t params) {
             this->lastId_++;
         }
     }
+    //esta de prueba esto debe crearse al mismo nivel q el fondo
     MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png");
     this->mapElements_[this->lastId_] = nave;
+}
 
+GraphicsScenario* Stage::getCurrentScenario(){
+    return this->escenario_;
+}
 
-    //createBackground(background);
+void Stage::setCurrentScenario(GraphicsScenario *escenario){
+    this->escenario_=escenario;
 }
 
 void Map::addLevel(Level *level){
@@ -125,7 +132,8 @@ void Level::update(currentStep_t currentStep){
 
 void Stage::update(currentStep_t currentStep){
     size_t actualStep = currentStep.step;
-    
+
+    //((steps_[actualStep])->getCurrentScenario())->update();
     steps_[actualStep]->update();
 }
 
@@ -135,20 +143,27 @@ void Step::update(){
     }
 }
 
-// void Step::createBackground(stageSource_t backgroundSource){
-//     int screen_widht = GameProvider::getWidth();
-//     int screen_height = GameProvider::getHeight();
-//     MapElement *background= new MapElement(BACKGROUND,0,0,screen_widht,screen_height,"assets/Stage/Level1/layer_2.png");
-    
-//     lastId_++;
-//     auto stageData = GameProvider::getConfig()->getSourcesForStage(0,0);
+void Stage::createBackground(int oneLevel, int oneStage){
+    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(oneLevel,oneStage);
+     background.layer1="assets/Stage/Level1/layer_1.png";
+     background.layer2="assets/Stage/Level1/layer_2.png";
+     background.layer3="assets/Stage/Level1/layer_3.png";
+     this->escenario_= new GraphicsScenario(background);
 
-//     auto *graphics = new GraphicsScenario(backgroundSource);
-    
-//     background->addAction("Graphics", graphics);
 
-//     mapElements_[lastId_] = background;
-// }
+/*     int screen_widht = GameProvider::getWidth();
+    int screen_height = GameProvider::getHeight();
+    MapElement *background= new MapElement(BACKGROUND,0,0,screen_widht,screen_height,"assets/Stage/Level1/layer_2.png");
+    
+    lastId_++;
+    auto stageData = GameProvider::getConfig()->getSourcesForStage(0,0);
+
+    auto *graphics = new GraphicsScenario(backgroundSource);
+    
+    background->addAction("Graphics", graphics);
+
+    mapElements_[lastId_] = background; */
+}
 
 // // void Step::createPlayer(){
 // //     MapElement* player = new MapElement(PLAYER);
