@@ -15,6 +15,15 @@ Map::Map(gameParams_t &gameSettings){
     }
 }
 
+void Map::setStageSource(size_t numberLevel, size_t numberStage){
+    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(numberLevel,numberStage);
+    this->escenario_= new GraphicsScenario(background);
+}
+
+GraphicsScenario *Map::getCurrentScenario(){
+    return this->escenario_;
+}
+
 Level::Level(){
     //Necesitaba crearlo para compilar
 }

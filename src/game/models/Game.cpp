@@ -148,9 +148,6 @@ void Game::run() {
 
     //comentar lo de arriba para terminar esto (el posta)
 
-
-
-
     currentStep_t current;
     // TODO investigar por q si sacas estas 3 lineas de abajo se cuelga al cerrar la ventana
     current.level = LEVEL_ONE;
@@ -182,15 +179,7 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
 
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
-
-
-                stageSource_t background = GameProvider::getConfig()->getSourcesForStage(0,0);
-            background.layer1="assets/Stage/Level1/layer_1.png";
-            background.layer2="assets/Stage/Level1/layer_2.png";
-            background.layer3="assets/Stage/Level1/layer_3.png";
-            map_->escenario_= new GraphicsScenario(background);
-        
-
+        this->map_->setStageSource(actualStep.level,actualStep.stage);
         runStage(actualStep, stages[i]);
     }
 }
@@ -219,7 +208,7 @@ void Game::runStep(currentStep_t actualStep){
         
         clearScene();
         processEvent();
-        (map_->escenario_)->update();
+        (this->map_->getCurrentScenario())->update();
         while(0 >= (ms - elaptedTimeMS)) { // TODO Revisar esta logica
             end = chrono::high_resolution_clock::now();
             dur = end - begin;

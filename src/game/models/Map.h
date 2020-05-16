@@ -33,7 +33,7 @@ class GraphicsScenario;
 class Map {
     private:
     vector <Level *> levels_;  
-   
+    GraphicsScenario *escenario_;
     //void clearMap();
 
     public:    
@@ -42,9 +42,10 @@ class Map {
     void update(currentStep_t currentStep);
     void addLevel(Level *level);
     vector<Level *> getLevels();
-    //GraphicsScenario* getCurrentScenario();
+    void setStageSource(size_t numberLevel, size_t numberStage);
+    GraphicsScenario* getCurrentScenario();
     //void setCurrentScenario(GraphicsScenario *escenario);
-      GraphicsScenario *escenario_;//fix momentaneo
+      
 };
 
 class Level: public Map {
