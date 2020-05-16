@@ -44,6 +44,7 @@ class Map {
     vector<Level *> getLevels();
     void setStageSource(size_t numberLevel, size_t numberStage);
     GraphicsScenario* getCurrentScenario();
+    bool endStep(currentStep_t currentStep);
     //void setCurrentScenario(GraphicsScenario *escenario);
       
 };
@@ -59,6 +60,7 @@ class Level: public Map {
     void addStage(Stage *stage);
     vector<Stage *> getStages();
     void update(currentStep_t currentStep);
+    bool endStep(size_t numberStage, size_t numberStep);
 };
 
 class Stage: public Level {
@@ -79,6 +81,7 @@ class Stage: public Level {
     void update(currentStep_t currentStep);
     GraphicsScenario* getCurrentScenario();
     void setCurrentScenario(GraphicsScenario *escenario);
+    bool endStep(size_t numberStep);
 };
 
 class Step: public Stage {
@@ -93,6 +96,7 @@ class Step: public Stage {
 
 
     void update();
+    bool endStep();
     // int move_in_direction(string movement_instruction,int id);
     // void createPlayer();
     // void createEnemy();    

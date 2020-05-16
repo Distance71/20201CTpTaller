@@ -48,7 +48,7 @@
                 "enemies": [
                     {
                         "type": 0,
-                        "quantity": 80,
+                        "quantity": 10,
                         "sprite": "assets/Enemies/enemigo1.png"				  
                     }
                 ]

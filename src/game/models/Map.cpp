@@ -24,6 +24,10 @@ GraphicsScenario *Map::getCurrentScenario(){
     return this->escenario_;
 }
 
+bool Map::endStep(currentStep_t currentStep){
+    return this->levels_[currentStep.level]->endStep(currentStep.stage, currentStep.step);
+}
+
 Level::Level(){
     //Necesitaba crearlo para compilar
 }
@@ -39,6 +43,10 @@ Level::Level(levelParams_t &params){
     }
 }
 
+bool Level::endStep(size_t numberStage, size_t numberStep){
+    return this->stages_[numberStage]->endStep(numberStep);
+}
+
 Stage::Stage(){
     //Necesitaba crearlo para compilar
 }
@@ -50,6 +58,10 @@ Stage::Stage(stageParams_t &params){
         Step *step = new Step(params.stepsParams[i]);
         this->addStep(step);
     }
+}
+
+bool Stage::endStep(size_t numberStep){
+    return this->steps_[numberStep]->endStep();
 }
 
 Step::Step(){
@@ -73,6 +85,10 @@ Step::Step(stepParams_t params) {
     //esta de prueba esto debe crearse al mismo nivel q el fondo
     MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png");
     this->mapElements_[this->lastId_] = nave;
+}
+
+bool Step::endStep(){
+    return (this->mapElements_.size() == 1);
 }
 
 GraphicsScenario* Stage::getCurrentScenario(){
@@ -147,8 +163,20 @@ void Stage::update(currentStep_t currentStep){
 }
 
 void Step::update(){
+
+    vector<IdElement> mapElemenDead;
+
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
+
+        // Funciona pero habria que hacerlo mas prolijo -> solo de prueba
+        if (mapElement.second->getState<Position>("Position")->getX() < 0){
+            mapElemenDead.push_back(mapElement.first);
+        }
+    }
+
+    for(auto oneIdDead : mapElemenDead){
+        this->mapElements_.erase(oneIdDead);
     }
 }
 

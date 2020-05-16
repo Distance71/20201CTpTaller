@@ -5,7 +5,7 @@
 // Se encarga de manejar internamente la informacion de la posicion de los elementos
 // La misma se debe requerir al mapa, ya que los elementos dependen de este.
 
-class Position: virtual State  {
+class Position: public State  {
     
     public:
     Position();

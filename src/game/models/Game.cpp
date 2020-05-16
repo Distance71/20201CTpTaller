@@ -176,7 +176,7 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     size_t quantityStages = gameSettings.levelParams[actualStep.level].stagesParams.size();
 
     auto stages = level->getStages();
-
+    Logger::getInstance()->log(DEBUG, "Se comienza el nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
         this->map_->setStageSource(actualStep.level,actualStep.stage);
@@ -188,9 +188,9 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
 
-
     vector<Step *> steps = stage->getSteps();
 
+    Logger::getInstance()->log(DEBUG, "Se comienza el stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantitySteps; i++){
         actualStep.step = i;
         runStep(actualStep);
@@ -200,7 +200,9 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
 void Game::runStep(currentStep_t actualStep){
     double elaptedTimeMS = GameProvider::getElaptedTimeFPS();
 
-    while(GameProvider::getStatus().normalStatus){ // || funcionFinStep) {
+    Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
+    
+    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
         auto begin = chrono::high_resolution_clock::now();
         auto end = chrono::high_resolution_clock::now();   
         auto dur = end - begin;
