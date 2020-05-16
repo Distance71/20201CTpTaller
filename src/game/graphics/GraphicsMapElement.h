@@ -10,10 +10,12 @@
 class Sprite;
 class GraphicsMapElement: public Action{
     private:
-    Sprite* sprite_;
+        Sprite* sprite_;
+        int size_x_;
+        int size_y_;
     
     public:
-        GraphicsMapElement(Sprite * sprite);
+        GraphicsMapElement(Sprite * sprite, int size_x, int size_y);
         void update(unordered_map<string, State *> states_) override;
 };
 

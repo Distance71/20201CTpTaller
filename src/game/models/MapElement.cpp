@@ -1,27 +1,30 @@
 #include "MapElement.h"
 
-MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sourceSprite){
+MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sourceSprite, int size_x, int size_y){
     Position* position =new Position(x_pos,y_pos);
     Speed* speed = new Speed(x_speed,y_speed);
     addState("Position", position);
     addState("Speed", speed);
     
+    this->size_x_ = size_x;
+    this->size_y_ = size_y;
+
     if (type == PLAYER){
         Sprite* sprite =new Sprite(sourceSprite);
-        GraphicsMapElement* graficador = new GraphicsMapElement(sprite);
+        GraphicsMapElement* graficador = new GraphicsMapElement(sprite, this->size_x_, this->size_y_);
         addAction("Graphics", graficador);
         PlayerController* playercontroller= new PlayerController(sprite);
         addAction("PlayerController", playercontroller);
     } else if(type==ENEMY_1){
         Sprite* sprite = new Sprite(sourceSprite);
-        GraphicsMapElement* graficador = new GraphicsMapElement(sprite);
+        GraphicsMapElement* graficador = new GraphicsMapElement(sprite, this->size_x_, this->size_y_);
         addAction("Graphics", graficador);
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
     }
     else if(type==ENEMY_2){
         Sprite* sprite =new Sprite(sourceSprite);
-        GraphicsMapElement* graficador = new GraphicsMapElement(sprite);
+        GraphicsMapElement* graficador = new GraphicsMapElement(sprite, this->size_x_, this->size_y_);
         addAction("Graphics", graficador);
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);

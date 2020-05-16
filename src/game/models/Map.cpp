@@ -48,7 +48,7 @@ bool Level::endStep(size_t numberStage, size_t numberStep){
 }
 
 Stage::Stage(){
-    //Necesitaba crearlo para compilar
+    //Nintecesitaba crearlo para compilar
 }
 
 Stage::Stage(stageParams_t &params){
@@ -72,18 +72,22 @@ Step::Step(stepParams_t params) {
     //Do something -> create enemies of different types, rocks, etc
     size_t nEnemies = params.enemies.size();
     
+    int size_x = 107;
+    int size_y = 83;
+
     for(size_t i = 0; i < nEnemies; i++){
         unsigned int nEnemiesIguales = params.enemies[i].quantity;
         string sprite = params.enemies[i].sprite;
+
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
-            MapElement *newEnemy = new MapElement(ENEMY_1,i*100 + j*100,j*40,2,2,sprite);
+            MapElement *newEnemy = new MapElement(ENEMY_1,i*100 + j*100,j*40,2,2,sprite, size_x, size_y);
             this->mapElements_[this->lastId_] = newEnemy;
             this->lastId_++;
         }
     }
     //esta de prueba esto debe crearse al mismo nivel q el fondo
-    MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png");
+    MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png", size_x, size_y);
     this->mapElements_[this->lastId_] = nave;
 }
 

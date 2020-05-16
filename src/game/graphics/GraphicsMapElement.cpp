@@ -1,7 +1,9 @@
 #include "GraphicsMapElement.h"
 
-GraphicsMapElement::GraphicsMapElement(Sprite * sprite){
-    sprite_ = sprite;
+GraphicsMapElement::GraphicsMapElement(Sprite * sprite,  int size_x, int size_y){
+    this->sprite_ = sprite;
+    this->size_x_ = size_x;
+    this->size_y_ = size_y;
 }
 
 void GraphicsMapElement::update(unordered_map<string, State *> states_){
@@ -13,7 +15,7 @@ void GraphicsMapElement::update(unordered_map<string, State *> states_){
     SDL_Renderer* renderer = GameProvider::getRenderer();   
     
     //rectangulo que se usa para hace el recorte sobre la foto
-    SDL_Rect sprite ={0,0,107,83}; 
+    SDL_Rect sprite ={0, 0, this->size_x_, this->size_y_}; 
     
     //rectangulo de la pantalla donde quiero dibujar el sprite.
     SDL_Rect aux_graphics_sprite = {position_ -> getX(), position_ -> getY(),107, 83};

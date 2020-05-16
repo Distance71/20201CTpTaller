@@ -21,13 +21,15 @@ class MapElement {
         elementType_t type;
         unordered_map<string, State *> states_;
         unordered_map<string, Action *> actions_;
+        int size_x_;
+        int size_y_;
 
         vector<Action *> getActions();
         vector<State *> getStates();
         
 
     public:
-        MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sprite);
+        MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sprite, int size_x, int size_y);
         ~MapElement();
        
        

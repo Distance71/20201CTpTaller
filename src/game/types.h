@@ -19,8 +19,16 @@ typedef enum stage {
 typedef struct {
     unsigned int type;
     unsigned int quantity;
+    int size_x;
+    int size_y;
     string sprite;
 } enemy_t;
+
+typedef struct {
+    int size_x;
+    int size_y;
+    string sprite;
+} player_t;
 
 typedef struct {
     string layer1;
