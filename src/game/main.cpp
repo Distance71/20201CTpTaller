@@ -17,10 +17,13 @@ bool initializeGameConfig(int argc, char* args[]) {
             configurationHandler->setLogLevel();
             break;
         case 2:
-            Logger::getInstance()->setLevel(args[1]);
+            if (!(Logger::getInstance()->setLevel(args[1]))){
+                cout << "Verifique que haya escrito los parametros correctamente." << endl;
+                return false;
+            } 
             break;
         default:
-            cout << "Verifique que haya escrito los parametros correctamente." << endl;
+            cout << "Verifique los parametros, no se permite mas de uno." << endl;
             return false;
     }
 
@@ -40,7 +43,11 @@ int main(int argc, char *args[]) {
 
     game->run();
 
+    //game->~Game();
+
     //GameProvider::getConfig()->~ConfigurationHandler();
+
+    Logger::getInstance()->log(INFO, "Juego Finalizado");
 
     return EXIT_SUCCESS;
 }

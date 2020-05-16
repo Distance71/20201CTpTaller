@@ -85,7 +85,7 @@ class Step: public Stage {
     // int move_in_direction(string movement_instruction,int id);
     // void createPlayer();
     // void createEnemy();
-    // //void createBackground(level_t level);
+    //void createBackground(stageSource_t stageSource);
     // void killMapElement(IdElement id);
 };
 

@@ -60,6 +60,11 @@ Step::Step(stepParams_t params) {
             this->lastId_++;
         }
     }
+    MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png");
+    this->mapElements_[this->lastId_] = nave;
+
+
+    //createBackground(background);
 }
 
 void Map::addLevel(Level *level){
@@ -131,9 +136,12 @@ void Step::update(){
 }
 
 // void Step::createBackground(stageSource_t backgroundSource){
-//     MapElement* background = new MapElement(BACKGROUND);
+//     int screen_widht = GameProvider::getWidth();
+//     int screen_height = GameProvider::getHeight();
+//     MapElement *background= new MapElement(BACKGROUND,0,0,screen_widht,screen_height,"assets/Stage/Level1/layer_2.png");
+    
 //     lastId_++;
-//     stageData = GameProvider::getConfig()->getStageData(LEVEL_ONE);
+//     auto stageData = GameProvider::getConfig()->getSourcesForStage(0,0);
 
 //     auto *graphics = new GraphicsScenario(backgroundSource);
     
