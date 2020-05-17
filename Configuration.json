@@ -21,14 +21,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 60,
+                            "quantity": 6,
                             "sizeX": 90,
                             "sizeY": 80,
                             "sprite": "assets/Enemies/enemigo1.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 90,
+                            "quantity": 9,
                             "sizeX": 90,
                             "sizeY": 80,
                             "sprite": "assets/Enemies/enemigo2.png"
@@ -36,9 +36,9 @@
                     ]
                 },
                 {
-                    "layer1": "assets/Stage/Level1/layer_1.png",
-                    "layer2": "assets/Stage/Level1/layer_2.png",
-                    "layer3": "assets/Stage/Level1/layer_3.png",
+                    "layer1": "assets/Stage/Level2/layer_1.png",
+                    "layer2": "assets/Stage/Level2/layer_2.jpg",
+                    "layer3": "assets/Stage/Level2/layer_3.png",
                     "enemies": [
                         {
                             "type": 0,
