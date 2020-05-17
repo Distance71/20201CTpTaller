@@ -42,6 +42,7 @@ class MapElement {
 
         void setIdElement(IdElement oneIdElement);
         IdElement getIdElement();
+        bool leftScreen();
 };
 
 template<typename T>

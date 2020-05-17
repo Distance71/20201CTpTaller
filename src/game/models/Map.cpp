@@ -168,18 +168,17 @@ void Stage::update(currentStep_t currentStep){
 
 void Step::update(){
 
-    vector<IdElement> mapElemenDead;
+    vector<IdElement> mapElementDead;
 
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
 
-        // Funciona pero habria que hacerlo mas prolijo -> solo de prueba
-        if (mapElement.second->getState<Position>("Position")->getX() < 0){
-            mapElemenDead.push_back(mapElement.first);
+        if (mapElement.second->leftScreen()){
+            mapElementDead.push_back(mapElement.first);
         }
     }
 
-    for(auto oneIdDead : mapElemenDead){
+    for(auto oneIdDead : mapElementDead){
         this->mapElements_.erase(oneIdDead);
     }
 }

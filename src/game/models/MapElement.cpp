@@ -64,3 +64,6 @@ void MapElement::update(){
     }
 }
 
+bool MapElement::leftScreen(){
+    return (this->getState<Position>("Position")->getX() + this->size_x_ <= 0);
+}
