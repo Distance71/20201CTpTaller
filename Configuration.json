@@ -28,9 +28,9 @@
                         },
                         {
                             "type": 1,
-                            "quantity": 70,
-                            "sizeX": 50,
-                            "sizeY": 50,
+                            "quantity": 90,
+                            "sizeX": 90,
+                            "sizeY": 80,
                             "sprite": "assets/Enemies/enemigo2.png"
                         }
                     ]
@@ -43,8 +43,8 @@
                         {
                             "type": 0,
                             "quantity": 80,
-                            "sizeX": 150,
-                            "sizeY": 100,
+                            "sizeX": 90,
+                            "sizeY": 80,
                             "sprite": "assets/Enemies/enemigo1.png"				  
                         },
                         {
@@ -65,7 +65,7 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 10,
+                            "quantity": 90,
                             "sizeX": 107,
                             "sizeY": 87,
                             "sprite": "assets/Enemies/enemigo1.png"				  

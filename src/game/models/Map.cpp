@@ -91,8 +91,8 @@ Step::Step(stepParams_t params) {
 }
 
 bool Step::endStep(){
-    //this->mapElements_.empty()
-    return (this->mapElements_.size() == 0);
+    //this->mapElements_.size() == 0
+    return (this->mapElements_.empty());
 }
 
 position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
