@@ -72,6 +72,8 @@ Step::Step(stepParams_t params) {
     //Do something -> create enemies of different types, rocks, etc
     size_t nEnemies = params.enemies.size();
     
+    srand(time(0)); 
+
     for(size_t i = 0; i < nEnemies; i++){
         unsigned int nEnemiesIguales = params.enemies[i].quantity;
         string sprite = params.enemies[i].sprite;
@@ -80,7 +82,8 @@ Step::Step(stepParams_t params) {
         
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
-            MapElement *newEnemy = new MapElement(ENEMY,i*100 + j*100,j*40,2,2,sprite, size_x, size_y);
+            position_t positionEnemy = getPosition(size_x, size_y);
+            MapElement *newEnemy = new MapElement(ENEMY,positionEnemy.width,positionEnemy.height,2,2,sprite, size_x, size_y);
             this->mapElements_[this->lastId_] = newEnemy;
             this->lastId_++;
         }
@@ -88,8 +91,21 @@ Step::Step(stepParams_t params) {
 }
 
 bool Step::endStep(){
-    // Igual a 1 porque solo quedaria un jugador -> habria que cambiarlo despues
+    //this->mapElements_.empty()
     return (this->mapElements_.size() == 0);
+}
+
+position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
+    position_t positionMapElement;
+    int minPosX = GameProvider::getWidth();
+    int maxPosX = minPosX * 2;
+    int minPosY = 0;
+    int maxPosY = GameProvider::getHeight() - sizeMapElement_y;
+
+    positionMapElement.width = minPosX + rand()%(maxPosX + 1 - minPosX);
+    positionMapElement.height = minPosY + rand()%(maxPosY + 1 - minPosY);
+
+    return positionMapElement;
 }
 
 void Map::addLevel(Level *level){

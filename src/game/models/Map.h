@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
+#include <stdlib.h>
 #include "MapElement.h"
 #include "../../providers/GameProvider.h"
 #include "Position.h"
@@ -84,6 +85,7 @@ class Step: public Stage {
     private:
     unordered_map<IdElement, MapElement*> mapElements_;
     IdElement lastId_ = 0;
+    position_t getPosition(int sizeMapElement_x, int sizeMapElement_y);
 
     public:
     Step();

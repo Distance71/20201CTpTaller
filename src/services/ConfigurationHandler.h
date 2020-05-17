@@ -17,9 +17,9 @@
 #define DEFAULT_ENEMY_QUANTITY 25
 #define DEFAULT_ENEMY_TYPE 0
 
-#define STEP_FOR_STAGE 2
-#define MIN_ENEMY_STEP 2
-#define MAX_ENEMY_STEP 7
+#define STEP_FOR_STAGE 6
+#define MIN_ENEMY_STEP 8
+#define MAX_ENEMY_STEP 20
 
 using namespace std;
 
