@@ -4,9 +4,9 @@ project(tp1taller)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/src/vendor/")
 
-
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2TTF REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
@@ -41,12 +41,8 @@ add_executable( tp1taller
 	src/game/models/Sprite.h
 	src/game/models/State.cpp
 	src/game/models/State.h
-        src/game/graphics/Graphics.cpp
-        src/game/graphics/Graphics.h
         src/game/graphics/GraphicsScenario.cpp
         src/game/graphics/GraphicsScenario.h
-        src/game/graphics/GraphicsSpacecraft.cpp
-        src/game/graphics/GraphicsSpacecraft.h
         src/game/graphics/GraphicsMapElement.h
         src/game/graphics/GraphicsMapElement.cpp
         src/game/main.cpp
@@ -60,4 +56,4 @@ add_executable( tp1taller
         src/services/ParserJson.cpp
         src/services/ParserJson.h)
 	
-target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2TTF_LIBRARY})

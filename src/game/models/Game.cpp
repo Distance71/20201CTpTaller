@@ -58,6 +58,12 @@ void Game::initializeGraphics() {
         return;
     }
 
+    if (TTF_Init() < 0) {
+        Logger::getInstance()->log(ERROR, string("SDL_ttf no se pudo iniciar! SDL_Error: ").append(TTF_GetError()));
+        GameProvider::setErrorStatus(TTF_GetError());
+        return;
+    }
+
     GameProvider::setRenderer(renderer_);
     GameProvider::setWindow(window_);
 }

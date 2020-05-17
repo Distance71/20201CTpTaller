@@ -11,7 +11,6 @@
 #include "Position.h"
 #include "Speed.h"
 #include "Orientation.h"
-#include "../graphics/GraphicsSpacecraft.h"
 #include "../graphics/GraphicsScenario.h"
 #include "MovementHandler.h"
 #include "PlayerController.h"

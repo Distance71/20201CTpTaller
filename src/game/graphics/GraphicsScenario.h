@@ -11,7 +11,6 @@ class Sprite;
 #include "../../game/models/Sprite.h"
 #include <vector>
 #include "../types.h"
-#include "Graphics.h"
 
 class GraphicsScenario {
     private:
