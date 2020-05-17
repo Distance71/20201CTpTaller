@@ -148,11 +148,7 @@ void Game::run() {
 
     //comentar lo de arriba para terminar esto (el posta)
 
-    currentStep_t current;
-    // TODO investigar por q si sacas estas 3 lineas de abajo se cuelga al cerrar la ventana
-    current.level = LEVEL_ONE;
-    current.stage = STAGE_ONE;
-    current.step = 0;
+    currentStep_t current = {};   
 
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantityLevels = gameSettings.levelParams.size();
@@ -179,7 +175,7 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
-        this->map_->setStageSource(actualStep.level,actualStep.stage);
+        this->map_->setStageSource(actualStep.level,actualStep.stage); //crea el escenario
         runStage(actualStep, stages[i]);
     }
 }
@@ -211,7 +207,7 @@ void Game::runStep(currentStep_t actualStep){
         clearScene();
         processEvent();
         (this->map_->getCurrentScenario())->update();
-        while(0 >= (ms - elaptedTimeMS)) { // TODO Revisar esta logica
+        while(0 >= (ms - elaptedTimeMS)) { // TODO Revisar esto
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();

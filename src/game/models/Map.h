@@ -35,7 +35,7 @@ class Map {
     vector <Level *> levels_;  
     GraphicsScenario *escenario_;
     //void clearMap();
-    MapElement *player; //Prueba
+    MapElement *player;
 
     public:    
     Map();
@@ -46,7 +46,7 @@ class Map {
     void setStageSource(size_t numberLevel, size_t numberStage);
     GraphicsScenario* getCurrentScenario();
     bool endStep(currentStep_t currentStep);
-    //void setCurrentScenario(GraphicsScenario *escenario);
+    void createPlayer(gameParams_t &gameSettings);
 };
 
 class Level: public Map {
@@ -66,7 +66,6 @@ class Level: public Map {
 class Stage: public Level {
     private:
     vector<Step *> steps_;
-    GraphicsScenario *escenario_;
     //IdElement lastId_ = 0;
     void clearMap();
 
@@ -75,12 +74,9 @@ class Stage: public Level {
     Stage();
     Stage(stageParams_t &params);
     // MapElement* createMapElement();
-    void createBackground(int oneLevel, int oneStage);
     void addStep(Step *step);
     vector<Step *> getSteps();
     void update(currentStep_t currentStep);
-    GraphicsScenario* getCurrentScenario();
-    void setCurrentScenario(GraphicsScenario *escenario);
     bool endStep(size_t numberStep);
 };
 
@@ -98,7 +94,6 @@ class Step: public Stage {
     void update();
     bool endStep();
     // int move_in_direction(string movement_instruction,int id);
-    // void createPlayer();
     // void createEnemy();    
     // void killMapElement(IdElement id);
 };
