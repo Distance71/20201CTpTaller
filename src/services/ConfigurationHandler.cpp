@@ -39,6 +39,37 @@ string ConfigurationHandler::getPathStageEnemy(string pathStage, int numberEnemy
     return pathStageEnemy;
 }
 
+string ConfigurationHandler::getPathPlayer(string paramPlayer){
+    string pathPlayer = PATH_PLAYER + paramPlayer;
+
+    return pathPlayer;
+}
+
+player_t ConfigurationHandler::getPlayerParams(){
+    player_t playerParam;
+
+    string pathSizeX = getPathPlayer("sizeX");
+    int sizeX = this->parserJson->getUnsignedInt(pathSizeX);
+    if (sizeX >= 0){
+        playerParam.size_x = sizeX;
+    } else {
+        playerParam.size_x = DEFAULT_SIZE_X;
+    }    
+
+    string pathSizeY = getPathPlayer("sizeY");
+    int sizeY = this->parserJson->getUnsignedInt(pathSizeY);
+    if (sizeX >= 0){
+        playerParam.size_y = sizeY;
+    } else {
+        playerParam.size_y = DEFAULT_SIZE_Y;
+    }    
+
+    string pathSprite = getPathPlayer("sprite");
+    playerParam.sprite = this->parserJson->getString(pathSprite);
+
+    return playerParam;
+}
+
 bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfiguration){
     return this->parserJson->loadConfiguration(pathFileConfiguration);
 }
@@ -94,6 +125,8 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
 }
 
 void ConfigurationHandler::initializeData(){
+
+    this->gameData.playerParams = getPlayerParams();
 
     int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
 

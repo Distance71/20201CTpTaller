@@ -35,6 +35,7 @@ class Map {
     vector <Level *> levels_;  
     GraphicsScenario *escenario_;
     //void clearMap();
+    MapElement *player; //Prueba
 
     public:    
     Map();
@@ -46,7 +47,6 @@ class Map {
     GraphicsScenario* getCurrentScenario();
     bool endStep(currentStep_t currentStep);
     //void setCurrentScenario(GraphicsScenario *escenario);
-      
 };
 
 class Level: public Map {

@@ -85,6 +85,7 @@ typedef struct {
 
 typedef struct {
     vector<levelParams_t> levelParams;
+    player_t playerParams;
 } gameParams_t;
 
 #endif

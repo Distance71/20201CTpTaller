@@ -4,9 +4,9 @@
             "level": "INFO"
         },
         "player": {
-            "size_x": 107,
-            "size_y": 83,
-            "sprite": "assets/Enemies/enemigo1.png"
+            "sizeX": 106,
+            "sizeY": 83,
+            "sprite": "assets/player.png"
         },
         "level": [
             [

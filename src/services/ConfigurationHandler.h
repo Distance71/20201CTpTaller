@@ -9,6 +9,7 @@
 #define PATH_LOG_LEVEL "/configuracion/log/level"
 #define PATH_LEVEL "/configuracion/level"
 #define PATH_BASE_STAGE "/configuracion/level/"
+#define PATH_PLAYER "/configuracion/player/"
 
 #define DEFAULT_SIZE_X 110
 #define DEFAULT_SIZE_Y 90
@@ -35,6 +36,9 @@ class ConfigurationHandler {
         string getPathStage(int numberLevel, int numberStage);
         string getPathStageLayer(string pathStage, int numberLayer);
         string getPathStageEnemy(string pathStage, int numberEnemy, string paramEnemy);
+
+        string getPathPlayer(string paramPlayer);
+        player_t getPlayerParams();
 
         vector<stepParams_t> getStep(vector<enemy_t> &totalEnemies);
 

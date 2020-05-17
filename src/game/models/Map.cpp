@@ -13,6 +13,11 @@ Map::Map(gameParams_t &gameSettings){
         Level *newLevel = new Level(gameSettings.levelParams[i]);
         this->addLevel(newLevel);
     }
+
+    int playerSizeX = gameSettings.playerParams.size_x;
+    int playerSizeY = gameSettings.playerParams.size_y;
+    string playerSprite = gameSettings.playerParams.sprite;
+    this->player = new MapElement(PLAYER, 500, 500, 4, 4, playerSprite, playerSizeX, playerSizeY);
 }
 
 void Map::setStageSource(size_t numberLevel, size_t numberStage){
@@ -87,12 +92,13 @@ Step::Step(stepParams_t params) {
     }
 
     //esta de prueba esto debe crearse al mismo nivel q el fondo
-    MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png", 107, 83);
-    this->mapElements_[this->lastId_] = nave;
+//  //  MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png", 107, 83);
+// //   this->mapElements_[this->lastId_] = nave;
 }
 
 bool Step::endStep(){
-    return (this->mapElements_.size() == 1);
+    // Igual a 1 porque solo quedaria un jugador -> habria que cambiarlo despues
+    return (this->mapElements_.size() == 0);
 }
 
 GraphicsScenario* Stage::getCurrentScenario(){
@@ -150,6 +156,7 @@ vector<Step *> Stage::getSteps(){
 void Map::update(currentStep_t currentStep){
     size_t actualLevel = currentStep.level;
         
+    this->player->update();
     levels_[actualLevel]->update(currentStep);
 }
 
