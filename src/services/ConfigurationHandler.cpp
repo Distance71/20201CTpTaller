@@ -126,6 +126,7 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
 
 void ConfigurationHandler::initializeData(){
 
+    this->setSizeScreen();
     this->gameData.playerParams = getPlayerParams();
 
     int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
@@ -212,6 +213,31 @@ void ConfigurationHandler::initializeData(){
 
         this->gameData.levelParams.push_back(oneLevelParams);
     }
+}
+
+string ConfigurationHandler::getPathScreen(string paramScreen){
+    string pathScreen = PATH_SCREEN + paramScreen;
+
+    return pathScreen;
+}
+
+void ConfigurationHandler::setSizeScreen(){
+
+    string pathScreenWidth = getPathScreen("width");
+    string pathScreenHeight = getPathScreen("height");
+
+    size_t screenWidth = this->parserJson->getUnsignedInt(pathScreenWidth);
+    if (screenWidth < 400){
+        screenWidth = SCREEN_WIDTH;
+    } 
+
+    size_t screenHeight = this->parserJson->getUnsignedInt(pathScreenHeight);
+    if (screenHeight < 400){
+        screenHeight = SCREEN_HEIGHT;
+    } 
+    
+    GameProvider::setWidth(screenWidth);
+    GameProvider::setHeight(screenHeight);
 }
 
 void ConfigurationHandler::setLogLevel(){

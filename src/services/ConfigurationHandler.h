@@ -10,6 +10,7 @@
 #define PATH_LEVEL "/configuracion/level"
 #define PATH_BASE_STAGE "/configuracion/level/"
 #define PATH_PLAYER "/configuracion/player/"
+#define PATH_SCREEN "/configuracion/screen/"
 
 #define DEFAULT_SIZE_X 110
 #define DEFAULT_SIZE_Y 90
@@ -41,6 +42,9 @@ class ConfigurationHandler {
         player_t getPlayerParams();
 
         vector<stepParams_t> getStep(vector<enemy_t> &totalEnemies);
+
+        string getPathScreen(string paramScreen);
+        void setSizeScreen();
 
     public:
         ConfigurationHandler();

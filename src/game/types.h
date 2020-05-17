@@ -31,6 +31,11 @@ typedef struct {
 } player_t;
 
 typedef struct {
+    unsigned int width;
+    unsigned int height;
+} screen_t;
+
+typedef struct {
     string layer1;
     string layer2;
     string layer3;

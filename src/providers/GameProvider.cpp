@@ -7,13 +7,23 @@ namespace GameProvider {
     SDL_Renderer *renderer_;
     SDL_Event lastEvent_;
     SDL_Window* _window;
+    size_t screenWidth_;
+    size_t screenHeight_;
 
     size_t getWidth() {
-        return SCREEN_WIDTH;
+        return screenWidth_;
     }
 
     size_t getHeight(){
-        return SCREEN_HEIGHT;
+        return screenHeight_;
+    }
+
+    void setWidth(size_t width) {
+        screenWidth_ = width;
+    }
+
+    void setHeight(size_t height){
+        screenHeight_ = height;
     }
 
     SDL_Event getLastEvent() {

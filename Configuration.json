@@ -3,6 +3,10 @@
         "log":{
             "level": "INFO"
         },
+        "screen":{
+            "width": 1280,
+            "height": 800
+        },
         "player": {
             "sizeX": 106,
             "sizeY": 83,

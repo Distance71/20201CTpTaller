@@ -45,6 +45,8 @@ namespace GameProvider {
     SDL_Window* getWindow();
 
     //Could go later on gameParamsProvider
+    void setWidth(size_t width);
+    void setHeight(size_t height);
     size_t getWidth();
     size_t getHeight();
     float getElaptedTimeFPS();
