@@ -36,6 +36,11 @@ typedef struct {
 } screen_t;
 
 typedef struct {
+    unsigned int width;
+    unsigned int height;
+} position_t;
+
+typedef struct {
     string layer1;
     string layer2;
     string layer3;
