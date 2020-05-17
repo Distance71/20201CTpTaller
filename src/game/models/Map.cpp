@@ -93,15 +93,11 @@ Step::Step(stepParams_t params) {
             this->lastId_++;
         }
     }
-
-    //esta de prueba esto debe crearse al mismo nivel q el fondo
-//  //  MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png", 107, 83);
-// //   this->mapElements_[this->lastId_] = nave;
 }
 
 bool Step::endStep(){
-    //this->mapElements_.empty()
-    return (this->mapElements_.size() == 0);
+    //this->mapElements_.size() == 0
+    return (this->mapElements_.empty());
 }
 
 position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
