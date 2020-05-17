@@ -13,11 +13,7 @@ Map::Map(gameParams_t &gameSettings){
         Level *newLevel = new Level(gameSettings.levelParams[i]);
         this->addLevel(newLevel);
     }
-
-    int playerSizeX = gameSettings.playerParams.size_x;
-    int playerSizeY = gameSettings.playerParams.size_y;
-    string playerSprite = gameSettings.playerParams.sprite;
-    this->player = new MapElement(PLAYER, 500, 500, 4, 4, playerSprite, playerSizeX, playerSizeY);
+    createPlayer(gameSettings);
 }
 
 void Map::setStageSource(size_t numberLevel, size_t numberStage){
@@ -43,7 +39,6 @@ Level::Level(levelParams_t &params){
 
     for(size_t i = 0; i < nStages; i++){
         Stage *newStage = new Stage(params.stagesParams[i]);
-        //newStage->createBackground(0,0);
         this->addStage(newStage);
     }
 }
@@ -53,7 +48,7 @@ bool Level::endStep(size_t numberStage, size_t numberStep){
 }
 
 Stage::Stage(){
-    //Nintecesitaba crearlo para compilar
+    //Necesitaba crearlo para compilar
 }
 
 Stage::Stage(stageParams_t &params){
@@ -111,14 +106,6 @@ position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
     positionMapElement.height = minPosY + rand()%(maxPosY + 1 - minPosY);
 
     return positionMapElement;
-}
-
-GraphicsScenario* Stage::getCurrentScenario(){
-    return this->escenario_;
-}
-
-void Stage::setCurrentScenario(GraphicsScenario *escenario){
-    this->escenario_=escenario;
 }
 
 void Map::addLevel(Level *level){
@@ -181,7 +168,6 @@ void Level::update(currentStep_t currentStep){
 void Stage::update(currentStep_t currentStep){
     size_t actualStep = currentStep.step;
 
-    //((steps_[actualStep])->getCurrentScenario())->update();
     steps_[actualStep]->update();
 }
 
@@ -202,15 +188,19 @@ void Step::update(){
     }
 }
 
+void Map::createPlayer(gameParams_t &gameSettings){
+    int playerSizeX = gameSettings.playerParams.size_x;
+    int playerSizeY = gameSettings.playerParams.size_y;
+    string playerSprite = gameSettings.playerParams.sprite;
+    this->player = new MapElement(PLAYER, 500, 500, 4, 4, playerSprite, playerSizeX, playerSizeY);
+ }
+
+
+
+/* //No va mas este
 void Stage::createBackground(int oneLevel, int oneStage){
-    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(oneLevel,oneStage);
-     background.layer1="assets/Stage/Level1/layer_1.png";
-     background.layer2="assets/Stage/Level1/layer_2.png";
-     background.layer3="assets/Stage/Level1/layer_3.png";
-     this->escenario_= new GraphicsScenario(background);
 
-
-/*     int screen_widht = GameProvider::getWidth();
+     int screen_widht = GameProvider::getWidth();
     int screen_height = GameProvider::getHeight();
     MapElement *background= new MapElement(BACKGROUND,0,0,screen_widht,screen_height,"assets/Stage/Level1/layer_2.png");
     
@@ -221,27 +211,27 @@ void Stage::createBackground(int oneLevel, int oneStage){
     
     background->addAction("Graphics", graphics);
 
-    mapElements_[lastId_] = background; */
-}
+    mapElements_[lastId_] = background; 
+}*/
 
-// // void Step::createPlayer(){
-// //     MapElement* player = new MapElement(PLAYER);
-// //     lastId_++;
+// void Step::createPlayer(){ //no va mas este
+//      MapElement* player = new MapElement(PLAYER);
+//     lastId_++;
 
-// //     Position *initialPosition = new Position(); //Should have a initial player positionHandler
-// //     Speed *speed = new Speed(); //This should be taken from config
-// //     Orientation *initialOrientation = new Orientation(); //Should be Front
-// //     auto *graphics = new GraphicsSpacecraft();
-// //     auto *movementHandler = new PlayerController(lastId_);
+//     Position *initialPosition = new Position(); //Should have a initial player positionHandler
+//     Speed *speed = new Speed(); //This should be taken from config
+//     Orientation *initialOrientation = new Orientation(); //Should be Front
+//     auto *graphics = new GraphicsSpacecraft();
+//     auto *movementHandler = new PlayerController(lastId_);
 
-// //     player->addState("Position", initialPosition);
-// //     player->addState("Speed", speed);
-// //     player->addState("Orientation", initialOrientation);
-// //     player->addAction("Graphics", graphics);
-// //     player->addAction("MovementHandler", movementHandler);
+//     player->addState("Position", initialPosition);
+//     player->addState("Speed", speed);
+//     player->addState("Orientation", initialOrientation);
+//     player->addAction("Graphics", graphics);
+//     player->addAction("MovementHandler", movementHandler);
 
-// //     mapElements_[lastId_] = player;
-// // }
+//     mapElements_[lastId_] = player;
+//  }
 
 // // void Step::createEnemy(){
 // //     MapElement* enemy = new MapElement(ENEMY);
