@@ -54,8 +54,8 @@ typedef enum {
 
 typedef enum {
     PLAYER,
-    ENEMY_1,
-    ENEMY_2,
+    ENEMY,
+//    ENEMY_2,
     BACKGROUND
 } elementType_t;
 

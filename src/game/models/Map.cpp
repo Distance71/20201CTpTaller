@@ -85,7 +85,7 @@ Step::Step(stepParams_t params) {
         
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
-            MapElement *newEnemy = new MapElement(ENEMY_1,i*100 + j*100,j*40,2,2,sprite, size_x, size_y);
+            MapElement *newEnemy = new MapElement(ENEMY,i*100 + j*100,j*40,2,2,sprite, size_x, size_y);
             this->mapElements_[this->lastId_] = newEnemy;
             this->lastId_++;
         }
