@@ -18,7 +18,7 @@ void GraphicsMapElement::update(unordered_map<string, State *> states_){
     SDL_Rect sprite ={0, 0, this->size_x_, this->size_y_}; 
     
     //rectangulo de la pantalla donde quiero dibujar el sprite.
-    SDL_Rect aux_graphics_sprite = {position_ -> getX(), position_ -> getY(),107, 83};
+    SDL_Rect aux_graphics_sprite = {position_ -> getX(), position_ -> getY(), this->size_x_, this->size_y_};
     
     //Obtengo la textura
     SDL_Texture* spriteTexture = sprite_-> getTexture();

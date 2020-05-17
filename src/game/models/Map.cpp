@@ -72,13 +72,12 @@ Step::Step(stepParams_t params) {
     //Do something -> create enemies of different types, rocks, etc
     size_t nEnemies = params.enemies.size();
     
-    int size_x = 107;
-    int size_y = 83;
-
     for(size_t i = 0; i < nEnemies; i++){
         unsigned int nEnemiesIguales = params.enemies[i].quantity;
         string sprite = params.enemies[i].sprite;
-
+        int size_x = params.enemies[i].size_x;
+        int size_y = params.enemies[i].size_y;
+        
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
             MapElement *newEnemy = new MapElement(ENEMY_1,i*100 + j*100,j*40,2,2,sprite, size_x, size_y);
@@ -86,8 +85,9 @@ Step::Step(stepParams_t params) {
             this->lastId_++;
         }
     }
+
     //esta de prueba esto debe crearse al mismo nivel q el fondo
-    MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png", size_x, size_y);
+    MapElement *nave= new MapElement(PLAYER,500,500,4,4,"assets/player.png", 107, 83);
     this->mapElements_[this->lastId_] = nave;
 }
 

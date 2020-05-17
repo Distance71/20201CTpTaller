@@ -62,6 +62,8 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
         for(int i = 0; i < cantEnemies; i++){
             enemy_t oneEnemy;
             oneEnemy.type = totalEnemies[i].type;
+            oneEnemy.size_x = totalEnemies[i].size_x;
+            oneEnemy.size_y = totalEnemies[i].size_y;
             oneEnemy.sprite = totalEnemies[i].sprite;
 
             if (step == STEP_FOR_STAGE - 1){
@@ -130,6 +132,7 @@ void ConfigurationHandler::initializeData(){
                 enemy_t oneEnemy;
 
                 string pathEnemyType = getPathStageEnemy(pathStage, numberEnemy, "type");
+
                 int typeEnemy = this->parserJson->getUnsignedInt(pathEnemyType);
                 if (typeEnemy >= 0){
                     oneEnemy.type = typeEnemy;
@@ -147,13 +150,22 @@ void ConfigurationHandler::initializeData(){
                     oneEnemy.quantity = DEFAULT_ENEMY_QUANTITY;
                 }
 
-                /*
-                if (oneEnemy.type == 0){
-                    cantTotalType1 += oneEnemy.quantity;
+                string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
+                int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
+                if (sizeX >= 0){
+                    oneEnemy.size_x = sizeX;
                 } else {
-                    cantTotalType2 += oneEnemy.quantity;
-                }*/
+                    oneEnemy.size_x = DEFAULT_SIZE_X;
+                }
 
+                string pathEnemySizeY = getPathStageEnemy(pathStage, numberEnemy, "sizeY");
+                int sizeY = this->parserJson->getUnsignedInt(pathEnemySizeY);
+                if (sizeY >= 0){
+                    oneEnemy.size_y = sizeY;
+                } else {
+                    oneEnemy.size_y = DEFAULT_SIZE_Y;
+                }
+                
                 string pathEnemySprite = getPathStageEnemy(pathStage, numberEnemy, "sprite");
                 oneEnemy.sprite = this->parserJson->getString(pathEnemySprite);
 
@@ -167,7 +179,6 @@ void ConfigurationHandler::initializeData(){
 
         this->gameData.levelParams.push_back(oneLevelParams);
     }
-
 }
 
 void ConfigurationHandler::setLogLevel(){

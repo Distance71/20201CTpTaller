@@ -10,6 +10,8 @@
 #define PATH_LEVEL "/configuracion/level"
 #define PATH_BASE_STAGE "/configuracion/level/"
 
+#define DEFAULT_SIZE_X 110
+#define DEFAULT_SIZE_Y 90
 #define DEFAULT_ENEMY_QUANTITY 25
 #define DEFAULT_ENEMY_TYPE 0
 

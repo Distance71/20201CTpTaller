@@ -1,60 +1,75 @@
 {
     "configuracion": {
         "log":{
-            "level": "DEBUG"
-      },
-      "level": [
-          [
-              {
-                "layer1": "assets/Stage/Level1/layer_1.png",
-                "layer2": "assets/Stage/Level1/layer_2.png",
-                "layer3": "assets/Stage/Level1/layer_3.png",
-                "enemies": [
-                    {
-                        "type": 0,
-                        "quantity": 10,
-                        "sprite": "assets/Enemies/enemigo1.png"				  
-                    },
-                    {
-                        "type": 1,
-                        "quantity": 10,
-                        "sprite": "assets/Enemies/enemigo2.png"
-                    }
-                ]
-              },
-              {
-                "layer1": "assets/Stage/Level1/layer_1.png",
-                "layer2": "assets/Stage/Level1/layer_2.png",
-                "layer3": "assets/Stage/Level1/layer_3.png",
-                "enemies": [
-                    {
-                        "type": 0,
-                        "quantity": 10,
-                        "sprite": "assets/Enemies/enemigo1.png"				  
-                    },
-                    {
-                        "type": 1,
-                        "quantity": 10,
-                        "sprite": "assets/Enemies/enemigo2.png"
-                    }
-                ]
-              }
-          ],
-          [
-              {
-                "layer1": "assets/Stage/Level2/layer_1.png",
-                "layer2": "assets/Stage/Level2/layer_2.png",
-                "layer3": "assets/Stage/Level2/layer_3.png",
-                "enemies": [
-                    {
-                        "type": 0,
-                        "quantity": 10,
-                        "sprite": "assets/Enemies/enemigo1.png"				  
-                    }
-                ]
-              }
-          ]
-      ]
+            "level": "INFO"
+        },
+        "player": {
+            "size_x": 107,
+            "size_y": 83,
+            "sprite": "assets/Enemies/enemigo1.png"
+        },
+        "level": [
+            [
+                {
+                    "layer1": "assets/Stage/Level1/layer_1.png",
+                    "layer2": "assets/Stage/Level1/layer_2.png",
+                    "layer3": "assets/Stage/Level1/layer_3.png",
+                    "enemies": [
+                        {
+                            "type": 0,
+                            "quantity": 10,
+                            "sizeX": 90,
+                            "sizeY": 80,
+                            "sprite": "assets/Enemies/enemigo1.png"				  
+                        },
+                        {
+                            "type": 1,
+                            "quantity": 10,
+                            "sizeX": 50,
+                            "sizeY": 50,
+                            "sprite": "assets/Enemies/enemigo2.png"
+                        }
+                    ]
+                },
+                {
+                    "layer1": "assets/Stage/Level1/layer_1.png",
+                    "layer2": "assets/Stage/Level1/layer_2.png",
+                    "layer3": "assets/Stage/Level1/layer_3.png",
+                    "enemies": [
+                        {
+                            "type": 0,
+                            "quantity": 10,
+                            "sizeX": 150,
+                            "sizeY": 100,
+                            "sprite": "assets/Enemies/enemigo1.png"				  
+                        },
+                        {
+                            "type": 1,
+                            "quantity": 10,
+                            "sizeX": 107,
+                            "sizeY": 87,
+                            "sprite": "assets/Enemies/enemigo2.png"
+                        }
+                    ]
+                }
+            ],
+            [
+                {
+                    "layer1": "assets/Stage/Level2/layer_1.png",
+                    "layer2": "assets/Stage/Level2/layer_2.png",
+                    "layer3": "assets/Stage/Level2/layer_3.png",
+                    "enemies": [
+                        {
+                            "type": 0,
+                            "quantity": 10,
+                            "sizeX": 107,
+                            "sizeY": 87,
+                            "sprite": "assets/Enemies/enemigo1.png"				  
+                        }
+                    ]
+                }
+            ]
+        ]
     }
-  }
+}
   
