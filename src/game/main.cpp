@@ -43,8 +43,6 @@ int main(int argc, char *args[]) {
 
     game->run();
 
-    //game->~Game();
-
     //GameProvider::getConfig()->~ConfigurationHandler();
 
     Logger::getInstance()->log(INFO, "Juego Finalizado");

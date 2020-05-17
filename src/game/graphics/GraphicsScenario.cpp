@@ -6,7 +6,7 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
     string layer1Path= background.layer1;
     string layer2Path = background.layer2;
     string layer3Path = background.layer3;
-    stageSource_t stageData;
+    //stageSource_t stageData;
 
     // switch(level){
     //     case LEVEL_ONE:
