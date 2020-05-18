@@ -3,11 +3,86 @@
 #include "../services/ConfigurationHandler.h"
 #include "../providers/GameProvider.h"
 
+#include <iostream>
+#include <getopt.h>
+
 #define PATH_CONFIGURATION "../Configuration.json"
 
+void showHelp(){
+    cout << "Uso: ejemplo [opcion]..." << endl;
+    cout << "Opciones:" << endl;
+    cout << "\t --help \t Ver esta ayuda" << endl;
+    cout << "\t -l \t" << endl;
+    cout << "\t --log \t \t Establecer nivel de log" << endl;
+    cout << "\t -c file \t" << endl;
+    cout << "\t --config=file \t Establecer archivo de configuracion" << endl;
+}
 
-//Sets bullshit of config.json and logger
+void initializeGameConfig(string pathConfiguration, string levelLog){
+
+    ConfigurationHandler *configurationHandler = new ConfigurationHandler();
+    configurationHandler->loadFileConfiguration(pathConfiguration); 
+
+    if (levelLog == ""){
+        configurationHandler->setLogLevel();
+    } else {
+        Logger::getInstance()->setLevel(levelLog);
+    }
+
+    configurationHandler->initializeData();
+    GameProvider::setConfig(configurationHandler);
+}
+
+int main(int argc, char *args[]) {
+
+    const char* const short_opts = "hl:c:";
+    const option long_opts[] = {
+        {"help", no_argument, NULL, 'h'},
+        {"log", required_argument, NULL, 'l'},
+        {"config", required_argument, NULL, 'c'},
+        {NULL, 0, NULL, 0}
+    };
+
+    int opt;
+    std::string levelLog, pathConfig;
+
+    while ((opt = getopt_long(argc, args, short_opts, long_opts, nullptr)) != -1){
+        switch (opt) {
+            case 'h':
+                showHelp();
+                return EXIT_SUCCESS;
+            case 'c':
+                pathConfig = optarg;
+                break;
+            case 'l':
+                levelLog = optarg;
+                break;
+            
+            default:
+                showHelp();
+                return EXIT_FAILURE;
+        }
+    }
+
+    initializeGameConfig(pathConfig, levelLog);
+
+    Logger::getInstance()->log(INFO, "Juego iniciado");
+
+    Game *game = new Game();
+
+    game->run();
+
+    //GameProvider::getConfig()->~ConfigurationHandler();
+
+    Logger::getInstance()->log(INFO, "Juego Finalizado");
+
+    return EXIT_SUCCESS;
+}
+
+/*
 bool initializeGameConfig(int argc, char* args[]) {
+
+    return false;
 
     ConfigurationHandler *configurationHandler = new ConfigurationHandler();
     configurationHandler->loadFileConfiguration(PATH_CONFIGURATION);
@@ -30,22 +105,4 @@ bool initializeGameConfig(int argc, char* args[]) {
     configurationHandler->initializeData();
     GameProvider::setConfig(configurationHandler);
     return true;
-}
-
-int main(int argc, char *args[]) {
-    if (!initializeGameConfig(argc, args)){
-        return EXIT_FAILURE;
-    }
-
-    Logger::getInstance()->log(INFO, "Juego iniciado");
-
-    Game *game = new Game();
-
-    game->run();
-
-    //GameProvider::getConfig()->~ConfigurationHandler();
-
-    Logger::getInstance()->log(INFO, "Juego Finalizado");
-
-    return EXIT_SUCCESS;
-}
+}*/
