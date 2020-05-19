@@ -9,6 +9,7 @@ GraphicsMapElement::GraphicsMapElement(Sprite * sprite,  int size_x, int size_y)
 void GraphicsMapElement::update(unordered_map<string, State *> states_){
 
     State* position_ = states_.at("Position");
+    State* orientation_ = states_.at("Orientation");
 
     Logger::getInstance()->log(DEBUG, "Entro al update de graphics");
 
@@ -26,6 +27,12 @@ void GraphicsMapElement::update(unordered_map<string, State *> states_){
     //el renderer copia la textura del sprite recortando la foto con 
     //sprite y pegandola en el rectangulo de la pantalla
     //donde lo quiero ubicar, es decir en aux_graphics_sprite
-    SDL_RenderCopy(renderer, spriteTexture, &sprite, &aux_graphics_sprite);
+    //SDL_RenderCopy(renderer, spriteTexture, &sprite, &aux_graphics_sprite);
+    int orientationSprite = orientation_->getX();
+    if (orientationSprite == FRONT){
+        SDL_RenderCopy(renderer, spriteTexture, &sprite, &aux_graphics_sprite);
+    } else if (orientationSprite == BACK){
+        SDL_RenderCopyEx(renderer, spriteTexture, &sprite, &aux_graphics_sprite, 180, nullptr, SDL_FLIP_VERTICAL);
+    }
 }
  
