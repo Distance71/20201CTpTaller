@@ -16,9 +16,9 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     int new_xp;
 
     if (orientation->getX() == FRONT){
-        new_xp = xp-xs;
+        new_xp = xp + xs;
     } else {
-        new_xp = xp+xs;
+        new_xp = xp - xs;
     }
 
     position->setX(new_xp);

@@ -59,7 +59,7 @@ void MapElement::update(){
 
 bool MapElement::leftScreen(){
 
-    if (this->getState<Orientation>("Orientation")->getX() == FRONT){
+    if (this->getState<Orientation>("Orientation")->getX() == BACK){
         return (this->getState<Position>("Position")->getX() + this->size_x_ <= 0);
     }
     

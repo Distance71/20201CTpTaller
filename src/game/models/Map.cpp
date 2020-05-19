@@ -71,8 +71,6 @@ Step::Step(){
 Step::Step(stepParams_t params) {
     //Do something -> create enemies of different types, rocks, etc
     size_t nEnemies = params.enemies.size();
-    
-    srand(time(0)); 
 
     for(size_t i = 0; i < nEnemies; i++){
         unsigned int nEnemiesIguales = params.enemies[i].quantity;
@@ -105,12 +103,12 @@ position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
     int orientationRand = rand() % 2;
 
     if (orientationRand == 0){
-        positionMapElement.orientation = FRONT;
+        positionMapElement.orientation = BACK;//FRONT
         minPosX = GameProvider::getWidth();
         maxPosX = minPosX * 2;
         positionMapElement.width = minPosX + rand()%(maxPosX + 1 - minPosX);
     } else {
-        positionMapElement.orientation = BACK;
+        positionMapElement.orientation = FRONT;//BACK
         minPosX = 0 + sizeMapElement_x;
         maxPosX = GameProvider::getWidth();
         positionMapElement.width = -1 * (minPosX + rand()%(maxPosX + 1 - minPosX));
