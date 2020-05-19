@@ -1,4 +1,4 @@
-/*#ifndef _ORIENTATION_H_
+#ifndef _ORIENTATION_H_
 #define _ORIENTATION_H_
 
 #include "State.h"
@@ -6,13 +6,12 @@
 
 // Se encarga del manejo interno del state de posicion
 
-class Orientation: virtual State {
-    orientation_t orientation_;
-
+class Orientation: public State {
+    
     public:
-    Orientation();
-    orientation_t getOrientation();
-    //~Orientation();
+        Orientation(int x, int y);
+        int getX()override;
+        //~Orientation();
 };
 
-#endif*/
+#endif

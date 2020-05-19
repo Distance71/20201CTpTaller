@@ -1,10 +1,12 @@
 #include "MapElement.h"
 
-MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sourceSprite, int size_x, int size_y){
+MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sourceSprite, int size_x, int size_y, orientation_t orientationInit){
     Position* position =new Position(x_pos,y_pos);
     Speed* speed = new Speed(x_speed,y_speed);
+    Orientation* orientation = new Orientation(orientationInit, 0);
     addState("Position", position);
     addState("Speed", speed);
+    addState("Orientation", orientation);
     
     this->size_x_ = size_x;
     this->size_y_ = size_y;
@@ -56,5 +58,10 @@ void MapElement::update(){
 }
 
 bool MapElement::leftScreen(){
-    return (this->getState<Position>("Position")->getX() + this->size_x_ <= 0);
+
+    if (this->getState<Orientation>("Orientation")->getX() == FRONT){
+        return (this->getState<Position>("Position")->getX() + this->size_x_ <= 0);
+    }
+    
+    return (this->getState<Position>("Position")->getX() - this->size_x_ >= (int)GameProvider::getWidth());
 }

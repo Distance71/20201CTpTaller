@@ -1,11 +1,11 @@
-/*#include "Orientation.h"
+#include "Orientation.h"
 
 //Orientation::~Orientation();
 
-Orientation::Orientation(){
-    orientation_ = FRONT;
+Orientation::Orientation(int x, int y):State(x,y){
+    
 }
 
-orientation_t Orientation::getOrientation(){
-    return this->orientation_;
-}*/
+int Orientation::getX(){
+    return this->x;
+}

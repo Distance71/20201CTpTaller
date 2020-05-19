@@ -16,6 +16,17 @@ typedef enum stage {
     STAGE_TWO = 1,
 } stage_t;
 
+typedef enum {
+    FRONT,
+    BACK,
+    UP,
+    DOWN,
+    FRONT_UP,
+    FRONT_DOWN,
+    BACK_DOWN,
+    BACK_UP
+} orientation_t;
+
 typedef struct {
     unsigned int type;
     unsigned int quantity;
@@ -36,8 +47,9 @@ typedef struct {
 } screen_t;
 
 typedef struct {
-    unsigned int width;
-    unsigned int height;
+    int width;
+    int height;
+    orientation_t orientation;
 } position_t;
 
 typedef struct {
@@ -50,17 +62,6 @@ typedef struct {
     stage_t stage;
     vector<enemy_t> enemies;
 } stepContent_t;
-
-typedef enum {
-    FRONT,
-    BACK,
-    UP,
-    DOWN,
-    FRONT_UP,
-    FRONT_DOWN,
-    BACK_DOWN,
-    BACK_UP
-} orientation_t;
 
 typedef enum {
     PLAYER,

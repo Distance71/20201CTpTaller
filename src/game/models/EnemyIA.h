@@ -4,13 +4,14 @@
 #include "MovementHandler.h"
 #include "State.h"
 #include "../../services/Logger.h"
+#include "../types.h"
 
 
 class EnemyIA: public MovementHandler {
-	private:
+
 	public:
-	EnemyIA();
-	void update(unordered_map<string, State *> states_);
+		EnemyIA();
+		void update(unordered_map<string, State *> states_);
 };
 
 #endif

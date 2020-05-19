@@ -83,7 +83,8 @@ Step::Step(stepParams_t params) {
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
-            MapElement *newEnemy = new MapElement(ENEMY,positionEnemy.width,positionEnemy.height,2,2,sprite, size_x, size_y);
+            MapElement *newEnemy = new MapElement(ENEMY,positionEnemy.width,positionEnemy.height,2,2,sprite, size_x, size_y, positionEnemy.orientation);
+            //MapElement *newEnemy = new MapElement(ENEMY,positionEnemy.width,positionEnemy.height,2,2,sprite, size_x, size_y, positionEnemy.orientation);
             this->mapElements_[this->lastId_] = newEnemy;
             this->lastId_++;
         }
@@ -97,14 +98,26 @@ bool Step::endStep(){
 
 position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
     position_t positionMapElement;
-    int minPosX = GameProvider::getWidth();
-    int maxPosX = minPosX * 2;
+    int minPosX, maxPosX;
     int minPosY = 0;
     int maxPosY = GameProvider::getHeight() - sizeMapElement_y;
+    
+    int orientationRand = rand() % 2;
 
-    positionMapElement.width = minPosX + rand()%(maxPosX + 1 - minPosX);
+    if (orientationRand == 0){
+        positionMapElement.orientation = FRONT;
+        minPosX = GameProvider::getWidth();
+        maxPosX = minPosX * 2;
+        positionMapElement.width = minPosX + rand()%(maxPosX + 1 - minPosX);
+    } else {
+        positionMapElement.orientation = BACK;
+        minPosX = 0 + sizeMapElement_x;
+        maxPosX = GameProvider::getWidth();
+        positionMapElement.width = -1 * (minPosX + rand()%(maxPosX + 1 - minPosX));
+    } 
+
     positionMapElement.height = minPosY + rand()%(maxPosY + 1 - minPosY);
-
+    
     return positionMapElement;
 }
 
@@ -197,7 +210,7 @@ void Map::createPlayer(gameParams_t &gameSettings){
     positionPlayer.width = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
     positionPlayer.height = (GameProvider::getHeight() - playerSizeY) / 2;
 
-    this->player = new MapElement(PLAYER, positionPlayer.width, positionPlayer.height, 4, 4, playerSprite, playerSizeX, playerSizeY); //Parametrizar
+    this->player = new MapElement(PLAYER, positionPlayer.width, positionPlayer.height, 4, 4, playerSprite, playerSizeX, playerSizeY, FRONT); //Parametrizar
  }
 
 
