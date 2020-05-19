@@ -1,9 +1,9 @@
 #include "MapElement.h"
 
-MapElement::MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sourceSprite, int size_x, int size_y, orientation_t orientationInit){
-    Position* position =new Position(x_pos,y_pos);
+MapElement::MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, const string &sourceSprite, int size_x, int size_y){
+    Position* position =new Position(position_.axis_x, position_.axis_y);
     Speed* speed = new Speed(x_speed,y_speed);
-    Orientation* orientation = new Orientation(orientationInit, 0);
+    Orientation* orientation = new Orientation(position_.orientation, 0);
     addState("Position", position);
     addState("Speed", speed);
     addState("Orientation", orientation);

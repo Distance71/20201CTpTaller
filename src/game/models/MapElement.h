@@ -29,7 +29,7 @@ class MapElement {
         
 
     public:
-        MapElement(elementType_t type,int x_pos,int y_pos,int x_speed,int y_speed, const string &sprite, int size_x, int size_y, orientation_t orientationInit);
+        MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, const string &sprite, int size_x, int size_y);
         ~MapElement();
        
        

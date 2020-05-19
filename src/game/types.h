@@ -47,8 +47,8 @@ typedef struct {
 } screen_t;
 
 typedef struct {
-    int width;
-    int height;
+    int axis_x;
+    int axis_y;
     orientation_t orientation;
 } position_t;
 
