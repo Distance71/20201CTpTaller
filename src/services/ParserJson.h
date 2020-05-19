@@ -12,7 +12,6 @@
 #include "../game/models/Map.h"
 
 #define DEFAULT_CONFIGURATION "../default/ConfigurationDefault.json"
-#define DEFAULT_LOG_LEVEL "INFO"
 
 using namespace std;
 using json = nlohmann::json;
@@ -23,8 +22,13 @@ class ParserJson {
 
     private:
         json jsonConfiguration;
+        json jsonDefault;
 
         ifstream loadFile(const string &pathFile, string valueDefault);
+        int getSizeArrayDefault(json::json_pointer jsonPointerPath);
+        string getStringDefault(json::json_pointer jsonPointerPath);
+        int getUnsignedIntDefault(json::json_pointer jsonPointerPath);
+        bool isNull(json oneJson, json::json_pointer pathJsonPointer); 
 
     public:
         ParserJson();

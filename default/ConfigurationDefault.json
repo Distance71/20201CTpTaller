@@ -21,14 +21,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 6,
+                            "quantity": 70,
                             "sizeX": 90,
                             "sizeY": 80,
                             "sprite": "assets/Enemies/enemigo1.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 9,
+                            "quantity": 60,
                             "sizeX": 90,
                             "sizeY": 80,
                             "sprite": "assets/Enemies/enemigo2.png"
@@ -42,7 +42,7 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 80,
+                            "quantity": 90,
                             "sizeX": 90,
                             "sizeY": 80,
                             "sprite": "assets/Enemies/enemigo1.png"				  
