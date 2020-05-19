@@ -192,7 +192,12 @@ void Map::createPlayer(gameParams_t &gameSettings){
     int playerSizeX = gameSettings.playerParams.size_x;
     int playerSizeY = gameSettings.playerParams.size_y;
     string playerSprite = gameSettings.playerParams.sprite;
-    this->player = new MapElement(PLAYER, 500, 500, 4, 4, playerSprite, playerSizeX, playerSizeY); //Parametrizar
+
+    position_t positionPlayer;
+    positionPlayer.width = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
+    positionPlayer.height = (GameProvider::getHeight() - playerSizeY) / 2;
+
+    this->player = new MapElement(PLAYER, positionPlayer.width, positionPlayer.height, 4, 4, playerSprite, playerSizeX, playerSizeY); //Parametrizar
  }
 
 
