@@ -78,7 +78,9 @@ bool Game::login() {
         GameProvider::setErrorStatus("Error al cargar el menu principal" );
         return false;
     }
-    SDL_BlitSurface(loginscreen, NULL, surface, NULL);
+    //SDL_BlitSurface(loginscreen, NULL, surface, NULL);
+    // La pantalla de Login se ajusta segun el tamanio de la ventana 
+    SDL_BlitScaled(loginscreen, NULL, surface, NULL);
     SDL_UpdateWindowSurface(window);
     while (GameProvider::getStatus().normalStatus){
         processEvent();
