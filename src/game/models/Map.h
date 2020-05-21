@@ -47,6 +47,7 @@ class Map {
     GraphicsScenario* getCurrentScenario();
     bool endStep(currentStep_t currentStep);
     void createPlayer(gameParams_t &gameSettings);
+    void initializePositionPlayer(gameParams_t &gameSettings);
 };
 
 class Level: public Map {

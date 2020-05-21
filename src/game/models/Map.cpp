@@ -210,8 +210,20 @@ void Map::createPlayer(gameParams_t &gameSettings){
     positionPlayer.orientation = FRONT;
 
     this->player = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); //Parametrizar
- }
+}
 
+void Map::initializePositionPlayer(gameParams_t &gameSettings){
+    int playerSizeX = gameSettings.playerParams.size_x;
+    int playerSizeY = gameSettings.playerParams.size_y;
+
+    position_t positionPlayer;
+    positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
+    positionPlayer.axis_y = (GameProvider::getHeight() - playerSizeY) / 2;
+
+    State *playerPosition = this->player->getState<Position>(string("Position"));
+    playerPosition->setX(positionPlayer.axis_x);
+    playerPosition->setY(positionPlayer.axis_y);
+}
 
 
 /* //No va mas este

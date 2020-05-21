@@ -99,62 +99,6 @@ void Game::run() {
         return;
 
     initializeGameParams();
-    
-
-
-
-
-
-
-    /***  TODO ESTO ES PARA PROBAR NADA MAS -> Se cambio a ver si funciona el getSourcesForStage */
-/*      currentStep_t currentprueba;
-    currentprueba.level = LEVEL_ONE;
-    currentprueba.stage = STAGE_ONE;
-    currentprueba.step = 0;
-
-    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(0,0);
-    background.layer1="assets/Stage/Level1/layer_1.png";
-    background.layer2="assets/Stage/Level1/layer_2.png";
-    background.layer3="assets/Stage/Level1/layer_3.png";
-    GraphicsScenario escenario= GraphicsScenario(background);
-
-    int screen_widht = GameProvider::getWidth();
-    int screen_height = GameProvider::getHeight();
-        
-    gameParams_t gameParams = GameProvider::getConfig()->getGameParams();
-
-    this->map_ = new Map(gameParams);
-
-    MapElement nave= MapElement(PLAYER,500,500,4,4,"assets/player.png");
-    MapElement enemigo1 = MapElement(ENEMY_1,screen_widht+100,200,2,2,"assets/Enemies/enemigo1.png");
-    MapElement enemigo2 = MapElement(ENEMY_2,screen_widht+400,screen_height-200,2,2,"assets/Enemies/enemigo2.png");
-    MapElement enemigo3 = MapElement(ENEMY_1,screen_widht+800,200,2,2,"assets/Enemies/enemigo1.png");
-    MapElement enemigo4 = MapElement(ENEMY_2,screen_widht+100,screen_height-200,2,2,"assets/Enemies/enemigo2.png");
-    MapElement enemigo5 = MapElement(ENEMY_1,screen_widht+400,200,2,2,"assets/Enemies/enemigo1.png");
-    MapElement enemigo6 = MapElement(ENEMY_2,screen_widht+900,screen_height-200,2,2,"assets/Enemies/enemigo2.png");
-
-    while (true){        
-        SDL_Event e;
-        while (SDL_PollEvent(&e)){
-            if (e.type==SDL_QUIT){
-                return;
-            }
-        }
-        escenario.update();
-        nave.update();
-        this->map_->update(currentprueba);
-        enemigo1.update();
-        enemigo2.update();
-        enemigo3.update();
-        enemigo4.update();
-        enemigo5.update();
-        enemigo6.update();
-
-        updateGraphics();  
-    }
- */
-
-    //comentar lo de arriba para terminar esto (el posta)
 
     currentStep_t current = {};   
 
@@ -163,9 +107,17 @@ void Game::run() {
 
     vector<Level *> levels =  map_->getLevels();
 
-    for(size_t i = 0; i < quantityLevels; i++){
+    /*for(size_t i = 0; i < quantityLevels; i++){
         current.level = static_cast<level_t>(i); 
         runLevel(current, levels[i]);
+    }*/
+    
+    size_t i = 0;
+
+    while ((i < quantityLevels) && (GameProvider::getStatus().normalStatus)){
+        current.level = static_cast<level_t>(i); 
+        runLevel(current, levels[i]);
+        i++;
     }
 }
 
@@ -188,7 +140,10 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
         runStage(actualStep, stages[i]);
     }
     
-    this->viewStageCleared(actualStep.level);
+    if (GameProvider::getStatus().normalStatus){
+        this->viewStageCleared(actualStep.level);
+        this->map_->initializePositionPlayer(gameSettings);
+    }
 }
 
 void Game::runStage(currentStep_t actualStep, Stage *stage){
