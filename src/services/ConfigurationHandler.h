@@ -21,6 +21,9 @@
 #define MIN_ENEMY_STEP 8
 #define MAX_ENEMY_STEP 20
 
+#define MIN_SCREEN_WIDTH 800
+#define MIN_SCREEN_HEIGHT 600
+
 using namespace std;
 
 class ParserJson;

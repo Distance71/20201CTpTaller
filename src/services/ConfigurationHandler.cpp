@@ -227,13 +227,15 @@ void ConfigurationHandler::setSizeScreen(){
     string pathScreenHeight = getPathScreen("height");
 
     size_t screenWidth = this->parserJson->getUnsignedInt(pathScreenWidth);
-    if (screenWidth < 400){
-        screenWidth = SCREEN_WIDTH;
+    if (screenWidth < MIN_SCREEN_WIDTH){
+        screenWidth = MIN_SCREEN_WIDTH;
+        Logger::getInstance()->log(ERROR, "El ancho de la ventana es menor al mínimo permitido. Se settea como valor el mínimo.");
     } 
 
     size_t screenHeight = this->parserJson->getUnsignedInt(pathScreenHeight);
-    if (screenHeight < 400){
-        screenHeight = SCREEN_HEIGHT;
+    if (screenHeight < MIN_SCREEN_HEIGHT){
+        screenHeight = MIN_SCREEN_HEIGHT;
+        Logger::getInstance()->log(ERROR, "El alto de la ventana es menor al mínimo permitido. Se settea como valor el mínimo.");
     } 
     
     GameProvider::setWidth(screenWidth);
