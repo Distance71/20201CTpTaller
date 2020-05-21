@@ -25,6 +25,7 @@ void PlayerController::update(unordered_map<string, State *> states_){
 
     State* position = states_.at("Position");
     State* speed =states_.at("Speed");
+    State* orientation = states_.at("Orientation");
     int xp = position->getX();
     int yp = position->getY();
     int xs = speed->getX();
@@ -49,6 +50,7 @@ void PlayerController::update(unordered_map<string, State *> states_){
     
     else if(!up && !down && right && !left){ // derecha
         new_xp=xp+xs;
+        orientation->setX(FRONT);
         if(new_xp<=screen_widht-sprite_width){
             position->setX(new_xp);
         }
@@ -56,6 +58,7 @@ void PlayerController::update(unordered_map<string, State *> states_){
     
     else if(!up && !down && !right && left){ // izquierda;
         new_xp=xp-xs;
+        orientation->setX(BACK);
         if(new_xp>=0){
             position->setX(new_xp);
         }
@@ -64,6 +67,7 @@ void PlayerController::update(unordered_map<string, State *> states_){
     else if(up && !down && right && !left){ // arriba a la derecha
         new_xp=xp+xs;
         new_yp=yp-ys;
+        orientation->setX(FRONT);
 
         if (new_xp <=screen_widht-sprite_width){
             position->setX(new_xp);
@@ -79,6 +83,7 @@ void PlayerController::update(unordered_map<string, State *> states_){
     else if(up && !down && !right && left){ // arriba a la izquierda
         new_xp=xp-xs;
         new_yp=yp-ys;
+        orientation->setX(BACK);
 
         if (new_xp >=0 ){
             position->setX(new_xp);
@@ -95,6 +100,7 @@ void PlayerController::update(unordered_map<string, State *> states_){
     else if(!up && down && right && !left){ // abajo a la derecha
         new_xp=xp+xs;
         new_yp=yp+ys;
+        orientation->setX(FRONT);
 
         if (new_xp <= screen_widht-sprite_width){
             position->setX(new_xp);
@@ -109,7 +115,7 @@ void PlayerController::update(unordered_map<string, State *> states_){
     else if(!up && down && !right && left){ // abajo a la izquierda
         new_xp=xp-xs;
         new_yp=yp+ys;
-
+        orientation->setX(BACK);
         if (new_xp >= 0){
             position->setX(new_xp);
         }
