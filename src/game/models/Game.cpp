@@ -179,6 +179,7 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantityStages = gameSettings.levelParams[actualStep.level].stagesParams.size();
 
+    this->viewStartStage(actualStep.level);
     auto stages = level->getStages();
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantityStages; i++){
@@ -186,6 +187,8 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
         this->map_->setStageSource(actualStep.level,actualStep.stage); //crea el escenario
         runStage(actualStep, stages[i]);
     }
+    
+    this->viewStageCleared(actualStep.level);
 }
 
 void Game::runStage(currentStep_t actualStep, Stage *stage){
@@ -251,4 +254,76 @@ void Game::updateGraphics() {
 
     SDL_RenderPresent(actualRenderer);
     renderer_ = actualRenderer;
+}
+
+bool Game::viewStartStage(level_t oneLevel){
+    string pathScreen;
+
+    switch (oneLevel){
+        case LEVEL_ONE:
+            pathScreen = "assets/TransitionScreens/Stage1.JPG";
+            break;
+        case LEVEL_TWO:
+            pathScreen = "assets/TransitionScreens/Stage2.JPG";
+            break;
+        case LEVEL_THREE:
+            pathScreen = "assets/TransitionScreens/Stage3.JPG";
+            break;
+
+    }
+
+    SDL_Surface* screenStage = IMG_Load(pathScreen.c_str());
+    
+    if (!screenStage){
+        Logger::getInstance()->log(ERROR, string("Error al cargar la pantalla de comienzo de Stage: ").append(IMG_GetError()));
+        GameProvider::setErrorStatus("Error al cargar pantalla de comienzo de Stage para el nivel " + to_string(oneLevel));
+        return false;
+    }
+
+    return this->waitEnter(screenStage);
+}
+
+bool Game::viewStageCleared(level_t oneLevel){
+
+    string pathScreen;
+
+    switch (oneLevel){
+        case LEVEL_ONE:
+            pathScreen = "assets/TransitionScreens/Stage1Cleared.JPG";
+            break;
+        case LEVEL_TWO:
+            pathScreen = "assets/TransitionScreens/Stage2Cleared.JPG";
+            break;
+        case LEVEL_THREE:
+            pathScreen = "assets/TransitionScreens/Stage3Cleared.JPG";
+            break;
+
+    }
+
+    SDL_Surface* screenStageCleared = IMG_Load(pathScreen.c_str());
+    
+    if (!screenStageCleared){
+        Logger::getInstance()->log(ERROR, string("Error al cargar la pantalla StageCleared: ").append(IMG_GetError()));
+        GameProvider::setErrorStatus("Error al cargar pantalla StageCleared para el nivel " + to_string(oneLevel));
+        return false;
+    }
+
+    return this->waitEnter(screenStageCleared);
+}
+
+bool Game::waitEnter(SDL_Surface* screen){
+
+    this->clearScene();
+
+    SDL_Window* window = GameProvider::getWindow();
+    SDL_Surface* surface = SDL_GetWindowSurface(window);
+
+    SDL_BlitScaled(screen, NULL, surface, NULL);
+    SDL_UpdateWindowSurface(window);
+    while (GameProvider::getStatus().normalStatus){
+        processEvent();
+        SDL_Event e = GameProvider::getLastEvent();
+        if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
+            return true;
+    }
 }

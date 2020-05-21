@@ -9,6 +9,7 @@ using namespace std;
 typedef enum level {
     LEVEL_ONE = 0,
     LEVEL_TWO = 1,
+    LEVEL_THREE = 2,
 } level_t;
 
 typedef enum stage {

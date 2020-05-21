@@ -34,6 +34,9 @@ class Game {
     void updateGraphics();
     void clearScene();
     void initializeGraphics();
+    bool viewStartStage(level_t oneLevel);
+    bool viewStageCleared(level_t oneLevel);
+    bool waitEnter(SDL_Surface* screen);
 
     public:
     Game();
