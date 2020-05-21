@@ -223,6 +223,9 @@ void Map::initializePositionPlayer(gameParams_t &gameSettings){
     State *playerPosition = this->player->getState<Position>(string("Position"));
     playerPosition->setX(positionPlayer.axis_x);
     playerPosition->setY(positionPlayer.axis_y);
+
+    State *playerOrientation = this->player->getState<Orientation>(string("Orientation"));
+    playerOrientation->setX(FRONT);
 }
 
 

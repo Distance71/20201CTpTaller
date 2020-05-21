@@ -11,6 +11,7 @@ class Orientation: public State {
     public:
         Orientation(int x, int y);
         int getX()override;
+        void setX(int x_)override;
         //~Orientation();
 };
 
