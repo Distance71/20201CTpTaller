@@ -15,14 +15,14 @@ Sprite::Sprite(const string &source){
     }
     else {
         Logger::getInstance()->log(ERROR, string("Error al abrir el archivo del sprite").append(source));
-        TTF_Font *Sans = TTF_OpenFont("assets/Fonts/open-sans/OpenSans-Regular.ttf", 24);
+        TTF_Font *Sans = TTF_OpenFont("assets/Fonts/open-sans/OpenSans-Regular.ttf", 56);
         if (Sans == nullptr) {
             SDL_Surface *surfaceColor = SDL_CreateRGBSurface(0, 106, 83, 32, 0, 0, 0, 0);
             SDL_FillRect(surfaceColor, nullptr, SDL_MapRGB(surfaceColor->format, 47, 106, 144));
             texture_ = SDL_CreateTextureFromSurface(GameProvider::getRenderer(), surfaceColor); 
         } else {
             SDL_Color black = {0, 0, 0};
-            SDL_Surface *surfaceMessage = TTF_RenderText_Solid(Sans, "?", black);
+            SDL_Surface *surfaceMessage = TTF_RenderText_Solid(Sans, "  ?", black);
             SDL_Surface *surfaceColor = SDL_CreateRGBSurface(0, 106, 83, 32, 0, 0, 0, 0);
             SDL_FillRect(surfaceColor, nullptr, SDL_MapRGB(surfaceColor->format, 47, 106, 144));
             SDL_BlitSurface(surfaceMessage, nullptr, surfaceColor, nullptr);
