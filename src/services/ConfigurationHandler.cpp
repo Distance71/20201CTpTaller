@@ -175,6 +175,12 @@ void ConfigurationHandler::initializeData(){
             string pathLayer3 = getPathStageLayer(pathStage, 3);
             oneStageParams.backgroundSources.layer3 = this->parserJson->getString(pathLayer3);
 
+            string pathLayer4 = getPathStageLayer(pathStage, 4);
+            oneStageParams.backgroundSources.layer4 = this->parserJson->getString(pathLayer4);
+            
+            string pathLayer5 = getPathStageLayer(pathStage, 5);
+            oneStageParams.backgroundSources.layer5 = this->parserJson->getString(pathLayer5);
+            
             string pathEnemiesBase = getPathStageEnemy(pathStage, -1, "");
             int sizeEnemies = this->parserJson->getSizeArray(pathEnemiesBase);
             

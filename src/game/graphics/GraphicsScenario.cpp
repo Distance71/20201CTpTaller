@@ -3,9 +3,11 @@
 GraphicsScenario::GraphicsScenario(stageSource_t background){
     /*Creo las variables donde se cargaran  las rutas de las imagenes dependiendo el nivel*/
     /*Leo las imagenes segun el nivel*/
-    string layer1Path= background.layer1;
+    string layer1Path = background.layer1;
     string layer2Path = background.layer2;
     string layer3Path = background.layer3;
+    string layer4Path = background.layer4;
+    string layer5Path = background.layer5;
     //stageSource_t stageData;
 
     // switch(level){
@@ -25,13 +27,19 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
     sprites_.push_back(new Sprite(layer1Path));
     sprites_.push_back(new Sprite(layer2Path));
     sprites_.push_back(new Sprite(layer3Path));
+    sprites_.push_back(new Sprite(layer4Path));
+    sprites_.push_back(new Sprite(layer5Path));
 
     /* velocidad con que se mueven las capas*/
     unordered_map<layer_t, size_t> layersSpeeds = GameProvider::getLayersSpeeds();
     layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_1], 0));
     layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_2], 0));
     layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_3], 0));
+    layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_4], 0));
+    layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_5], 0));
 
+    layersPositions_.push_back(new Position(0, 0));
+    layersPositions_.push_back(new Position(0, 0));
     layersPositions_.push_back(new Position(0, 0));
     layersPositions_.push_back(new Position(0, 0));
     layersPositions_.push_back(new Position(0, 0));

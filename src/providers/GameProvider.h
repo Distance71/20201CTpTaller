@@ -16,8 +16,11 @@ class ConfigurationHandler;
 #define SCREEN_HEIGHT 800
 
 #define STAGE1LAYER1SPEED 0
-#define STAGE1LAYER2SPEED 2
-#define STAGE1LAYER3SPEED 5 
+#define STAGE1LAYER2SPEED 3
+#define STAGE1LAYER3SPEED 6
+#define STAGE1LAYER4SPEED 8
+#define STAGE1LAYER5SPEED 10
+
 
 #define MS_PER_UPDATE 16.67
 
@@ -29,7 +32,7 @@ struct status_t {
 // Contiene todas las variables que pueden ser comunes a todo el programa
 // y su manejo.
 
-enum layer_t {LAYER_1 = 0, LAYER_2 = 1, LAYER_3 = 2};
+enum layer_t {LAYER_1 = 0, LAYER_2 = 1, LAYER_3 = 2, LAYER_4 = 5,LAYER_5 = 4 };
 
 namespace GameProvider {
     SDL_Event getLastEvent();

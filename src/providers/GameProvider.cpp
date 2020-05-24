@@ -80,7 +80,10 @@ namespace GameProvider {
         unordered_map<layer_t, size_t> layersSpeeds = {
             {LAYER_1, STAGE1LAYER1SPEED}, 
             {LAYER_2, STAGE1LAYER2SPEED}, 
-            {LAYER_3, STAGE1LAYER3SPEED}};
+            {LAYER_3, STAGE1LAYER3SPEED},
+            {LAYER_4, STAGE1LAYER4SPEED},
+            {LAYER_5, STAGE1LAYER5SPEED}
+            };
 
         return layersSpeeds;
     }
