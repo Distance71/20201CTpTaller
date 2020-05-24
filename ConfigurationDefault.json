@@ -4,8 +4,8 @@
             "level": "DEBUG"
         },
         "screen":{
-            "width": 1280,
-            "height": 800
+            "width": 1000,
+            "height": 500
         },
         "player": {
             "sizeX": 106,
@@ -18,10 +18,6 @@
                     "layer1": "assets/Stage/Level1/layer_1.png",
                     "layer2": "assets/Stage/Level1/layer_2.png",
                     "layer3": "assets/Stage/Level1/layer_3.png",
-                    "layer4": "assets/Stage/Level1/layer_4.png",
-                    "layer5": "assets/Stage/Level1/layer_5.png",
-                    "layer6": "assets/Stage/Level1/layer_6.png",
-                    "layer7": "assets/Stage/Level1/layer_7.png",
                     "enemies": [
                         {
                             "type": 0,
@@ -43,8 +39,6 @@
                     "layer1": "assets/Stage/Level1/layer_1.png",
                     "layer2": "assets/Stage/Level1/layer_2.png",
                     "layer3": "assets/Stage/Level1/layer_3.png",
-                    "layer4": "assets/Stage/Level1/layer_4.png",
-                    "layer5": "assets/Stage/Level1/layer_5.png",
                     "enemies": [
                         {
                             "type": 0,
@@ -68,9 +62,6 @@
                     "layer1": "assets/Stage/Level2/layer_1.png",
                     "layer2": "assets/Stage/Level2/layer_2.png",
                     "layer3": "assets/Stage/Level2/layer_3.png",
-                    "layer4": "assets/Stage/Level2/layer_4.png",
-                    "layer5": "assets/Stage/Level2/layer_5.png",
-
                     "enemies": [
                         {
                             "type": 0,
@@ -87,8 +78,6 @@
                     "layer1": "assets/Stage/Level3/layer_1.png",
                     "layer2": "assets/Stage/Level3/layer_2.png",
                     "layer3": "assets/Stage/Level3/layer_3.png",
-                    "layer4": "assets/Stage/Level3/layer_4.png",
-                    "layer5": "assets/Stage/Level3/layer_5.png",
                     "enemies": [
                         {
                             "type": 0,
@@ -110,8 +99,6 @@
                     "layer1": "assets/Stage/Level3/layer_1.png",
                     "layer2": "assets/Stage/Level3/layer_2.png",
                     "layer3": "assets/Stage/Level3/layer_3.png",
-                    "layer3": "assets/Stage/Level4/layer_4.png",
-                    "layer3": "assets/Stage/Level5/layer_5.png",
                     "enemies": [
                         {
                             "type": 0,

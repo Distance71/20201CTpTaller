@@ -82,7 +82,9 @@ namespace GameProvider {
             {LAYER_2, STAGE1LAYER2SPEED}, 
             {LAYER_3, STAGE1LAYER3SPEED},
             {LAYER_4, STAGE1LAYER4SPEED},
-            {LAYER_5, STAGE1LAYER5SPEED}
+            {LAYER_5, STAGE1LAYER5SPEED},
+            {LAYER_6, STAGE1LAYER6SPEED},
+            {LAYER_7, STAGE1LAYER7SPEED},
             };
 
         return layersSpeeds;

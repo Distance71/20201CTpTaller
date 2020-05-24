@@ -64,6 +64,8 @@ typedef struct {
     string layer3;
     string layer4;
     string layer5;
+    string layer6;
+    string layer7;
 } stageSource_t;
 
 typedef struct {

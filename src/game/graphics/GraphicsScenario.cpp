@@ -8,27 +8,16 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
     string layer3Path = background.layer3;
     string layer4Path = background.layer4;
     string layer5Path = background.layer5;
-    //stageSource_t stageData;
-
-    // switch(level){
-    //     case LEVEL_ONE:
-    //         
-    //         layer1Path = stageData.layer1;
-    //         layer2Path = stageData.layer2;
-    //         layer3Path = stageData.layer3;
-    //         break;
-        
-    //     default:
-    //         Logger::getInstance()->log(ERROR, string("No existe el nivel seleccionado. No se puedo acceder a las rutas de las capas del escenario"));
-    //         GameProvider::setErrorStatus("No existe el nivel seleccionado. No se pudo acceder a las rutas de las capas del escenario" );
-    //         return;
-    // }   
+    string layer6Path = background.layer6;
+    string layer7Path = background.layer7;
 
     sprites_.push_back(new Sprite(layer1Path));
     sprites_.push_back(new Sprite(layer2Path));
     sprites_.push_back(new Sprite(layer3Path));
     sprites_.push_back(new Sprite(layer4Path));
     sprites_.push_back(new Sprite(layer5Path));
+    sprites_.push_back(new Sprite(layer6Path));
+    sprites_.push_back(new Sprite(layer7Path));
 
     /* velocidad con que se mueven las capas*/
     unordered_map<layer_t, size_t> layersSpeeds = GameProvider::getLayersSpeeds();
@@ -37,7 +26,11 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
     layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_3], 0));
     layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_4], 0));
     layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_5], 0));
+    layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_6], 0));
+    layersSpeeds_.push_back(new Speed(layersSpeeds[LAYER_7], 0));
 
+    layersPositions_.push_back(new Position(0, 0));
+    layersPositions_.push_back(new Position(0, 0));
     layersPositions_.push_back(new Position(0, 0));
     layersPositions_.push_back(new Position(0, 0));
     layersPositions_.push_back(new Position(0, 0));
