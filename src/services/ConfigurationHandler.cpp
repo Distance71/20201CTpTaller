@@ -74,17 +74,35 @@ bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfigura
     return this->parserJson->loadConfiguration(pathFileConfiguration);
 }
 
+cotasCantEnemigos_t ConfigurationHandler::getCotasEnemigos(unsigned int cantTotalEnemigos){
+    cotasCantEnemigos_t cotasEnemigos;
+
+    unsigned int promPorStep = cantTotalEnemigos / STEP_FOR_STAGE;
+    unsigned int delta = promPorStep * 20 / 100;
+    cotasEnemigos.cotaInferior = promPorStep - delta;
+    cotasEnemigos.cotaSuperior = promPorStep + delta;
+
+    if (promPorStep == 0){
+        cotasEnemigos.cotaSuperior = cantTotalEnemigos;
+    }
+
+    return cotasEnemigos;
+}
+
 vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies){
     vector<stepParams_t> stepsParams;
 
     unsigned int cantEnemies = totalEnemies.size();
     vector<unsigned int> cantPuesta (cantEnemies); 
-    vector<unsigned int> cantTotal (cantEnemies); 
+    vector<unsigned int> cantTotal (cantEnemies);
+    vector<cotasCantEnemigos_t> cotasEnemigos (cantEnemies);
     srand(time(NULL)); 
 
     // Guardamos el Total de Enemigos que debemos poner en todo el Stage
     for(int posEnemy = 0; posEnemy < cantEnemies; posEnemy++){
-        cantTotal[posEnemy] = totalEnemies[posEnemy].quantity;
+        unsigned int enemiesTotales = totalEnemies[posEnemy].quantity;
+        cantTotal[posEnemy] = enemiesTotales;
+        cotasEnemigos[posEnemy] = getCotasEnemigos(enemiesTotales);
     }
 
     for(int step = 0; step < STEP_FOR_STAGE; step++){
@@ -102,8 +120,11 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
                 oneEnemy.quantity = cantTotal[i] - cantPuesta[i];
             } else {
                 unsigned int cantAPoner = 0;
-                unsigned int cotaSup = min((unsigned int)MAX_ENEMY_STEP, (cantTotal[i] - cantPuesta[i]));
-                unsigned int cotaInf = min((unsigned int)MIN_ENEMY_STEP, (cantTotal[i] - cantPuesta[i]));
+                unsigned int cotaSup = min(cotasEnemigos[i].cotaSuperior, (cantTotal[i] - cantPuesta[i]));
+                unsigned int cotaInf = min(cotasEnemigos[i].cotaInferior, (cantTotal[i] - cantPuesta[i]));
+
+                //unsigned int cotaSup = min((unsigned int)MAX_ENEMY_STEP, (cantTotal[i] - cantPuesta[i]));
+                //unsigned int cotaInf = min((unsigned int)MIN_ENEMY_STEP, (cantTotal[i] - cantPuesta[i]));
 
                 /* Si la cota Superior no es cero y la cantAPoner es cero. Quiere decir que tenemos enemigos para
                    poner, entonces ejecutamos hasta que la funcion rand() nos de un numero mayor a cero.
@@ -206,7 +227,6 @@ void ConfigurationHandler::initializeData(){
                 oneStageParams.totalEnemies.push_back(oneEnemy);
             }
 
-            //oneStageParams.stepsParams = getStep(cantTotalType1, cantTotalType2);
             oneStageParams.stepsParams = getStep(oneStageParams.totalEnemies);
             oneLevelParams.stagesParams.push_back(oneStageParams);
         }

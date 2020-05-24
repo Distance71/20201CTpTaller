@@ -18,8 +18,8 @@
 #define DEFAULT_ENEMY_TYPE 0
 
 #define STEP_FOR_STAGE 6
-#define MIN_ENEMY_STEP 8
-#define MAX_ENEMY_STEP 20
+//#define MIN_ENEMY_STEP 8
+//#define MAX_ENEMY_STEP 20
 
 #define MIN_SCREEN_WIDTH 800
 #define MIN_SCREEN_HEIGHT 600
@@ -43,6 +43,7 @@ class ConfigurationHandler {
 
         string getPathPlayer(string paramPlayer);
         player_t getPlayerParams();
+        cotasCantEnemigos_t getCotasEnemigos(unsigned int cantTotalEnemigos);
 
         vector<stepParams_t> getStep(vector<enemy_t> &totalEnemies);
 

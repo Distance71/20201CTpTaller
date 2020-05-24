@@ -43,6 +43,11 @@ typedef struct {
 } player_t;
 
 typedef struct {
+    unsigned int cotaInferior;
+    unsigned int cotaSuperior;
+} cotasCantEnemigos_t;
+
+typedef struct {
     unsigned int width;
     unsigned int height;
 } screen_t;
