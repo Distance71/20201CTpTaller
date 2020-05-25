@@ -10,6 +10,7 @@ typedef enum level {
     LEVEL_ONE = 0,
     LEVEL_TWO = 1,
     LEVEL_THREE = 2,
+    LEVEL_FOUR = 3,
 } level_t;
 
 typedef enum stage {
