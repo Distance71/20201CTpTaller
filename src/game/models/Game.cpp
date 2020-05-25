@@ -227,6 +227,9 @@ bool Game::viewStartStage(level_t oneLevel){
         case LEVEL_FOUR:
             pathScreen = "assets/TransitionScreens/Stage4.JPG";
             break;
+        default:
+            pathScreen = "assets/TransitionScreens/StageDefault.jpg";
+            break;
     }
 
     SDL_Surface* screenStage = IMG_Load(pathScreen.c_str());
@@ -257,7 +260,9 @@ bool Game::viewStageCleared(level_t oneLevel){
         case LEVEL_FOUR:
             pathScreen = "assets/TransitionScreens/Stage4Cleared.JPG";
             break;
-
+        default:
+            pathScreen = "assets/TransitionScreens/StageDefaultCleared.jpg";
+            break;
     }
 
     SDL_Surface* screenStageCleared = IMG_Load(pathScreen.c_str());
