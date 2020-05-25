@@ -11,13 +11,26 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
     string layer6Path = background.layer6;
     string layer7Path = background.layer7;
 
-    sprites_.push_back(new Sprite(layer1Path));
-    sprites_.push_back(new Sprite(layer2Path));
-    sprites_.push_back(new Sprite(layer3Path));
-    sprites_.push_back(new Sprite(layer4Path));
-    sprites_.push_back(new Sprite(layer5Path));
-    sprites_.push_back(new Sprite(layer6Path));
-    sprites_.push_back(new Sprite(layer7Path));
+    if (layer1Path != "")
+        sprites_.push_back(new Sprite(layer1Path));
+        
+    if (layer2Path != "")
+        sprites_.push_back(new Sprite(layer2Path));
+
+    if (layer3Path != "")
+        sprites_.push_back(new Sprite(layer3Path));
+
+    if (layer4Path != "")
+        sprites_.push_back(new Sprite(layer4Path));
+
+    if (layer5Path != "")
+        sprites_.push_back(new Sprite(layer5Path));
+
+    if (layer6Path != "")
+        sprites_.push_back(new Sprite(layer6Path));
+
+    if (layer7Path != "")
+        sprites_.push_back(new Sprite(layer7Path));
 
     /* velocidad con que se mueven las capas*/
     unordered_map<layer_t, size_t> layersSpeeds = GameProvider::getLayersSpeeds();

@@ -17,7 +17,7 @@
 #define DEFAULT_ENEMY_QUANTITY 25
 #define DEFAULT_ENEMY_TYPE 0
 
-#define STEP_FOR_STAGE 6
+#define STEP_FOR_STAGE 3
 //#define MIN_ENEMY_STEP 8
 //#define MAX_ENEMY_STEP 20
 
