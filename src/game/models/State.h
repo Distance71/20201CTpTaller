@@ -16,7 +16,7 @@ class State {
     virtual int getY();
     virtual void setX(int x_);
     virtual void setY(int y_);
-    //~State();
+    ~State();
 };
 
 #endif

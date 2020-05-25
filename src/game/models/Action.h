@@ -14,7 +14,7 @@ class  Action {
     public:
     Action();
     virtual void update(unordered_map<string, State *> states_);
-    //~Action();
+    ~Action();
     
     private:
     

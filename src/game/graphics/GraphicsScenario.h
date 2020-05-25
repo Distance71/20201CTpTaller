@@ -22,7 +22,7 @@ class GraphicsScenario {
 
     public:
     GraphicsScenario(stageSource_t stageSource);
-    //~GraphicsScenario();
+    ~GraphicsScenario();
     void update(); //Add override later
     
 };

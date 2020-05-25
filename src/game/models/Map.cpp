@@ -195,7 +195,9 @@ void Step::update(){
     }
 
     for(auto oneIdDead : mapElementDead){
+        MapElement *enemyDead = this->mapElements_.at(oneIdDead);
         this->mapElements_.erase(oneIdDead);
+        delete enemyDead;        
     }
 }
 

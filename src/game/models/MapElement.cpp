@@ -25,6 +25,14 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
 }
 
 MapElement::~MapElement() {
+    
+    for (auto oneState : this->states_){
+        delete oneState.second;
+    }
+
+    for (auto oneAction : this->actions_){
+        delete oneAction.second;
+    }
 }
 
 vector<Action *> MapElement::getActions() {

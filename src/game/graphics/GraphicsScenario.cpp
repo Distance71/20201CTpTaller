@@ -78,3 +78,7 @@ void GraphicsScenario::update(){
 
     GameProvider::setRenderer(renderer);
 }
+
+GraphicsScenario::~GraphicsScenario(){
+    
+}

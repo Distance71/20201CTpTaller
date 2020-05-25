@@ -3,7 +3,7 @@
 
 #include "State.h"
 
-class Speed: virtual State {
+class Speed: public State {
 
     public:
     Speed(int x_,int y_);

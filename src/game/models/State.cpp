@@ -17,4 +17,7 @@ void State::setX(int x_){
 void State:: setY(int y_){
     y=y_;
 }
-//State::~State();
+
+State::~State(){
+    
+}
