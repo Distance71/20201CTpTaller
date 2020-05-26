@@ -74,10 +74,10 @@ bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfigura
     return this->parserJson->loadConfiguration(pathFileConfiguration);
 }
 
-cotasCantEnemigos_t ConfigurationHandler::getCotasEnemigos(unsigned int cantTotalEnemigos){
+cotasCantEnemigos_t ConfigurationHandler::getCotasEnemigos(unsigned int cantTotalEnemigos, unsigned int cantSteps){
     cotasCantEnemigos_t cotasEnemigos;
 
-    unsigned int promPorStep = cantTotalEnemigos / STEP_FOR_STAGE;
+    unsigned int promPorStep = cantTotalEnemigos / cantSteps;
     unsigned int delta = promPorStep * 20 / 100;
     cotasEnemigos.cotaInferior = promPorStep - delta;
     cotasEnemigos.cotaSuperior = promPorStep + delta;
@@ -93,6 +93,8 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
     vector<stepParams_t> stepsParams;
 
     unsigned int cantEnemies = totalEnemies.size();
+    unsigned int quantityEnemies = 0;
+    unsigned int cantStepsAJugar = 1;
     vector<unsigned int> cantPuesta (cantEnemies); 
     vector<unsigned int> cantTotal (cantEnemies);
     vector<cotasCantEnemigos_t> cotasEnemigos (cantEnemies);
@@ -102,10 +104,21 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
     for(int posEnemy = 0; posEnemy < cantEnemies; posEnemy++){
         unsigned int enemiesTotales = totalEnemies[posEnemy].quantity;
         cantTotal[posEnemy] = enemiesTotales;
-        cotasEnemigos[posEnemy] = getCotasEnemigos(enemiesTotales);
+        quantityEnemies += enemiesTotales;
+        //cotasEnemigos[posEnemy] = getCotasEnemigos(enemiesTotales);
     }
 
-    for(int step = 0; step < STEP_FOR_STAGE; step++){
+    cantStepsAJugar += (quantityEnemies / 40);
+
+    if (cantStepsAJugar > MAX_STEPS){
+        cantStepsAJugar = MAX_STEPS;
+    }
+
+    for(int posEnemy = 0; posEnemy < cantEnemies; posEnemy++){
+        cotasEnemigos[posEnemy] = getCotasEnemigos(cantTotal[posEnemy], cantStepsAJugar);
+    }
+
+    for(int step = 0; step < cantStepsAJugar; step++){
         stepParams_t oneStepParam;
 
         for(int i = 0; i < cantEnemies; i++){
@@ -115,7 +128,7 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
             oneEnemy.size_y = totalEnemies[i].size_y;
             oneEnemy.sprite = totalEnemies[i].sprite;
 
-            if (step == STEP_FOR_STAGE - 1){
+            if (step == cantStepsAJugar - 1){
                 // Si es el ultimo Step debo poner todos los enemigos restantes para completar
                 oneEnemy.quantity = cantTotal[i] - cantPuesta[i];
             } else {
