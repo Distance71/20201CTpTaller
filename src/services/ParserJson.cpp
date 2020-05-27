@@ -87,7 +87,7 @@ int ParserJson::getUnsignedInt(string pathJson){
 
 int ParserJson::getSizeArrayDefault(json::json_pointer jsonPointerPath) {
 
-    Logger::getInstance()->log(DEBUG, "Se lee la ruta " + jsonPointerPath.to_string() + " del archivo default de configuracion.");
+    Logger::getInstance()->log(INFO, "Se lee la ruta " + jsonPointerPath.to_string() + " del archivo default de configuracion.");
     
     if (this->isNull(jsonDefault, jsonPointerPath))
         return -1;
@@ -97,7 +97,7 @@ int ParserJson::getSizeArrayDefault(json::json_pointer jsonPointerPath) {
 
 string ParserJson::getStringDefault(json::json_pointer jsonPointerPath){
 
-    Logger::getInstance()->log(DEBUG, "Se lee la ruta " + jsonPointerPath.to_string() + " del archivo default de configuracion.");
+    Logger::getInstance()->log(INFO, "Se lee la ruta " + jsonPointerPath.to_string() + " del archivo default de configuracion.");
     if (this->isNull(jsonDefault, jsonPointerPath))
         return "";
 
@@ -106,7 +106,7 @@ string ParserJson::getStringDefault(json::json_pointer jsonPointerPath){
 
 int ParserJson::getUnsignedIntDefault(json::json_pointer jsonPointerPath){
 
-    Logger::getInstance()->log(DEBUG, "Se lee la ruta " + jsonPointerPath.to_string() + " del archivo default de configuracion.");
+    Logger::getInstance()->log(INFO, "Se lee la ruta " + jsonPointerPath.to_string() + " del archivo default de configuracion.");
     if (this->isNull(jsonDefault, jsonPointerPath))
         return -1;
 

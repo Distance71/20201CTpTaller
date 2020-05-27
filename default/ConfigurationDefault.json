@@ -25,14 +25,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 40,
+                            "quantity": 10,
                             "sizeX": 85,
                             "sizeY": 45,
                             "sprite": "assets/Enemies/enemigo8.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 40,
+                            "quantity": 15,
                             "sizeX": 90,
                             "sizeY": 56,
                             "sprite": "assets/Enemies/enemigo6.png"
@@ -52,14 +52,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 60,
+                            "quantity": 15,
                             "sizeX": 85,
                             "sizeY": 45,
                             "sprite": "assets/Enemies/enemigo8.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 50,
+                            "quantity": 15,
                             "sizeX": 95,
                             "sizeY": 62,
                             "sprite": "assets/Enemies/enemigo9.png"
@@ -79,14 +79,41 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 65,
+                            "quantity": 17,
                             "sizeX": 90,
                             "sizeY": 56,
                             "sprite": "assets/Enemies/enemigo6.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 70,
+                            "quantity": 18,
+                            "sizeX": 95,
+                            "sizeY": 62,
+                            "sprite": "assets/Enemies/enemigo9.png"
+                        }
+                    ]
+                }
+            ],
+            [
+                {
+                    "layer1": "assets/Stage/Level4/layer_a.png",
+                    "layer2": "assets/Stage/Level4/placebo.png",
+                    "layer3": "assets/Stage/Level4/layer_b.png",
+                    "layer4": "assets/Stage/Level4/placebo.png",
+                    "layer5": "assets/Stage/Level4/placebo.png",
+                    "layer6": "assets/Stage/Level4/layer_c.png",
+                    "layer7": "assets/Stage/Level4/layer_d.png",
+                    "enemies": [
+                        {
+                            "type": 0,
+                            "quantity": 20,
+                            "sizeX": 90,
+                            "sizeY": 56,
+                            "sprite": "assets/Enemies/enemigo6.png"				  
+                        },
+                        {
+                            "type": 1,
+                            "quantity": 19,
                             "sizeX": 95,
                             "sizeY": 62,
                             "sprite": "assets/Enemies/enemigo9.png"

@@ -63,6 +63,19 @@ player_t ConfigurationHandler::getPlayerParams(){
     } else {
         playerParam.size_y = DEFAULT_SIZE_Y;
     }    
+    
+    unsigned int sizeScreenX = GameProvider::getWidth();
+    unsigned int sizeScreenY = GameProvider::getHeight();
+
+    if (sizeX > sizeScreenX){
+        Logger::getInstance()->log(ERROR, "El largo del jugador supera el largo de la pantalla. Se settea este ultimo como su largo");
+        playerParam.size_x = sizeScreenX;
+    }
+    
+    if (sizeX > sizeScreenY){
+        Logger::getInstance()->log(ERROR, "El ancho del jugador supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+        playerParam.size_y = sizeScreenY;
+    }    
 
     string pathSprite = getPathPlayer("sprite");
     playerParam.sprite = this->parserJson->getString(pathSprite);
@@ -206,6 +219,9 @@ void ConfigurationHandler::initializeData(){
             unsigned int cantTotalType1 = 0;
             unsigned int cantTotalType2 = 0;
 
+            unsigned int sizeScreenX = GameProvider::getWidth();
+            unsigned int sizeScreenY = GameProvider::getHeight();
+
             for(int numberEnemy = 0; numberEnemy < sizeEnemies; numberEnemy++){
                 Logger::getInstance()->log(DEBUG, "Se comienza a analizar el enemigo " + to_string(numberEnemy) + " del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
             
@@ -236,6 +252,16 @@ void ConfigurationHandler::initializeData(){
                     oneEnemy.size_x = sizeX;
                 } else {
                     oneEnemy.size_x = DEFAULT_SIZE_X;
+                }
+
+                if (sizeX > sizeScreenX){
+                    Logger::getInstance()->log(ERROR, "El largo del enemigo " + to_string(numberEnemy) + " supera el largo de la pantalla. Se settea este ultimo como su largo");
+                    oneEnemy.size_x = sizeScreenX;
+                }
+
+                if (sizeX > sizeScreenY){
+                    Logger::getInstance()->log(ERROR, "El ancho del enemigo " + to_string(numberEnemy) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+                    oneEnemy.size_y = sizeScreenY;
                 }
 
                 string pathEnemySizeY = getPathStageEnemy(pathStage, numberEnemy, "sizeY");

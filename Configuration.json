@@ -25,14 +25,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 40,
+                            "quantity": 1,
                             "sizeX": 85,
                             "sizeY": 45,
                             "sprite": "assets/Enemies/enemigo8.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 40,
+                            "quantity": 15,
                             "sizeX": 90,
                             "sizeY": 56,
                             "sprite": "assets/Enemies/enemigo6.png"
@@ -52,14 +52,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 60,
+                            "quantity": 15,
                             "sizeX": 85,
                             "sizeY": 45,
                             "sprite": "assets/Enemies/enemigo8.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 50,
+                            "quantity": 15,
                             "sizeX": 95,
                             "sizeY": 62,
                             "sprite": "assets/Enemies/enemigo9.png"
@@ -79,14 +79,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 65,
+                            "quantity": 17,
                             "sizeX": 90,
                             "sizeY": 56,
                             "sprite": "assets/Enemies/enemigo6.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 70,
+                            "quantity": 18,
                             "sizeX": 95,
                             "sizeY": 62,
                             "sprite": "assets/Enemies/enemigo9.png"
@@ -106,14 +106,14 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 65,
+                            "quantity": 20,
                             "sizeX": 90,
                             "sizeY": 56,
                             "sprite": "assets/Enemies/enemigo6.png"				  
                         },
                         {
                             "type": 1,
-                            "quantity": 70,
+                            "quantity": 19,
                             "sizeX": 95,
                             "sizeY": 62,
                             "sprite": "assets/Enemies/enemigo9.png"
