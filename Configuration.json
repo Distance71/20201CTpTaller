@@ -25,7 +25,7 @@
                     "enemies": [
                         {
                             "type": 0,
-                            "quantity": 1,
+                            "quantity": 10,
                             "sizeX": 85,
                             "sizeY": 45,
                             "sprite": "assets/Enemies/enemigo8.png"				  

@@ -24,7 +24,6 @@ class ParserJson {
         json jsonConfiguration;
         json jsonDefault;
 
-        ifstream loadFile(const string &pathFile, string valueDefault);
         int getSizeArrayDefault(json::json_pointer jsonPointerPath);
         string getStringDefault(json::json_pointer jsonPointerPath);
         int getUnsignedIntDefault(json::json_pointer jsonPointerPath);
@@ -38,7 +37,7 @@ class ParserJson {
         int getSizeArray(string pathJson);
         string getString(string pathJson);
         int getUnsignedInt(string pathJson);
-
+        void setConfigDefault();
 };
 
 

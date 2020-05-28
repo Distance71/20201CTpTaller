@@ -10,26 +10,19 @@ ParserJson::ParserJson(){
 
 ParserJson::~ParserJson(){
     
-}
-
-ifstream ParserJson::loadFile(const string &pathFile, string valueDefault){
-    ifstream i(pathFile, ifstream::in);
-    
-    if (!i.is_open()){
-        i.open(valueDefault, ifstream::in);
-        Logger::getInstance()->log(ERROR, "Ocurrio un error al abrir el archivo de configuracion. Se lo reemplaza por el archivo default.");
-    }
-
-    return i;
 };
 
 bool ParserJson::loadConfiguration(const string &pathFileConfiguration){
     
-    ifstream fileConfiguration = loadFile(pathFileConfiguration, DEFAULT_CONFIGURATION);
+    ifstream fileConfiguration(pathFileConfiguration, ifstream::in);
 
-    fileConfiguration >> jsonConfiguration;
-
-    fileConfiguration.close(); 
+    if (fileConfiguration.is_open()){
+        fileConfiguration >> jsonConfiguration;
+        fileConfiguration.close(); 
+    } else {
+        Logger::getInstance()->log(ERROR, "Ocurrio un error al intentar abrir el archivo de configuracion. Se lo reemplaza por el archivo default.");
+        this->setConfigDefault();
+    }
 
     return (!jsonConfiguration.is_null());
 };
@@ -117,3 +110,7 @@ bool ParserJson::isNull(json oneJson, json::json_pointer pathJsonPointer){
     return oneJson[pathJsonPointer].is_null();
 };
 
+
+void ParserJson::setConfigDefault(){
+    this->jsonConfiguration = jsonDefault;
+};

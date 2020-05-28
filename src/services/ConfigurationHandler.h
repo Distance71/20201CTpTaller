@@ -58,9 +58,11 @@ class ConfigurationHandler {
         bool loadFileConfiguration(const string &pathFileConfiguration);
         void initializeData();
         void setLogLevel();
+        void setConfigDefault();
 
         stageSource_t getSourcesForStage(int oneLevel, int oneStage);
         gameParams_t getGameParams();
+
 };
 
 

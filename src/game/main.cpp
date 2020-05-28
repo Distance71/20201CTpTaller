@@ -21,7 +21,13 @@ void showHelp(){
 void initializeGameConfig(string pathConfiguration, string levelLog){
 
     ConfigurationHandler *configurationHandler = new ConfigurationHandler();
-    configurationHandler->loadFileConfiguration(pathConfiguration); 
+
+    try {
+        configurationHandler->loadFileConfiguration(pathConfiguration); 
+    } catch (invalid_argument &e){
+        Logger::getInstance()->log(ERROR, "Error sintactico en archivo de configuracion (" + string(e.what()) + "). Se procede a cargar el archivo de default.");
+        configurationHandler->setConfigDefault();
+    }
 
     if (levelLog == ""){
         configurationHandler->setLogLevel();

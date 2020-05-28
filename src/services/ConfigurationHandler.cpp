@@ -343,3 +343,7 @@ stageSource_t ConfigurationHandler::getSourcesForStage(int oneLevel, int oneStag
 gameParams_t ConfigurationHandler::getGameParams(){
     return this->gameData;
 }
+
+void ConfigurationHandler::setConfigDefault(){
+    this->parserJson->setConfigDefault();
+};
