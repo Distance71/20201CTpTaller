@@ -1,4 +1,3 @@
-#include "models/Game.h"
 #include "../services/Logger.h"
 #include "../services/ConfigurationHandler.h"
 #include "../providers/GameProvider.h"
@@ -7,6 +6,7 @@
 #include <getopt.h>
 
 #define PATH_CONFIGURATION "../Configuration.json"
+#define INDEX_MODE 1
 
 void showHelp(){
     cout << "Uso: ejemplo [opcion]..." << endl;
@@ -18,6 +18,7 @@ void showHelp(){
     cout << "\t --config=file \t Establecer archivo de configuracion" << endl;
 }
 
+//Rewrite depending on server/client
 void initializeGameConfig(string pathConfiguration, string levelLog){
 
     ConfigurationHandler *configurationHandler = new ConfigurationHandler();
@@ -74,41 +75,27 @@ int main(int argc, char *args[]) {
 
     Logger::getInstance()->log(INFO, "Juego iniciado");
 
-    Game *game = new Game();
+    switch(str2int(args[INDEX_MODE])) {
+        case str2int("SERVER"):
+            Server *server = new Server();
+            server->run();
+            break;        
 
-    game->run();
+        case str2int("CLIENT"):
+            Client *client = new Client();
+            client->run();
+            break;
 
-    //GameProvider::getConfig()->~ConfigurationHandler();
+        default:;
+            cout << "Ha Ejecutado mal el modo de la aplicacion" << endl;
+            return EXIT_FAILURE;
+    }   
+
+    //Game *game = new Game();
+
+    //game->run();
 
     Logger::getInstance()->log(INFO, "Juego Finalizado");
 
     return EXIT_SUCCESS;
 }
-
-/*
-bool initializeGameConfig(int argc, char* args[]) {
-
-    return false;
-
-    ConfigurationHandler *configurationHandler = new ConfigurationHandler();
-    configurationHandler->loadFileConfiguration(PATH_CONFIGURATION);
-
-    switch (argc){
-        case 1:
-            configurationHandler->setLogLevel();
-            break;
-        case 2:
-            if (!(Logger::getInstance()->setLevel(args[1]))){
-                cout << "Verifique que haya escrito los parametros correctamente." << endl;
-                return false;
-            } 
-            break;
-        default:
-            cout << "Verifique los parametros, no se permite mas de uno." << endl;
-            return false;
-    }
-
-    configurationHandler->initializeData();
-    GameProvider::setConfig(configurationHandler);
-    return true;
-}*/
