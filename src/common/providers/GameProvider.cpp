@@ -10,6 +10,9 @@ namespace GameProvider {
     size_t screenWidth_;
     size_t screenHeight_;
 
+    size_t getQuantityPlayers(){
+        return QUANTITY_PLAYERS;
+    }
     size_t getWidth() {
         return screenWidth_;
     }

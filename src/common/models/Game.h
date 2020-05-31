@@ -1,6 +1,8 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+//OUTDATED
+
 #include <ctime>
 #include "../../providers/GameProvider.h"
 #include "SDL2/SDL.h"
@@ -44,7 +46,6 @@ class Game {
 
     void run();
     bool login();
-    //GraphicsScenario play_level(int level);
 };
 
 #endif

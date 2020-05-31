@@ -23,6 +23,7 @@ class ConfigurationHandler;
 #define STAGE1LAYER6SPEED 9
 #define STAGE1LAYER7SPEED 10
 
+#define QUANTITY_PLAYERS 4
 
 #define MS_PER_UPDATE 16.67
 
@@ -54,6 +55,7 @@ namespace GameProvider {
     void setHeight(size_t height);
     size_t getWidth();
     size_t getHeight();
+    size_t getQuantityPlayers();
     float getElaptedTimeFPS();
     unordered_map<layer_t, size_t> getLayersSpeeds(); //Possible refactor if add more levels
 
