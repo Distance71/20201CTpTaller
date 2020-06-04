@@ -10,50 +10,48 @@ find_package(SDL2TTF REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
-include_directories(src/game)
+include_directories(src/common)
 include_directories(src/providers)
 include_directories(src/services)
 
-file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})
-
 add_executable( tp1taller
-	src/game/models/Action.cpp
-	src/game/models/Action.h        
-	src/game/models/Game.cpp
-        src/game/models/Game.h
-        src/game/models/Map.cpp
-        src/game/models/Map.h
-        src/game/models/MapElement.cpp
-        src/game/models/MapElement.h
-	src/game/models/MovementHandler.h
-	src/game/models/MovementHandler.cpp        
-	src/game/models/Orientation.cpp
-        src/game/models/Orientation.h
-	src/game/models/PlayerController.cpp
-	src/game/models/PlayerController.h
-	src/game/models/EnemyIA.h
-	src/game/models/EnemyIA.cpp
-        src/game/models/Position.cpp
-        src/game/models/Position.h
-	src/game/models/Speed.cpp
-	src/game/models/Speed.h
-	src/game/models/Sprite.cpp
-	src/game/models/Sprite.h
-	src/game/models/State.cpp
-	src/game/models/State.h
-        src/game/graphics/GraphicsScenario.cpp
-        src/game/graphics/GraphicsScenario.h
-        src/game/graphics/GraphicsMapElement.h
-        src/game/graphics/GraphicsMapElement.cpp
-        src/game/main.cpp
-	src/game/types.h
-        src/providers/GameProvider.cpp
-        src/providers/GameProvider.h
-        src/services/ConfigurationHandler.cpp
-        src/services/ConfigurationHandler.h
-        src/services/Logger.cpp
-        src/services/Logger.h
-        src/services/ParserJson.cpp
-        src/services/ParserJson.h)
+	src/common/models/Action.cpp
+	src/common/models/Action.h        
+	src/common/models/Game.cpp
+        src/common/models/Game.h
+        src/common/models/Map.cpp
+        src/common/models/Map.h
+        src/common/models/MapElement.cpp
+        src/common/models/MapElement.h
+	src/common/models/MovementHandler.h
+	src/common/models/MovementHandler.cpp        
+	src/common/models/Orientation.cpp
+        src/common/models/Orientation.h
+	src/common/models/PlayerController.cpp
+	src/common/models/PlayerController.h
+	src/common/models/EnemyIA.h
+	src/common/models/EnemyIA.cpp
+        src/common/models/Position.cpp
+        src/common/models/Position.h
+	src/common/models/Speed.cpp
+	src/common/models/Speed.h
+	src/common/models/Sprite.cpp
+	src/common/models/Sprite.h
+	src/common/models/State.cpp
+	src/common/models/State.h
+        src/client/graphicsManager/GraphicsScenario.cpp
+        src/client/graphicsManager/GraphicsScenario.h
+        src/client/graphicsManager/GraphicsMapElement.h
+        src/client/graphicsManager/GraphicsMapElement.cpp
+        src/main.cpp
+	src/common/types.h
+        src/common/providers/GameProvider.cpp
+        src/common/providers/GameProvider.h
+        src/common/services/ConfigurationHandler.cpp
+        src/common/services/ConfigurationHandler.h
+        src/common/services/Logger.cpp
+        src/common/services/Logger.h
+        src/common/services/ParserJson.cpp
+        src/common/services/ParserJson.h)
 	
 target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2TTF_LIBRARY})

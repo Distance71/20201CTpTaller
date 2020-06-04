@@ -3,14 +3,14 @@
 
 class Sprite;
 
-#include "../../providers/GameProvider.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "../../game/models/Speed.h"
-#include "../../game/models/Position.h"
-#include "../../game/models/Sprite.h"
+#include "../../common/providers/GameProvider.h"
+#include "../../common/models/Sprite.h"
+#include "../../common/models/Position.h"
+#include "../../common/models/Speed.h"
 #include <vector>
-#include "../types.h"
+#include "../../common/types.h"
 
 class GraphicsScenario {
     private:

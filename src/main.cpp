@@ -1,6 +1,6 @@
-#include "../services/Logger.h"
-#include "../services/ConfigurationHandler.h"
-#include "../providers/GameProvider.h"
+#include "services/Logger.h"
+#include "services/ConfigurationHandler.h"
+#include "providers/GameProvider.h"
 
 #include <iostream>
 #include <getopt.h>

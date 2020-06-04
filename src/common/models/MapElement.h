@@ -7,8 +7,9 @@
 #include <unordered_map>
 #include "State.h"
 #include "Action.h"
+#include "Orientation.h"
 #include "../types.h"
-#include "../graphics/GraphicsMapElement.h"
+#include "../../client/graphicsManager/GraphicsMapElement.h"
 #include "PlayerController.h"
 #include "EnemyIA.h"
 

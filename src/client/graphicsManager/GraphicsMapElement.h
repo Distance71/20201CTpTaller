@@ -1,11 +1,12 @@
 #ifndef _GRAPHICS_MAP_ELEMENT_H_
 #define _GRAPHICS_MAP_ELEMENT_H_
 
-#include "../../game/models/Sprite.h"
 #include <vector>
 #include <string>
-#include "../../game/models/Position.h"
-#include "../../game/models/Speed.h"
+#include "../../common/models/Action.h"
+#include "../../common/models/Sprite.h"
+#include "../../common/models/Position.h"
+#include "../../common/models/Speed.h"
 
 class Sprite;
 class GraphicsMapElement: public Action{

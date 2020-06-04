@@ -4,13 +4,13 @@
 //OUTDATED
 
 #include <ctime>
-#include "../../providers/GameProvider.h"
+#include "../providers/GameProvider.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "../../services/Logger.h"
+#include "../services/Logger.h"
 #include "Sprite.h"
 #include "Map.h"
-#include "../graphics/GraphicsScenario.h"
+#include "../../client/graphicsManager/GraphicsScenario.h"
 #include <chrono>
 #include <string>
 
