@@ -53,6 +53,7 @@ namespace GameProvider {
     //Could go later on gameParamsProvider
     void setWidth(size_t width);
     void setHeight(size_t height);
+    void setQuantityPlayers(size_t quantityPlayers);
     size_t getWidth();
     size_t getHeight();
     size_t getQuantityPlayers();

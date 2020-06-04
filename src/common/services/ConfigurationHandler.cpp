@@ -9,6 +9,13 @@ ConfigurationHandler::~ConfigurationHandler(){
     //delete this->levelData;
 }
 
+string ConfigurationHandler::getPathUser(int numberUser, string paramUser){
+
+    string pathUserParam = PATH_USER + '/' + to_string(numberUser) + '/' + paramUser;
+
+    return pathUserParam;
+}
+
 string ConfigurationHandler::getPathLevel(int numberLevel){
     string pathLevel = PATH_BASE_STAGE + to_string(numberLevel);
 
@@ -290,6 +297,32 @@ string ConfigurationHandler::getPathScreen(string paramScreen){
     string pathScreen = PATH_SCREEN + paramScreen;
 
     return pathScreen;
+}
+
+void ConfigurationHandler::setQuantityPlayer(){
+
+    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
+
+    if (quantityPlayers > MAX_QUANTITY_PLAYERS){
+        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
+        quantityPlayers == MAX_QUANTITY_PLAYERS;
+    }
+
+    GameProvider::setQuantityPlayers(quantityPlayers);
+
+    vector<user_t> users (quantityPlayers);
+
+    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
+        user_t newUser;
+
+        string pathUsername = this->getPathUser(oneUser, "username");
+        string pathPassword = this->getPathUser(oneUser, "password");
+
+        newUser.username = this->parserJson->getString(pathUsername);
+        newUser.password = this->parserJson->getString(pathPassword);
+
+        users.push_back(newUser);
+    }
 }
 
 void ConfigurationHandler::setSizeScreen(){

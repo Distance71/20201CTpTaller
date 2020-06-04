@@ -8,8 +8,6 @@
 #include <vector>
 #include "nlohmann/json.hpp"
 #include "Logger.h"
-#include "../game/types.h"
-#include "../game/models/Map.h"
 
 #define DEFAULT_CONFIGURATION "../default/ConfigurationDefault.json"
 

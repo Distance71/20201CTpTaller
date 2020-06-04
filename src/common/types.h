@@ -110,4 +110,9 @@ typedef struct {
     player_t playerParams;
 } gameParams_t;
 
+typedef struct {
+    string username;
+    string password;
+} user_t;
+
 #endif
