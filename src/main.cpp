@@ -4,18 +4,58 @@
 
 #include <iostream>
 #include <getopt.h>
+#include <boost/algorithm/string.hpp>
 
 #define PATH_CONFIGURATION "../Configuration.json"
 #define INDEX_MODE 1
 
-void showHelp(){
-    cout << "Uso: ejemplo [opcion]..." << endl;
-    cout << "Opciones:" << endl;
-    cout << "\t --help \t Ver esta ayuda" << endl;
+
+int mainServer(int port, string levelLog, string pathConfig){
+
+    cout << "Modo servidor." << endl;
+    cout << "Puerto: " + to_string(port) + ". Log: " + levelLog + ". Config: " + pathConfig << endl;
+
+    return EXIT_SUCCESS;    
+}
+
+int mainClient(int port, string ipAddress){
+
+    cout << "Modo Cliente." << endl;
+    cout << "Puerto: " + to_string(port) + ". IP: " + ipAddress << endl;
+    return EXIT_SUCCESS;
+}
+
+void showHelpServer(){
+    cout << "MODO SERVER:" << endl;
+    cout << "\t -p \t" << endl;
+    cout << "\t --port \t Puerto a conectarse" << endl;
     cout << "\t -l \t" << endl;
     cout << "\t --log \t \t Establecer nivel de log" << endl;
     cout << "\t -c file \t" << endl;
     cout << "\t --config=file \t Establecer archivo de configuracion" << endl;
+}
+
+void showHelpClient(){
+    cout << "MODO CLIENT:" << endl;
+    cout << "\t -p \t" << endl;
+    cout << "\t --port \t Puerto a conectarse" << endl;
+    cout << "\t -i \t" << endl;
+    cout << "\t --ip \t \t Direccion IP a conectarse" << endl;
+}
+
+void showHelp(){
+    cout << "Uso: ejemplo [opcion]..." << endl;
+    cout << "Opciones:" << endl;
+    cout << "\t -h \t" << endl;
+    cout << "\t --help \t Ver esta ayuda" << endl;
+    cout << "\t -m \t" << endl;
+    cout << "\t --mode \t Modo de la aplicacion (Server / Client)" << endl;
+
+    cout << "" << endl;
+    showHelpServer();
+
+    cout << "" << endl;
+    showHelpClient();
 }
 
 //Rewrite depending on server/client
@@ -40,30 +80,42 @@ void initializeGameConfig(string pathConfiguration, string levelLog){
     GameProvider::setConfig(configurationHandler);
 }
 
-int main(int argc, char *args[]) {
+int main(int argc, char *argv[]) {
 
-    const char* const short_opts = "hl:c:";
+    const char* const short_opts = "m:p:i:hl:c:";
     const option long_opts[] = {
+        {"mode", required_argument, NULL, 'm'},
+        {"port", required_argument, NULL, 'p'},
+        {"ip", required_argument, NULL, 'i'},
         {"help", no_argument, NULL, 'h'},
         {"log", required_argument, NULL, 'l'},
         {"config", required_argument, NULL, 'c'},
         {NULL, 0, NULL, 0}
     };
 
-    int opt;
-    std::string levelLog, pathConfig;
-
-    while ((opt = getopt_long(argc, args, short_opts, long_opts, nullptr)) != -1){
+    int opt, port;
+    string modeApp, ipAddress, levelLog, pathConfig;
+    
+    while ((opt = getopt_long(argc, argv, short_opts, long_opts, nullptr)) != -1){
         switch (opt) {
-            case 'h':
-                showHelp();
-                return EXIT_SUCCESS;
+            case 'm':
+                modeApp = optarg;
+                break;
+            case 'p':
+                port = stoi(optarg);
+                break;
+            case 'i':
+                ipAddress = optarg;
+                break;
             case 'c':
                 pathConfig = optarg;
                 break;
             case 'l':
                 levelLog = optarg;
                 break;
+            case 'h':
+                showHelp();
+                return EXIT_SUCCESS;
             
             default:
                 showHelp();
@@ -71,31 +123,23 @@ int main(int argc, char *args[]) {
         }
     }
 
-    initializeGameConfig(pathConfig, levelLog);
+    boost::to_upper(modeApp);
 
-    Logger::getInstance()->log(INFO, "Juego iniciado");
+    if (modeApp == "SERVER")
+        return mainServer(port, levelLog, pathConfig);
+   
+    if (modeApp == "CLIENT")
+        return mainClient(port, ipAddress);
 
-    switch(str2int(args[INDEX_MODE])) {
-        case str2int("SERVER"):
-            Server *server = new Server();
-            server->run();
-            break;        
-
-        case str2int("CLIENT"):
-            Client *client = new Client();
-            client->run();
-            break;
-
-        default:;
-            cout << "Ha Ejecutado mal el modo de la aplicacion" << endl;
-            return EXIT_FAILURE;
-    }   
+    cout << "Modo de juego inválido" << endl;
+    showHelp();
+    return EXIT_FAILURE;
 
     //Game *game = new Game();
 
     //game->run();
 
-    Logger::getInstance()->log(INFO, "Juego Finalizado");
+    //Logger::getInstance()->log(INFO, "Juego Finalizado");
 
-    return EXIT_SUCCESS;
+    //return EXIT_SUCCESS;
 }
