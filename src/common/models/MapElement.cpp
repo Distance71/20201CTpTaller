@@ -65,6 +65,112 @@ void MapElement::update(){
     }
 }
 
+void MapElement::moveTo(orientation_t oneOrientation){
+
+    State* position = states_.at("Position");
+    State* speed = states_.at("Speed");
+    State* orientation = states_.at("Orientation");
+    int xp = position->getX();
+    int yp = position->getY();
+    int xs = speed->getX();
+    int ys = speed-> getY();
+
+    int new_xp;
+    int new_yp;
+
+    switch (oneOrientation){
+        case FRONT:        
+            new_xp = xp + xs;
+            orientation->setX(FRONT);
+            if(new_xp <= (screen_widht - sprite_width)){
+                position->setX(new_xp);
+            }
+            break;
+
+        case BACK:
+            new_xp = xp - xs;
+            orientation->setX(BACK);
+            if(new_xp >= 0){
+                position->setX(new_xp);
+            }        
+            break;
+
+        case UP:
+            new_yp = yp-ys;
+            if (new_yp >= 0){
+                position->setY(new_yp);
+            }
+            break;
+
+        case DOWN:
+            new_yp = yp + ys;
+            if(new_yp <= (screen_height - sprite_height)){
+                position->setY(new_yp);
+            } 
+            break;
+
+        case FRONT_UP:
+            new_xp = xp + xs;
+            new_yp = yp - ys;
+            orientation->setX(FRONT);
+
+            if (new_xp <= screen_widht-sprite_width){
+                position->setX(new_xp);
+            }
+
+            if (new_yp > 0){
+                position->setY(new_yp);
+
+            }        
+            break;
+
+        case FRONT_DOWN:
+            new_xp = xp + xs;
+            new_yp = yp + ys;
+            orientation->setX(FRONT);
+
+            if (new_xp <= (screen_widht - sprite_width)){
+                position->setX(new_xp);
+            }
+
+            if (new_yp <= (screen_height - sprite_height)){
+                position->setY(new_yp);
+
+            }        
+            break;
+
+        case BACK_DOWN:
+            new_xp = xp - xs;
+            new_yp = yp + ys;
+            orientation->setX(BACK);
+            if (new_xp >= 0){
+                position->setX(new_xp);
+            }
+
+            if (new_yp <= (screen_height - sprite_height)){
+                position->setY(new_yp);
+
+            }        
+            break;
+
+        case BACK_UP:
+            new_xp = xp - xs;
+            new_yp = yp - ys;
+            orientation->setX(BACK);
+
+            if (new_xp >= 0 ){
+                position->setX(new_xp);
+            }
+
+            if (new_yp >= 0){
+                position->setY(new_yp);
+
+            }        
+            break;
+    }
+
+}
+
 bool MapElement::leftScreen(){
 
     if (this->getState<Orientation>("Orientation")->getX() == BACK){

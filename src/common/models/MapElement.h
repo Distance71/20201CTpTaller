@@ -41,6 +41,8 @@ class MapElement {
         
         void update();
 
+        void moveTo(orientation_t oneOrientation);    
+
         void setIdElement(IdElement oneIdElement);
         IdElement getIdElement();
         bool leftScreen();
