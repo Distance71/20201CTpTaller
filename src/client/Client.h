@@ -7,6 +7,7 @@
 #include <strings.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include "GameScreen.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/services/Logger.h"
 
@@ -14,6 +15,7 @@ using namespace std;
 
 class Client {
     private:
+        GameScreen *gameScreen_;
         bool connected_;
         int socket_;
         string name_;

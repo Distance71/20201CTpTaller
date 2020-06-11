@@ -4,9 +4,13 @@ Client::Client(string ipAddress, size_t port){
     this->name_ = "";
     this->ipHost_ = ipAddress;
     this->port_ = port;
+
+    this->gameScreen_ = new GameScreen(this);
 }
 
-Client::~Client(){}
+Client::~Client(){
+    delete this->gameScreen_;
+}
 
 void Client::initializeClient(){
 
