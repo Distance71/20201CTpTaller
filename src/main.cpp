@@ -5,6 +5,7 @@
 #include <iostream>
 #include <getopt.h>
 #include <boost/algorithm/string.hpp>
+#include "../client/Client.h"
 
 #define PATH_CONFIGURATION "../Configuration.json"
 #define INDEX_MODE 1
@@ -23,6 +24,12 @@ int mainClient(int port, string ipAddress){
     cout << "Modo Cliente." << endl;
     cout << "Puerto: " + to_string(port) + ". IP: " + ipAddress << endl;
     return EXIT_SUCCESS;
+
+    Client *newClient = new Client(ipAddress, port);
+    int codExitClient = newClient->run();
+    delete newClient;
+
+    return codExitClient;
 }
 
 void showHelpServer(){
