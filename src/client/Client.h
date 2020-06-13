@@ -8,16 +8,20 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "GameScreen.h"
+#include "../common/transmitionManager/Socket.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/services/Logger.h"
 
 using namespace std;
 
+class GameScreen;
+
 class Client {
     private:
         GameScreen *gameScreen_;
+        Socket *socket_;
         bool connected_;
-        int socket_;
+        
         string name_;
         string ipHost_;
         size_t port_;

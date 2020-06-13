@@ -12,6 +12,8 @@
 
 using namespace std;
 
+class Client;
+
 class GameScreen {
     private:
         Client *clientOwn;

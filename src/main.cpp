@@ -6,6 +6,7 @@
 #include <getopt.h>
 #include <boost/algorithm/string.hpp>
 #include "../client/Client.h"
+#include "../server/Server.h"
 
 #define PATH_CONFIGURATION "../Configuration.json"
 #define INDEX_MODE 1
@@ -16,7 +17,19 @@ int mainServer(int port, string levelLog, string pathConfig){
     cout << "Modo servidor." << endl;
     cout << "Puerto: " + to_string(port) + ". Log: " + levelLog + ". Config: " + pathConfig << endl;
 
-    return EXIT_SUCCESS;    
+    return EXIT_SUCCESS;   
+
+    if (port < 0){
+        cout << "Falta parámetro Port requerido para conectar el servidor." << endl;
+        showHelp();
+        return EXIT_FAILURE;
+    } 
+
+    Server *newServer = new Server(port);
+    int codExitServer = newServer->run();
+    delete newServer;
+
+    return codExitServer;
 }
 
 int mainClient(int port, string ipAddress){
@@ -24,6 +37,18 @@ int mainClient(int port, string ipAddress){
     cout << "Modo Cliente." << endl;
     cout << "Puerto: " + to_string(port) + ". IP: " + ipAddress << endl;
     return EXIT_SUCCESS;
+
+    if (port < 0){
+        cout << "Falta parámetro Port requerido para conectar el cliente." << endl;
+        showHelp();
+        return EXIT_FAILURE;
+    } 
+
+    if (ipAddress == ""){
+        cout << "Falta dirección IP requerida para conectar el cliente." << endl;
+        showHelp();
+        return EXIT_FAILURE;
+    } 
 
     Client *newClient = new Client(ipAddress, port);
     int codExitClient = newClient->run();
@@ -100,7 +125,8 @@ int main(int argc, char *argv[]) {
         {NULL, 0, NULL, 0}
     };
 
-    int opt, port;
+    int opt;
+    int port = -1;
     string modeApp, ipAddress, levelLog, pathConfig;
     
     while ((opt = getopt_long(argc, argv, short_opts, long_opts, nullptr)) != -1){

@@ -4,7 +4,7 @@ Client::Client(string ipAddress, size_t port){
     this->name_ = "";
     this->ipHost_ = ipAddress;
     this->port_ = port;
-
+    this->socket_ = new Socket(port);
     this->gameScreen_ = new GameScreen(this);
 }
 
@@ -14,17 +14,7 @@ Client::~Client(){
 
 void Client::initializeClient(){
 
-    sockaddr_in serverAddr{};
-    bzero((char *) &serverAddr, sizeof(serverAddr));
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_addr.s_addr = inet_addr(this->ipHost_.c_str());
-    serverAddr.sin_port = htons(this->port_);
-
-    Logger::getInstance()->log(DEBUG, "Se conecta el cliente con host" + this->ipHost_ + " y puerto " + to_string(this->port_));
-
-    this->socket_ = socket(AF_INET, SOCK_STREAM, 0);
-
-    if(this->socket_ < 0){
+    if(!this->socket_->create()){
         string errorMessage = "No se pudo crear el socket conectarse con el server";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -32,10 +22,7 @@ void Client::initializeClient(){
         return;
     }
 
-    int enable = 1;
-    int optsSetted = (setsockopt(socket_, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0);
-
-    if(optsSetted < 0){
+    if(!this->socket_->setOption()){
         string errorMessage = "No se pudieron setear las opciones del socket en el cliente";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -43,7 +30,7 @@ void Client::initializeClient(){
         return;
     }
 
-    if (connect(this->socket_, (struct sockaddr *) &serverAddr, sizeof(serverAddr)) < 0){
+    if (!this->socket_->connectWithServer(this->ipHost_)){
         string errorMessage = "No se pudo conectar el cliente con el servidor.";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -52,7 +39,8 @@ void Client::initializeClient(){
     }
 
     this->connected_ = true;
-    Logger::getInstance()->log(DEBUG, "Se creo el socket con exito");
+    Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host" + this->ipHost_ + " y puerto " + to_string(this->port_));
+
 }
 
 int Client::run(){

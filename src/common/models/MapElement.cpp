@@ -78,11 +78,14 @@ void MapElement::moveTo(orientation_t oneOrientation){
     int new_xp;
     int new_yp;
 
+    int screen_widht = GameProvider::getWidth();
+    int screen_height = GameProvider::getHeight();
+
     switch (oneOrientation){
         case FRONT:        
             new_xp = xp + xs;
             orientation->setX(FRONT);
-            if(new_xp <= (screen_widht - sprite_width)){
+            if(new_xp <= (screen_widht - this->size_x_)){
                 position->setX(new_xp);
             }
             break;
@@ -104,7 +107,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
 
         case DOWN:
             new_yp = yp + ys;
-            if(new_yp <= (screen_height - sprite_height)){
+            if(new_yp <= (screen_height - this->size_y_)){
                 position->setY(new_yp);
             } 
             break;
@@ -114,7 +117,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_yp = yp - ys;
             orientation->setX(FRONT);
 
-            if (new_xp <= screen_widht-sprite_width){
+            if (new_xp <= screen_widht - this->size_x_){
                 position->setX(new_xp);
             }
 
@@ -129,11 +132,11 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_yp = yp + ys;
             orientation->setX(FRONT);
 
-            if (new_xp <= (screen_widht - sprite_width)){
+            if (new_xp <= (screen_widht - this->size_x_)){
                 position->setX(new_xp);
             }
 
-            if (new_yp <= (screen_height - sprite_height)){
+            if (new_yp <= (screen_height - this->size_y_)){
                 position->setY(new_yp);
 
             }        
@@ -147,7 +150,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
                 position->setX(new_xp);
             }
 
-            if (new_yp <= (screen_height - sprite_height)){
+            if (new_yp <= (screen_height - this->size_y_)){
                 position->setY(new_yp);
 
             }        
