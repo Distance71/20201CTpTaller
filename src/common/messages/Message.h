@@ -4,6 +4,9 @@
 #include <iostream>
 #include <string.h>
 
+#define IS_FALSE 0
+#define IS_TRUE 1
+
 using namespace std;
 
 typedef enum typeMessage {
@@ -12,9 +15,9 @@ typedef enum typeMessage {
     UPDATE_ENTITY,
     INIT_LAYER,
     UPDATE_STAGE,
+    MOVEMENT_PLAYER,
     ACTION_PLAYER,
 } typeMessage_t;
-
 
 class Message {
 
@@ -24,6 +27,13 @@ class Message {
         Message(typeMessage_t type);
         virtual string getStringData();
 
+};
+
+class NoneMessage : public Message {
+
+    public:
+        NoneMessage();
+        string getStringData();
 };
 
 #endif // MESSAGE_H_
