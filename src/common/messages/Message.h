@@ -17,6 +17,8 @@ typedef enum typeMessage {
     INIT_LAYER,
     INIT_SCREEN,
     UPDATE_STAGE,
+    LOGIN_PLAYER,
+    REQUEST_LOGIN_PLAYER,
     MOVEMENT_PLAYER,
     ACTION_PLAYER,
 } typeMessage_t;
