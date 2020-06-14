@@ -20,18 +20,18 @@ class MessageDeserializer {
 
     private:
     
-        MessageActionPlayer *receiveActionPlayer(Socket *receives, int *fdSend, bool &error);
-        MessageInitEntity *receiveInitEntity(Socket *receives, int *fdSend, bool &error);
-        MessageInitLayer *receiveInitLayer(Socket *receives, int *fdSend, bool &error);
-        MessageInitScreen *receiveInitScreen(Socket *receives, int *fdSend, bool &error);
-        MessageMovementPlayer *receiveMovementPlayer(Socket *receives, int *fdSend, bool &error);
-        MessageUpdateEntity *receiveUpdateEntity(Socket *receives, int *fdSend, bool &error);
-        MessageUpdateStage *receiveUpdateStage(Socket *receives, int *fdSend, bool &error);
+        MessageActionPlayer *receiveActionPlayer(Socket *receives, bool &error);
+        MessageInitEntity *receiveInitEntity(Socket *receives, bool &error);
+        MessageInitLayer *receiveInitLayer(Socket *receives, bool &error);
+        MessageInitScreen *receiveInitScreen(Socket *receives, bool &error);
+        MessageMovementPlayer *receiveMovementPlayer(Socket *receives, bool &error);
+        MessageUpdateEntity *receiveUpdateEntity(Socket *receives, bool &error);
+        MessageUpdateStage *receiveUpdateStage(Socket *receives, bool &error);
 
     public:
         MessageDeserializer();
         
-        Message *getReceivedMessage(Socket *receives, int *fdSend, bool &error);
+        Message *getReceivedMessage(Socket *receives, bool &error);
     
 };
 

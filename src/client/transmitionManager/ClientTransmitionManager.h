@@ -13,6 +13,7 @@
 
 #include "../Client.h"
 #include "../../common/transmitionManager/Socket.h"
+#include "../../common/transmitionManager/serializer/MessageDeserializer.h"
 #include "../../common/messages/Message.h"
 #include "../../common/messages/MessageActionPlayer.h"
 #include "../../common/messages/MessageInitEntity.h"
@@ -31,7 +32,7 @@ class ClientTransmitionManager {
         Socket *socket_;
 
         vector<Message *> queueMessage_;
-        //MessageDeserializer *deserializer_;
+        MessageDeserializer *deserializer_;
 
     public:
         ClientTransmitionManager(Client *client, size_t port);
@@ -42,7 +43,7 @@ class ClientTransmitionManager {
         Client *getClient();
         Socket *getSocket();
         vector<Message *> getMessages();
-        //MessageDeserializer *getDeserializer();
+        MessageDeserializer *getDeserializer();
 };
 
 #endif // _CLIENT_TRANSMITION_MANAGER_H_
