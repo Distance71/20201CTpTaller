@@ -79,10 +79,6 @@ int mainServer(int port, string levelLog, string pathConfiguration){
 
 int mainClient(int port, string ipAddress){
 
-    cout << "Modo Cliente." << endl;
-    cout << "Puerto: " + to_string(port) + ". IP: " + ipAddress << endl;
-    return EXIT_SUCCESS;
-
     if (port < 0){
         cout << "Falta parámetro Port requerido para conectar el cliente." << endl;
         showHelp();

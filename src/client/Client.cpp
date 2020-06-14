@@ -50,7 +50,7 @@ int Client::run(){
     if (!this->isConnected())
         return EXIT_FAILURE;
 
-    cout << "Se conecto perfecto parece " << endl;
+    cout << "Se Conectado con el servidor " << endl;
 
     return EXIT_SUCCESS;    
 }
