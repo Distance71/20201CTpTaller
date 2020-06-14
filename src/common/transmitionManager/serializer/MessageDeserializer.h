@@ -8,6 +8,7 @@
 #include "../messages/MessageActionPlayer.h"
 #include "../messages/MessageInitEntity.h"
 #include "../messages/MessageInitLayer.h"
+#include "../messages/MessageInitScreen.h"
 #include "../messages/MessageMovementPlayer.h"
 #include "../messages/MessageUpdateEntity.h"
 #include "../messages/MessageUpdateStage.h"
@@ -22,6 +23,7 @@ class MessageDeserializer {
         MessageActionPlayer *receiveActionPlayer(Socket *receives, int *fdSend, bool &error);
         MessageInitEntity *receiveInitEntity(Socket *receives, int *fdSend, bool &error);
         MessageInitLayer *receiveInitLayer(Socket *receives, int *fdSend, bool &error);
+        MessageInitScreen *receiveInitScreen(Socket *receives, int *fdSend, bool &error);
         MessageMovementPlayer *receiveMovementPlayer(Socket *receives, int *fdSend, bool &error);
         MessageUpdateEntity *receiveUpdateEntity(Socket *receives, int *fdSend, bool &error);
         MessageUpdateStage *receiveUpdateStage(Socket *receives, int *fdSend, bool &error);

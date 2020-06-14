@@ -15,6 +15,7 @@ typedef enum typeMessage {
     INIT_ENTITY,
     UPDATE_ENTITY,
     INIT_LAYER,
+    INIT_SCREEN,
     UPDATE_STAGE,
     MOVEMENT_PLAYER,
     ACTION_PLAYER,

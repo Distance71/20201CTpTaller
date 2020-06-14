@@ -18,6 +18,8 @@ class MessageActionPlayer : public Message {
         MessageActionPlayer(bool isEnter, bool isQuitKey);
         ~MessageActionPlayer();
         string getStringData();
+        bool getIsEnterKey();
+        bool getIsQuitKey();
 };
 
 #endif // MESSAGE_ACTION_PLAYER_H_

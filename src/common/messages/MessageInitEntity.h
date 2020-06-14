@@ -26,6 +26,14 @@ class MessageInitEntity : public Message {
         ~MessageInitEntity();
         string getStringData();
 
+        level_t getLevel();
+        stage_t getStage();
+        IdElement getIdElement();
+        int getSizeX();
+        int getSizeY();
+        int getPosX();
+        int getPosY();
+        string getSource();
 };
 
 #endif // MESSAGE_INIT_ENTITY_H_

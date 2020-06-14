@@ -21,6 +21,9 @@ class MessageUpdateStage : public Message {
         ~MessageUpdateStage();
         string getStringData();
 
+        level_t getLevel();
+        stage_t getStage();
+        string getSource();
 };
 
 #endif // MESSAGE_UPDATE_STAGE_H_

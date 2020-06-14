@@ -5,6 +5,8 @@ MessageActionPlayer::MessageActionPlayer(bool isEnter, bool isQuit) : Message(AC
     this->isQuitKey_ = isQuitKey_;
 }
 
+MessageActionPlayer::~MessageActionPlayer(){}
+
 string MessageActionPlayer::getStringData(){
     string dataString;
     
@@ -23,4 +25,12 @@ string MessageActionPlayer::getStringData(){
     }
         
     return dataString;    
+}
+
+bool MessageActionPlayer::getIsEnterKey(){
+    return this->isEnterKey_;
+}
+
+bool MessageActionPlayer::getIsQuitKey(){
+    return this->isQuitKey_;
 }

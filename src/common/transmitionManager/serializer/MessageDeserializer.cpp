@@ -49,6 +49,23 @@ MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *receives, int *f
     return message;
 };
 
+MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *receives, int *fdSend, bool &error){
+
+    char width;
+    if (receives->recibirMensaje(fdSend, &width, sizeof(char)) <= 0){
+        error = true;
+        return nullptr;
+    }
+        
+    char height;
+    if (receives->recibirMensaje(fdSend, &height, sizeof(char)) <= 0){
+        error = true;
+        return nullptr;
+    }
+
+    return new MessageInitScreen((size_t) width, (size_t) height);
+};
+
 MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *receives, int *fdSend, bool &error){
     return nullptr;
 };
@@ -81,6 +98,9 @@ Message *MessageDeserializer::getReceivedMessage(Socket *receives, int *fdSend, 
 
         case INIT_LAYER:
             return this->receiveInitLayer(receives, fdSend, error);
+
+        case INIT_SCREEN:
+            return this->receiveInitScreen(receives, fdSend, error);
 
         case UPDATE_STAGE:
             return this->receiveUpdateStage(receives, fdSend, error);

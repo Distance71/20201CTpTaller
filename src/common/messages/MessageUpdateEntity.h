@@ -25,6 +25,12 @@ class MessageUpdateEntity : public Message {
         
         string getStringData();
 
+        level_t getLevel();
+        stage_t getStage();
+        IdElement getIdElement();
+        int getPosX();
+        int getPosY();
+
 };
 
 #endif // MESSAGE_UPDATE_ENTITY_H_

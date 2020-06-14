@@ -4,6 +4,8 @@ MessageMovementPlayer::MessageMovementPlayer(orientation_t oneOrientation) : Mes
     this->moveOrientation_ = oneOrientation;
 }
 
+MessageMovementPlayer::~MessageMovementPlayer(){};
+
 string MessageMovementPlayer::getStringData(){
     string dataString;
     
@@ -12,3 +14,7 @@ string MessageMovementPlayer::getStringData(){
         
     return dataString;
 }
+
+orientation_t MessageMovementPlayer::getOrientation(){
+    return this->moveOrientation_;
+};

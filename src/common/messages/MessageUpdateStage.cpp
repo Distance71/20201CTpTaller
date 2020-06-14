@@ -6,6 +6,8 @@ MessageUpdateStage::MessageUpdateStage(level_t oneLevel, stage_t oneStage, strin
     this->source_ = oneSource;
 };
 
+MessageUpdateStage::~MessageUpdateStage(){};
+
 string MessageUpdateStage::getStringData(){
     string dataString;
 
@@ -23,3 +25,14 @@ string MessageUpdateStage::getStringData(){
     return dataString;
 };
 
+level_t MessageUpdateStage::getLevel(){
+    return this->level_;
+};
+
+stage_t MessageUpdateStage::getStage(){
+    return this->stage_;
+};
+
+string MessageUpdateStage::getSource(){
+    return this->source_;
+};

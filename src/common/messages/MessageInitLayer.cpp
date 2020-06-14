@@ -26,3 +26,19 @@ string MessageInitLayer::getStringData(){
         
     return dataString;
 };
+
+level_t MessageInitLayer::getLevel(){
+    return this->level_;
+};
+
+stage_t MessageInitLayer::getStage(){
+    return this->stage_;
+};
+
+size_t MessageInitLayer::getIdLayer(){
+    return this->id_;
+};
+
+string MessageInitLayer::getSource(){
+    return this->source_;
+};
