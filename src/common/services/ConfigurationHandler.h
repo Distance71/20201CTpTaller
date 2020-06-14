@@ -13,6 +13,7 @@
 #define PATH_PLAYER "/configuracion/player/"
 #define PATH_SCREEN "/configuracion/screen/"
 #define PATH_USER "/configuracion/users"
+#define PATH_BASE_USER "/configuracion/users/"
 
 #define DEFAULT_SIZE_X 110
 #define DEFAULT_SIZE_Y 90

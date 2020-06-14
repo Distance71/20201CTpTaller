@@ -52,7 +52,6 @@ int mainServer(int port, string levelLog, string pathConfiguration){
         return EXIT_FAILURE;
     } 
 
-    /*
     ConfigurationHandler *configurationHandler = new ConfigurationHandler();
 
     try {
@@ -69,7 +68,7 @@ int mainServer(int port, string levelLog, string pathConfiguration){
     }
 
     configurationHandler->initializeData();
-    GameProvider::setConfig(configurationHandler);    */
+    GameProvider::setConfig(configurationHandler);
 
     Server *newServer = new Server(port);
     int codExitServer = newServer->run();

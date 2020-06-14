@@ -13,7 +13,7 @@ ConfigurationHandler::~ConfigurationHandler(){
 
 string ConfigurationHandler::getPathUser(int numberUser, string paramUser){
 
-    string pathUserParam = PATH_USER + '/' + to_string(numberUser) + '/' + paramUser;
+    string pathUserParam = PATH_BASE_USER + to_string(numberUser) + "/" + paramUser;
 
     return pathUserParam;
 }

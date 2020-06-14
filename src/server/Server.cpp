@@ -57,7 +57,7 @@ bool Server::isConnected(){
 }
 
 bool Server::waitPlayers(){
-    cout << "Esperando jugadores..." + to_string(this->maxPlayers) + "-" + to_string(this->players.size())  << endl;
+    cout << "Esperando jugadores..." << endl;
 
     while (this->maxPlayers > this->players.size()){
     
