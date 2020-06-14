@@ -54,9 +54,26 @@ add_executable( tp1taller
         src/common/services/ParserJson.cpp
         src/common/services/ParserJson.h
 
-
+        src/common/messages/Message.cpp
+        src/common/messages/Message.h
+        src/common/messages/MessageActionPlayer.cpp
+        src/common/messages/MessageActionPlayer.h
+        src/common/messages/MessageInitEntity.cpp
+        src/common/messages/MessageInitEntity.h
+        src/common/messages/MessageInitLayer.cpp
+        src/common/messages/MessageInitLayer.h
+        src/common/messages/MessageInitScreen.cpp
+        src/common/messages/MessageInitScreen.h
+        src/common/messages/MessageMovementPlayer.cpp
+        src/common/messages/MessageMovementPlayer.h
+        src/common/messages/MessageUpdateEntity.cpp
+        src/common/messages/MessageUpdateEntity.h
+        src/common/messages/MessageUpdateStage.cpp
+        src/common/messages/MessageUpdateStage.h
         src/common/transmitionManager/Socket.cpp
         src/common/transmitionManager/Socket.h
+        src/common/transmitionManager/serializer/MessageDeserializer.cpp
+        src/common/transmitionManager/serializer/MessageDeserializer.h
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
         src/client/GameScreen.cpp
