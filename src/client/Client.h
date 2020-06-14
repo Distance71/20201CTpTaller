@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "GameScreen.h"
+#include "transmitionManager/ClientTransmitionManager.h"
 #include "../common/transmitionManager/Socket.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/services/Logger.h"
@@ -15,11 +16,14 @@
 using namespace std;
 
 class GameScreen;
+class ClientTransmitionManager;
 
 class Client {
     private:
         GameScreen *gameScreen_;
-        Socket *socket_;
+        ClientTransmitionManager *transmitionManager_;
+
+        //Socket *socket_;
         bool connected_;
         
         string name_;
@@ -38,6 +42,8 @@ class Client {
         void disconnect();
         void setName(string oneName);
         string getName();
+
+        GameScreen *getGameScreen();
 };
 
 #endif

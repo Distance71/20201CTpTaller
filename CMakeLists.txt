@@ -55,6 +55,8 @@ add_executable( tp1taller
         src/common/services/ParserJson.h
         src/common/transmitionManager/Socket.cpp
         src/common/transmitionManager/Socket.h
+        src/client/transmitionManager/ClientTransmitionManager.cpp
+        src/client/transmitionManager/ClientTransmitionManager.h
         src/client/GameScreen.cpp
         src/client/GameScreen.h
         src/client/Client.cpp

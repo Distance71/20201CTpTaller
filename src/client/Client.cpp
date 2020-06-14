@@ -4,8 +4,10 @@ Client::Client(string ipAddress, size_t port){
     this->name_ = "";
     this->ipHost_ = ipAddress;
     this->port_ = port;
-    this->socket_ = new Socket(port);
+    //this->socket_ = new Socket(port);
+
     this->gameScreen_ = new GameScreen(this);
+    this->transmitionManager_ = new ClientTransmitionManager(this, port);
 }
 
 Client::~Client(){
@@ -14,26 +16,7 @@ Client::~Client(){
 
 void Client::initializeClient(){
 
-    if(!this->socket_->create()){
-        string errorMessage = "No se pudo crear el socket conectarse con el server";
-        Logger::getInstance()->log(ERROR, errorMessage);
-        GameProvider::setErrorStatus(errorMessage);
-        this->connected_ = false;
-        return;
-    }
-
-    if(!this->socket_->setOption()){
-        string errorMessage = "No se pudieron setear las opciones del socket en el cliente";
-        Logger::getInstance()->log(ERROR, errorMessage);
-        GameProvider::setErrorStatus(errorMessage);
-        this->connected_ = false;
-        return;
-    }
-
-    if (!this->socket_->connectWithServer(this->ipHost_)){
-        string errorMessage = "No se pudo conectar el cliente con el servidor.";
-        Logger::getInstance()->log(ERROR, errorMessage);
-        GameProvider::setErrorStatus(errorMessage);
+    if (!this->transmitionManager_->connectWithServer(this->ipHost_)){
         this->connected_ = false;
         return;
     }
@@ -75,3 +58,7 @@ void Client::setName(string oneName){
 string Client::getName(){
     return this->name_;
 }
+
+GameScreen *Client::getGameScreen(){
+    return this->gameScreen_;
+};
