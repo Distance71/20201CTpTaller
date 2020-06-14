@@ -19,36 +19,31 @@ static void* sendMessage(void *arg){
     }
 }*/
 
-/*
 static void* receiveMessage(void *arg){
 
-    struct argpthread *argumentos = (struct argpthread *) arg;
+    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
 
-    bool clientIsOpen = true;
-    int indexClient = argumentos->nroClient - 1;
-    Server *self;
-    self = argumentos->server;
+    Client *client = transmitionManager->getClient();
+    Socket *socket = transmitionManager->getSocket();
+    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
+    vector<Message *> queueMessage = transmitionManager->getMessages();
 
-    Deserializer *deserial;
-    deserial = argumentos->des;
+    bool error = false;
 
-    while (clientIsOpen){
-        Message *nuevoMensaje;
-        nuevoMensaje = deserial->procesarMensaje(self->socket, &self->clients.at(indexClient), clientIsOpen);
+    while (client->isConnected() && !error){
 
-        typeMessage_t tipo;
-        tipo = nuevoMensaje->getType();
-        cout << to_string(tipo) << endl;
+        Message *newMessage = deserializer->getReceivedMessage(socket, error);
+
     }
 
-}*/
+}
 
 ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
     this->clientOwn_ = client;
     this->socket_ = new Socket();
     this->socket_->setPort(port);
 
-    //this->deserializer_ = new MessageDeserializer();
+    this->deserializer_ = new MessageDeserializer();
 }
 
 ClientTransmitionManager::~ClientTransmitionManager(){
@@ -79,4 +74,20 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
     }
 
     return true;
+};
+
+Client *ClientTransmitionManager::getClient(){
+    return this->clientOwn_;
+};
+
+Socket *ClientTransmitionManager::getSocket(){
+    return this->socket_;
+};
+
+vector<Message *> ClientTransmitionManager::getMessages(){
+    return this->queueMessage_;
+};
+
+MessageDeserializer *ClientTransmitionManager::getDeserializer(){
+    return this->deserializer_;
 };
