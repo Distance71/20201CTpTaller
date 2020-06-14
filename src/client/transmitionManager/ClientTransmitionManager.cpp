@@ -1,8 +1,54 @@
 #include "ClientTransmitionManager.h"
 
+/*
+static void* sendMessage(void *arg){
+
+    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+
+    Client *client = transmitionManager->getClient();
+    Socket *socket = transmitionManager->getSocket();
+    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
+    vector<Message *> queueMessage = transmitionManager->getMessages();
+
+    bool error = false;
+
+    while (client->isConnected() && !error){
+
+        Message *newMessage = deserializer->getReceivedMessage(socket, error);
+
+    }
+}*/
+
+/*
+static void* receiveMessage(void *arg){
+
+    struct argpthread *argumentos = (struct argpthread *) arg;
+
+    bool clientIsOpen = true;
+    int indexClient = argumentos->nroClient - 1;
+    Server *self;
+    self = argumentos->server;
+
+    Deserializer *deserial;
+    deserial = argumentos->des;
+
+    while (clientIsOpen){
+        Message *nuevoMensaje;
+        nuevoMensaje = deserial->procesarMensaje(self->socket, &self->clients.at(indexClient), clientIsOpen);
+
+        typeMessage_t tipo;
+        tipo = nuevoMensaje->getType();
+        cout << to_string(tipo) << endl;
+    }
+
+}*/
+
 ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
     this->clientOwn_ = client;
-    this->socket_ = new Socket(port);
+    this->socket_ = new Socket();
+    this->socket_->setPort(port);
+
+    //this->deserializer_ = new MessageDeserializer();
 }
 
 ClientTransmitionManager::~ClientTransmitionManager(){

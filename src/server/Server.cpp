@@ -3,7 +3,8 @@
 Server::Server(size_t port){
     this->port_ = port;
     this->maxPlayers = 0;
-    this->socket_ = new Socket(port);
+    this->socket_ = new Socket();
+    this->socket_->setPort(port);
     this->connected_ = false;
 }
 
@@ -64,7 +65,7 @@ bool Server::waitPlayers(){
         int newClient = this->socket_->acceptClient();
 
         if (newClient < 0){
-            cout << "Error al aceptar cliente" << endl;
+            Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
         } else {
             this->players.push_back(newClient);
 

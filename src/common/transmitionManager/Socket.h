@@ -15,7 +15,8 @@ class Socket {
         int fileDescriptor;
 
     public:
-        Socket(unsigned int port);
+        Socket();
+        Socket(int fd);
         ~Socket();
 
         // For Server
@@ -29,6 +30,7 @@ class Socket {
         bool connectWithServer(string ipHost);
 
         // Common
+        void setPort(unsigned int port);
         int recibirMensaje(int *socketRecv, char* buffer, size_t sizeData);
         int enviarMensaje(const char* buffer, size_t sizeData);
 

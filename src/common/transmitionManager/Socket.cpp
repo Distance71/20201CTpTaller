@@ -1,10 +1,16 @@
 #include "Socket.h"
 
-Socket::Socket(unsigned int port){
-    this->port_ = port;
+Socket::Socket(){}
+
+Socket::Socket(int fd){
+    this->fileDescriptor = fd;
 }
 
 Socket::~Socket(){}
+
+void Socket::setPort(unsigned int port){
+    this->port_ = port;
+}
 
 bool Socket::create(){
     

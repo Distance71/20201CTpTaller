@@ -53,6 +53,8 @@ add_executable( tp1taller
         src/common/services/Logger.h
         src/common/services/ParserJson.cpp
         src/common/services/ParserJson.h
+
+
         src/common/transmitionManager/Socket.cpp
         src/common/transmitionManager/Socket.h
         src/client/transmitionManager/ClientTransmitionManager.cpp
