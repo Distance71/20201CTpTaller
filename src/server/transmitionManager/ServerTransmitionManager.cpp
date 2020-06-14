@@ -46,16 +46,19 @@ bool ServerTransmitionManager::initialize(){
 bool ServerTransmitionManager::waitPlayers(){
     cout << "Esperando jugadores..." << endl;
 
-    while (this->maxPlayers > this->players.size()){
+    while (this->maxPlayers > this->players_.size()){
     
-        int newClient = this->socket_->acceptClient();
+        int newFDClient = this->socket_->acceptClient();
 
-        if (newClient < 0){
+        if (newFDClient < 0){
             Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
         } else {
-            this->players.push_back(newClient);
+            Socket *newClient = new Socket(newFDClient);
+            this->players_[this->lastId_] = newClient;
 
-            cout << "Se agrega el cliente " + to_string(this->players.size()) << endl;
+            cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;
+
+            this->lastId_++; 
 
             /*
             pthread_t newHilo;
