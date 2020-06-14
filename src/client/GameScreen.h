@@ -31,7 +31,7 @@ class GameScreen {
         void processEvent();
         void updateGraphics();
 
-        void viewLogin();
+        bool viewLogin();
         bool viewStartStage(level_t oneLevel);
         bool viewStageCleared(level_t oneLevel);
 };
