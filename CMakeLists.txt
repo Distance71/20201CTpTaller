@@ -80,6 +80,8 @@ add_executable( tp1taller
         src/client/GameScreen.h
         src/client/Client.cpp
         src/client/Client.h
+        src/server/transmitionManager/ServerTransmitionManager.cpp
+        src/server/transmitionManager/ServerTransmitionManager.h
         src/server/Server.cpp
         src/server/Server.h)
 	

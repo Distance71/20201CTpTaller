@@ -3,13 +3,15 @@
 Server::Server(size_t port){
     this->port_ = port;
     this->maxPlayers = 0;
-    this->socket_ = new Socket();
-    this->socket_->setPort(port);
     this->connected_ = false;
+
+    this->transmitionManager_ = new ServerTransmitionManager(this, port);
 }
 
 Server::~Server(){
-    this->socket_->cerrar();
+    delete this->transmitionManager_;
+
+    //this->socket_->cerrar();
     //delete this->socket_;
 
     Logger::getInstance()->log(INFO, "Fin del juego");
@@ -18,7 +20,7 @@ Server::~Server(){
 //Pre: 
 void Server::initializeServer() {
 
-    if(!this->socket_->create()){
+    /*if(!this->socket_->create()){
         string errorMessage = "No se pudo crear el socket para recibir clientes en el server";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -49,40 +51,19 @@ void Server::initializeServer() {
     }
 
     this->connected_ = true;
-    Logger::getInstance()->log(INFO, "Se creo el socket con exito");
+    Logger::getInstance()->log(INFO, "Se creo el socket con exito");*/
+
+    if(!this->transmitionManager_->initialize()){
+        this->connected_ = false;
+        return;
+    }
+
+    this->connected_ = true;
     cout << "Se crea servidor escuchando el puerto " + to_string(this->port_) << endl;
 }
 
 bool Server::isConnected(){
     return this->connected_;
-}
-
-bool Server::waitPlayers(){
-    cout << "Esperando jugadores..." << endl;
-
-    while (this->maxPlayers > this->players.size()){
-    
-        int newClient = this->socket_->acceptClient();
-
-        if (newClient < 0){
-            Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
-        } else {
-            this->players.push_back(newClient);
-
-            cout << "Se agrega el cliente " + to_string(this->players.size()) << endl;
-
-            /*
-            pthread_t newHilo;
-
-            argpthread argumentos;
-            argumentos.server = this;
-            argumentos.nroClient = this->clients.size();
-            argumentos.des = this->deserializer;
-
-            pthread_create(&newHilo, NULL, recibirInformacion, &argumentos);*/
-
-        }
-    }
 }
 
 int Server::run(){
@@ -91,7 +72,7 @@ int Server::run(){
     if(!this->isConnected())
         return EXIT_FAILURE;
 
-    if(!this->waitPlayers())
+    if(!this->transmitionManager_->waitPlayers())
         return EXIT_FAILURE;
 
     return EXIT_SUCCESS;

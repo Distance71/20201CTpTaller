@@ -1,23 +1,9 @@
 #include "ClientTransmitionManager.h"
 
-/*
+
 static void* sendMessage(void *arg){
 
-    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
-
-    Client *client = transmitionManager->getClient();
-    Socket *socket = transmitionManager->getSocket();
-    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
-    vector<Message *> queueMessage = transmitionManager->getMessages();
-
-    bool error = false;
-
-    while (client->isConnected() && !error){
-
-        Message *newMessage = deserializer->getReceivedMessage(socket, error);
-
-    }
-}*/
+}
 
 static void* receiveMessage(void *arg){
 

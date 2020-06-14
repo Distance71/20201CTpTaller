@@ -6,13 +6,19 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <vector>
+
+#include "transmitionManager/ServerTransmitionManager.h"
+
 #include "../common/transmitionManager/Socket.h"
 #include "../common/services/Logger.h"
 #include "../common/providers/GameProvider.h"
 
+class ServerTransmitionManager;
+
 class Server {
     private:
-        Socket *socket_;
+        ServerTransmitionManager *transmitionManager_;
+
         size_t port_;
         size_t maxPlayers;
         vector<int> players;
