@@ -4,7 +4,6 @@ Client::Client(string ipAddress, size_t port){
     this->name_ = "";
     this->ipHost_ = ipAddress;
     this->port_ = port;
-    //this->socket_ = new Socket(port);
 
     this->gameScreen_ = new GameScreen(this);
     this->transmitionManager_ = new ClientTransmitionManager(this, port);
@@ -12,6 +11,7 @@ Client::Client(string ipAddress, size_t port){
 
 Client::~Client(){
     delete this->gameScreen_;
+    delete this->transmitionManager_;
 }
 
 void Client::initializeClient(){

@@ -5,7 +5,9 @@ ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
     this->socket_ = new Socket(port);
 }
 
-ClientTransmitionManager::~ClientTransmitionManager(){}
+ClientTransmitionManager::~ClientTransmitionManager(){
+    delete this->socket_;
+}
 
 bool ClientTransmitionManager::connectWithServer(string ipAddress){
 
