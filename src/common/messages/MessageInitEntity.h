@@ -1,5 +1,5 @@
-#ifndef MESSAGE_UPDATE_ENTITY_H_
-#define MESSAGE_UPDATE_ENTITY_H_
+#ifndef MESSAGE_INIT_ENTITY_H_
+#define MESSAGE_INIT_ENTITY_H_
 
 #include <iostream>
 #include <string.h>
@@ -23,8 +23,9 @@ class MessageInitEntity : public Message {
     public:
 
         MessageInitEntity(level_t oneLevel, stage_t oneStage, IdElement idMapElement, int sizeX, int sizeY, int posX, int posY, string oneSource);
+        ~MessageInitEntity();
         string getStringData();
 
 };
 
-#endif // MESSAGE_UPDATE_ENTITY_H_
+#endif // MESSAGE_INIT_ENTITY_H_

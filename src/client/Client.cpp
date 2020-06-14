@@ -39,7 +39,7 @@ void Client::initializeClient(){
     }
 
     this->connected_ = true;
-    Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host" + this->ipHost_ + " y puerto " + to_string(this->port_));
+    Logger::getInstance()->log(INFO, "Se creo el socket con exito. Se conecta el cliente con host" + this->ipHost_ + " y puerto " + to_string(this->port_));
 
 }
 
@@ -49,7 +49,10 @@ int Client::run(){
 
     if (!this->isConnected())
         return EXIT_FAILURE;
-    
+
+    cout << "Se conecto perfecto parece " << endl;
+
+    return EXIT_SUCCESS;    
 }
 
 bool Client::isConnected(){

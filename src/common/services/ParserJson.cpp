@@ -4,8 +4,9 @@ ParserJson::ParserJson(){
 
     ifstream fileDefault(DEFAULT_CONFIGURATION, ifstream::in);
     fileDefault >> jsonDefault;
-
+    
     fileDefault.close(); 
+    
 };
 
 ParserJson::~ParserJson(){

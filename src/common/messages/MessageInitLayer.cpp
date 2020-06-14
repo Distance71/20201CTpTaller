@@ -7,6 +7,8 @@ MessageInitLayer::MessageInitLayer(level_t oneLevel, stage_t oneStage, size_t id
     this->source_ = oneSource;
 };
 
+MessageInitLayer::~MessageInitLayer(){};
+
 string MessageInitLayer::getStringData(){
     string dataString;
     

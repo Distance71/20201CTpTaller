@@ -21,6 +21,8 @@ class MessageUpdateEntity : public Message {
     public:
 
         MessageUpdateEntity(level_t oneLevel, stage_t oneStage, IdElement idMapElement, int posX, int posY);
+        ~MessageUpdateEntity();
+        
         string getStringData();
 
 };

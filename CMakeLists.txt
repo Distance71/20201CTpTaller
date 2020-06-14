@@ -52,6 +52,14 @@ add_executable( tp1taller
         src/common/services/Logger.cpp
         src/common/services/Logger.h
         src/common/services/ParserJson.cpp
-        src/common/services/ParserJson.h)
+        src/common/services/ParserJson.h
+        src/common/transmitionManager/Socket.cpp
+        src/common/transmitionManager/Socket.h
+        src/client/GameScreen.cpp
+        src/client/GameScreen.h
+        src/client/Client.cpp
+        src/client/Client.h
+        src/server/Server.cpp
+        src/server/Server.h)
 	
 target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2TTF_LIBRARY})

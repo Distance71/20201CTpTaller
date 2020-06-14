@@ -16,7 +16,7 @@ class MessageActionPlayer : public Message {
 
     public:
         MessageActionPlayer(bool isEnter, bool isQuitKey);
-
+        ~MessageActionPlayer();
         string getStringData();
 };
 

@@ -19,6 +19,7 @@ class MessageInitLayer : public Message {
     public:
 
         MessageInitLayer(level_t oneLevel, stage_t oneStage, size_t idLayer, string oneSource);
+        ~MessageInitLayer();
         string getStringData();
 
 };

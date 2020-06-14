@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string.h>
+#include "../types.h"
 
 #define IS_FALSE 0
 #define IS_TRUE 1
@@ -25,6 +26,8 @@ class Message {
         typeMessage_t type_;
 
         Message(typeMessage_t type);
+        ~Message();
+        typeMessage_t getType();
         virtual string getStringData();
 
 };
@@ -33,6 +36,7 @@ class NoneMessage : public Message {
 
     public:
         NoneMessage();
+        ~NoneMessage();
         string getStringData();
 };
 

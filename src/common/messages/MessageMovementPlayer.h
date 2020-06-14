@@ -15,7 +15,7 @@ class MessageMovementPlayer : public Message {
 
     public:
         MessageMovementPlayer(orientation_t oneOrientation);
-
+        ~MessageMovementPlayer();
         string getStringData();
 };
 

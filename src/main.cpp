@@ -11,19 +11,65 @@
 #define PATH_CONFIGURATION "../Configuration.json"
 #define INDEX_MODE 1
 
+void showHelpServer(){
+    cout << "MODO SERVER:" << endl;
+    cout << "\t -p \t" << endl;
+    cout << "\t --port \t Puerto a conectarse" << endl;
+    cout << "\t -l \t" << endl;
+    cout << "\t --log \t \t Establecer nivel de log" << endl;
+    cout << "\t -c file \t" << endl;
+    cout << "\t --config=file \t Establecer archivo de configuracion" << endl;
+}
 
-int mainServer(int port, string levelLog, string pathConfig){
+void showHelpClient(){
+    cout << "MODO CLIENT:" << endl;
+    cout << "\t -p \t" << endl;
+    cout << "\t --port \t Puerto a conectarse" << endl;
+    cout << "\t -i \t" << endl;
+    cout << "\t --ip \t \t Direccion IP a conectarse" << endl;
+}
 
-    cout << "Modo servidor." << endl;
-    cout << "Puerto: " + to_string(port) + ". Log: " + levelLog + ". Config: " + pathConfig << endl;
+void showHelp(){
+    cout << "Uso: ejemplo [opcion]..." << endl;
+    cout << "Opciones:" << endl;
+    cout << "\t -h \t" << endl;
+    cout << "\t --help \t Ver esta ayuda" << endl;
+    cout << "\t -m \t" << endl;
+    cout << "\t --mode \t Modo de la aplicacion (Server / Client)" << endl;
 
-    return EXIT_SUCCESS;   
+    cout << "" << endl;
+    showHelpServer();
+
+    cout << "" << endl;
+    showHelpClient();
+}
+
+int mainServer(int port, string levelLog, string pathConfiguration){
 
     if (port < 0){
         cout << "Falta parámetro Port requerido para conectar el servidor." << endl;
         showHelp();
         return EXIT_FAILURE;
     } 
+
+    /*
+    ConfigurationHandler *configurationHandler = new ConfigurationHandler();
+
+    try {
+        configurationHandler->loadFileConfiguration(pathConfiguration); 
+    } catch (invalid_argument &e){
+        Logger::getInstance()->log(ERROR, "Error sintactico en archivo de configuracion (" + string(e.what()) + "). Se procede a cargar el archivo de default.");
+        configurationHandler->setConfigDefault();
+    }
+
+    if (levelLog == ""){
+        configurationHandler->setLogLevel();
+    } else {
+        Logger::getInstance()->setLevel(levelLog);
+    }
+
+    configurationHandler->initializeData();
+    GameProvider::setConfig(configurationHandler);    */
 
     Server *newServer = new Server(port);
     int codExitServer = newServer->run();
@@ -57,38 +103,6 @@ int mainClient(int port, string ipAddress){
     return codExitClient;
 }
 
-void showHelpServer(){
-    cout << "MODO SERVER:" << endl;
-    cout << "\t -p \t" << endl;
-    cout << "\t --port \t Puerto a conectarse" << endl;
-    cout << "\t -l \t" << endl;
-    cout << "\t --log \t \t Establecer nivel de log" << endl;
-    cout << "\t -c file \t" << endl;
-    cout << "\t --config=file \t Establecer archivo de configuracion" << endl;
-}
-
-void showHelpClient(){
-    cout << "MODO CLIENT:" << endl;
-    cout << "\t -p \t" << endl;
-    cout << "\t --port \t Puerto a conectarse" << endl;
-    cout << "\t -i \t" << endl;
-    cout << "\t --ip \t \t Direccion IP a conectarse" << endl;
-}
-
-void showHelp(){
-    cout << "Uso: ejemplo [opcion]..." << endl;
-    cout << "Opciones:" << endl;
-    cout << "\t -h \t" << endl;
-    cout << "\t --help \t Ver esta ayuda" << endl;
-    cout << "\t -m \t" << endl;
-    cout << "\t --mode \t Modo de la aplicacion (Server / Client)" << endl;
-
-    cout << "" << endl;
-    showHelpServer();
-
-    cout << "" << endl;
-    showHelpClient();
-}
 
 //Rewrite depending on server/client
 void initializeGameConfig(string pathConfiguration, string levelLog){

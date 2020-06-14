@@ -1,6 +1,8 @@
 #include "ConfigurationHandler.h"
 
 ConfigurationHandler::ConfigurationHandler(){
+
+    cout << "Constructor" << endl;
     this->parserJson = new ParserJson();
 }
 
@@ -181,6 +183,7 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
 void ConfigurationHandler::initializeData(){
 
     this->setSizeScreen();
+    this->setQuantityPlayer();
     this->gameData.playerParams = getPlayerParams();
 
     int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);

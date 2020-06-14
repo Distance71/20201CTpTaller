@@ -9,7 +9,7 @@
 #include "nlohmann/json.hpp"
 #include "Logger.h"
 
-#define DEFAULT_CONFIGURATION "../default/ConfigurationDefault.json"
+#define DEFAULT_CONFIGURATION "../default/ConfigurationServerDefault.json"
 
 using namespace std;
 using json = nlohmann::json;

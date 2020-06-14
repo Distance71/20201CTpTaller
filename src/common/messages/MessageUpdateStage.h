@@ -18,6 +18,7 @@ class MessageUpdateStage : public Message {
     public:
 
         MessageUpdateStage(level_t oneLevel, stage_t oneStage, string oneSource);
+        ~MessageUpdateStage();
         string getStringData();
 
 };

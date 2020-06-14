@@ -10,6 +10,10 @@ MessageUpdateEntity::MessageUpdateEntity(level_t oneLevel, stage_t oneStage, IdE
     
 };
 
+MessageUpdateEntity::~MessageUpdateEntity(){
+
+};
+
 string MessageUpdateEntity::getStringData(){
     string dataString;
         
