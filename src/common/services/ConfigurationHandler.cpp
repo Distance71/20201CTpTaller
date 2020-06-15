@@ -308,7 +308,7 @@ void ConfigurationHandler::setQuantityPlayer(){
 
     if (quantityPlayers > MAX_QUANTITY_PLAYERS){
         Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
-        quantityPlayers == MAX_QUANTITY_PLAYERS;
+        quantityPlayers = MAX_QUANTITY_PLAYERS;
     }
 
     GameProvider::setQuantityPlayers(quantityPlayers);
