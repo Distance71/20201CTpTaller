@@ -55,10 +55,9 @@ bool ServerTransmitionManager::waitPlayers(){
         } else {
             Socket *newClient = new Socket(newFDClient);
             this->players_[this->lastId_] = newClient;
-
-            cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;
-
+            
             this->lastId_++; 
+            cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;            
 
             unsigned int width = GameProvider::getWidth();
             unsigned int height = GameProvider::getHeight();
