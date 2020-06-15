@@ -3,6 +3,21 @@
 
 static void* sendMessage(void *arg){
 
+    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+
+    Client *client = transmitionManager->getClient();
+    Socket *socket = transmitionManager->getSocket();
+    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
+    vector<Message *> *queueMessage = transmitionManager->getSendMessages();
+
+    bool error = false;
+
+    while (client->isConnected() && !error){
+
+        if (!queueMessage->empty()){
+            // Secuencia de sacar un mensaje y enviarlo
+        }
+    }
 }
 
 static void* receiveMessage(void *arg){
@@ -12,13 +27,33 @@ static void* receiveMessage(void *arg){
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
     MessageDeserializer *deserializer = transmitionManager->getDeserializer();
-    vector<Message *> queueMessage = transmitionManager->getMessages();
+    vector<Message *> *queueMessage = transmitionManager->getReceivedMessages();
 
     bool error = false;
 
     while (client->isConnected() && !error){
 
-        Message *newMessage = deserializer->getReceivedMessage(socket, error);
+        //MessageInitScreen *initScreen = (MessageInitScreen *) deserializer->getReceivedMessage(socket, error);
+
+        deserializer->pushNewMessage(socket, error, queueMessage);
+        Message *newMessage = queueMessage->at(0);
+        
+        switch (newMessage->getType()){
+            case INIT_SCREEN:
+                {
+                    MessageInitScreen *initScreen = (MessageInitScreen *) newMessage;
+                    unsigned int width = initScreen->getWidth();
+                    unsigned int  height = initScreen->getHeight();
+                    GameProvider::setWidth(width);
+                    GameProvider::setHeight(height);
+                    client->getGameScreen()->initializeGraphics();
+                    client->getGameScreen()->viewLogin();
+                    break;
+                }
+            case NONE:
+            default:
+                break;
+        }
 
     }
 
@@ -58,6 +93,9 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
         GameProvider::setErrorStatus(errorMessage);
         return false;
     }
+    
+    pthread_t newHilo;
+    pthread_create(&newHilo, NULL, receiveMessage, this);
 
     return true;
 };
@@ -70,8 +108,12 @@ Socket *ClientTransmitionManager::getSocket(){
     return this->socket_;
 };
 
-vector<Message *> ClientTransmitionManager::getMessages(){
-    return this->queueMessage_;
+vector<Message *> *ClientTransmitionManager::getReceivedMessages(){
+    return &this->queueReceiveMessage_;
+};
+
+vector<Message *> *ClientTransmitionManager::getSendMessages(){
+    return &this->queueSendMessage_;
 };
 
 MessageDeserializer *ClientTransmitionManager::getDeserializer(){

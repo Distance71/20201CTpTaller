@@ -60,6 +60,14 @@ bool ServerTransmitionManager::waitPlayers(){
 
             this->lastId_++; 
 
+            unsigned int width = GameProvider::getWidth();
+            unsigned int height = GameProvider::getHeight();
+            MessageInitScreen initScreen = MessageInitScreen(width, height);
+            string dataString;
+            dataString = initScreen.getStringData();
+        
+            newClient->enviarMensaje(dataString.c_str(), sizeof(char) *dataString.size());
+            
             /*
             pthread_t newHilo;
 

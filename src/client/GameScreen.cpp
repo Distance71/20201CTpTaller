@@ -3,7 +3,7 @@
 GameScreen::GameScreen(Client *client){
     this->clientOwn = client;
 
-    this->initializeGraphics();
+    //this->initializeGraphics();
 }
 
 GameScreen::~GameScreen(){
@@ -27,14 +27,10 @@ void GameScreen::initializeGraphics(){
         GameProvider::setErrorStatus(SDL_GetError());
         return;
     }
-
-    //HABRIA QUE VER ESTO
-    GameProvider::setWidth(800);
-    GameProvider::setHeight(600);
-
+    
     int screen_widht = GameProvider::getWidth();
     int screen_height = GameProvider::getHeight();
-   
+
     this->window_ = SDL_CreateWindow("Gley Lancer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_widht, screen_height, SDL_WINDOW_SHOWN);
 
     if(!this->window_) {

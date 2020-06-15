@@ -11,17 +11,17 @@ using namespace std;
 class MessageInitScreen : public Message {
 
     private:
-        size_t screenWidth_;
-        size_t screenHeight_;
+        unsigned int screenWidth_;
+        unsigned int screenHeight_;
 
     public:
 
-        MessageInitScreen(size_t width, size_t height);
+        MessageInitScreen(unsigned int width, unsigned int height);
         ~MessageInitScreen();
         string getStringData();
 
-        size_t getWidth();
-        size_t getHeight();
+        unsigned int getWidth();
+        unsigned int getHeight();
 };
 
 #endif // MESSAGE_INIT_SCREEN_H_

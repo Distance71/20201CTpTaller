@@ -32,6 +32,7 @@ class MessageDeserializer {
         MessageDeserializer();
         
         Message *getReceivedMessage(Socket *receives, bool &error);
+        void pushNewMessage(Socket *receives, bool &error, vector<Message *> *queueMessage);
     
 };
 

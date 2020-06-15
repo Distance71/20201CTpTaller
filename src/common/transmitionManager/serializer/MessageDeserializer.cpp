@@ -51,19 +51,19 @@ MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *receives, bool &
 
 MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *receives, bool &error){
 
-    char width;
-    if (receives->recibirMensaje(&width, sizeof(char)) <= 0){
+    unsigned int width;
+    if (receives->recibirMensaje((char *) &width, sizeof(unsigned int)) <= 0){
         error = true;
         return nullptr;
     }
         
-    char height;
-    if (receives->recibirMensaje(&height, sizeof(char)) <= 0){
+    unsigned int height;
+    if (receives->recibirMensaje((char *) &height, sizeof(unsigned int)) <= 0){
         error = true;
         return nullptr;
     }
-
-    return new MessageInitScreen((size_t) width, (size_t) height);
+    
+    return new MessageInitScreen(width, height);
 };
 
 MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *receives, bool &error){
@@ -116,4 +116,50 @@ Message *MessageDeserializer::getReceivedMessage(Socket *receives, bool &error){
             return new NoneMessage();
     }
 
+};
+
+void MessageDeserializer::pushNewMessage(Socket *receives, bool &error, vector<Message *> *queueMessage){
+    char typeMessage = NONE;
+
+    if (error)
+        return;
+    
+    if (receives->recibirMensaje(&typeMessage, sizeof(char)) <= 0)
+        error = true;
+
+    switch (typeMessage){
+
+        case INIT_ENTITY:
+            queueMessage->push_back(this->receiveInitEntity(receives, error));
+            break;
+
+        case UPDATE_ENTITY:
+            queueMessage->push_back(this->receiveUpdateEntity(receives, error));
+            break;
+
+        case INIT_LAYER:
+            queueMessage->push_back(this->receiveInitLayer(receives, error));
+            break;
+
+        case INIT_SCREEN:
+            queueMessage->push_back(this->receiveInitScreen(receives, error));
+            break;
+
+        case UPDATE_STAGE:
+            queueMessage->push_back(this->receiveUpdateStage(receives, error));
+            break;
+
+        case MOVEMENT_PLAYER:
+            queueMessage->push_back(this->receiveMovementPlayer(receives, error));
+            break;
+
+        case ACTION_PLAYER:
+            queueMessage->push_back(this->receiveActionPlayer(receives, error));
+            break;
+
+        case NONE:
+        default:
+            queueMessage->push_back(new NoneMessage());
+            break;
+    }    
 };

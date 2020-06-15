@@ -31,7 +31,8 @@ class ClientTransmitionManager {
         Client *clientOwn_;
         Socket *socket_;
 
-        vector<Message *> queueMessage_;
+        vector<Message *> queueReceiveMessage_;
+        vector<Message *> queueSendMessage_;
         MessageDeserializer *deserializer_;
 
     public:
@@ -42,7 +43,8 @@ class ClientTransmitionManager {
 
         Client *getClient();
         Socket *getSocket();
-        vector<Message *> getMessages();
+        vector<Message *> *getReceivedMessages();
+        vector<Message *> *getSendMessages();
         MessageDeserializer *getDeserializer();
 };
 

@@ -15,7 +15,10 @@ string MessageInitLayer::getStringData(){
     dataString.push_back(this->type_);
     dataString.push_back(this->level_);
     dataString.push_back(this->stage_);
-    dataString.push_back(this->id_);
+    
+    char* id_arr = (char*)&this->id_;
+    for (unsigned int i = 0; i < sizeof(size_t); ++i)
+        dataString.push_back(id_arr[i]);
 
     int len = this->source_.length();
     char* len_arr = (char*)&len;

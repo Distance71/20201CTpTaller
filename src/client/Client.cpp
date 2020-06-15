@@ -34,9 +34,8 @@ int Client::run(){
         return EXIT_FAILURE;
 
     cout << "Se Conectado con el servidor " << endl;
-     
-    if (!this->gameScreen_->viewLogin())
-        return EXIT_FAILURE;
+
+    while (this->isConnected()){}
 
     return EXIT_SUCCESS;    
 }

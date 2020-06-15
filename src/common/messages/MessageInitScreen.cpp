@@ -1,6 +1,6 @@
 #include "MessageInitScreen.h"
 
-MessageInitScreen::MessageInitScreen(size_t width, size_t height) : Message(INIT_SCREEN){
+MessageInitScreen::MessageInitScreen(unsigned int width, unsigned int height) : Message(INIT_SCREEN){
     this->screenWidth_ = width;
     this->screenHeight_ = height;
 }
@@ -13,16 +13,22 @@ string MessageInitScreen::getStringData(){
     string dataString;
 
     dataString.push_back(this->type_);
-    dataString.push_back(this->screenWidth_);
-    dataString.push_back(this->screenHeight_);
+
+    char* screenWidth_arr = (char*)&this->screenWidth_;
+    for (unsigned int i = 0; i < sizeof(unsigned int); ++i)
+        dataString.push_back(screenWidth_arr[i]);
+
+    char* screenHeight_arr = (char*)&this->screenHeight_;
+    for (unsigned int i = 0; i < sizeof(unsigned int); ++i)
+        dataString.push_back(screenHeight_arr[i]);
 
     return dataString;
 }
 
-size_t MessageInitScreen::getWidth(){
+unsigned int MessageInitScreen::getWidth(){
     return this->screenWidth_;
 };
 
-size_t MessageInitScreen::getHeight(){
+unsigned int MessageInitScreen::getHeight(){
     return this->screenHeight_;
 };
