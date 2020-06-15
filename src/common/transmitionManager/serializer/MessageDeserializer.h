@@ -9,7 +9,9 @@
 #include "../../messages/MessageInitEntity.h"
 #include "../../messages/MessageInitLayer.h"
 #include "../../messages/MessageInitScreen.h"
+#include "../../messages/MessageLoginPlayer.h"
 #include "../../messages/MessageMovementPlayer.h"
+#include "../../messages/MessageRequestLoginPlayer.h"
 #include "../../messages/MessageUpdateEntity.h"
 #include "../../messages/MessageUpdateStage.h"
 #include "../../types.h"
@@ -24,7 +26,9 @@ class MessageDeserializer {
         MessageInitEntity *receiveInitEntity(Socket *receives, bool &error);
         MessageInitLayer *receiveInitLayer(Socket *receives, bool &error);
         MessageInitScreen *receiveInitScreen(Socket *receives, bool &error);
+        MessageLoginPlayer *receiveLoginPlayer(Socket *receives, bool &error);
         MessageMovementPlayer *receiveMovementPlayer(Socket *receives, bool &error);
+        MessageRequestLoginPlayer *receiveRequestLoginPlayer(Socket *receives, bool &error);
         MessageUpdateEntity *receiveUpdateEntity(Socket *receives, bool &error);
         MessageUpdateStage *receiveUpdateStage(Socket *receives, bool &error);
 
