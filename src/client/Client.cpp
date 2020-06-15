@@ -35,6 +35,7 @@ int Client::run(){
 
     cout << "Se Conectado con el servidor " << endl;
 
+    //TODO agregar el nuevo login para autenticarse y continuar 
     while (this->isConnected()){}
 
     return EXIT_SUCCESS;    

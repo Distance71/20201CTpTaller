@@ -14,6 +14,8 @@ include_directories(src/common)
 include_directories(src/providers)
 include_directories(src/services)
 
+file(COPY src/client/assets DESTINATION ${CMAKE_BINARY_DIR})
+
 add_executable( tp1taller
 	src/common/models/Action.cpp
 	src/common/models/Action.h        

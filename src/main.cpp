@@ -176,12 +176,4 @@ int main(int argc, char *argv[]) {
     cout << "Modo de juego inválido" << endl;
     showHelp();
     return EXIT_FAILURE;
-
-    //Game *game = new Game();
-
-    //game->run();
-
-    //Logger::getInstance()->log(INFO, "Juego Finalizado");
-
-    //return EXIT_SUCCESS;
 }
