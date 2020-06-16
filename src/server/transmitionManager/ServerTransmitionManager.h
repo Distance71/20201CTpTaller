@@ -25,6 +25,7 @@ class ServerTransmitionManager {
         
         unordered_map<IdPlayer, Socket*> players_;
         IdPlayer lastId_ = 0;
+        pthread_mutex_t mutex_lastId_;
 
     public:
         ServerTransmitionManager(Server *server, size_t port);

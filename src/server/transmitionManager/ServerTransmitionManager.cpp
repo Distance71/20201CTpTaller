@@ -4,9 +4,12 @@ ServerTransmitionManager::ServerTransmitionManager(Server *server, size_t port){
     this->serverOwn_ = server;
     this->socket_ = new Socket();
     this->socket_->setPort(port);
+    pthread_mutex_init(&this->mutex_lastId_,NULL);
 }
 
-ServerTransmitionManager::~ServerTransmitionManager(){}
+ServerTransmitionManager::~ServerTransmitionManager(){
+    pthread_mutex_destroy(&this->mutex_lastId_);
+}
 
 bool ServerTransmitionManager::initialize(){
 
@@ -53,11 +56,14 @@ bool ServerTransmitionManager::waitPlayers(){
         if (newFDClient < 0){
             Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
         } else {
+            pthread_mutex_lock(&this->mutex_lastId_);
             Socket *newClient = new Socket(newFDClient);
+
             this->players_[this->lastId_] = newClient;
             
             this->lastId_++; 
-            cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;            
+            cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;     
+            pthread_mutex_unlock(&this->mutex_lastId_);       
 
             unsigned int width = GameProvider::getWidth();
             unsigned int height = GameProvider::getHeight();
