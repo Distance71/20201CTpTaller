@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unordered_map>
+#include <boost/algorithm/string.hpp>
 
 #include "transmitionManager/ServerTransmitionManager.h"
 #include "usersManager/UsersManager.h"

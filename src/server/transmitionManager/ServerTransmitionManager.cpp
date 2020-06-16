@@ -51,7 +51,7 @@ bool ServerTransmitionManager::waitPlayers(){
 
     // Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
     // porque el Socket hace el accept antes de que del logeo y demas
-    while (!this->serverOwn_->isFull()){
+    while ((!this->serverOwn_->isFull()) && (this->serverOwn_->isConnected())){
     
         int newFDClient = this->socket_->acceptClient();
 

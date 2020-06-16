@@ -51,5 +51,17 @@ int Server::run(){
     if(!this->transmitionManager_->waitPlayers())
         return EXIT_FAILURE;
 
+    /*while (this->isConnected()){
+        string strQuit;
+        cin >> strQuit;
+        boost::to_upper(strQuit);
+        if (strQuit == "QUIT"){
+            this->connected_ = false;
+            cout << "Has cerrado la partida." << endl;
+        } else {
+            cout << "Comando no válido." << endl;
+        }
+    }*/
+
     return EXIT_SUCCESS;
 }

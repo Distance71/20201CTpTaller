@@ -124,6 +124,18 @@
         ],    
         "users": [
             {
+                "username": "agustin",
+                "password": "agustin"
+            },
+            {
+                "username": "dario",
+                "password": "dario"
+            },
+            {
+                "username": "sergio",
+                "password": "sergio"
+            },
+            {
                 "username": "maxi",
                 "password": "maxi"
             }
