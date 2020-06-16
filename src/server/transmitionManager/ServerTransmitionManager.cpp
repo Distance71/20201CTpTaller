@@ -49,7 +49,9 @@ bool ServerTransmitionManager::initialize(){
 bool ServerTransmitionManager::waitPlayers(){
     cout << "Esperando jugadores..." << endl;
 
-    while (this->maxPlayers > this->players_.size()){
+    // Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
+    // porque el Socket hace el accept antes de que del logeo y demas
+    while (!this->serverOwn_->isFull()){
     
         int newFDClient = this->socket_->acceptClient();
 
@@ -57,10 +59,11 @@ bool ServerTransmitionManager::waitPlayers(){
             Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
         } else {
             pthread_mutex_lock(&this->mutex_lastId_);
-            Socket *newClient = new Socket(newFDClient);
-
-            this->players_[this->lastId_] = newClient;
+            Socket *newSocketClient = new Socket(newFDClient);
+            UsersManager *newUser = new UsersManager(this->lastId_, newSocketClient, this->serverOwn_);          
+            this->users_[this->lastId_] = newUser;
             
+            this->serverOwn_->addPlayer(this->lastId_, newUser);
             this->lastId_++; 
             cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;     
             pthread_mutex_unlock(&this->mutex_lastId_);       
@@ -71,7 +74,7 @@ bool ServerTransmitionManager::waitPlayers(){
             string dataString;
             dataString = initScreen.getStringData();
         
-            newClient->enviarMensaje(dataString.c_str(), sizeof(char) *dataString.size());
+            newSocketClient->enviarMensaje(dataString.c_str(), sizeof(char) *dataString.size());
             
             /*
             pthread_t newHilo;

@@ -265,7 +265,7 @@ MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *receives, bo
     return message;        
 };
 
-Message *MessageDeserializer::getReceivedMessage(Socket *receives, bool &error){
+/*Message *MessageDeserializer::getReceivedMessage(Socket *receives, bool &error){
     
     char typeMessage = NONE;
 
@@ -303,7 +303,7 @@ Message *MessageDeserializer::getReceivedMessage(Socket *receives, bool &error){
             return new NoneMessage();
     }
 
-};
+};*/
 
 void MessageDeserializer::pushNewMessage(Socket *receives, bool &error, vector<Message *> *queueMessage){
     char typeMessage = NONE;

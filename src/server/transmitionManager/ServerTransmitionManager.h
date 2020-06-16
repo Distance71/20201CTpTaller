@@ -14,8 +14,10 @@
 #include "../../common/messages/MessageUpdateStage.h"
 
 #include "../Server.h"
+#include "../usersManager/UsersManager.h"
 
 class Server;
+class UsersManager;
 
 class ServerTransmitionManager {
     private:
@@ -23,7 +25,7 @@ class ServerTransmitionManager {
         Socket *socket_;
         size_t maxPlayers;
         
-        unordered_map<IdPlayer, Socket*> players_;
+        unordered_map<IdPlayer, UsersManager*> users_;
         IdPlayer lastId_ = 0;
         pthread_mutex_t mutex_lastId_;
 

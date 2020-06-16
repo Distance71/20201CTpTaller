@@ -2,7 +2,7 @@
 
 Server::Server(size_t port){
     this->port_ = port;
-    this->maxPlayers = 0;
+    this->maxPlayers = GameProvider::getQuantityPlayers();;
     this->connected_ = false;
 
     this->transmitionManager_ = new ServerTransmitionManager(this, port);
@@ -27,6 +27,19 @@ void Server::initializeServer() {
 
 bool Server::isConnected(){
     return this->connected_;
+}
+
+bool Server::addPlayer(IdPlayer idPlayer, UsersManager *onePlayer){
+    if (this->isFull())
+        return false;
+
+    cout << "El cliente " + to_string(idPlayer) + " se agrega a la partida" << endl;
+    this->players_[idPlayer] = onePlayer;
+    return true;
+}
+
+bool Server::isFull(){
+    return (this->players_.size() >= this->maxPlayers);
 }
 
 int Server::run(){
