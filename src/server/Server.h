@@ -23,9 +23,10 @@ class Server {
         ServerTransmitionManager *transmitionManager_;
 
         size_t port_;
-        size_t maxPlayers;
+        size_t maxPlayers_;
         unordered_map<IdPlayer, UsersManager*> players_;
         bool connected_;
+        pthread_mutex_t mutex_players_;
 
         void initializeServer();
         
