@@ -33,8 +33,6 @@ static void* receiveMessage(void *arg){
 
     while (client->isConnected() && !error){
 
-        //MessageInitScreen *initScreen = (MessageInitScreen *) deserializer->getReceivedMessage(socket, error);
-
         deserializer->pushNewMessage(socket, error, queueMessage);
         Message *newMessage = queueMessage->at(0);
         
@@ -50,6 +48,21 @@ static void* receiveMessage(void *arg){
                     client->getGameScreen()->viewLogin();
                     break;
                 }
+            case INIT_ENTITY:
+                break;
+
+            case UPDATE_ENTITY:
+                break;
+
+            case INIT_LAYER:
+                break;
+
+            case UPDATE_STAGE:
+                break;
+
+            case REQUEST_LOGIN_PLAYER:
+                break;
+              
             case NONE:
             default:
                 break;
