@@ -11,22 +11,24 @@ using namespace std;
 class MessageUpdateEntity : public Message {
 
     private:
-        // El Level y Stage se podrian sacar si se actualizan solo currents
+        // El Level, Stage y Step se podrian sacar si se actualizan solo currents
         level_t level_; 
         stage_t stage_;
+        unsigned int step_;
         IdElement idElement_;
         int pos_x_;
         int pos_y_;
     
     public:
 
-        MessageUpdateEntity(level_t oneLevel, stage_t oneStage, IdElement idMapElement, int posX, int posY);
+        MessageUpdateEntity(level_t oneLevel, stage_t oneStage, unsigned int oneStep, IdElement idMapElement, int posX, int posY);
         ~MessageUpdateEntity();
         
         string getStringData();
 
         level_t getLevel();
         stage_t getStage();
+        unsigned int getStep();
         IdElement getIdElement();
         int getPosX();
         int getPosY();

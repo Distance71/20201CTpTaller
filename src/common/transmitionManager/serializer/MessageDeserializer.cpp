@@ -4,14 +4,14 @@ MessageDeserializer::MessageDeserializer(){};
 
 MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *receives, bool &error){
 
-    bool enterKey;
-    if (receives->recibirMensaje((char *) &enterKey, sizeof(bool)) <= 0){
+    char enterKey;
+    if (receives->recibirMensaje(&enterKey, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
 
-    bool quitKey;
-    if (receives->recibirMensaje((char *) &quitKey, sizeof(bool)) <= 0){
+    char quitKey;
+    if (receives->recibirMensaje(&quitKey, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
@@ -33,7 +33,7 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool
         return nullptr;
     }
     
-    int step;
+    unsigned int step;
     if (receives->recibirMensaje((char *)&step, sizeof(unsigned int)) <= 0){
         error = true;
         return nullptr;
@@ -82,7 +82,13 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool
         return nullptr;
     }
     
-    MessageInitEntity *message = new MessageInitEntity(level, stage, step, id, sizeX, sizeY, posX, posY, source);
+    char isPlayer;
+    if (receives->recibirMensaje(&isPlayer, sizeof(char)) <= 0){
+        error = true;
+        return nullptr;
+    }
+
+    MessageInitEntity *message = new MessageInitEntity(level, stage, step, id, sizeX, sizeY, posX, posY, source, isPlayer);
 
     delete [] source;
     return message;    
@@ -192,8 +198,8 @@ MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *receiv
         
 MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *receives, bool &error){
 
-    bool authorize;
-    if (receives->recibirMensaje((char *) &authorize, sizeof(bool)) <= 0){
+    char authorize;
+    if (receives->recibirMensaje(&authorize, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
@@ -214,7 +220,13 @@ MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *receives, 
         error = true;
         return nullptr;
     }
-        
+            
+    unsigned int step;
+    if (receives->recibirMensaje((char *)&step, sizeof(unsigned int)) <= 0){
+        error = true;
+        return nullptr;
+    }
+
     IdElement id;
     if (receives->recibirMensaje((char *) &id, sizeof(IdElement)) <= 0){
         error = true;
@@ -233,7 +245,7 @@ MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *receives, 
         return nullptr;
     }
     
-    MessageUpdateEntity *message = new MessageUpdateEntity((level_t) level, (stage_t) stage, id, posX, posY);
+    MessageUpdateEntity *message = new MessageUpdateEntity((level_t) level, (stage_t) stage, step, id, posX, posY);
 
     return message; 
 };

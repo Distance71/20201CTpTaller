@@ -1,7 +1,7 @@
 #include "MessageInitEntity.h"
 
 MessageInitEntity::MessageInitEntity(level_t oneLevel, stage_t oneStage, unsigned int oneStep, IdElement idMapElement, 
-                                    int sizeX, int sizeY, int posX, int posY, string oneSource) : Message(INIT_ENTITY)
+                                    int sizeX, int sizeY, int posX, int posY, string oneSource, bool isHuman) : Message(INIT_ENTITY)
 {
     this->level_ = oneLevel;
     this->stage_ = oneStage;
@@ -12,6 +12,7 @@ MessageInitEntity::MessageInitEntity(level_t oneLevel, stage_t oneStage, unsigne
     this->pos_x_ = posX;
     this->pos_y_ = posY;
     this->source_ = oneSource;
+    this->isPlayer_ = isHuman;
 };
 
 MessageInitEntity::~MessageInitEntity(){};
@@ -53,6 +54,12 @@ string MessageInitEntity::getStringData(){
         dataString.push_back(len_arr[i]);
 
     dataString.append(this->source_);
+
+    if (this->isPlayer_){
+        dataString.push_back(IS_TRUE);
+    } else {
+        dataString.push_back(IS_FALSE);
+    }
     
     return dataString;
 };
@@ -64,6 +71,10 @@ level_t MessageInitEntity::getLevel(){
 stage_t MessageInitEntity::getStage(){
     return this->stage_;
 };
+
+unsigned int MessageInitEntity::getStep(){
+    return this->step_;
+}
 
 IdElement MessageInitEntity::getIdElement(){
     return this->idElement_;
@@ -88,3 +99,7 @@ int MessageInitEntity::getPosY(){
 string MessageInitEntity::getSource(){
     return this->source_;
 };
+
+bool MessageInitEntity::getIsPlayer(){
+    return this->isPlayer_;
+}

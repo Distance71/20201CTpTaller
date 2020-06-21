@@ -20,10 +20,11 @@ class MessageInitEntity : public Message {
         int pos_x_;
         int pos_y_;
         string source_;
+        bool isPlayer_;
     
     public:
 
-        MessageInitEntity(level_t oneLevel, stage_t oneStage, unsigned int oneStep, IdElement idMapElement, int sizeX, int sizeY, int posX, int posY, string oneSource);
+        MessageInitEntity(level_t oneLevel, stage_t oneStage, unsigned int oneStep, IdElement idMapElement, int sizeX, int sizeY, int posX, int posY, string oneSource, bool isHuman);
         ~MessageInitEntity();
         string getStringData();
 
@@ -36,6 +37,7 @@ class MessageInitEntity : public Message {
         int getPosX();
         int getPosY();
         string getSource();
+        bool getIsPlayer();
 };
 
 #endif // MESSAGE_INIT_ENTITY_H_
