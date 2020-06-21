@@ -32,6 +32,12 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool
         error = true;
         return nullptr;
     }
+    
+    int step;
+    if (receives->recibirMensaje((char *)&step, sizeof(unsigned int)) <= 0){
+        error = true;
+        return nullptr;
+    }
         
     IdElement id;
     if (receives->recibirMensaje((char *) &id, sizeof(IdElement)) <= 0){
@@ -76,7 +82,7 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool
         return nullptr;
     }
     
-    MessageInitEntity *message = new MessageInitEntity(level, stage, id, sizeX, sizeY, posX, posY, source);
+    MessageInitEntity *message = new MessageInitEntity(level, stage, step, id, sizeX, sizeY, posX, posY, source);
 
     delete [] source;
     return message;    

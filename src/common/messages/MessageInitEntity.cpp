@@ -1,10 +1,11 @@
 #include "MessageInitEntity.h"
 
-MessageInitEntity::MessageInitEntity(level_t oneLevel, stage_t oneStage, IdElement idMapElement, 
+MessageInitEntity::MessageInitEntity(level_t oneLevel, stage_t oneStage, unsigned int oneStep, IdElement idMapElement, 
                                     int sizeX, int sizeY, int posX, int posY, string oneSource) : Message(INIT_ENTITY)
 {
     this->level_ = oneLevel;
     this->stage_ = oneStage;
+    this->step_ = oneStep;
     this->idElement_ = idMapElement;
     this->size_x_ = sizeX;
     this->size_y_ = sizeY;
@@ -21,6 +22,10 @@ string MessageInitEntity::getStringData(){
     dataString.push_back(this->type_);
     dataString.push_back(this->level_);
     dataString.push_back(this->stage_);
+
+    char* sizeStep_arr = (char*)&this->step_;
+    for (unsigned int i = 0; i < sizeof(unsigned int); ++i)
+        dataString.push_back(sizeStep_arr[i]);
 
     char* idElement_arr = (char*)&this->idElement_;
     for (unsigned int i = 0; i < sizeof(IdElement); ++i)
