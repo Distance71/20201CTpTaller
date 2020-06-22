@@ -245,29 +245,21 @@ MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *receives, bo
         error = true;
         return nullptr;
     }
-        
-    char stage;
-    if (receives->recibirMensaje(&stage, sizeof(char)) <= 0){
+    
+    char isStart;
+    if (receives->recibirMensaje(&isStart, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
-    
-    int source_length;
-    if (receives->recibirMensaje((char *)&source_length, sizeof(int)) <= 0){
-        error = true;
-        return nullptr;
-    }
-    
-    char *source = new char[source_length + 1];
-    source[source_length] = '\0';
-    if (receives->recibirMensaje(source,  sizeof(char) * source_length) <= 0){
-        error = true;
-        return nullptr;
-    }
-    
-    MessageUpdateStage *message = new MessageUpdateStage((level_t) level, (stage_t) stage, source);
 
-    delete [] source;
+    char isEnd;
+    if (receives->recibirMensaje(&isEnd, sizeof(char)) <= 0){
+        error = true;
+        return nullptr;
+    }
+
+    MessageUpdateStage *message = new MessageUpdateStage((level_t) level, isStart, isEnd);
+
     return message;        
 };
 

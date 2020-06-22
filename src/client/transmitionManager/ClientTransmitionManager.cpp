@@ -115,18 +115,23 @@ void ClientTransmitionManager::processMessages(){
                     this->processInitScreen((MessageInitScreen *) newMessage);
                     break;
                 case INIT_ENTITY:
+                    this->processInitEntity((MessageInitEntity *) newMessage);
                     break;
 
                 case UPDATE_ENTITY:
+                    this->processUpdateEntity((MessageUpdateEntity *) newMessage);
                     break;
 
                 case INIT_LAYER:
+                    this->processInitLayer((MessageInitLayer *) newMessage);
                     break;
 
                 case UPDATE_STAGE:
+                    this->processUpdateStage((MessageUpdateStage *) newMessage);
                     break;
 
                 case REQUEST_LOGIN_PLAYER:
+                    this->processRequestLoginPlayer((MessageRequestLoginPlayer *) newMessage);
                     break;
                 
                 case NONE:
@@ -166,3 +171,17 @@ void ClientTransmitionManager::processRequestLoginPlayer(MessageRequestLoginPlay
 void ClientTransmitionManager::processUpdateEntity(MessageUpdateEntity *updateEntity){
 
 };
+
+void ClientTransmitionManager::processUpdateStage(MessageUpdateStage *updateStage){
+
+    level_t oneLevel = updateStage->getLevel();
+    
+    if (updateStage->getIsStartStage()){
+        this->clientOwn_->getGameScreen()->viewStartStage(oneLevel);
+    }
+
+    if (updateStage->getIsEndStage()){
+        this->clientOwn_->getGameScreen()->viewStageCleared(oneLevel);
+    }
+};
+

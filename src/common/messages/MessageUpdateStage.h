@@ -12,18 +12,18 @@ class MessageUpdateStage : public Message {
 
     private:
         level_t level_; 
-        stage_t stage_;
-        string source_;
+        bool isStartStage_;
+        bool isEndStage_;
     
     public:
 
-        MessageUpdateStage(level_t oneLevel, stage_t oneStage, string oneSource);
+        MessageUpdateStage(level_t oneLevel, bool isStartStage, bool isEndStage);
         ~MessageUpdateStage();
         string getStringData();
 
         level_t getLevel();
-        stage_t getStage();
-        string getSource();
+        bool getIsStartStage();
+        bool getIsEndStage();
 };
 
 #endif // MESSAGE_UPDATE_STAGE_H_

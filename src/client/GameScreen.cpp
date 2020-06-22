@@ -76,12 +76,12 @@ bool GameScreen::viewLogin() {
     // La pantalla de Login se ajusta segun el tamanio de la ventana 
     SDL_BlitScaled(loginscreen, NULL, surface, NULL);
     SDL_UpdateWindowSurface(window);
-    while (GameProvider::getStatus().normalStatus){
+    /*while (GameProvider::getStatus().normalStatus){
         processEvent();
         SDL_Event e = GameProvider::getLastEvent();
         if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
             return true;
-    }
+    }*/
 }
 
 void GameScreen::clearScene(){
@@ -108,6 +108,7 @@ void GameScreen::updateGraphics() {
 }
 
 bool GameScreen::viewStartStage(level_t oneLevel){
+
     string pathScreen;
 
     switch (oneLevel){

@@ -40,6 +40,7 @@ class ClientTransmitionManager {
         void processInitScreen(MessageInitScreen *initScreen);
         void processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin);
         void processUpdateEntity(MessageUpdateEntity *updateEntity);
+        void processUpdateStage(MessageUpdateStage *updateStage);
 
     public:
         ClientTransmitionManager(Client *client, size_t port);
