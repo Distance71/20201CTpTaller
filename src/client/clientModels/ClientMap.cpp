@@ -1,11 +1,42 @@
 #include "ClientMap.h"
 
-ClientMap::ClientMap(){}
+ClientMap::ClientMap(){
+    this->clearBackground();
+}
 
 ClientMap::~ClientMap(){}
 
-void ClientMap::setStageSource(stageSource_t background){
-    this->escenario_= new GraphicsScenario(background);
+void ClientMap::addLayerBackground(size_t idLayer, string oneSource){
+
+    switch (idLayer){
+        case 1:
+            this->background_.layer1 = oneSource;
+            break;
+        case 2:
+            this->background_.layer2 = oneSource;
+            break;
+        case 3:
+            this->background_.layer3 = oneSource;
+            break;
+        case 4:
+            this->background_.layer4 = oneSource;
+            break;
+        case 5:
+            this->background_.layer5 = oneSource;
+            break;
+        case 6:
+            this->background_.layer6 = oneSource;
+            break;
+        case 7:
+            this->background_.layer7 = oneSource;
+            break;
+        default:
+            break;
+    }
+}
+
+void ClientMap::setStageSource(){
+    this->escenario_= new GraphicsScenario(this->background_);
 }
 
 GraphicsScenario *ClientMap::getCurrentScenario(){
@@ -37,6 +68,19 @@ void ClientMap::endLevel(){
     if (this->escenario_ != nullptr){
         delete this->escenario_;
     }
+
+    this->clearBackground();
+}
+
+void ClientMap::clearBackground(){
+
+    this->background_.layer1 = "";
+    this->background_.layer2 = "";
+    this->background_.layer3 = "";
+    this->background_.layer4 = "";
+    this->background_.layer5 = "";
+    this->background_.layer6 = "";
+    this->background_.layer7 = "";
 }
 
 void ClientStep::addNewEnemy(IdElement idEnemy, elementType_t type, position_t position, const string &sourceSprite, int size_x, int size_y){

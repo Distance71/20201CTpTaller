@@ -21,12 +21,16 @@ class ClientMap {
         vector<ClientStep *> steps_;
         unordered_map<IdElement, ClientMapElement*> mapElements_;
         unordered_map<IdPlayer, ClientMapElement*> players_;
+        stageSource_t background_;
+
+        void clearBackground();
 
     public:    
         ClientMap();
         ~ClientMap();
 
-        void setStageSource(stageSource_t background);
+        void addLayerBackground(size_t idLayer, string oneSource);
+        void setStageSource();
         GraphicsScenario *getCurrentScenario();
         void addNewPlayer();
         void addNewEnemy(unsigned int step, IdElement idEnemy, elementType_t type, position_t position, const string &sourceSprite, int size_x, int size_y);
