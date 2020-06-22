@@ -96,20 +96,8 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool
 
 MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *receives, bool &error){
     
-    char level;
-    if (receives->recibirMensaje(&level, sizeof(char)) <= 0){
-        error = true;
-        return nullptr;
-    }
-        
-    char stage;
-    if (receives->recibirMensaje(&stage, sizeof(char)) <= 0){
-        error = true;
-        return nullptr;
-    }
-    
-    char id;
-    if (receives->recibirMensaje(&id, sizeof(char)) <= 0){
+    size_t id;
+    if (receives->recibirMensaje((char *)&id, sizeof(size_t)) <= 0){
         error = true;
         return nullptr;
     }
@@ -127,7 +115,7 @@ MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *receives, bool &
         return nullptr;
     }
     
-    MessageInitLayer *message = new MessageInitLayer((level_t)level, (stage_t)stage, (size_t)id, source);
+    MessageInitLayer *message = new MessageInitLayer(id, source);
 
     delete [] source;
     return message;

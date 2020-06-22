@@ -1,8 +1,6 @@
 #include "MessageInitLayer.h"
 
-MessageInitLayer::MessageInitLayer(level_t oneLevel, stage_t oneStage, size_t idLayer, string oneSource) : Message(INIT_LAYER){
-    this->level_ = oneLevel;
-    this->stage_ = oneStage;
+MessageInitLayer::MessageInitLayer(size_t idLayer, string oneSource) : Message(INIT_LAYER){
     this->id_ = idLayer;
     this->source_ = oneSource;
 };
@@ -13,8 +11,6 @@ string MessageInitLayer::getStringData(){
     string dataString;
     
     dataString.push_back(this->type_);
-    dataString.push_back(this->level_);
-    dataString.push_back(this->stage_);
     
     char* id_arr = (char*)&this->id_;
     for (unsigned int i = 0; i < sizeof(size_t); ++i)
@@ -28,14 +24,6 @@ string MessageInitLayer::getStringData(){
     dataString.append(this->source_);
         
     return dataString;
-};
-
-level_t MessageInitLayer::getLevel(){
-    return this->level_;
-};
-
-stage_t MessageInitLayer::getStage(){
-    return this->stage_;
 };
 
 size_t MessageInitLayer::getIdLayer(){

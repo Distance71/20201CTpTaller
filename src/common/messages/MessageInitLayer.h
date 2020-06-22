@@ -11,19 +11,15 @@ using namespace std;
 class MessageInitLayer : public Message {
 
     private:
-        level_t level_; 
-        stage_t stage_;
         size_t id_; 
         string source_;
     
     public:
 
-        MessageInitLayer(level_t oneLevel, stage_t oneStage, size_t idLayer, string oneSource);
+        MessageInitLayer(size_t idLayer, string oneSource);
         ~MessageInitLayer();
         string getStringData();
 
-        level_t getLevel();
-        stage_t getStage();
         size_t getIdLayer();
         string getSource();
 
