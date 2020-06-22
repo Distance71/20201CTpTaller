@@ -36,9 +36,11 @@ int Client::run(){
     cout << "Se Conectado con el servidor " << endl;
 
     //TODO agregar el nuevo login para autenticarse y entrar en espera del server 
-    if (!this->gameScreen_->viewLogin())
-        return EXIT_FAILURE;
+    /*if (!this->gameScreen_->viewLogin())
+        return EXIT_FAILURE;*/
    // while (this->isConnected()){}
+
+    this->transmitionManager_->processMessages();
 
     return EXIT_SUCCESS;    
 }

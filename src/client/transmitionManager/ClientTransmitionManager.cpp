@@ -32,42 +32,10 @@ static void* receiveMessage(void *arg){
     bool error = false;
 
     while (client->isConnected() && !error){
-
         deserializer->pushNewMessage(socket, error, queueMessage);
-        Message *newMessage = queueMessage->at(0);
-        
-        switch (newMessage->getType()){
-            case INIT_SCREEN:
-                {
-                    MessageInitScreen *initScreen = (MessageInitScreen *) newMessage;
-                    unsigned int width = initScreen->getWidth();
-                    unsigned int  height = initScreen->getHeight();
-                    GameProvider::setWidth(width);
-                    GameProvider::setHeight(height);
-                    client->getGameScreen()->initializeGraphics();
-                    client->getGameScreen()->viewLogin();
-                    break;
-                }
-            case INIT_ENTITY:
-                break;
 
-            case UPDATE_ENTITY:
-                break;
-
-            case INIT_LAYER:
-                break;
-
-            case UPDATE_STAGE:
-                break;
-
-            case REQUEST_LOGIN_PLAYER:
-                break;
-              
-            case NONE:
-            default:
-                break;
-        }
-
+        // TODO: usleep de prueba
+        usleep(1000000);
     }
 
 }
@@ -131,4 +99,70 @@ vector<Message *> *ClientTransmitionManager::getSendMessages(){
 
 MessageDeserializer *ClientTransmitionManager::getDeserializer(){
     return this->deserializer_;
+};
+
+void ClientTransmitionManager::processMessages(){
+
+    while (this->clientOwn_->isConnected()){
+
+        if (!this->queueReceiveMessage_.empty()){
+            Message *newMessage = this->queueReceiveMessage_.front();
+            this->queueReceiveMessage_.erase(this->queueReceiveMessage_.begin(), this->queueReceiveMessage_.begin() + 1);
+
+            switch (newMessage->getType()){
+                
+                case INIT_SCREEN:
+                    this->processInitScreen((MessageInitScreen *) newMessage);
+                    break;
+                case INIT_ENTITY:
+                    break;
+
+                case UPDATE_ENTITY:
+                    break;
+
+                case INIT_LAYER:
+                    break;
+
+                case UPDATE_STAGE:
+                    break;
+
+                case REQUEST_LOGIN_PLAYER:
+                    break;
+                
+                case NONE:
+                default:
+                    break;
+            }
+        }
+
+        // TODO: usleep de prueba
+        usleep(10000000);
+    }
+
+};
+
+void ClientTransmitionManager::processInitEntity(MessageInitEntity *initEntity){
+
+};
+
+void ClientTransmitionManager::processInitLayer(MessageInitLayer *initLayer){
+
+};
+
+void ClientTransmitionManager::processInitScreen(MessageInitScreen *initScreen){
+
+    unsigned int width = initScreen->getWidth();
+    unsigned int  height = initScreen->getHeight();
+    GameProvider::setWidth(width);
+    GameProvider::setHeight(height);
+    this->clientOwn_->getGameScreen()->initializeGraphics();
+    this->clientOwn_->getGameScreen()->viewLogin();
+};
+
+void ClientTransmitionManager::processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin){
+
+};
+
+void ClientTransmitionManager::processUpdateEntity(MessageUpdateEntity *updateEntity){
+
 };

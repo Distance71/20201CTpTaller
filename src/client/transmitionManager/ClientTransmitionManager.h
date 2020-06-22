@@ -35,6 +35,12 @@ class ClientTransmitionManager {
         vector<Message *> queueSendMessage_;
         MessageDeserializer *deserializer_;
 
+        void processInitEntity(MessageInitEntity *initEntity);
+        void processInitLayer(MessageInitLayer *initLayer);
+        void processInitScreen(MessageInitScreen *initScreen);
+        void processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin);
+        void processUpdateEntity(MessageUpdateEntity *updateEntity);
+
     public:
         ClientTransmitionManager(Client *client, size_t port);
         ~ClientTransmitionManager();
@@ -46,6 +52,7 @@ class ClientTransmitionManager {
         vector<Message *> *getReceivedMessages();
         vector<Message *> *getSendMessages();
         MessageDeserializer *getDeserializer();
+        void processMessages();
 };
 
 #endif // _CLIENT_TRANSMITION_MANAGER_H_
