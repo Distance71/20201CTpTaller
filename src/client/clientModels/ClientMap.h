@@ -12,51 +12,39 @@
 #include "../graphicsManager/GraphicsScenario.h"
 #include "../../common/types.h"
 
-// Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 class ClientMapElement;
-class Step;
-class Stage;
-class Level;
 class GraphicsScenario;
 
 class ClientMap {
     private:
-        vector <ClientLevel *> levels_;  
         GraphicsScenario *escenario_;
+        vector<ClientStep *> steps_;
+        unordered_map<IdElement, ClientMapElement*> mapElements_;
         unordered_map<IdPlayer, ClientMapElement*> players_;
 
     public:    
         ClientMap();
         ~ClientMap();
+
+        void setStageSource(stageSource_t background);
+        GraphicsScenario *getCurrentScenario();
+        void addNewPlayer();
+        void addNewEnemy(unsigned int step, IdElement idEnemy, elementType_t type, position_t position, const string &sourceSprite, int size_x, int size_y);
+        void deadEnemy(unsigned int step, IdElement idEnemy);
+        void endLevel();
 };
 
-class ClientLevel: public ClientMap {
-    private:
-        vector<ClientStage *> stages_;
-
-    public:
-        ClientLevel();
-        ~ClientLevel();
-};
-
-class ClientStage: public ClientLevel {
-    private:
-        vector<ClientStep *> steps_;
-
-    public:
-        ClientStage();
-        ~ClientStage();
-};
-
-class ClientStep: public ClientStage {
+class ClientStep {
     private:
         unordered_map<IdElement, ClientMapElement*> mapElements_;
-        IdElement lastId_ = 0;
 
-    public:
+    public:    
         ClientStep();
         ~ClientStep();
 
+        void addNewEnemy(IdElement idEnemy, elementType_t type, position_t position, const string &sourceSprite, int size_x, int size_y);
+        void deadEnemy(IdElement idEnemy);
+        void endStep();
 };
 
 #endif // _CLIENT_MAP_H_
