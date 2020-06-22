@@ -82,6 +82,12 @@ add_executable( tp1taller
         src/common/transmitionManager/serializer/MessageDeserializer.h
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
+        src/client/controllers/ClientController.cpp
+        src/client/controllers/ClientController.h
+        src/client/clientModels/ClientMap.cpp
+        src/client/clientModels/ClientMap.h
+        src/client/clientModels/ClientMapElement.cpp
+        src/client/clientModels/ClientMapElement.h
         src/client/GameScreen.cpp
         src/client/GameScreen.h
         src/client/Client.cpp

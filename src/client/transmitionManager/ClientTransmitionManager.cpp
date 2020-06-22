@@ -152,6 +152,9 @@ void ClientTransmitionManager::processInitEntity(MessageInitEntity *initEntity){
 
 void ClientTransmitionManager::processInitLayer(MessageInitLayer *initLayer){
 
+    size_t idLayer = initLayer->getIdLayer();
+    string sourceLayer = initLayer->getSource();
+
 };
 
 void ClientTransmitionManager::processInitScreen(MessageInitScreen *initScreen){

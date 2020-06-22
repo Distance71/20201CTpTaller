@@ -7,6 +7,7 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include "Client.h"
+#include "clientModels/ClientMap.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/types.h"
 
@@ -17,6 +18,7 @@ class Client;
 class GameScreen {
     private:
         Client *clientOwn;
+        ClientMap *map_;
         SDL_Window *window_ = nullptr;
         SDL_Renderer *renderer_ = nullptr;
 
@@ -30,6 +32,8 @@ class GameScreen {
         void clearScene();
         void processEvent();
         void updateGraphics();
+
+        void addLayer(size_t idLayer, string sourceLayer);
 
         bool viewLogin();
         bool viewStartStage(level_t oneLevel);

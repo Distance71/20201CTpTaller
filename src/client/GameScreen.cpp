@@ -2,7 +2,7 @@
 
 GameScreen::GameScreen(Client *client){
     this->clientOwn = client;
-
+    this->map_ = new ClientMap();
     //this->initializeGraphics();
 }
 
@@ -188,4 +188,8 @@ bool GameScreen::waitEnter(SDL_Surface* screen){
         if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
             return true;
     }
+}
+
+void GameScreen::addLayer(size_t idLayer, string sourceLayer){
+    this->map_->addLayerBackground(idLayer, sourceLayer);
 }

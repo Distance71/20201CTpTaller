@@ -14,6 +14,7 @@
 
 class ClientMapElement;
 class GraphicsScenario;
+class ClientStep;
 
 class ClientMap {
     private:
