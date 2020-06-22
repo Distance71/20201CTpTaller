@@ -8,7 +8,6 @@
 #include "../client/Client.h"
 #include "../server/Server.h"
 
-#define PATH_CONFIGURATION "../Configuration.json"
 #define INDEX_MODE 1
 
 void showHelpServer(){
@@ -27,6 +26,10 @@ void showHelpClient(){
     cout << "\t --port \t Puerto a conectarse" << endl;
     cout << "\t -i \t" << endl;
     cout << "\t --ip \t \t Direccion IP a conectarse" << endl;
+    cout << "\t -l \t" << endl;
+    cout << "\t --log \t \t Establecer nivel de log" << endl;
+    cout << "\t -c file \t" << endl;
+    cout << "\t --config=file \t Establecer archivo de configuracion" << endl;
 }
 
 void showHelp(){
@@ -52,7 +55,7 @@ int mainServer(int port, string levelLog, string pathConfiguration){
         return EXIT_FAILURE;
     } 
 
-    ConfigurationHandler *configurationHandler = new ConfigurationHandler();
+    ConfigurationHandler *configurationHandler = new ConfigurationHandler(true);
 
     try {
         configurationHandler->loadFileConfiguration(pathConfiguration); 
@@ -77,7 +80,7 @@ int mainServer(int port, string levelLog, string pathConfiguration){
     return codExitServer;
 }
 
-int mainClient(int port, string ipAddress){
+int mainClient(int port, string ipAddress, string levelLog, string pathConfiguration){
 
     if (port < 0){
         cout << "Falta parámetro Port requerido para conectar el cliente." << endl;
@@ -91,18 +94,7 @@ int mainClient(int port, string ipAddress){
         return EXIT_FAILURE;
     } 
 
-    Client *newClient = new Client(ipAddress, port);
-    int codExitClient = newClient->run();
-    delete newClient;
-
-    return codExitClient;
-}
-
-
-//Rewrite depending on server/client
-void initializeGameConfig(string pathConfiguration, string levelLog){
-
-    ConfigurationHandler *configurationHandler = new ConfigurationHandler();
+    ConfigurationHandler *configurationHandler = new ConfigurationHandler(false);
 
     try {
         configurationHandler->loadFileConfiguration(pathConfiguration); 
@@ -116,9 +108,13 @@ void initializeGameConfig(string pathConfiguration, string levelLog){
     } else {
         Logger::getInstance()->setLevel(levelLog);
     }
+    delete configurationHandler;
 
-    configurationHandler->initializeData();
-    GameProvider::setConfig(configurationHandler);
+    Client *newClient = new Client(ipAddress, port);
+    int codExitClient = newClient->run();
+    delete newClient;
+
+    return codExitClient;
 }
 
 int main(int argc, char *argv[]) {
@@ -171,7 +167,7 @@ int main(int argc, char *argv[]) {
         return mainServer(port, levelLog, pathConfig);
    
     if (modeApp == "CLIENT")
-        return mainClient(port, ipAddress);
+        return mainClient(port, ipAddress, levelLog, pathConfig);
 
     cout << "Modo de juego inválido" << endl;
     showHelp();

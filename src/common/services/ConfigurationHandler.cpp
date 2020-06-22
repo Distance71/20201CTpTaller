@@ -1,9 +1,8 @@
 #include "ConfigurationHandler.h"
 
-ConfigurationHandler::ConfigurationHandler(){
+ConfigurationHandler::ConfigurationHandler(bool isServer){
 
-    cout << "Constructor" << endl;
-    this->parserJson = new ParserJson();
+    this->parserJson = new ParserJson(isServer);
 }
 
 ConfigurationHandler::~ConfigurationHandler(){

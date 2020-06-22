@@ -59,7 +59,7 @@ class ConfigurationHandler {
         void setQuantityPlayer();
 
     public:
-        ConfigurationHandler();
+        ConfigurationHandler(bool isServer);
         ~ConfigurationHandler();
 
         bool loadFileConfiguration(const string &pathFileConfiguration);

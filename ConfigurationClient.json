@@ -1,0 +1,7 @@
+{
+    "configuracion": {
+        "log":{
+            "level": "DEBUG"
+        }
+    }
+}

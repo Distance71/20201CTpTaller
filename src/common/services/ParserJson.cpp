@@ -1,11 +1,18 @@
 #include "ParserJson.h"
 
-ParserJson::ParserJson(){
+ParserJson::ParserJson(bool isServer){
 
-    ifstream fileDefault(DEFAULT_CONFIGURATION, ifstream::in);
-    fileDefault >> jsonDefault;
-    
-    fileDefault.close(); 
+    if (isServer){
+        ifstream fileDefault(DEFAULT_SERVER_CONFIGURATION, ifstream::in);
+        fileDefault >> jsonDefault;
+        
+        fileDefault.close(); 
+    } else {
+        ifstream fileDefault(DEFAULT_CLIENT_CONFIGURATION, ifstream::in);
+        fileDefault >> jsonDefault;
+        
+        fileDefault.close(); 
+    }
     
 };
 

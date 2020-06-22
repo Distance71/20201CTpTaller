@@ -9,7 +9,8 @@
 #include "nlohmann/json.hpp"
 #include "Logger.h"
 
-#define DEFAULT_CONFIGURATION "../default/ConfigurationServerDefault.json"
+#define DEFAULT_SERVER_CONFIGURATION "../default/ConfigurationServerDefault.json"
+#define DEFAULT_CLIENT_CONFIGURATION "../default/ConfigurationClientDefault.json"
 
 using namespace std;
 using json = nlohmann::json;
@@ -28,7 +29,7 @@ class ParserJson {
         bool isNull(json oneJson, json::json_pointer pathJsonPointer); 
 
     public:
-        ParserJson();
+        ParserJson(bool isServer);
         ~ParserJson();
 
         bool loadConfiguration(const string &pathFileConfiguration);
