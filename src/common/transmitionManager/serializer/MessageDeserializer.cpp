@@ -21,18 +21,6 @@ MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *receives, 
 
 MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool &error){
 
-    level_t level;
-    if (receives->recibirMensaje((char *) &level, sizeof(level_t)) <= 0){
-        error = true;
-        return nullptr;
-    }
-        
-    stage_t stage;
-    if (receives->recibirMensaje((char *) &stage, sizeof(stage_t)) <= 0){
-        error = true;
-        return nullptr;
-    }
-    
     unsigned int step;
     if (receives->recibirMensaje((char *)&step, sizeof(unsigned int)) <= 0){
         error = true;
@@ -88,7 +76,7 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool
         return nullptr;
     }
 
-    MessageInitEntity *message = new MessageInitEntity(level, stage, step, id, sizeX, sizeY, posX, posY, source, isPlayer);
+    MessageInitEntity *message = new MessageInitEntity(step, id, sizeX, sizeY, posX, posY, source, isPlayer);
 
     delete [] source;
     return message;    
@@ -196,18 +184,6 @@ MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket
 };
 
 MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *receives, bool &error){
-
-    char level;
-    if (receives->recibirMensaje(&level, sizeof(char)) <= 0){
-        error = true;
-        return nullptr;
-    }
-        
-    char stage;
-    if (receives->recibirMensaje(&stage, sizeof(char)) <= 0){
-        error = true;
-        return nullptr;
-    }
             
     unsigned int step;
     if (receives->recibirMensaje((char *)&step, sizeof(unsigned int)) <= 0){
@@ -233,7 +209,7 @@ MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *receives, 
         return nullptr;
     }
     
-    MessageUpdateEntity *message = new MessageUpdateEntity((level_t) level, (stage_t) stage, step, id, posX, posY);
+    MessageUpdateEntity *message = new MessageUpdateEntity(step, id, posX, posY);
 
     return message; 
 };

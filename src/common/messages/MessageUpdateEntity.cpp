@@ -1,10 +1,9 @@
 #include "MessageUpdateEntity.h"
 
-MessageUpdateEntity::MessageUpdateEntity(level_t oneLevel, stage_t oneStage, unsigned int oneStep, 
+MessageUpdateEntity::MessageUpdateEntity(unsigned int oneStep, 
                                         IdElement idMapElement, int posX, int posY) : Message(UPDATE_ENTITY)
 {
-    this->level_ = oneLevel;
-    this->stage_ = oneStage;
+
     this->step_ = oneStep;
     this->idElement_ = idMapElement;
     this->pos_x_ = posX;
@@ -20,8 +19,6 @@ string MessageUpdateEntity::getStringData(){
     string dataString;
 
     dataString.push_back(this->type_);
-    dataString.push_back(this->level_);
-    dataString.push_back(this->stage_);
 
     char* sizeStep_arr = (char*)&this->step_;
     for (unsigned int i = 0; i < sizeof(unsigned int); ++i)
@@ -43,13 +40,14 @@ string MessageUpdateEntity::getStringData(){
     return dataString;
 };
 
+/*
 level_t MessageUpdateEntity::getLevel(){
     return this->level_;
 };
 
 stage_t MessageUpdateEntity::getStage(){
     return this->stage_;
-};
+};*/
 
 unsigned int MessageUpdateEntity::getStep(){
     return this->step_;
