@@ -54,6 +54,8 @@ class ClientTransmitionManager {
         vector<Message *> *getSendMessages();
         MessageDeserializer *getDeserializer();
         void processMessages();
+
+        void sendMovement(orientation_t moveOrientation);
 };
 
 #endif // _CLIENT_TRANSMITION_MANAGER_H_

@@ -59,6 +59,10 @@ void Client::setName(string oneName){
     this->name_ = oneName;
 }
 
+void Client::sendMovement(orientation_t moveOrientation){
+    this->transmitionManager_->sendMovement(moveOrientation);
+};
+
 string Client::getName(){
     return this->name_;
 }
@@ -66,3 +70,7 @@ string Client::getName(){
 GameScreen *Client::getGameScreen(){
     return this->gameScreen_;
 };
+
+ClientTransmitionManager *Client::getTransmitionManager(){
+    return this->transmitionManager_;
+}

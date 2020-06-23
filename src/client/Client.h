@@ -43,7 +43,10 @@ class Client {
         void setName(string oneName);
         string getName();
 
+        void sendMovement(orientation_t moveOrientation);
+
         GameScreen *getGameScreen();
+        ClientTransmitionManager *getTransmitionManager();
 };
 
 #endif

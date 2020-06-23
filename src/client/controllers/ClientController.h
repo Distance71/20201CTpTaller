@@ -3,12 +3,16 @@
 
 #include "../../common/types.h"
 #include "SDL2/SDL.h"
+#include "../Client.h"
+
+class Client;
 
 class ClientController {
     private:
+        Client *clientOwn_;
 
     public:
-        ClientController();
+        ClientController(Client *client);
         ~ClientController();
 
         void update();

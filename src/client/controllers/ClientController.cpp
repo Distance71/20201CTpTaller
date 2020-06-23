@@ -1,6 +1,8 @@
 #include "ClientController.h"
 
-ClientController::ClientController(){}
+ClientController::ClientController(Client *client){
+    this->clientOwn_ = client;
+}
 
 ClientController::~ClientController(){}
 
@@ -13,7 +15,7 @@ void ClientController::update(){
     Uint8 right =  keystate[SDL_SCANCODE_RIGHT];
     Uint8 left = keystate[SDL_SCANCODE_LEFT];
 
-    orientation_t movementOrientation;
+    orientation_t movementOrientation = FRONT;
 
     if (up && !down && !right && !left){ //arriba
         movementOrientation = UP;
@@ -48,5 +50,5 @@ void ClientController::update(){
     }    
 
     // TODO: llamar metodo para enviar mensaje el Server
-    //move(movementOrientation);
+    this->clientOwn_->sendMovement(movementOrientation);
 }

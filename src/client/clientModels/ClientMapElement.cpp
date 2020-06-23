@@ -14,8 +14,8 @@ ClientMapElement::ClientMapElement(elementType_t type, position_t position_, con
     addAction("Graphics", graficador);
 
     if (type == PLAYER){
-        ClientController* clientController= new ClientController();
-        addAction("ClientController", clientController);
+        //ClientController* clientController= new ClientController();
+        //addAction("ClientController", clientController);
     } else if(type == ENEMY){
         //EnemyIA* enemyia = new EnemyIA();
         //addAction("EnemyIA", enemyia);

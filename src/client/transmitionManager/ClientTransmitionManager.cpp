@@ -15,7 +15,12 @@ static void* sendMessage(void *arg){
     while (client->isConnected() && !error){
 
         if (!queueMessage->empty()){
-            // Secuencia de sacar un mensaje y enviarlo
+            Message *newMessage = queueMessage->front();
+            queueMessage->erase(queueMessage->begin(), queueMessage->begin() + 1);
+            
+            string dataSend = newMessage->getStringData();
+            //delete newMessage;
+            socket->enviarMensaje(dataSend.c_str(), sizeof(char) *dataSend.size());
         }
     }
 }
@@ -188,3 +193,7 @@ void ClientTransmitionManager::processUpdateStage(MessageUpdateStage *updateStag
     }
 };
 
+void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
+    MessageMovementPlayer *messageMovement = new MessageMovementPlayer(moveOrientation);
+    this->queueSendMessage_.push_back(messageMovement);
+};
