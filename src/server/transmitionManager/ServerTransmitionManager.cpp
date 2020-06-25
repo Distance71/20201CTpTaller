@@ -51,42 +51,42 @@ bool ServerTransmitionManager::waitPlayers(){
 
     // Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
     // porque el Socket hace el accept antes de que del logeo y demas
-    while ((!this->serverOwn_->isFull()) && (this->serverOwn_->isConnected())){
+    // while ((!this->serverOwn_->isFull()) && (this->serverOwn_->isConnected())){
     
-        int newFDClient = this->socket_->acceptClient();
+    //     int newFDClient = this->socket_->acceptClient();
 
-        if (newFDClient < 0){
-            Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
-        } else {
-            pthread_mutex_lock(&this->mutex_lastId_);
-            Socket *newSocketClient = new Socket(newFDClient);
-            UsersManager *newUser = new UsersManager(this->lastId_, newSocketClient, this->serverOwn_);          
-            this->users_[this->lastId_] = newUser;
+    //     if (newFDClient < 0){
+    //         Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
+    //     } else {
+    //         pthread_mutex_lock(&this->mutex_lastId_);
+    //         Socket *newSocketClient = new Socket(newFDClient);
+    //         //UsersManager *newUser = new UsersManager(this->lastId_, newSocketClient, this->serverOwn_);          
+    //         this->users_[this->lastId_] = newUser;
             
-            this->serverOwn_->addPlayer(this->lastId_, newUser);
-            this->lastId_++; 
-            cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;     
-            pthread_mutex_unlock(&this->mutex_lastId_);       
+    //         this->serverOwn_->addPlayer(this->lastId_, newUser);
+    //         this->lastId_++; 
+    //         cout << "Se agrega el cliente " + to_string(this->lastId_) << endl;     
+    //         pthread_mutex_unlock(&this->mutex_lastId_);       
 
-            unsigned int width = GameProvider::getWidth();
-            unsigned int height = GameProvider::getHeight();
-            MessageInitScreen initScreen = MessageInitScreen(width, height);
-            string dataString;
-            dataString = initScreen.getStringData();
+    //         unsigned int width = GameProvider::getWidth();
+    //         unsigned int height = GameProvider::getHeight();
+    //         MessageInitScreen initScreen = MessageInitScreen(width, height);
+    //         string dataString;
+    //         dataString = initScreen.getStringData();
         
-            newSocketClient->enviarMensaje(dataString.c_str(), sizeof(char) *dataString.size());
+    //         newSocketClient->enviarMensaje(dataString.c_str(), sizeof(char) *dataString.size());
             
-            /*
-            pthread_t newHilo;
+    //         /*
+    //         pthread_t newHilo;
 
-            argpthread argumentos;
-            argumentos.server = this;
-            argumentos.nroClient = this->clients.size();
-            argumentos.des = this->deserializer;
+    //         argpthread argumentos;
+    //         argumentos.server = this;
+    //         argumentos.nroClient = this->clients.size();
+    //         argumentos.des = this->deserializer;
 
-            pthread_create(&newHilo, NULL, recibirInformacion, &argumentos);*/
+    //         pthread_create(&newHilo, NULL, recibirInformacion, &argumentos);*/
 
-        }
-    }
+    //     }
+    // }
     return true;
 };

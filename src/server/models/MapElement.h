@@ -5,10 +5,11 @@
 #include <vector>
 #include <algorithm>
 #include <unordered_map>
-#include "State.h"
-#include "Action.h"
-#include "Orientation.h"
-#include "../types.h"
+#include "../../common/models/State.h"
+#include "../../common/models/Action.h"
+#include "../../common/models/Orientation.h"
+#include "Speed.h"
+#include "../../common/types.h"
 #include "../../client/graphicsManager/GraphicsMapElement.h"
 #include "PlayerController.h"
 #include "EnemyIA.h"

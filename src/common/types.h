@@ -6,6 +6,13 @@
 
 using namespace std;
 
+typedef enum character {
+    CHARACTER_1 = 0,
+    CHARACTER_2 = 1,
+    CHARACTER_3 = 2,
+    CHARACTER_4 = 3,
+} character_t;
+
 typedef enum level {
     LEVEL_ONE = 0,
     LEVEL_TWO = 1,

@@ -7,6 +7,8 @@ MessageLoginPlayer::MessageLoginPlayer(string username, string password) : Messa
 
 MessageLoginPlayer::~MessageLoginPlayer(){}
 
+
+//Server
 string MessageLoginPlayer::getStringData(){
 
     string dataString;
@@ -15,7 +17,7 @@ string MessageLoginPlayer::getStringData(){
 
     int lenUsername = this->username_.length();
     char* lenUsername_arr = (char*)&lenUsername;
-    for (unsigned int i = 0; i < sizeof(int); ++i)
+    for (size_t i = 0; i < sizeof(int); ++i)
         dataString.push_back(lenUsername_arr[i]);
 
     dataString.append(this->username_);
@@ -37,3 +39,8 @@ string MessageLoginPlayer::getUsername(){
 string MessageLoginPlayer::getPassword(){
     return this->password_;
 };
+
+//Client
+// void MesssageLoginPlayer::setStringData(){
+    
+// };

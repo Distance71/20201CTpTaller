@@ -9,7 +9,7 @@
 #include <sys/socket.h>
 #include "GameScreen.h"
 #include "transmitionManager/ClientTransmitionManager.h"
-#include "../common/transmitionManager/Socket.h"
+#include "../common/models/Socket.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/services/Logger.h"
 

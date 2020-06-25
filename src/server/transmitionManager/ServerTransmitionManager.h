@@ -2,7 +2,7 @@
 #define _SERVER_TRANSMITION_MANAGER_H_
 
 #include <unordered_map>
-#include "../../common/transmitionManager/Socket.h"
+#include "../../common/models/Socket.h"
 #include "../../common/types.h"
 #include "../../common/messages/Message.h"
 #include "../../common/messages/MessageActionPlayer.h"

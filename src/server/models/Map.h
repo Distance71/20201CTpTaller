@@ -7,20 +7,16 @@
 #include <algorithm>
 #include <stdlib.h>
 #include "MapElement.h"
-#include "../providers/GameProvider.h"
-#include "Position.h"
-#include "Speed.h"
-#include "Orientation.h"
+#include "../../common/providers/GameProvider.h"
+#include "../../common/models/Position.h"
+#include "../../common/models/Orientation.h"
 #include "../../client/graphicsManager/GraphicsScenario.h"
 #include "MovementHandler.h"
 #include "PlayerController.h"
-#include "../types.h"
+#include "../../common/types.h"
 
 
 //Para probar
-#include "Speed.h"
-#include "Position.h"
-#include "Sprite.h"
 #include "../../client/graphicsManager/GraphicsMapElement.h"
 
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla

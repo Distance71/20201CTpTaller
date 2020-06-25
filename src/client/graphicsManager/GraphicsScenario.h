@@ -8,7 +8,7 @@ class Sprite;
 #include "../../common/providers/GameProvider.h"
 #include "../../common/models/Sprite.h"
 #include "../../common/models/Position.h"
-#include "../../common/models/Speed.h"
+#include "../../server/models/Speed.h"
 #include <vector>
 #include "../../common/types.h"
 

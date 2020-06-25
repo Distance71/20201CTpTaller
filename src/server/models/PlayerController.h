@@ -1,12 +1,11 @@
 #ifndef _PLAYER_CONTROLLER_H_
 #define _PLAYER_CONTROLLER_H_
 
-#include "../providers/GameProvider.h"
+#include "../../common/providers/GameProvider.h"
 #include "MovementHandler.h"
 #include "SDL2/SDL.h"
-#include "MapElement.h"
-#include "State.h"
-#include "Sprite.h"
+#include "../../common/models/State.h"
+#include "../../common/models/Sprite.h"
 
 class Sprite;
 class PlayerController: public MovementHandler {

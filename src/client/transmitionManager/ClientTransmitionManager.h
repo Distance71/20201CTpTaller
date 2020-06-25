@@ -12,8 +12,8 @@
 #include <vector>
 
 #include "../Client.h"
-#include "../../common/transmitionManager/Socket.h"
-#include "../../common/transmitionManager/serializer/MessageDeserializer.h"
+#include "../../common/models/Socket.h"
+#include "../../common/serializer/MessageDeserializer.h"
 #include "../../common/messages/Message.h"
 #include "../../common/messages/MessageActionPlayer.h"
 #include "../../common/messages/MessageInitEntity.h"

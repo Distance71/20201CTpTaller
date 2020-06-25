@@ -2,9 +2,9 @@
 #define _ENEMYIA_H_
 
 #include "MovementHandler.h"
-#include "State.h"
-#include "../services/Logger.h"
-#include "../types.h"
+#include "../../common/models/State.h"
+#include "../../common/services/Logger.h"
+#include "../../common/types.h"
 
 
 class EnemyIA: public MovementHandler {

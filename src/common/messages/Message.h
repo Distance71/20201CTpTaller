@@ -32,6 +32,7 @@ class Message {
         ~Message();
         typeMessage_t getType();
         virtual string getStringData();
+        virtual void setStringData();
 
 };
 

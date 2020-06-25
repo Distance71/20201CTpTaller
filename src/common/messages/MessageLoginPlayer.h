@@ -21,6 +21,8 @@ class MessageLoginPlayer : public Message {
 
         string getUsername();
         string getPassword();
+        
+        void setStringData();
 };
 
 #endif // _MESSAGE_LOGIN_PLAYER_H_

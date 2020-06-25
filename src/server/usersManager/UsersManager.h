@@ -2,21 +2,22 @@
 #define _USERS_MANAGER_H_
 
 #include "../../common/types.h"
-#include "../../common/transmitionManager/Socket.h"
-
+#include "../../common/models/Socket.h"
+#include "../models/User.h"
+#include "../../common/providers/GameProvider.h"
 #include "../Server.h"
 
 class Server;
 
 class UsersManager {
     private:
-        IdPlayer id_;
-        Socket *socket_;
         Server *serverOwn_;
+        unordered_map<IdPlayer, User *> users_;
 
     public:
-        UsersManager(IdPlayer idPlayer, Socket *socket, Server *server);
+        UsersManager(Server *server);
         ~UsersManager();
+
 
         void setIdPlayer(IdPlayer idPlayer);
         IdPlayer getIdPlayer();

@@ -3,13 +3,11 @@
 
 #include <vector>
 #include <string>
-#include "../../common/models/Action.h"
 #include "../../common/models/Sprite.h"
 #include "../../common/models/Position.h"
-#include "../../common/models/Speed.h"
 
 class Sprite;
-class GraphicsMapElement: public Action{
+class GraphicsMapElement {
     private:
         Sprite* sprite_;
         int size_x_;
@@ -17,7 +15,7 @@ class GraphicsMapElement: public Action{
     
     public:
         GraphicsMapElement(Sprite * sprite, int size_x, int size_y);
-        void update(unordered_map<string, State *> states_) override;
+        void update(unordered_map<string, State *> states); //Receives Position, Orientation
 };
 
 #endif

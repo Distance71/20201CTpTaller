@@ -12,7 +12,7 @@
 #include "usersManager/UsersManager.h"
 
 #include "../common/types.h"
-#include "../common/transmitionManager/Socket.h"
+#include "../common/models/Socket.h"
 #include "../common/services/Logger.h"
 #include "../common/providers/GameProvider.h"
 

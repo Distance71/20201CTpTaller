@@ -3,18 +3,18 @@
 
 #include <iostream>
 #include <string.h>
-#include "../Socket.h"
-#include "../../messages/Message.h"
-#include "../../messages/MessageActionPlayer.h"
-#include "../../messages/MessageInitEntity.h"
-#include "../../messages/MessageInitLayer.h"
-#include "../../messages/MessageInitScreen.h"
-#include "../../messages/MessageLoginPlayer.h"
-#include "../../messages/MessageMovementPlayer.h"
-#include "../../messages/MessageRequestLoginPlayer.h"
-#include "../../messages/MessageUpdateEntity.h"
-#include "../../messages/MessageUpdateStage.h"
-#include "../../types.h"
+#include "../models/Socket.h"
+#include "../messages/Message.h"
+#include "../messages/MessageActionPlayer.h"
+#include "../messages/MessageInitEntity.h"
+#include "../messages/MessageInitLayer.h"
+#include "../messages/MessageInitScreen.h"
+#include "../messages/MessageLoginPlayer.h"
+#include "../messages/MessageMovementPlayer.h"
+#include "../messages/MessageRequestLoginPlayer.h"
+#include "../messages/MessageUpdateEntity.h"
+#include "../messages/MessageUpdateStage.h"
+#include "../types.h"
 
 using namespace std;
 

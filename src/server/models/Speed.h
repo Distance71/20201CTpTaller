@@ -1,7 +1,7 @@
 #ifndef _SPEED_H_
 #define _SPEED_H_
 
-#include "State.h"
+#include "../../common/models/State.h"
 
 class Speed: public State {
 
