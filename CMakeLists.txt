@@ -92,6 +92,12 @@ add_executable( tp1taller
         src/client/GameScreen.h
         src/client/Client.cpp
         src/client/Client.h
+        src/client/loginMenu/Button.h
+        src/client/loginMenu/Button.cpp
+        src/client/loginMenu/Menu.h
+        src/client/loginMenu/Menu.cpp
+        src/client/loginMenu/TextBox.h
+        src/client/loginMenu/TextBox.cpp
         src/server/transmitionManager/ServerTransmitionManager.cpp
         src/server/transmitionManager/ServerTransmitionManager.h
         src/server/usersManager/UsersManager.cpp

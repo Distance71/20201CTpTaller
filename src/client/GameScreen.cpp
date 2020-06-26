@@ -64,6 +64,8 @@ void GameScreen::initializeGraphics(){
 }
 
 bool GameScreen::viewLogin() {
+    /*Menu* menu = new Menu();
+    menu->run();*/
     SDL_Window* window = GameProvider::getWindow();
     SDL_Surface* surface = SDL_GetWindowSurface(window);
     SDL_Surface* loginscreen = IMG_Load("assets/LoginScreen/loginscreen.png");
@@ -76,12 +78,12 @@ bool GameScreen::viewLogin() {
     // La pantalla de Login se ajusta segun el tamanio de la ventana 
     SDL_BlitScaled(loginscreen, NULL, surface, NULL);
     SDL_UpdateWindowSurface(window);
-    /*while (GameProvider::getStatus().normalStatus){
+    while (GameProvider::getStatus().normalStatus){
         processEvent();
         SDL_Event e = GameProvider::getLastEvent();
         if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
             return true;
-    }*/
+    }
 }
 
 void GameScreen::clearScene(){
