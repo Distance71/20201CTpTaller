@@ -73,6 +73,8 @@ add_executable( tp1taller
 	src/common/models/Orientation.h
         src/common/models/Position.cpp
 	src/common/models/Position.h
+        src/common/models/Socket.cpp
+	src/common/models/Socket.h
         src/common/models/Sprite.cpp
 	src/common/models/Sprite.h
         src/common/models/State.cpp
@@ -115,6 +117,8 @@ add_executable( tp1taller
         src/server/models/MovementHandler.h
         src/server/models/PlayerController.cpp
         src/server/models/PlayerController.h
+        src/server/models/Speed.cpp
+        src/server/models/Speed.h
         src/server/models/User.cpp
         src/server/models/User.h
         
@@ -133,9 +137,6 @@ add_executable( tp1taller
         
         src/server/usersManager/UsersManager.cpp
         src/server/usersManager/UsersManager.h
-        
-        src/server/Server.cpp
-        src/server/Server.h
         
         src/main.cpp)
 	

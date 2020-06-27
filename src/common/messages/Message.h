@@ -20,6 +20,7 @@ class Message {
         message_t getType();
         virtual string getStringData();
         virtual void setStringData();
+
 };
 
 class NoneMessage : public Message {
