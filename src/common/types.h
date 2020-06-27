@@ -154,10 +154,10 @@ typedef struct {
 
 } sendingCycleParams_t;
 
-//Exported to a class
-// typedef struct {
-//     string username;
-//     string password;
-// } user_t;
+//Exported to a class -> se deja por el momento
+typedef struct {
+    string username;
+    string password;
+} user_t;
 
 #endif

@@ -20,7 +20,7 @@ static void* sendMessage(void *arg){
             
             string dataSend = newMessage->getStringData();
             //delete newMessage;
-            socket->enviarMensaje(dataSend.c_str(), sizeof(char) *dataSend.size());
+            socket->sendMessage(dataSend.c_str(), sizeof(char) *dataSend.size());
         }
     }
 }
@@ -37,7 +37,8 @@ static void* receiveMessage(void *arg){
     bool error = false;
 
     while (client->isConnected() && !error){
-        deserializer->pushNewMessage(socket, error, queueMessage);
+        // TODO: descomentado por queueMessage: cambiar de vector<Message *>* a EventsQueue*
+        //deserializer->pushNewMessage(socket, error, queueMessage);
 
         // TODO: usleep de prueba
         usleep(1000000);

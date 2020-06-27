@@ -5,13 +5,13 @@ MessageDeserializer::MessageDeserializer(){};
 MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *receives, bool &error){
 
     char enterKey;
-    if (receives->recibirMensaje(&enterKey, sizeof(char)) <= 0){
+    if (receives->receiveMessage(&enterKey, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
 
     char quitKey;
-    if (receives->recibirMensaje(&quitKey, sizeof(char)) <= 0){
+    if (receives->receiveMessage(&quitKey, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
@@ -22,56 +22,56 @@ MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *receives, 
 MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool &error){
 
     unsigned int step;
-    if (receives->recibirMensaje((char *)&step, sizeof(unsigned int)) <= 0){
+    if (receives->receiveMessage((char *)&step, sizeof(unsigned int)) <= 0){
         error = true;
         return nullptr;
     }
         
     IdElement id;
-    if (receives->recibirMensaje((char *) &id, sizeof(IdElement)) <= 0){
+    if (receives->receiveMessage((char *) &id, sizeof(IdElement)) <= 0){
         error = true;
         return nullptr;
     }
     
     int sizeX;
-    if (receives->recibirMensaje((char *)&sizeX, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&sizeX, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     int sizeY;
-    if (receives->recibirMensaje((char *)&sizeY, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&sizeY, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     int posX;
-    if (receives->recibirMensaje((char *)&posX, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&posX, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     int posY;
-    if (receives->recibirMensaje((char *)&posY, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&posY, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     int source_length;
-    if (receives->recibirMensaje((char *)&source_length, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&source_length, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     char *source = new char[source_length + 1];
     source[source_length] = '\0';
-    if (receives->recibirMensaje(source,  sizeof(char) * source_length) <= 0){
+    if (receives->receiveMessage(source,  sizeof(char) * source_length) <= 0){
         error = true;
         return nullptr;
     }
     
     char isPlayer;
-    if (receives->recibirMensaje(&isPlayer, sizeof(char)) <= 0){
+    if (receives->receiveMessage(&isPlayer, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
@@ -85,20 +85,20 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *receives, bool
 MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *receives, bool &error){
     
     size_t id;
-    if (receives->recibirMensaje((char *)&id, sizeof(size_t)) <= 0){
+    if (receives->receiveMessage((char *)&id, sizeof(size_t)) <= 0){
         error = true;
         return nullptr;
     }
     
     int source_length;
-    if (receives->recibirMensaje((char *)&source_length, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&source_length, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     char *source = new char[source_length + 1];
     source[source_length] = '\0';
-    if (receives->recibirMensaje(source,  sizeof(char) * source_length) <= 0){
+    if (receives->receiveMessage(source,  sizeof(char) * source_length) <= 0){
         error = true;
         return nullptr;
     }
@@ -112,13 +112,13 @@ MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *receives, bool &
 MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *receives, bool &error){
 
     unsigned int width;
-    if (receives->recibirMensaje((char *) &width, sizeof(unsigned int)) <= 0){
+    if (receives->receiveMessage((char *) &width, sizeof(unsigned int)) <= 0){
         error = true;
         return nullptr;
     }
         
     unsigned int height;
-    if (receives->recibirMensaje((char *) &height, sizeof(unsigned int)) <= 0){
+    if (receives->receiveMessage((char *) &height, sizeof(unsigned int)) <= 0){
         error = true;
         return nullptr;
     }
@@ -129,27 +129,27 @@ MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *receives, bool
 MessageLoginPlayer *MessageDeserializer::receiveLoginPlayer(Socket *receives, bool &error){
     
     int name_length;
-    if (receives->recibirMensaje((char *)&name_length, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&name_length, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     char *username = new char[name_length + 1];
     username[name_length] = '\0';
-    if (receives->recibirMensaje(username,  sizeof(char) * name_length) <= 0){
+    if (receives->receiveMessage(username,  sizeof(char) * name_length) <= 0){
         error = true;
         return nullptr;
     }
 
     int password_length;
-    if (receives->recibirMensaje((char *)&password_length, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&password_length, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     char *password = new char[password_length + 1];
     password[password_length] = '\0';
-    if (receives->recibirMensaje(password,  sizeof(char) * password_length) <= 0){
+    if (receives->receiveMessage(password,  sizeof(char) * password_length) <= 0){
         error = true;
         return nullptr;
     }
@@ -164,7 +164,7 @@ MessageLoginPlayer *MessageDeserializer::receiveLoginPlayer(Socket *receives, bo
 MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *receives, bool &error){
 
     orientation_t moveOrientation;
-    if (receives->recibirMensaje((char *) &moveOrientation, sizeof(orientation_t)) <= 0){
+    if (receives->receiveMessage((char *) &moveOrientation, sizeof(orientation_t)) <= 0){
         error = true;
         return nullptr;
     }
@@ -175,7 +175,7 @@ MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *receiv
 MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *receives, bool &error){
 
     char authorize;
-    if (receives->recibirMensaje(&authorize, sizeof(char)) <= 0){
+    if (receives->receiveMessage(&authorize, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
@@ -186,25 +186,25 @@ MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket
 MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *receives, bool &error){
             
     unsigned int step;
-    if (receives->recibirMensaje((char *)&step, sizeof(unsigned int)) <= 0){
+    if (receives->receiveMessage((char *)&step, sizeof(unsigned int)) <= 0){
         error = true;
         return nullptr;
     }
 
     IdElement id;
-    if (receives->recibirMensaje((char *) &id, sizeof(IdElement)) <= 0){
+    if (receives->receiveMessage((char *) &id, sizeof(IdElement)) <= 0){
         error = true;
         return nullptr;
     }
     
     int posX;
-    if (receives->recibirMensaje((char *)&posX, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&posX, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
     
     int posY;
-    if (receives->recibirMensaje((char *)&posY, sizeof(int)) <= 0){
+    if (receives->receiveMessage((char *)&posY, sizeof(int)) <= 0){
         error = true;
         return nullptr;
     }
@@ -217,19 +217,19 @@ MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *receives, 
 MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *receives, bool &error){
 
     char level;
-    if (receives->recibirMensaje(&level, sizeof(char)) <= 0){
+    if (receives->receiveMessage(&level, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
     
     char isStart;
-    if (receives->recibirMensaje(&isStart, sizeof(char)) <= 0){
+    if (receives->receiveMessage(&isStart, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
 
     char isEnd;
-    if (receives->recibirMensaje(&isEnd, sizeof(char)) <= 0){
+    if (receives->receiveMessage(&isEnd, sizeof(char)) <= 0){
         error = true;
         return nullptr;
     }
@@ -239,6 +239,7 @@ MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *receives, bo
     return message;        
 };
 
+/*
 Message *MessageDeserializer::getReceivedMessage(Message *messageReceived, bool &error){
     
     char typeMessage = NONE;
@@ -247,7 +248,7 @@ Message *MessageDeserializer::getReceivedMessage(Message *messageReceived, bool 
     // if (error)
     //     return new NoneMessage();
     
-    // if (receives->recibirMensaje(&typeMessage, sizeof(char)) <= 0)
+    // if (receives->receiveMessage(&typeMessage, sizeof(char)) <= 0)
     //     error = true;
 
     switch (messageReceived->getType()){
@@ -278,7 +279,7 @@ Message *MessageDeserializer::getReceivedMessage(Message *messageReceived, bool 
             return new NoneMessage();
     }
 
-};
+};*/
 
 void MessageDeserializer::pushNewMessage(Socket *receives, bool &error, EventsQueue *queueMessages){
     char typeMessage = NONE;
@@ -286,50 +287,52 @@ void MessageDeserializer::pushNewMessage(Socket *receives, bool &error, EventsQu
     if (error)
         return;
     
-    if (receives->recibirMensaje(&typeMessage, sizeof(char)) <= 0)
+    if (receives->receiveMessage(&typeMessage, sizeof(char)) <= 0)
         error = true;
+
+    // TODO: SE COMENTA PARA QUE COMPILE queueMessages->push_back
 
     switch (typeMessage){
 
         case INIT_ENTITY:
-            queueMessages->push(this->receiveInitEntity(receives, error));
+            //queueMessages->push_back(this->receiveInitEntity(receives, error));
             break;
 
         case UPDATE_ENTITY:
-            queueMessage->push_back(this->receiveUpdateEntity(receives, error));
+            //queueMessages->push_back(this->receiveUpdateEntity(receives, error));
             break;
 
         case INIT_LAYER:
-            queueMessage->push_back(this->receiveInitLayer(receives, error));
+            //queueMessages->push_back(this->receiveInitLayer(receives, error));
             break;
 
         case INIT_SCREEN:
-            queueMessage->push_back(this->receiveInitScreen(receives, error));
+            //queueMessages->push_back(this->receiveInitScreen(receives, error));
             break;
 
         case UPDATE_STAGE:
-            queueMessage->push_back(this->receiveUpdateStage(receives, error));
+            //queueMessages->push_back(this->receiveUpdateStage(receives, error));
             break;
 
         case LOGIN_PLAYER:
-            queueMessage->push_back(this->receiveLoginPlayer(receives, error));
+            //queueMessages->push_back(this->receiveLoginPlayer(receives, error));
             break;
 
         case MOVEMENT_PLAYER:
-            queueMessage->push_back(this->receiveMovementPlayer(receives, error));
+            //queueMessages->push_back(this->receiveMovementPlayer(receives, error));
             break;
 
         case REQUEST_LOGIN_PLAYER:
-            queueMessage->push_back(this->receiveRequestLoginPlayer(receives, error));
+            //queueMessages->push_back(this->receiveRequestLoginPlayer(receives, error));
             break;
 
         case ACTION_PLAYER:
-            queueMessage->push_back(this->receiveActionPlayer(receives, error));
+            //queueMessages->push_back(this->receiveActionPlayer(receives, error));
             break;
 
         case NONE:
         default:
-            queueMessage->push_back(new NoneMessage());
+            //queueMessages->push_back(new NoneMessage());
             break;
     }    
 };

@@ -2,6 +2,7 @@
 #define _THREADSHANDLER_H_
 
 #include "Logger.h"
+#include "../providers/GameProvider.h"
 #include <unordered_map>
 #include <pthread.h>
 
@@ -15,7 +16,8 @@ class ThreadsHandler {
     public:
         ThreadsHandler();
         ~ThreadsHandler();
-        //void ThreadsHandler::createThread(void (*func) ()), string threadName);
+        
+        void createThread(void (*func) (), string threadName);
 };
 
 

@@ -43,7 +43,7 @@ class Server {
         int run();
         void runGame();
         
-        Socket* Server::getSocket();
+        Socket* getSocket();
 };
 
 #endif

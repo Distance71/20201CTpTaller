@@ -12,9 +12,9 @@ ServerTransmitionManager::~ServerTransmitionManager(){
 }
 
 
-void ServerTransmitionManager::addUser(User* user){
-    ThreadsHandler::createThread(this->receivingCycle(), "Recibir jugador" + to_string(newUser->getUserId()));
-    ThreadsHandler::createThread(this->sendingCycle(), "Enviar jugador" + to_string(newUser->getUserId()));
+void ServerTransmitionManager::addUser(User* newUser){
+    //ThreadsHandler::createThread(this->receivingCycle(), "Recibir jugador" + to_string(newUser->getUserId()));
+    //ThreadsHandler::createThread(this->sendingCycle(), "Enviar jugador" + to_string(newUser->getUserId()));
 }
 
 void ServerTransmitionManager::receivingCycle() {
@@ -25,7 +25,5 @@ void ServerTransmitionManager::receivingCycle() {
 status_t ServerTransmitionManager::sendingCycle() {
     // while(msj != "END_CONNECTION") {
     
-    
-    
-    // }
+    //
 }

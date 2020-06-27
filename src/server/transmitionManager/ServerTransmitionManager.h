@@ -11,8 +11,12 @@
 #include "../../common/messages/MessageMovementPlayer.h"
 #include "../../common/messages/MessageUpdateEntity.h"
 #include "../../common/messages/MessageUpdateStage.h"
+#include "../../common/services/ThreadsHandler.h"
 
 #include "../Server.h"
+#include "../models/User.h"
+
+class Server;
 
 class ServerTransmitionManager {
     private:
@@ -20,11 +24,14 @@ class ServerTransmitionManager {
 
 
     public:
-        ServerTransmitionManager(Server *server, size_t port);
+        ServerTransmitionManager(Server *server);
         ~ServerTransmitionManager();
 
+        void addUser(User* newUser);
+        void receivingCycle();
+        status_t sendingCycle();
         //bool initialize();
         //bool waitPlayers();
 };
 
-#endif
+#endif // _SERVER_TRANSMITION_MANAGER_H_
