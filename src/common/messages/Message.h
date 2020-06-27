@@ -10,30 +10,16 @@
 
 using namespace std;
 
-typedef enum typeMessage {
-    NONE,
-    INIT_ENTITY,
-    UPDATE_ENTITY,
-    INIT_LAYER,
-    INIT_SCREEN,
-    UPDATE_STAGE,
-    LOGIN_PLAYER,
-    REQUEST_LOGIN_PLAYER,
-    MOVEMENT_PLAYER,
-    ACTION_PLAYER,
-} typeMessage_t;
-
 class Message {
 
     public:
-        typeMessage_t type_;
+        message_t type_;
 
-        Message(typeMessage_t type);
+        Message(message_t type);
         ~Message();
-        typeMessage_t getType();
+        message_t getType();
         virtual string getStringData();
         virtual void setStringData();
-
 };
 
 class NoneMessage : public Message {

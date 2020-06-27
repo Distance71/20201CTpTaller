@@ -12,15 +12,24 @@ class Server;
 class UsersManager {
     private:
         Server *serverOwn_;
-        unordered_map<IdPlayer, User *> users_;
+        unordered_map<IdUser, User *> users_;
+        size_t maxUsers_;
+        size_t loggedUsers_ = 0;
+        IdUser lastId_ = 0;
+        
+        pthread_mutex_t mutex_lastId_;
+        
 
     public:
-        UsersManager(Server *server);
+        UsersManager(Server *serverOwn);
         ~UsersManager();
 
-
-        void setIdPlayer(IdPlayer idPlayer);
-        IdPlayer getIdPlayer();
+        unordered_map<IdUser, User *> getUsers();
+        // void setIdUser(IdUser idUser);
+        // IdUser getIdUser();
+        bool isFullGame();
+        void acceptUnloggedUser();
+        
 
         void setSocket(Socket *socket);
 };

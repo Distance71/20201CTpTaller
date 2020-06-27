@@ -20,25 +20,30 @@ class ServerTransmitionManager;
 
 class Server {
     private:
-        ServerTransmitionManager *transmitionManager_;
+        //ServerTransmitionManager *transmitionManager_;
 
         size_t port_;
-        size_t maxPlayers_;
-        unordered_map<IdPlayer, UsersManager*> players_;
+        Socket *socket_;
+        UsersManager* usersManager_;
+        ServerTransmitionManager* transmitionManager_;
         bool connected_;
+        
         pthread_mutex_t mutex_players_;
 
-        void initializeServer();
+        void _initializeServer();
         
     public:
         Server(size_t port);
         ~Server();
 
         bool isConnected();
-        bool waitPlayers();
-        bool addPlayer(IdPlayer idPlayer, UsersManager *onePlayer);
+        void waitPlayers();
+        void addPlayer(User *newUser);
         bool isFull();
         int run();
+        void runGame();
+        
+        Socket* Server::getSocket();
 };
 
 #endif

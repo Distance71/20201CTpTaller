@@ -15,13 +15,13 @@
 #include "../messages/MessageUpdateEntity.h"
 #include "../messages/MessageUpdateStage.h"
 #include "../types.h"
+#include "../events/EventsQueue.h"
 
 using namespace std;
 
 class MessageDeserializer {
 
     private:
-    
         MessageActionPlayer *receiveActionPlayer(Socket *receives, bool &error);
         MessageInitEntity *receiveInitEntity(Socket *receives, bool &error);
         MessageInitLayer *receiveInitLayer(Socket *receives, bool &error);
@@ -35,8 +35,8 @@ class MessageDeserializer {
     public:
         MessageDeserializer();
         
-        //Message *getReceivedMessage(Socket *receives, bool &error);
-        void pushNewMessage(Socket *receives, bool &error, vector<Message *> *queueMessage);
+        Message *getReceivedMessage(Socket *receives, bool &error);
+        void pushNewMessage(Socket *receives, bool &error, EventsQueue *queueMessage);
     
 };
 

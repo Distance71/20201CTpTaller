@@ -3,7 +3,7 @@
 Socket::Socket(){}
 
 Socket::Socket(int fd){
-    this->fileDescriptor = fd;
+    this->fileDescriptor_ = fd;
 }
 
 Socket::~Socket(){}
@@ -14,9 +14,9 @@ void Socket::setPort(unsigned int port){
 
 bool Socket::create(){
     
-    this->fileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
+    this->fileDescriptor_ = socket(AF_INET, SOCK_STREAM, 0);
 
-    if (this->fileDescriptor < 0)
+    if (this->fileDescriptor_ < 0)
         return false;
 
     return true;
@@ -24,7 +24,7 @@ bool Socket::create(){
 
 bool Socket::setOption(){
     int enable = 1;
-    int optsSetted = setsockopt(this->fileDescriptor, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
+    int optsSetted = setsockopt(this->fileDescriptor_, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
 
     if (optsSetted < 0)
         return false;
@@ -32,7 +32,7 @@ bool Socket::setOption(){
     return true;
 }
 
-bool Socket::enlazar(){
+bool Socket::link(){
 
     struct sockaddr_in socket_addr; 
 
@@ -40,15 +40,15 @@ bool Socket::enlazar(){
     socket_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     socket_addr.sin_port = htons(this->port_);
 
-    if (bind(this->fileDescriptor, (struct sockaddr *) &socket_addr, sizeof(socket_addr)) < 0)
+    if (bind(this->fileDescriptor_, (struct sockaddr *) &socket_addr, sizeof(socket_addr)) < 0)
         return false; 
     
     return true;
 }
 
-bool Socket::escuchar(int maxConection){
+bool Socket::listen(int maxConnections){
 
-    if (listen(this->fileDescriptor, maxConection) < 0)
+    if (listen(this->fileDescriptor_, maxConnections) < 0)
         return false;
 
     return true; 
@@ -62,7 +62,7 @@ bool Socket::connectWithServer(string ipHost){
     server.sin_addr.s_addr = inet_addr(ipHost.c_str());
     server.sin_port = htons(this->port_);
 
-    if (connect(this->fileDescriptor, (struct sockaddr *) &server, sizeof(server)))
+    if (connect(this->fileDescriptor_, (struct sockaddr *) &server, sizeof(server)))
         return false;
     
     return true;
@@ -72,17 +72,17 @@ int Socket::acceptClient(){
     struct sockaddr_in sockaddr_client;
     int clientAddrLen;
 
-    return accept(this->fileDescriptor, (struct sockaddr *) &sockaddr_client, (socklen_t *) &clientAddrLen);
+    return accept(this->fileDescriptor_, (struct sockaddr *) &sockaddr_client, (socklen_t *) &clientAddrLen);
 }
 
-int Socket::recibirMensaje(char* buffer, size_t sizeData){
+int Socket::receiveMessage(char* buffer, size_t sizeData){
 
     int totalBytesReceive = 0;
     int bytesReceive = 0;
     bool isOpen = true;
 
     while ((sizeData > totalBytesReceive) && isOpen){
-        bytesReceive = read(this->fileDescriptor, &buffer[totalBytesReceive], (sizeData - totalBytesReceive));
+        bytesReceive = read(this->fileDescriptor_, &buffer[totalBytesReceive], (sizeData - totalBytesReceive));
         
         if (bytesReceive < 0){
             return -1;
@@ -97,14 +97,14 @@ int Socket::recibirMensaje(char* buffer, size_t sizeData){
     return totalBytesReceive;
 }
 
-int Socket::enviarMensaje(const char* buffer, size_t sizeData){
+int Socket::sendMessage(const char* buffer, size_t sizeData){
        
     int totalBytesWritten = 0;
     int bytesWritten = 0;;
     bool isOpen = true;
 
     while ((sizeData > totalBytesWritten) && isOpen){
-        bytesWritten = write(this->fileDescriptor, &buffer[totalBytesWritten], (sizeData - totalBytesWritten));
+        bytesWritten = write(this->fileDescriptor_, &buffer[totalBytesWritten], (sizeData - totalBytesWritten));
 
         if (bytesWritten < 0){
             return -1;

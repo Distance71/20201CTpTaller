@@ -1,6 +1,6 @@
 #include "Message.h"
 
-Message::Message(typeMessage_t type){
+Message::Message(message_t type){
     this->type_ = type;
 }
 
@@ -15,7 +15,7 @@ string Message::getStringData(){
     return dataString;
 }
 
-typeMessage_t Message::getType(){
+message_t Message::getType(){
     return this->type_;
 }
 

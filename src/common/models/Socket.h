@@ -12,7 +12,7 @@ using namespace std;
 class Socket {
     private:
         unsigned int port_;
-        int fileDescriptor;
+        int fileDescriptor_;
 
     public:
         Socket();
@@ -21,8 +21,8 @@ class Socket {
 
         // For Server
         bool create();
-        bool enlazar();
-        bool escuchar(int maxConection);
+        bool link();
+        bool listen(int maxConnections);
         bool setOption();
         int acceptClient();
 
@@ -31,8 +31,8 @@ class Socket {
 
         // Common
         void setPort(unsigned int port);
-        int recibirMensaje(char* buffer, size_t sizeData);
-        int enviarMensaje(const char* buffer, size_t sizeData);
+        int receiveMessage(char* buffer, size_t sizeData);
+        int sendMessage(const char* buffer, size_t sizeData);
 
         void cerrar();    
 };

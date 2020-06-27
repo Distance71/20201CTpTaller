@@ -1,15 +1,60 @@
-// #include "UsersManager.h"
+#include "UsersManager.h"
 
-// UsersManager::UsersManager(Server *server){
-//     //this->id_ = idPlayer;
-//     //this->socket_ = socket;
-//     this->serverOwn_ = server;
+UsersManager::UsersManager(Server *serverOwn){
+    this->serverOwn_ = serverOwn;
+    size_t maxUsers = GameProvider::getQuantityPlayers();
+    this->maxUsers_ = maxUsers;
+}
+
+UsersManager::~UsersManager(){
+    this->serverOwn_ = nullptr;
+}
+
+bool UsersManager::isFullGame(){
+    return loggedUsers_ >= this->maxUsers_;
+}
+
+void UsersManager::acceptUnloggedUser(){
+
+    int newClientDescriptor = this->serverOwn_->getSocket()->acceptClient();
+    
+    pthread_mutex_lock(&this->mutex_lastId_);
+    Socket *socketNewUser = new Socket(newClientDescriptor);
+    
+    User* newUser = new User(socketNewUser);
+    this->users_[this->lastId_] = newUser;
+    this->lastId_++; 
+
+    this->serverOwn_->addPlayer(newUser);
+
+    pthread_mutex_unlock(&this->mutex_lastId_);       
+}
+
+// void UserManager::logInUser(User* User){
+
 // }
 
-// UsersManager::~UsersManager(){}
+    // unsigned int width = GameProvider::getWidth();
+    // unsigned int height = GameProvider::getHeight();
+    // MessageInitScreen initScreen = MessageInitScreen(width, height);
+    // string dataString;
+    // dataString = initScreen.getStringData();
 
-// unordered_map<IdPlayer *> UsersManager::getUsers(){
-// 	return this->users_;
+    //newSocketClient->enviarMensaje(dataString.c_str(), sizeof(char) *dataString.size());
+    
+    
+    // pthread_t newHilo;
+
+    // argpthread argumentos;
+    // argumentos.server = this;
+    // argumentos.nroClient = this->clients.size();
+    // argumentos.des = this->deserializer;
+
+    // pthread_create(&newHilo, NULL, recibirInformacion, &argumentos);
+
+
+// unordered_map<IdUser, User *> UsersManager::getUsers(){
+//     return this->users_;
 // }
 
 // //Checks remains players

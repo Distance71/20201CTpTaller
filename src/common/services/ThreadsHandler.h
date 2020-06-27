@@ -10,7 +10,7 @@ using namespace std;
 class ThreadsHandler {
 
     private:
-    //unordered_map<string, pthread_t *> threads_;
+        static unordered_map<string, pthread_t *> threads_;
 
     public:
         ThreadsHandler();

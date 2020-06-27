@@ -239,17 +239,18 @@ MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *receives, bo
     return message;        
 };
 
-/*Message *MessageDeserializer::getReceivedMessage(Socket *receives, bool &error){
+Message *MessageDeserializer::getReceivedMessage(Message *messageReceived, bool &error){
     
     char typeMessage = NONE;
 
-    if (error)
-        return new NoneMessage();
+    //Necesidad de usar error?
+    // if (error)
+    //     return new NoneMessage();
     
-    if (receives->recibirMensaje(&typeMessage, sizeof(char)) <= 0)
-        error = true;
+    // if (receives->recibirMensaje(&typeMessage, sizeof(char)) <= 0)
+    //     error = true;
 
-    switch (typeMessage){
+    switch (messageReceived->getType()){
 
         case INIT_ENTITY:
             return this->receiveInitEntity(receives, error);
@@ -277,9 +278,9 @@ MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *receives, bo
             return new NoneMessage();
     }
 
-};*/
+};
 
-void MessageDeserializer::pushNewMessage(Socket *receives, bool &error, vector<Message *> *queueMessage){
+void MessageDeserializer::pushNewMessage(Socket *receives, bool &error, EventsQueue *queueMessages){
     char typeMessage = NONE;
 
     if (error)
@@ -291,7 +292,7 @@ void MessageDeserializer::pushNewMessage(Socket *receives, bool &error, vector<M
     switch (typeMessage){
 
         case INIT_ENTITY:
-            queueMessage->push_back(this->receiveInitEntity(receives, error));
+            queueMessages->push(this->receiveInitEntity(receives, error));
             break;
 
         case UPDATE_ENTITY:

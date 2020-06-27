@@ -1,8 +1,20 @@
 #include "User.h"
 
+User::User(Socket *socket){
+	this->socket_ = socket;
+}
+
 User::User(string userName, string password){
 	this->userName_ = userName;
 	this->password_ = password;
+	this->connected_ = true;
+}
+
+User::~User() {
+	this->socket_ = nullptr;
+	this->logged_ = false;
+	this->connected_ = false;
+	delete socket_;
 }
 
 string User::getUserName(){
@@ -11,6 +23,10 @@ string User::getUserName(){
 
 string User::getPassword(){
 	this->password_;
+}
+
+void User::setLoggedIn(){
+	this->logged_ = true;
 }
 
 void User::setUserName(string userName){
