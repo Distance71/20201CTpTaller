@@ -15,6 +15,7 @@
 #include "../common/models/Socket.h"
 #include "../common/services/Logger.h"
 #include "../common/providers/GameProvider.h"
+#include "eventsManager/ServerEventsManager.h"
 
 class ServerTransmitionManager;
 
@@ -26,7 +27,9 @@ class Server {
         Socket *socket_;
         UsersManager* usersManager_;
         ServerTransmitionManager* transmitionManager_;
-        bool connected_;
+        ServerEventsManager* eventsManager_;
+        bool connected_ = false;
+        bool gameRunning_ = false;
         
         pthread_mutex_t mutex_players_;
 
@@ -44,6 +47,7 @@ class Server {
         void runGame();
         
         Socket* Server::getSocket();
+        BlockingQueue* getEventsToProcess();
 };
 
 #endif

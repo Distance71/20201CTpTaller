@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+#include "../server/Server.h"
+#include "../server/models/User.h"
+
 using namespace std;
 
 typedef struct status {
@@ -146,13 +149,10 @@ typedef struct {
     player_t playerParams;
 } gameParams_t;
 
-typedef struct {
-
-} receivingCycleParams_t;
-
-typedef struct {
-
-} sendingCycleParams_t;
+typedef struct argsThreadUser {
+    void* params;
+    void* handler;
+} argsThread_t;
 
 //Exported to a class
 // typedef struct {

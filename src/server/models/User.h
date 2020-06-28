@@ -4,9 +4,9 @@
 #include <string>
 #include "../../common/models/Socket.h"
 #include "../../common/types.h"
+#include "../../common/messages/Message.h"
 
 using namespace std;
-
 
 class User {
 
@@ -15,7 +15,7 @@ private:
     string password_ = "";
     Socket *socket_;
     character_t character_;
-    IdUser idUser_;
+    IdUser userId_;
 
     bool connected_ = false;
     bool logged_ = false;
@@ -40,8 +40,13 @@ public:
     void setSocket(Socket *socket);
     Socket *getSocket();
 
+    IdUser getId();
+
     bool isConnected();
-    void disconnect();
+    void setDisconnection();
+
+    void sendMessage(Message *message);
+    Message receiveMessage();
 };
 
 

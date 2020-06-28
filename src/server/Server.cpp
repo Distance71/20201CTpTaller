@@ -58,7 +58,7 @@ void Server::waitPlayers(){
 
     //Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
     //porque el Socket hace el accept antes de que del logeo y demas
-    while (!this->isFull() && this->isConnected()){
+    while (!this->usersManager_->isFullGame() && this->isConnected()){
         
         int newUserId = this->usersManager_->acceptUnloggedUser();
 
@@ -81,6 +81,10 @@ void Server::waitPlayers(){
 
 Socket* Server::getSocket(){
     return this->socket_;
+}
+
+BlockingQueue* Server::getEventsToProcess(){
+    return transmitionManager_->getMessagesToProcess();
 }
 
 void Server::addPlayer(User *newUser){
@@ -114,6 +118,8 @@ int Server::run(){
 
     if(!this->waitPlayers())
          return EXIT_FAILURE;
+
+    //Here goes gameRun that generates events for events manager
 
     /*while (this->isConnected()){
         string strQuit;

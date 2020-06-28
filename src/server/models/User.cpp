@@ -57,7 +57,19 @@ bool User::isConnected(){
 	return this->connected_;
 }
 
-void User::disconnect(){
+IdUser User::getId(){
+	return this->userId_;
+}
+
+void User::setDisconnection(){
 	this->socket_ = NULL;
 	this->connected_ = false;
+}
+
+Message* User::receiveMessage(){
+	return MessageDeserializer::getReceivedMessage(this);
+}
+
+void User::sendMessage(Message* message){
+	return MessageSerializer::serializeMessage(message) //Send also, for consistence?
 }
