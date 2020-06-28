@@ -22,7 +22,7 @@ class Socket {
         // For Server
         bool create();
         bool link();
-        bool listen(int maxConnections);
+        bool listenConnections(int maxConnections);
         bool setOption();
         int acceptClient();
 

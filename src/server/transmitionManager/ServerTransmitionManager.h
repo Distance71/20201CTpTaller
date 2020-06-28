@@ -14,8 +14,12 @@
 #include "../../common/messages/MessageUpdateEntity.h"
 #include "../../common/messages/MessageUpdateStage.h"
 #include "../../common/models/BlockingQueue.h"
+#include "../../common/services/ThreadsHandler.h"
 
 #include "../Server.h"
+#include "../models/User.h"
+
+class Server;
 
 class ServerTransmitionManager {
     private:
@@ -32,8 +36,6 @@ class ServerTransmitionManager {
 
         void addUser(User* user);
         BlockingQueue* getMessagesToProcess();
-        //bool initialize();
-        //bool waitPlayers();
 };
 
-#endif
+#endif // _SERVER_TRANSMITION_MANAGER_H_

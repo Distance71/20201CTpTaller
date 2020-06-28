@@ -2,6 +2,7 @@
 #define THREADSHANDLER_H_
 
 #include "Logger.h"
+#include "../providers/GameProvider.h"
 #include <unordered_map>
 #include <pthread.h>
 #include <string>

@@ -21,7 +21,7 @@ class ClientMap {
         GraphicsScenario *escenario_;
         vector<ClientStep *> steps_;
         unordered_map<IdElement, ClientMapElement*> mapElements_;
-        unordered_map<IdPlayer, ClientMapElement*> players_;
+        unordered_map<IdUser, ClientMapElement*> players_;
         stageSource_t background_;
 
         void clearBackground();

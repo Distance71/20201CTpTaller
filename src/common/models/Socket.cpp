@@ -46,7 +46,7 @@ bool Socket::link(){
     return true;
 }
 
-bool Socket::listen(int maxConnections){
+bool Socket::listenConnections(int maxConnections){
 
     if (listen(this->fileDescriptor_, maxConnections) < 0)
         return false;
@@ -120,5 +120,5 @@ int Socket::sendMessage(const char* buffer, size_t sizeData){
 }
 
 void Socket::cerrar(){
-    shutdown(this->fileDescriptor, 2);
+    shutdown(this->fileDescriptor_, 2);
 }
