@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string.h>
 #include "Message.h"
-#include "../types.h"
+#include "../../types.h"
 
 using namespace std;
 

@@ -31,15 +31,11 @@ add_executable( tp1taller
         src/client/eventsManager/ClientEventsManager.cpp
         src/client/eventsManager/ClientEventsManager.h
 
-        src/client/graphicsManager/GraphicsScenario.cpp
-        src/client/graphicsManager/GraphicsScenario.h
-        src/client/graphicsManager/GraphicsMapElement.cpp
-        src/client/graphicsManager/GraphicsMapElement.h
+        src/client/graphics/GraphicsScenario.cpp
+        src/client/graphics/GraphicsScenario.h
+        src/client/graphics/GraphicsMapElement.cpp
+        src/client/graphics/GraphicsMapElement.h
 
-        src/client/transmitionManager/serializer/ClientDeserializer.cpp
-        src/client/transmitionManager/serializer/ClientDeserializer.h
-        src/client/transmitionManager/serializer/ClientSerializer.cpp
-        src/client/transmitionManager/serializer/ClientSerializer.h
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
 
@@ -48,27 +44,26 @@ add_executable( tp1taller
         src/client/GameScreen.cpp
         src/client/GameScreen.h
 
-        src/common/messages/Message.cpp
-        src/common/messages/Message.h
-        src/common/messages/MessageActionPlayer.cpp
-        src/common/messages/MessageActionPlayer.h
-        src/common/messages/MessageInitEntity.cpp
-        src/common/messages/MessageInitEntity.h
-        src/common/messages/MessageInitLayer.cpp
-        src/common/messages/MessageInitLayer.h
-        src/common/messages/MessageInitScreen.cpp
-        src/common/messages/MessageInitScreen.h
-        src/common/messages/MessageLoginPlayer.cpp
-        src/common/messages/MessageLoginPlayer.h
-        src/common/messages/MessageMovementPlayer.cpp
-        src/common/messages/MessageMovementPlayer.h
-        src/common/messages/MessageRequestLoginPlayer.cpp
-        src/common/messages/MessageRequestLoginPlayer.h
-        src/common/messages/MessageUpdateEntity.cpp
-        src/common/messages/MessageUpdateEntity.h
-        src/common/messages/MessageUpdateStage.cpp
-        src/common/messages/MessageUpdateStage.h
-
+        src/common/models/messages/Message.cpp
+        src/common/models/messages/Message.h
+        src/common/models/messages/MessageActionPlayer.cpp
+        src/common/models/messages/MessageActionPlayer.h
+        src/common/models/messages/MessageInitEntity.cpp
+        src/common/models/messages/MessageInitEntity.h
+        src/common/models/messages/MessageInitLayer.cpp
+        src/common/models/messages/MessageInitLayer.h
+        src/common/models/messages/MessageInitScreen.cpp
+        src/common/models/messages/MessageInitScreen.h
+        src/common/models/messages/MessageLoginPlayer.cpp
+        src/common/models/messages/MessageLoginPlayer.h
+        src/common/models/messages/MessageMovementPlayer.cpp
+        src/common/models/messages/MessageMovementPlayer.h
+        src/common/models/messages/MessageRequestLoginPlayer.cpp
+        src/common/models/messages/MessageRequestLoginPlayer.h
+        src/common/models/messages/MessageUpdateEntity.cpp
+        src/common/models/messages/MessageUpdateEntity.h
+        src/common/models/messages/MessageUpdateStage.cpp
+        src/common/models/messages/MessageUpdateStage.h
         src/common/models/Orientation.cpp
 	src/common/models/Orientation.h
         src/common/models/Position.cpp
@@ -83,10 +78,10 @@ add_executable( tp1taller
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h
 
-        src/common/serializer/MessageDeserializer.cpp
-        src/common/serializer/MessageDeserializer.h
-        src/common/serializer/MessageSerializer.cpp
-        src/common/serializer/MessageSerializer.h
+        src/common/services/serializer/MessageDeserializer.cpp
+        src/common/services/serializer/MessageDeserializer.h
+        src/common/services/serializer/MessageSerializer.cpp
+        src/common/services/serializer/MessageSerializer.h
 
         src/common/services/ConfigurationHandler.cpp
         src/common/services/ConfigurationHandler.h
@@ -125,13 +120,6 @@ add_executable( tp1taller
         src/server/Server.cpp
         src/server/Server.h
 
-        src/server/transmitionManager/serializer/ServerSerializer.cpp
-        src/server/transmitionManager/serializer/ServerSerializer.h
-        src/server/transmitionManager/serializer/ServerDeserializer.cpp
-        src/server/transmitionManager/serializer/ServerDeserializer.h
-
-        src/server/transmitionManager/LogsManager.cpp
-        src/server/transmitionManager/LogsManager.h
         src/server/transmitionManager/ServerTransmitionManager.cpp
         src/server/transmitionManager/ServerTransmitionManager.h
         

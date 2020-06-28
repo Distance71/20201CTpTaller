@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include "../../common/types.h"
-#include "../graphicsManager/GraphicsMapElement.h"
+#include "../graphics/GraphicsMapElement.h"
 #include "../controllers/ClientController.h"
 #include "../../common/models/Action.h"
 #include "../../common/models/State.h"

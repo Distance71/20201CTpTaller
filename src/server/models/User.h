@@ -4,7 +4,7 @@
 #include <string>
 #include "../../common/models/Socket.h"
 #include "../../common/types.h"
-#include "../../common/messages/Message.h"
+#include "../../common/models/messages/Message.h"
 
 using namespace std;
 

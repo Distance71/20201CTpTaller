@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string.h>
-#include "../types.h"
+#include "../../types.h"
 
 #define IS_FALSE 0
 #define IS_TRUE 1

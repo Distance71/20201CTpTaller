@@ -9,7 +9,7 @@
 
 #include "ClientMapElement.h"
 #include "../../common/providers/GameProvider.h"
-#include "../graphicsManager/GraphicsScenario.h"
+#include "../graphics/GraphicsScenario.h"
 #include "../../common/types.h"
 
 class ClientMapElement;

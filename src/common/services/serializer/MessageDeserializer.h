@@ -3,19 +3,19 @@
 
 #include <iostream>
 #include <string.h>
-#include "../models/Socket.h"
-#include "../messages/Message.h"
-#include "../messages/MessageActionPlayer.h"
-#include "../messages/MessageInitEntity.h"
-#include "../messages/MessageInitLayer.h"
-#include "../messages/MessageInitScreen.h"
-#include "../messages/MessageLoginPlayer.h"
-#include "../messages/MessageMovementPlayer.h"
-#include "../messages/MessageRequestLoginPlayer.h"
-#include "../messages/MessageUpdateEntity.h"
-#include "../messages/MessageUpdateStage.h"
-#include "../types.h"
-#include "../events/EventsQueue.h"
+#include "../../models/Socket.h"
+#include "../../models/messages/Message.h"
+#include "../../models/messages/MessageActionPlayer.h"
+#include "../../models/messages/MessageInitEntity.h"
+#include "../../models/messages/MessageInitLayer.h"
+#include "../../models/messages/MessageInitScreen.h"
+#include "../../models/messages/MessageLoginPlayer.h"
+#include "../../models/messages/MessageMovementPlayer.h"
+#include "../../models/messages/MessageRequestLoginPlayer.h"
+#include "../../models/messages/MessageUpdateEntity.h"
+#include "../../models/messages/MessageUpdateStage.h"
+#include "../../types.h"
+#include "../../events/EventsQueue.h"
 
 using namespace std;
 

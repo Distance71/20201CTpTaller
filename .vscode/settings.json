@@ -57,6 +57,10 @@
         "thread": "cpp",
         "valarray": "cpp",
         "bitset": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "list": "cpp",
+        "set": "cpp",
+        "typeindex": "cpp",
+        "variant": "cpp"
     }
 }
