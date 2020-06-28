@@ -1,8 +1,9 @@
 #ifndef _SERVER_TRANSMITION_MANAGER_H_
 #define _SERVER_TRANSMITION_MANAGER_H_
 
-#include <unordered_map>
-#include "../../common/transmitionManager/Socket.h"
+#include <errno.h>
+
+#include "../../common/models/Socket.h"
 #include "../../common/types.h"
 #include "../../common/messages/Message.h"
 #include "../../common/messages/MessageActionPlayer.h"
@@ -12,29 +13,29 @@
 #include "../../common/messages/MessageMovementPlayer.h"
 #include "../../common/messages/MessageUpdateEntity.h"
 #include "../../common/messages/MessageUpdateStage.h"
+#include "../../common/models/BlockingQueue.h"
+#include "../../common/services/ThreadsHandler.h"
 
 #include "../Server.h"
-#include "../usersManager/UsersManager.h"
+#include "../models/User.h"
 
 class Server;
-class UsersManager;
 
 class ServerTransmitionManager {
     private:
         Server *serverOwn_;
-        Socket *socket_;
-        size_t maxPlayers;
-        
-        unordered_map<IdPlayer, UsersManager*> users_;
-        IdPlayer lastId_ = 0;
-        pthread_mutex_t mutex_lastId_;
+        BlockingQueue* receivedMessagesQueue_;
+        unordered_map<IdUser, BlockingQueue *> messagesQueues_;
+
+        void createReceivingCycle(User* user);
+        void* receivingCycle(User* user);
 
     public:
-        ServerTransmitionManager(Server *server, size_t port);
+        ServerTransmitionManager(Server *server);
         ~ServerTransmitionManager();
 
-        bool initialize();
-        bool waitPlayers();
+        void addUser(User* user);
+        BlockingQueue* getMessagesToProcess();
 };
 
-#endif
+#endif // _SERVER_TRANSMITION_MANAGER_H_

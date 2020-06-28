@@ -34,14 +34,14 @@ IdElement ClientMapElement::getIdElement(){
     return this->id_;
 }
 
-void ClientMapElement::updatePosition(position_t newPosition){
-    Position *position = dynamic_cast<Position*>(this->states_.at("Position"));
-    Orientation *orientation = dynamic_cast<Orientation*>(this->states_.at("Orientation"));
+// void ClientMapElement::updatePosition(position_t newPosition){
+//     Position *position = dynamic_cast<Position*>(this->states_.at("Position"));
+//     Orientation *orientation = dynamic_cast<Orientation*>(this->states_.at("Orientation"));
 
-    position->setX(newPosition.axis_x);
-    position->setY(newPosition.axis_y);
-    orientation->setX(newPosition.orientation);
-}
+//     position->setX(newPosition.axis_x);
+//     position->setY(newPosition.axis_y);
+//     orientation->setX(newPosition.orientation);
+// }
 
 void ClientMapElement::update(){
     GraphicsMapElement *graficador = dynamic_cast<GraphicsMapElement*>(actions_.at("Graphics")); 

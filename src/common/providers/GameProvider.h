@@ -7,6 +7,7 @@ class ConfigurationHandler;
 
 #include "../services/Logger.h"
 #include "../services/ConfigurationHandler.h"
+#include "../types.h"
 #include "SDL2/SDL.h"
 #include <string>
 #include <unordered_map>
@@ -27,15 +28,8 @@ class ConfigurationHandler;
 
 #define MS_PER_UPDATE 16.67
 
-struct status_t {
-    bool normalStatus = true;
-    string errorLog;
-};
-
 // Contiene todas las variables que pueden ser comunes a todo el programa
 // y su manejo.
-
-enum layer_t {LAYER_1 = 0, LAYER_2 = 1, LAYER_3 = 2, LAYER_4 = 3,LAYER_5 = 4, LAYER_6 = 5, LAYER_7 = 6 };
 
 namespace GameProvider {
     SDL_Event getLastEvent();

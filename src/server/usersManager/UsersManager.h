@@ -2,24 +2,34 @@
 #define _USERS_MANAGER_H_
 
 #include "../../common/types.h"
-#include "../../common/transmitionManager/Socket.h"
-
+#include "../../common/models/Socket.h"
+#include "../models/User.h"
+#include "../../common/providers/GameProvider.h"
 #include "../Server.h"
 
 class Server;
 
 class UsersManager {
     private:
-        IdPlayer id_;
-        Socket *socket_;
         Server *serverOwn_;
+        unordered_map<IdUser, User *> users_;
+        size_t maxUsers_;
+        size_t loggedUsers_ = 0;
+        IdUser lastId_ = 0;
+        
+        pthread_mutex_t mutex_lastId_;
+        
 
     public:
-        UsersManager(IdPlayer idPlayer, Socket *socket, Server *server);
+        UsersManager(Server *serverOwn);
         ~UsersManager();
 
-        void setIdPlayer(IdPlayer idPlayer);
-        IdPlayer getIdPlayer();
+        unordered_map<IdUser, User *> getUsers();
+        // void setIdUser(IdUser idUser);
+        // IdUser getIdUser();
+        bool isFullGame();
+        void acceptUnloggedUser();
+        
 
         void setSocket(Socket *socket);
 };

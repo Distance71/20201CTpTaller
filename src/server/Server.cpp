@@ -2,28 +2,50 @@
 
 Server::Server(size_t port){
     this->port_ = port;
-    this->maxPlayers_ = GameProvider::getQuantityPlayers();;
-    this->connected_ = false;
-
-    this->transmitionManager_ = new ServerTransmitionManager(this, port);
-    pthread_mutex_init(&this->mutex_players_,NULL);
+    this->_initializeServer();
 }
 
 Server::~Server(){
+    delete this->usersManager_;
     delete this->transmitionManager_;
-    pthread_mutex_destroy(&this->mutex_players_);
-
     Logger::getInstance()->log(INFO, "Fin del juego");
 }
 
-//Pre: 
-void Server::initializeServer() {
-    if(!this->transmitionManager_->initialize()){
-        this->connected_ = false;
+void Server::_initializeServer() {
+    if(!this->socket_->create()){
+        string errorMessage = "No se pudo crear el socket para recibir clientes en el server";
+        Logger::getInstance()->log(ERROR, errorMessage);
+        GameProvider::setErrorStatus(errorMessage);
         return;
     }
 
+    if(!this->socket_->setOption()){
+        string errorMessage = "No se pudieron setear las opciones del socket en el server";
+        Logger::getInstance()->log(ERROR, errorMessage);
+        GameProvider::setErrorStatus(errorMessage);
+        return;
+    }
+
+    if (!this->socket_->link()) {
+        string errorMessage = "No se pudo asignar una direccion al socket del server";
+        Logger::getInstance()->log(ERROR, errorMessage);
+        GameProvider::setErrorStatus(errorMessage);
+        return;
+    }
+
+    size_t maxUsers = GameProvider::getQuantityPlayers();
+
+    if(!this->socket_->listen(maxUsers)) {
+        string errorMessage = "No se pudo configurar el socket para aceptar configuraciones entrantes";
+        Logger::getInstance()->log(ERROR, errorMessage);
+        GameProvider::setErrorStatus(errorMessage);
+        return;
+    }
+
+    this->usersManager_ = new UsersManager(this);
     this->connected_ = true;
+
+    Logger::getInstance()->log(INFO, "Se inicializa el socket correctamente. Se pueden recibir clientes");
     cout << "Se crea servidor escuchando el puerto " + to_string(this->port_) << endl;
 }
 
@@ -31,33 +53,73 @@ bool Server::isConnected(){
     return this->connected_;
 }
 
-bool Server::addPlayer(IdPlayer idPlayer, UsersManager *onePlayer){
+void Server::waitPlayers(){
+    cout << "Esperando jugadores..." << endl;
 
-    pthread_mutex_lock(&this->mutex_players_);
+    //Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
+    //porque el Socket hace el accept antes de que del logeo y demas
+    while (!this->usersManager_->isFullGame() && this->isConnected()){
+        
+        int newUserId = this->usersManager_->acceptUnloggedUser();
 
-    if (this->isFull()){
-        pthread_mutex_unlock(&this->mutex_players_);
-        return false;
-    }   
-    
-    cout << "El cliente " + to_string(idPlayer) + " se agrega a la partida" << endl;
-    this->players_[idPlayer] = onePlayer;
-    pthread_mutex_unlock(&this->mutex_players_);
-    return true;
+        if (newUserId < 0){
+            bool isFullGame = this->usersManager_->isFullGame();
+            if(isFullGame) {
+                //Some debug log
+                return;
+            }
+
+            Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
+        } else
+            cout << "Se agrega el cliente " + to_string(newUserId) << endl;
+
+        //Here should handle validation
+    }
+
+    this->transmitionManager_ = new ServerTransmitionManager(this);
+};
+
+Socket* Server::getSocket(){
+    return this->socket_;
 }
 
-bool Server::isFull(){
-    return (this->players_.size() >= this->maxPlayers_);
+BlockingQueue* Server::getEventsToProcess(){
+    return transmitionManager_->getMessagesToProcess();
+}
+
+void Server::addPlayer(User *newUser){
+    if(!newUser || usersManager_->isFullGame()) {
+        //Handle error
+        return;
+    }
+
+    this->transmitionManager_->addUser(newUser);
+    
+    // pthread_mutex_lock(&this->mutex_players_);
+
+    // if (this->isFull()){
+    //     pthread_mutex_unlock(&this->mutex_players_);
+    //     return false;
+    // }   
+    
+    // cout << "El cliente " + to_string(idPlayer) + " se agrega a la partida" << endl;
+    // this->players_[idPlayer] = onePlayer;
+    // pthread_mutex_unlock(&this->mutex_players_);
+    // return true;
 }
 
 int Server::run(){
-    this->initializeServer();
 
-    if(!this->isConnected())
+    if(!this->isConnected()) {
+        //Handle error
         return EXIT_FAILURE;
+    }
+        
 
-    if(!this->transmitionManager_->waitPlayers())
-        return EXIT_FAILURE;
+    if(!this->waitPlayers())
+         return EXIT_FAILURE;
+
+    //Here goes gameRun that generates events for events manager
 
     /*while (this->isConnected()){
         string strQuit;
@@ -72,4 +134,8 @@ int Server::run(){
     }*/
 
     return EXIT_SUCCESS;
+}
+
+void Server::runGame(){
+
 }

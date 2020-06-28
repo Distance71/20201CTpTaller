@@ -15,6 +15,7 @@ using namespace std;
 
 class ClientMap;
 class Client;
+class ClientMap;
 
 class GameScreen {
     private:

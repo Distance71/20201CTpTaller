@@ -12,33 +12,42 @@
 #include "usersManager/UsersManager.h"
 
 #include "../common/types.h"
-#include "../common/transmitionManager/Socket.h"
+#include "../common/models/Socket.h"
 #include "../common/services/Logger.h"
 #include "../common/providers/GameProvider.h"
+#include "eventsManager/ServerEventsManager.h"
 
 class ServerTransmitionManager;
 
 class Server {
     private:
-        ServerTransmitionManager *transmitionManager_;
+        //ServerTransmitionManager *transmitionManager_;
 
         size_t port_;
-        size_t maxPlayers_;
-        unordered_map<IdPlayer, UsersManager*> players_;
-        bool connected_;
+        Socket *socket_;
+        UsersManager* usersManager_;
+        ServerTransmitionManager* transmitionManager_;
+        ServerEventsManager* eventsManager_;
+        bool connected_ = false;
+        bool gameRunning_ = false;
+        
         pthread_mutex_t mutex_players_;
 
-        void initializeServer();
+        void _initializeServer();
         
     public:
         Server(size_t port);
         ~Server();
 
         bool isConnected();
-        bool waitPlayers();
-        bool addPlayer(IdPlayer idPlayer, UsersManager *onePlayer);
+        void waitPlayers();
+        void addPlayer(User *newUser);
         bool isFull();
         int run();
+        void runGame();
+        
+        Socket* Server::getSocket();
+        BlockingQueue* getEventsToProcess();
 };
 
 #endif

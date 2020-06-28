@@ -4,7 +4,32 @@
 #include <string>
 #include <vector>
 
+#include "../server/Server.h"
+#include "../server/models/User.h"
+
 using namespace std;
+
+typedef struct status {
+    bool normalStatus = true;
+    string errorLog;
+} status_t;
+
+typedef enum layer {
+    LAYER_1 = 0, 
+    LAYER_2 = 1, 
+    LAYER_3 = 2, 
+    LAYER_4 = 3,
+    LAYER_5 = 4, 
+    LAYER_6 = 5, 
+    LAYER_7 = 6
+} layer_t ;
+
+typedef enum character {
+    CHARACTER_1 = 0,
+    CHARACTER_2 = 1,
+    CHARACTER_3 = 2,
+    CHARACTER_4 = 3,
+} character_t;
 
 typedef enum level {
     LEVEL_ONE = 0,
@@ -17,6 +42,19 @@ typedef enum stage {
     STAGE_ONE = 0,
     STAGE_TWO = 1,
 } stage_t;
+
+typedef enum message {
+    NONE,
+    INIT_ENTITY,
+    UPDATE_ENTITY,
+    INIT_LAYER,
+    INIT_SCREEN,
+    UPDATE_STAGE,
+    LOGIN_PLAYER,
+    REQUEST_LOGIN_PLAYER,
+    MOVEMENT_PLAYER,
+    ACTION_PLAYER,
+} message_t;
 
 typedef enum {
     FRONT,
@@ -82,7 +120,7 @@ typedef enum {
 } elementType_t;
 
 typedef size_t IdElement;
-typedef size_t IdPlayer;
+typedef size_t IdUser;
 
 typedef struct {
     level_t level;
@@ -111,6 +149,12 @@ typedef struct {
     player_t playerParams;
 } gameParams_t;
 
+typedef struct argsThreadUser {
+    void* params;
+    void* handler;
+} argsThread_t;
+
+//Exported to a class -> se deja por el momento
 typedef struct {
     string username;
     string password;
