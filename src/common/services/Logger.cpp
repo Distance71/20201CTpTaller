@@ -2,12 +2,14 @@
 
 Logger* Logger::instance = nullptr;
 
-Logger::Logger(){
+Logger::Logger(const string& type_){
 	// crea la carpeta logs si no existe
 	mkdir(LOG_FOLDER, 0777);
 	this->logFile = new ofstream();
 	// crea el log con la fecha actual
-	this->logFile->open(LOG_FOLDER + getTime() + "_log.txt");
+	//this->fileName = LOG_FOLDER + getTime() + "_" + type_+ "_log.txt";
+	//this->logFile->open(this->fileName);
+	this->logFile->open(LOG_FOLDER + getTime() + "_" + type_+ "_log.txt");
 	if (!this->logFile){
 	    std::cerr << "ERROR creando archivo log. No se puede continuar. \n";
 	    exit(1);
@@ -25,8 +27,14 @@ Logger::Logger(){
 Logger* Logger::getInstance()
 {
   if (instance == nullptr)
-    instance = new Logger();
+    instance = new Logger("");
   return instance;
+}
+
+void Logger::setTypeInstance(const string& type_)
+{
+  if (instance == nullptr)
+    instance = new Logger(type_);
 }
 
 string Logger::getFullTime(){
@@ -46,6 +54,23 @@ void Logger::log(LOG_LEVEL level, const string& message){
 		this->logFile->flush();
 	}
 }
+
+/* void Logger::setTypeForFileName(const string& type_){
+	 char * oldfilename = (char*)this->fileName.c_str();
+	 string auxFilename = LOG_FOLDER + getTime() + "_" + type_+ "_log.txt";
+	 char * newfilename = (char*)auxFilename.c_str();
+	 this->logFile->close();
+
+	auto result= rename(oldfilename, newfilename);
+  	if ( result == 0 ) this->fileName = auxFilename;
+	  else std::cerr << "ERROR renombrando archivo log. \n";
+
+	this->logFile->open(this->fileName, std::ofstream::out | std::ofstream::app);
+	if (!this->logFile){
+	    std::cerr << "ERROR abriendo archivo log. No se puede continuar. \n";
+	    exit(1);
+	}
+} */
 
  bool Logger::setLevel(const string& level){
 	// busca level en el mapa para ver si existe

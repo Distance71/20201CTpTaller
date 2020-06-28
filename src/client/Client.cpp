@@ -1,5 +1,5 @@
 #include "Client.h"
-
+#include <stdio.h>
 Client::Client(string ipAddress, size_t port){
     this->name_ = "";
     this->ipHost_ = ipAddress;
@@ -27,9 +27,8 @@ void Client::initializeClient(){
 }
 
 int Client::run(){
-
+ 
     this->initializeClient();
-
     if (!this->isConnected())
         return EXIT_FAILURE;
 

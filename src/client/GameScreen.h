@@ -13,6 +13,7 @@
 
 using namespace std;
 
+class ClientMap;
 class Client;
 class ClientMap;
 
