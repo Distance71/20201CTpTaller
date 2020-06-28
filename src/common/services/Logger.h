@@ -25,17 +25,20 @@ class Logger {
         static Logger* instance;
         LOG_LEVEL level;
         ofstream* logFile;
+        //string fileName;
 
-        Logger();
+        Logger(const string& type_);
         string getTime();
         string getFullTime();
         string levelToString(LOG_LEVEL);
 
     public:   
         static Logger* getInstance();
+        static void setTypeInstance(const string& type_);
         void log(LOG_LEVEL level, const string& message);
         // setLevel devuelve false si hubo error, true en caso satisfactorio
         bool setLevel(const string& level);
+        //void setTypeForFileName(const string& type_);
         virtual ~Logger();
 };
 

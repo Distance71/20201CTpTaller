@@ -53,10 +53,11 @@ int mainServer(int port, string levelLog, string pathConfiguration){
         cout << "Falta parámetro Port requerido para conectar el servidor." << endl;
         showHelp();
         return EXIT_FAILURE;
-    } 
+    }
 
+    Logger::setTypeInstance("SERVER");
     ConfigurationHandler *configurationHandler = new ConfigurationHandler(true);
-
+    
     try {
         configurationHandler->loadFileConfiguration(pathConfiguration); 
     } catch (invalid_argument &e){
@@ -96,6 +97,7 @@ int mainClient(int port, string ipAddress, string levelLog, string pathConfigura
 
     ConfigurationHandler *configurationHandler = new ConfigurationHandler(false);
 
+    Logger::setTypeInstance("CLIENT"); 
     try {
         configurationHandler->loadFileConfiguration(pathConfiguration); 
     } catch (invalid_argument &e){
