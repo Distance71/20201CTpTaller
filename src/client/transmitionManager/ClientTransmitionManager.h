@@ -23,6 +23,8 @@
 #include "../../common/models/messages/MessageUpdateEntity.h"
 #include "../../common/models/messages/MessageUpdateStage.h"
 
+using namespace std;
+
 class Client;
 
 class ClientTransmitionManager {

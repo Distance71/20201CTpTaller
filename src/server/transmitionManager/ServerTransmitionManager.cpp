@@ -1,8 +1,8 @@
 #include "ServerTransmitionManager.h"
 
 ServerTransmitionManager::ServerTransmitionManager(Server *server){
-    this->serverOwn_ = server;
-    this->receivedMessagesQueue_ = new BlockingQueue();
+    serverOwn_ = server;
+    receivedMessagesQueue_ = new BlockingQueue();
 }
 
 ServerTransmitionManager::~ServerTransmitionManager(){
@@ -33,7 +33,7 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
     }, (void *) &args);
 
     if(!pthreadCreateStatus) {
-        string errorMessage = "No se pudo crear el hilo para manejar el receptor de mensajes para el usuario".append(to_string(user->getId()));
+        string errorMessage = "No se pudo crear el hilo para manejar el receptor de mensajes para el usuario" + to_string(user->getId());
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
         return;
@@ -51,7 +51,7 @@ void* ServerTransmitionManager::receivingCycle(User* user){
 
             //Add mutex to errno
             if (errno == ECONNREFUSED || errno == ENOTCONN || errno == ENOTSOCK) {
-                Logger::getInstance()->log(ERROR, "Se detecta desconexión involuntaria del cliente.".append(to_string(user->getId())));
+                Logger::getInstance()->log(ERROR, "Se detecta desconexión involuntaria del cliente."+ to_string(user->getId()));
                 user->setDisconnection();
                 return nullptr;
             }
@@ -60,10 +60,12 @@ void* ServerTransmitionManager::receivingCycle(User* user){
         receivedMessagesQueue_->push(message);        
     }
     
-    Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente".append(to_string(user->getId())));
+    Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente" + to_string(user->getId()));
 }
 
-BlockingQueue* ServerTransmitionManager::getMessagesToProcess(){
+
+
+BlockingQueue<Message *>* ServerTransmitionManager::getMessagesToProcess(){
     return this->receivedMessagesQueue_;
 }
 
@@ -85,7 +87,7 @@ void ServerTransmitionManager::createSendingCycle(User* user) {
     }, (void *) &args);
 
     if(!pthreadCreateStatus) {
-        string errorMessage = "No se pudo crear el hilo para manejar el receptor de mensajes para el usuario".append(to_string(user->getId()));
+        string errorMessage = "No se pudo crear el hilo para manejar el receptor de mensajes para el usuario" + to_string(user->getId());
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
         return;
@@ -99,10 +101,10 @@ void ServerTransmitionManager::createSendingCycle(User* user) {
 void ServerTransmitionManager::sendingCycle(User* user) {
     
     while(user->isConnected() && this->serverOwn_->isConnected()){
-        if(messagesQueue.isEmpty())
+        if(messagesQueues_[user->getId()]->empty())
             continue;
         
-        Message* message = messagesQueues_[user->getId()].pop();
+        Message* message = (Message*) messagesQueues_[user->getId()]-> pop();
 
         user->sendMessage(message);
     }

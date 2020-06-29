@@ -83,6 +83,7 @@ add_executable(tp1taller
 		src/common/models/Sprite.h
         src/common/models/State.cpp
 		src/common/models/State.h
+		src/common/models/BlockingQueue.h
 
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h
@@ -125,6 +126,7 @@ add_executable(tp1taller
         src/server/models/Speed.h
         src/server/models/User.cpp
         src/server/models/User.h
+
         
         src/server/Server.cpp
         src/server/Server.h

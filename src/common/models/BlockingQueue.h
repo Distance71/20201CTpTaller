@@ -30,11 +30,11 @@ class BlockingQueue {
     }
 
     ~BlockingQueue() {
-        int i = this->count - 1;
+        int i = this->count_ - 1;
         while (i >= 0)
-            data_[i--].~T();
+            delete data_[i--];
         
-        delete(data_);
+        //delete(data_); no porque no es puntero
     }
 
     void push(const T &item) {
@@ -46,14 +46,14 @@ class BlockingQueue {
         fullSlots->post();
     }
 
-    T pop() {
+    T* pop() {
         fullSlots->wait();
-        T item;
+        T* item;
         {
             lock_guard<std::mutex> lock(mutex);
             auto lastIndex = data_.size() - 1;
             item = data_[lastIndex];
-            data_._pop_back();
+            data_.pop_back();
         }
         openSlots->post();
         return item;
