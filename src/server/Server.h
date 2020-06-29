@@ -46,8 +46,8 @@ class Server {
         int run();
         void runGame();
         
-        Socket* Server::getSocket();
-        BlockingQueue* getEventsToProcess();
+        Socket* getSocket();
+        BlockingQueue<Message *>* getEventsToProcess();
 };
 
 #endif

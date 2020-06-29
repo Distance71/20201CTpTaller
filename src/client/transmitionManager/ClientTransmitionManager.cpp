@@ -8,7 +8,7 @@ static void* sendMessage(void *arg){
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
     MessageDeserializer *deserializer = transmitionManager->getDeserializer();
-    vector<Message::Message *> *queueMessage = transmitionManager->getSendMessages();
+    vector<Message *> *queueMessage = transmitionManager->getSendMessages();
 
     bool error = false;
 
@@ -32,7 +32,7 @@ static void* receiveMessage(void *arg){
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
     MessageDeserializer *deserializer = transmitionManager->getDeserializer();
-    vector<Message::Message *> *queueMessage = transmitionManager->getReceivedMessages();
+    vector<Message *> *queueMessage = transmitionManager->getReceivedMessages();
 
     bool error = false;
 

@@ -24,8 +24,8 @@ class BlockingQueue {
     
     BlockingQueue(size_t size = QUANTITY_EVENTS) {
         data_.reserve(size);
-        openSlots(size);
-        fullSlots(0);
+        openSlots = Semaphore(size);
+        fullSlots = Semaphore((size_t) 0);
     }
 
     ~BlockingQueue() {
@@ -52,7 +52,7 @@ class BlockingQueue {
             lock_guard<std::mutex> lock(mutex);
             auto lastIndex = data_.size() - 1;
             item = data_[lastIndex];
-            data_pop_back();
+            data_._pop_back();
         }
         openSlots.post();
         return item;

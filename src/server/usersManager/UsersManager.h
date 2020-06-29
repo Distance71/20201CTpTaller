@@ -1,6 +1,7 @@
 #ifndef _USERS_MANAGER_H_
 #define _USERS_MANAGER_H_
 
+#include <unordered_map>
 #include "../../common/types.h"
 #include "../../common/models/Socket.h"
 #include "../models/User.h"

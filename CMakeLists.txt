@@ -19,7 +19,7 @@ include_directories(src/server)
 
 file(COPY src/client/assets DESTINATION ${CMAKE_BINARY_DIR})
 
-add_executable( tp1taller
+add_executable(tp1taller
         src/client/clientModels/ClientMap.cpp
         src/client/clientModels/ClientMap.h
         src/client/clientModels/ClientMapElement.cpp

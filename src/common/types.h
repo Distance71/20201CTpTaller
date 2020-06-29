@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "../server/Server.h"
-#include "../server/models/User.h"
 
 using namespace std;
 
@@ -18,8 +16,7 @@ typedef enum layer {
     LAYER_1 = 0, 
     LAYER_2 = 1, 
     LAYER_3 = 2, 
-    LAYER_4 = 3,
-    LAYER_5 = 4, 
+    LAYER_4 = 3,    LAYER_5 = 4, 
     LAYER_6 = 5, 
     LAYER_7 = 6
 } layer_t ;

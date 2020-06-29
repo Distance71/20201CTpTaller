@@ -83,7 +83,7 @@ Socket* Server::getSocket(){
     return this->socket_;
 }
 
-BlockingQueue* Server::getEventsToProcess(){
+BlockingQueue<Message *>* Server::getEventsToProcess(){
     return transmitionManager_->getMessagesToProcess();
 }
 

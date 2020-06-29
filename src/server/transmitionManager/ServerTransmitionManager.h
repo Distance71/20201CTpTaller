@@ -23,8 +23,8 @@
 class ServerTransmitionManager {
     private:
         Server *serverOwn_;
-        BlockingQueue* receivedMessagesQueue_;
-        unordered_map<IdUser, BlockingQueue *> messagesQueues_;
+        BlockingQueue<Message *>* receivedMessagesQueue_;
+        unordered_map<IdUser, BlockingQueue<Message *> *> messagesQueues_;
 
         void createReceivingCycle(User* user);
         void* receivingCycle(User* user);
@@ -34,7 +34,7 @@ class ServerTransmitionManager {
         ~ServerTransmitionManager();
 
         void addUser(User* user);
-        BlockingQueue* getMessagesToProcess();
+        BlockingQueue<Message *>* getMessagesToProcess();
 };
 
 #endif // _SERVER_TRANSMITION_MANAGER_H_
