@@ -1,66 +1,72 @@
 #include "Button.h"
-#include <stdio.h>
 
-Button::Button(int _xpos, int _ypos ,const char* not_selected_img_path,const char* selected_img_path){
+Button::Button(int _xpos, int _ypos ,int _button_width, int _button_height,const char* not_selected_img_path,const char* selected_img_path){
     gRenderer=GameProvider::getRenderer();
-    not_selected_sprite= new Sprite(not_selected_img_path);
-    selected_sprite= new Sprite(selected_img_path);
+    not_selected_sprite=new Sprite(not_selected_img_path);
+    selected_sprite=new Sprite(selected_img_path);
+    button_width = _button_width;
+    button_height = _button_height;
     x_pos=_xpos;
     y_pos=_ypos;
-    state = NOT_SELECTED;
+    state=NOT_SELECTED;
 }
 
 
-void Button::select_state(int x, int y,bool click){
 
-    Sprite* actual_sprite =NULL;
+Button::~Button(){
+    delete not_selected_sprite;
+    delete selected_sprite;
+}
 
-    if (state==NOT_SELECTED){
-        actual_sprite=not_selected_sprite;
+
+
+void Button::selectState(int x, int y,bool click){
+    Sprite* actual_sprite = NULL;
+    if (state == NOT_SELECTED){
+        actual_sprite = not_selected_sprite;
     }
     else{
-        actual_sprite=selected_sprite;
-    }
-
-    int x_limit_1 = x_pos;
-    int x_limit_2 = x_pos + actual_sprite-> getTextureWidth();
-    int y_limit_1 = y_pos;
-    int y_limit_2 = y_pos + actual_sprite->getTextureHeight();
-
-
-    if(x>= x_limit_1 && x<=x_limit_2 && y>= y_limit_1 && y<=y_limit_2){
+        actual_sprite = selected_sprite;
+    } 
+    int x_limit_left = x_pos;
+    int x_limit_right = x_pos+button_width;
+    int y_limit_up = y_pos;
+    int y_limit_down = y_pos+button_height; 
+    if(x >= x_limit_left && x <= x_limit_right && y >= y_limit_up && y <= y_limit_down){
         if (click){
             state = SELECTED;
         }
     } 
     else{
         if (click){
-            state=NOT_SELECTED;
+            state = NOT_SELECTED;
         }
     }
 }
 
-void Button::execute_action(){}
+
+
+bool Button::isSelected(){
+    if (state==SELECTED){
+        return true;
+    }
+    return false;
+}
+
+
+
 
 void Button::update(int x, int y,bool click,bool force_selected_sprite){
-    
-    select_state(x,y,click);
-    
-    Sprite* actual_sprite =NULL;
-
-    if (state==NOT_SELECTED && !force_selected_sprite){
-        actual_sprite=not_selected_sprite;
+    selectState(x,y,click);  
+    Sprite* actual_sprite = NULL;
+    if (state == NOT_SELECTED && !force_selected_sprite){
+        actual_sprite = not_selected_sprite;
     }
     else{
-        actual_sprite=selected_sprite;
+        actual_sprite = selected_sprite;
     }
-    
-    int width=actual_sprite->getTextureWidth();
-    int height=actual_sprite->getTextureHeight();
-   
-    SDL_Rect button ={this->x_pos,this->y_pos, width, height}; 
-    SDL_Rect rect = {0,0, width, height};
-    
-    SDL_RenderCopy( gRenderer, actual_sprite->getTexture(),&rect,&button);
 
+    SDL_Rect button ={this->x_pos,this->y_pos, button_width, button_height}; 
+ 
+    SDL_RenderCopy( gRenderer, actual_sprite->getTexture(),NULL,&button);
 }

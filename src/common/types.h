@@ -160,4 +160,9 @@ typedef struct {
     string password;
 } user_t;
 
+typedef enum {
+    SELECTED,
+    NOT_SELECTED,
+}buttonstate_t;
+
 #endif

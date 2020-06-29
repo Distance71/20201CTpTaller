@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include "Button.h"
 #include "TextBox.h"
+#include "MenuElement.h"
 #include <string>
 #include "../../common/models/Sprite.h"
 #include "../../common/providers/GameProvider.h"
@@ -14,22 +15,25 @@
 
 using namespace std;
 
-class  Menu {
+class Menu {
 
     public:
         Menu();
-        void run();
-         
-    private:
-        Sprite* background;
-
-    unordered_map <string, Button *> buttons; //BOTONES QUE EJECUTAN ACCIONES
-    unordered_map <string, TextBox *> text_boxes; // CUADROS DE TEXTO
-
-        SDL_Renderer* gRenderer; 
-        void add_button(string button_name,Button* button);
-        void add_textBox(string text_button_name,TextBox* text_button);
+        ~Menu();
+        void processEvent();
         void show();
+        void executeActions();
+
+    private:
+        SDL_Renderer* gRenderer;
+        unordered_map <string, MenuElement*> menu_elements; 
+        unordered_map <string, Button*> buttons; 
+        unordered_map <string, TextBox*> text_boxes;
+        bool invalid_credentials; 
+
+        void addButton(string button_name,Button* button);
+        void addTextBox(string text_box_name,TextBox* text_box);
+        void addMenuElement(string element_name,MenuElement* menu_element);
         void update(int x,int y, bool update);  
 };
 

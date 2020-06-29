@@ -63,7 +63,28 @@ void GameScreen::initializeGraphics(){
     GameProvider::setWindow(this->window_);    
 }
 
+
 bool GameScreen::viewLogin() {
+    Menu* menu = new Menu();
+    SDL_Event e; 
+    while (GameProvider::getStatus().normalStatus){
+        while (SDL_PollEvent(&e)){
+            GameProvider::setLastEvent(e);
+            if (e.type == SDL_QUIT){
+                Logger::getInstance()->log(INFO, "Cierre del juego voluntario");
+                delete menu;
+                return  EXIT_SUCCESS;
+            }
+            menu -> processEvent();
+        }
+        menu->executeActions();
+        menu->show();      
+    }
+    delete menu;
+}
+
+
+/*bool GameScreen::viewLogin() {
     /*Menu* menu = new Menu();
     menu->run();*/
     SDL_Window* window = GameProvider::getWindow();
@@ -84,7 +105,7 @@ bool GameScreen::viewLogin() {
         if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
             return true;
     }
-}
+}*/
 
 void GameScreen::clearScene(){
     this->renderer_ = GameProvider::getRenderer();
