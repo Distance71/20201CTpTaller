@@ -10,6 +10,16 @@ using namespace std;
 
 template<typename T>
 class BlockingQueue {
+
+    private:
+    size_t size_;
+    size_t count_;
+    vector <T *> data_;
+
+    Semaphore openSlots;
+    Semaphore fullSlots;
+    std::mutex mutex;
+
     public:
     
     BlockingQueue(size_t size = QUANTITY_EVENTS) {
@@ -21,7 +31,7 @@ class BlockingQueue {
     ~BlockingQueue() {
         int i = this->count - 1;
         while (i >= 0)
-            data[i--].~T();
+            data_[i--].~T();
         
         delete(data_);
     }
@@ -29,7 +39,7 @@ class BlockingQueue {
     void push(const T &item) {
         openSlots.wait();
         {
-            lock_guard<mutex> lock(mutex);
+            lock_guard<std::mutex> lock(mutex);
             data_.insert(data_.begin(), item);
         }
         fullSlots.post();
@@ -37,10 +47,11 @@ class BlockingQueue {
 
     T pop() {
         fullSlots.wait();
+        T item;
         {
-            lock_guard<mutex> lock(mutex);
-            lastIndex = data_.size() - 1;
-            T item = data_[lastIndex];
+            lock_guard<std::mutex> lock(mutex);
+            auto lastIndex = data_.size() - 1;
+            item = data_[lastIndex];
             data_pop_back();
         }
         openSlots.post();
@@ -48,18 +59,10 @@ class BlockingQueue {
     }
 
     bool empty() {
-        lock_guard<mutex> lock(mutex);
+        lock_guard<std::mutex> lock(mutex);
         return count_ == 0;
     }
 
-private:
-    size_t size_;
-    size_t count_;
-    vector <T *> data_;
-
-    Semaphore openSlots;
-    Semaphore fullSlots;
-    mutex mutex;
 };
 
 #endif

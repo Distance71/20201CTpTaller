@@ -19,7 +19,6 @@
 #include "../Server.h"
 #include "../models/User.h"
 
-class Server;
 
 class ServerTransmitionManager {
     private:

@@ -14,8 +14,8 @@ include_directories(
                 ${SDL2_TTF_INCLUDE_DIR})
 
 include_directories(src/common)
-include_directories(src/providers)
-include_directories(src/services)
+include_directories(src/client)
+include_directories(src/server)
 
 file(COPY src/client/assets DESTINATION ${CMAKE_BINARY_DIR})
 
