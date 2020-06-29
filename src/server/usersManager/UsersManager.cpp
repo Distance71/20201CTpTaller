@@ -14,7 +14,7 @@ bool UsersManager::isFullGame(){
     return loggedUsers_ >= this->maxUsers_;
 }
 
-void UsersManager::acceptUnloggedUser(){
+int UsersManager::acceptUnloggedUser(){
 
     int newClientDescriptor = this->serverOwn_->getSocket()->acceptClient();
     
@@ -27,7 +27,9 @@ void UsersManager::acceptUnloggedUser(){
 
     this->serverOwn_->addPlayer(newUser);
 
-    pthread_mutex_unlock(&this->mutex_lastId_);       
+    pthread_mutex_unlock(&this->mutex_lastId_); 
+
+    return newClientDescriptor;
 }
 
 // void UserManager::logInUser(User* User){

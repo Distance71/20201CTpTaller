@@ -2,6 +2,7 @@
 
 Server::Server(size_t port){
     this->port_ = port;
+    this->usersManager_ = new UsersManager(this);
     this->_initializeServer();
 }
 
@@ -42,7 +43,6 @@ void Server::_initializeServer() {
         return;
     }
 
-    this->usersManager_ = new UsersManager(this);
     this->connected_ = true;
 
     Logger::getInstance()->log(INFO, "Se inicializa el socket correctamente. Se pueden recibir clientes");
