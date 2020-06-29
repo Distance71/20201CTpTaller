@@ -35,7 +35,7 @@ void Server::_initializeServer() {
 
     size_t maxUsers = GameProvider::getQuantityPlayers();
 
-    if(!this->socket_->listen(maxUsers)) {
+    if(!this->socket_->listenConnections(maxUsers)) {
         string errorMessage = "No se pudo configurar el socket para aceptar configuraciones entrantes";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -116,8 +116,7 @@ int Server::run(){
     }
         
 
-    if(!this->waitPlayers())
-         return EXIT_FAILURE;
+    this->waitPlayers();
 
     //Here goes gameRun that generates events for events manager
 

@@ -46,7 +46,7 @@ public:
     void setDisconnection();
 
     void sendMessage(Message *message);
-    Message receiveMessage();
+    Message* receiveMessage();
 };
 
 

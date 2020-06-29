@@ -19,7 +19,7 @@ class ThreadsHandler {
     public:
         ThreadsHandler();
         ~ThreadsHandler();
-        void addThread(pthread_t thread, string threadName);
+        void addThread(pthread_t *thread, string threadName);
 };
 
 

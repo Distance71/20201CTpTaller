@@ -67,9 +67,9 @@ void User::setDisconnection(){
 }
 
 Message* User::receiveMessage(){
-	return MessageDeserializer::getReceivedMessage(this);
+	return nullptr;//;MessageDeserializer::getReceivedMessage(this);
 }
 
 void User::sendMessage(Message* message){
-	return MessageSerializer::serializeMessage(message) //Send also, for consistence?
+	//return MessageSerializer::serializeMessage(message); //Send also, for consistence?
 }

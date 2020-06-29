@@ -16,26 +16,32 @@
 #include "../../models/messages/MessageUpdateStage.h"
 #include "../../types.h"
 #include "../../events/EventsQueue.h"
+#include "../../services/Logger.h"
+
+#include "../../../server/models/User.h"
 
 using namespace std;
 
 class MessageDeserializer {
 
     private:
-        MessageActionPlayer *receiveActionPlayer(Socket *receives, bool &error);
-        MessageInitEntity *receiveInitEntity(Socket *receives, bool &error);
-        MessageInitLayer *receiveInitLayer(Socket *receives, bool &error);
-        MessageInitScreen *receiveInitScreen(Socket *receives, bool &error);
-        MessageLoginPlayer *receiveLoginPlayer(Socket *receives, bool &error);
-        MessageMovementPlayer *receiveMovementPlayer(Socket *receives, bool &error);
-        MessageRequestLoginPlayer *receiveRequestLoginPlayer(Socket *receives, bool &error);
-        MessageUpdateEntity *receiveUpdateEntity(Socket *receives, bool &error);
-        MessageUpdateStage *receiveUpdateStage(Socket *receives, bool &error);
+        void _read(Socket *socket, void *value);
+        void _readString(Socket *socket, void **value);
+        MessageActionPlayer *receiveActionPlayer(Socket *receives);
+        MessageInitEntity *receiveInitEntity(Socket *receives);
+        MessageInitLayer *receiveInitLayer(Socket *receives);
+        MessageInitScreen *receiveInitScreen(Socket *receives);
+        MessageLoginPlayer *receiveLoginPlayer(Socket *receives);
+        MessageMovementPlayer *receiveMovementPlayer(Socket *receives);
+        MessageRequestLoginPlayer *receiveRequestLoginPlayer(Socket *receives);
+        MessageUpdateEntity *receiveUpdateEntity(Socket *receives);
+        MessageUpdateStage *receiveUpdateStage(Socket *receives);
 
     public:
         MessageDeserializer();
         
-        Message *getReceivedMessage(Socket *receives, bool &error);
+        Message *getReceivedMessage(User *user);
+        //Message *getReceivedMessage(Socket *receives, bool &error);
         void pushNewMessage(Socket *receives, bool &error, EventsQueue *queueMessage);
     
 };

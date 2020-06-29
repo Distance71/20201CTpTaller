@@ -3,14 +3,14 @@
 MessageDeserializer::MessageDeserializer(){};
 
 void MessageDeserializer::_read(Socket *socket, void *value){
-    int status = socket->receiveMessage(value, sizeof(*value))
+    int status = socket->receiveMessage((char *)value, sizeof(value));
     if (status < 0){
         //handle error
     }
 }
 
 void MessageDeserializer::_readString(Socket *socket, void **value){
-    int status = socket->receiveMessage(*value, sizeof(*value))
+    int status = socket->receiveMessage((char *)value, sizeof(*value));
     if (status < 0){
         //handle error
     }
@@ -45,7 +45,7 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *socket){
 
     char *source = new char[source_length + 1];
     source[source_length] = '\0';
-    _readString(socket, (char *) source);
+    //_readString(socket, (char **) &source);
 
     _read(socket, (char *) &isPlayer);
 
@@ -55,7 +55,7 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *socket){
     return message;
 };
 
-MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *socket, bool &error){
+MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *socket){
     
     size_t id;
     int source_length;
@@ -65,7 +65,7 @@ MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *socket, bool &er
 
     char *source = new char[source_length + 1];
     source[source_length] = '\0';
-    _readString(socket, (char *) source);
+    //_readString(socket, (char *) source);
 
     MessageInitLayer *message = new MessageInitLayer(id, source);
 
@@ -73,7 +73,7 @@ MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *socket, bool &er
     return message;
 };
 
-MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *socket, bool &error){
+MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *socket){
 
     unsigned int width;
     unsigned int height;
@@ -84,6 +84,7 @@ MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *socket, bool &
     return new MessageInitScreen(width, height);
 };
 
+/*
 eventsManager->generate('PLAYER1_LOG', )
 
 
@@ -117,10 +118,10 @@ transmitionManager::addMessage(message){
 //1 hilo por cliente
 trasmitionManager::sendingCycle(){
     
-}
+}*/
 
 
-MessageLoginPlayer *MessageDeserializer::receiveLoginPlayer(Socket *socket, bool &error){
+MessageLoginPlayer *MessageDeserializer::receiveLoginPlayer(Socket *socket){
 
     int name_length, password_length;
     
@@ -128,22 +129,22 @@ MessageLoginPlayer *MessageDeserializer::receiveLoginPlayer(Socket *socket, bool
 
     char *userName = new char[name_length + 1];
     userName[name_length] = '\0';
-    _readString(socket, (char *) userName);
+    //_readString(socket, (char **) userName);
 
-    _read(socket, (char *) &name_length);
+    _read(socket, (char *) &password_length);
     
     char *password = new char[password_length + 1];
     password[password_length] = '\0';
-    _readString(socket, (char *) password);
+    //_readString(socket, (char *) password);
 
-    MessageLoginPlayer *message = new MessageLoginPlayer(username, password);
+    MessageLoginPlayer *message = new MessageLoginPlayer(userName, password);
 
-    delete [] username;
+    delete [] userName;
     delete [] password;
     return message;    
 };
 
-MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *socket, bool &error){
+MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *socket){
 
     orientation_t moveOrientation;
     _read(socket, (char *) &moveOrientation);
@@ -151,7 +152,7 @@ MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *socket
     return new MessageMovementPlayer(moveOrientation);
 };
         
-MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *socket, bool &error){
+MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *socket){
 
     char authorize;
     _read(socket, (char *) &authorize);
@@ -159,7 +160,7 @@ MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket
     return new MessageRequestLoginPlayer(authorize);
 };
 
-MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *socket, bool &error){
+MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *socket){
             
     unsigned int step;
     IdElement id;
@@ -175,7 +176,7 @@ MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *socket, bo
     return message; 
 };
 
-MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *socket, bool &error, total){
+MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *socket){
 
     char level, isStart, isEnd;
 
@@ -198,7 +199,7 @@ Message *MessageDeserializer::getReceivedMessage(User *user){
         Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
     }
 
-    switch (messageReceived->getType()){
+    switch (typeMessage){
 
         case INIT_ENTITY:
             return this->receiveInitEntity(socket);

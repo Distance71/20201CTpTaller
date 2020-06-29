@@ -10,7 +10,7 @@
 #include "../../common/models/Orientation.h"
 #include "Speed.h"
 #include "../../common/types.h"
-#include "../../client/graphicsManager/GraphicsMapElement.h"
+#include "../../client/graphics/GraphicsMapElement.h"
 #include "PlayerController.h"
 #include "EnemyIA.h"
 

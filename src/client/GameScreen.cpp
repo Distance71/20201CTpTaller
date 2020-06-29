@@ -86,7 +86,7 @@ bool GameScreen::viewLogin() {
 
 /*bool GameScreen::viewLogin() {
     /*Menu* menu = new Menu();
-    menu->run();*/
+    menu->run();
     SDL_Window* window = GameProvider::getWindow();
     SDL_Surface* surface = SDL_GetWindowSurface(window);
     SDL_Surface* loginscreen = IMG_Load("assets/LoginScreen/loginscreen.png");

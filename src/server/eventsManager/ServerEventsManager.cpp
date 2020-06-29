@@ -2,7 +2,7 @@
 
 ServerEventsManager::ServerEventsManager(Server *server){
     this->serverOwn_ = server;
-    this->receivedMessagesQueue_ = new BlockingQueue();
+    this->eventsQueue_ = new BlockingQueue<Message*>();
 }
 
 ServerEventsManager::~ServerEventsManager(){
@@ -10,11 +10,12 @@ ServerEventsManager::~ServerEventsManager(){
 }
 
 void ServerEventsManager::processingCycle() {
+        //TODO: A REVISAR
     pthread_t thread;
 
     argsThread_t args;
     
-    args.handler = (void *) this;
+    /*args.handler = (void *) this;
 
     int pthreadCreateStatus =  pthread_create(&thread, nullptr, [](void *args) -> void * {
         auto arguments = (argsThread_t *) args;
@@ -31,10 +32,13 @@ void ServerEventsManager::processingCycle() {
         return;
     }
 
-    Logger::getInstance()->log(DEBUG, "Se creó el hilo de procesamiento de eventos.");
+    Logger::getInstance()->log(DEBUG, "Se creó el hilo de procesamiento de eventos.");*/
 }
 
+//TODO: A REVISAR - DOS METODOS CON EL MISMO NOMBRE Y SIN PARAMETROS AMBOS
+/*
 void* ServerEventsManager::processingCycle(){
+
 
     events = serverOwn_->getEventsToProcess();
     
@@ -45,6 +49,4 @@ void* ServerEventsManager::processingCycle(){
         Logger::getInstance()->log(DEBUG, "Se ha cargado un evento");
     }
     
-}
-
-getMessagesToProcess
+}*/

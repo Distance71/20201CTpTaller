@@ -18,6 +18,7 @@
 #include "eventsManager/ServerEventsManager.h"
 
 class ServerTransmitionManager;
+class ServerEventsManager;
 
 class Server {
     private:
