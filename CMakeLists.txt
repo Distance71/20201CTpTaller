@@ -44,6 +44,15 @@ add_executable( tp1taller
         src/client/GameScreen.cpp
         src/client/GameScreen.h
 
+        src/client/loginMenu/Button.h
+        src/client/loginMenu/Button.cpp
+        src/client/loginMenu/Menu.h
+        src/client/loginMenu/Menu.cpp
+        src/client/loginMenu/TextBox.h
+        src/client/loginMenu/TextBox.cpp
+        src/client/loginMenu/MenuElement.h
+        src/client/loginMenu/MenuElement.cpp
+
         src/common/models/messages/Message.cpp
         src/common/models/messages/Message.h
         src/common/models/messages/MessageActionPlayer.cpp
@@ -65,15 +74,15 @@ add_executable( tp1taller
         src/common/models/messages/MessageUpdateStage.cpp
         src/common/models/messages/MessageUpdateStage.h
         src/common/models/Orientation.cpp
-	src/common/models/Orientation.h
+		src/common/models/Orientation.h
         src/common/models/Position.cpp
-	src/common/models/Position.h
+		src/common/models/Position.h
         src/common/models/Socket.cpp
-	src/common/models/Socket.h
+		src/common/models/Socket.h
         src/common/models/Sprite.cpp
-	src/common/models/Sprite.h
+		src/common/models/Sprite.h
         src/common/models/State.cpp
-	src/common/models/State.h
+		src/common/models/State.h
 
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h
