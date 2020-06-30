@@ -40,6 +40,9 @@ string MessageLoginPlayer::getPassword(){
     return this->password_;
 };
 
+void MessageLoginPlayer ::setStringData(){
+};
+
 //Client
 // void MesssageLoginPlayer::setStringData(){
     

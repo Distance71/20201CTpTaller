@@ -4,6 +4,9 @@ Semaphore::Semaphore(size_t count){
     this->count_ = count;
 }
 
+Semaphore::~Semaphore(){
+}
+
 void Semaphore::post()
 {
     unique_lock<mutex> lock(mutex);

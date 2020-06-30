@@ -7,8 +7,10 @@
 
 using namespace std;
 
+
 #define QUANTITY_EVENTS 100
 
+class Semaphore;
 template<typename T>
 class BlockingQueue {
 
@@ -25,7 +27,7 @@ class BlockingQueue {
     
     BlockingQueue(size_t size = QUANTITY_EVENTS) {
         data_.reserve(size);
-        openSlots = new Semaphore(size);
+        openSlots = new Semaphore(size_);
         fullSlots = new Semaphore((size_t) 0);
     }
 
@@ -41,7 +43,8 @@ class BlockingQueue {
         openSlots->wait();
         {
             lock_guard<std::mutex> lock(mutex);
-            data_.insert(data_.begin(), item);
+            
+            //data_.insert(data_.begin(), item);
         }
         fullSlots->post();
     }

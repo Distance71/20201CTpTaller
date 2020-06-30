@@ -2,7 +2,7 @@
 
 ServerTransmitionManager::ServerTransmitionManager(Server *server){
     serverOwn_ = server;
-    receivedMessagesQueue_ = new BlockingQueue();
+    receivedMessagesQueue_ =   new BlockingQueue <Message*>();
 }
 
 ServerTransmitionManager::~ServerTransmitionManager(){

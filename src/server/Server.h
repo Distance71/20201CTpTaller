@@ -19,6 +19,7 @@
 
 class ServerTransmitionManager;
 class ServerEventsManager;
+class UsersManager;
 
 class Server {
     private:
