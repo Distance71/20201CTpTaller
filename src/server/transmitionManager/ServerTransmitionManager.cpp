@@ -32,7 +32,7 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
         return nullptr;
     }, (void *) &args);
 
-    if(!pthreadCreateStatus) {
+    if(pthreadCreateStatus != 0) {
         string errorMessage = "No se pudo crear el hilo para manejar el receptor de mensajes para el usuario" + to_string(user->getId());
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -86,7 +86,7 @@ void ServerTransmitionManager::createSendingCycle(User* user) {
         return nullptr;
     }, (void *) &args);
 
-    if(!pthreadCreateStatus) {
+    if(pthreadCreateStatus != 0) {
         string errorMessage = "No se pudo crear el hilo para manejar el receptor de mensajes para el usuario" + to_string(user->getId());
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
