@@ -8,6 +8,6 @@ ThreadsHandler::~ThreadsHandler(){
 
 }
 
-void ThreadsHandler::addThread(pthread_t *thread, string threadName) {
-    threads_[threadName] = thread;
+void ThreadsHandler::addThread(pthread_t *thread, const string threadName) {
+    this->threads_[threadName] = thread;
 };

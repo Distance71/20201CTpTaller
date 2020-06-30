@@ -11,7 +11,7 @@ class Server;
 class ServerEventsManager {
     private:
         Server *serverOwn_;
-        BlockingQueue<Message *>* eventsQueue_;
+        BlockingQueue<Message*>* eventsQueue_;
 
 
     public:

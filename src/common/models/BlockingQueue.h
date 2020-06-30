@@ -36,6 +36,8 @@ class BlockingQueue {
         while (i >= 0)
             delete data_[i--];
         
+        delete this->openSlots;
+        delete this->fullSlots;
         //delete(data_); no porque no es puntero
     }
 
@@ -43,8 +45,7 @@ class BlockingQueue {
         openSlots->wait();
         {
             lock_guard<std::mutex> lock(mutex);
-            
-            data_.insert(data_.begin(), item);
+            data_.insert(data_.begin(), (T*) item);
         }
         fullSlots->post();
     }

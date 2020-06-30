@@ -14,12 +14,12 @@ using namespace std;
 class ThreadsHandler {
 
     private:
-        static unordered_map<string, pthread_t *> threads_;
+        unordered_map<string, pthread_t *> threads_;
 
     public:
         ThreadsHandler();
         ~ThreadsHandler();
-        void addThread(pthread_t *thread, string threadName);
+        void addThread(pthread_t *thread, const string threadName);
 };
 
 
