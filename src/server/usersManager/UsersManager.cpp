@@ -4,6 +4,7 @@ UsersManager::UsersManager(Server *serverOwn){
     this->serverOwn_ = serverOwn;
     size_t maxUsers = GameProvider::getQuantityPlayers();
     this->maxUsers_ = maxUsers;
+    pthread_mutex_init(&this->mutex_lastId_, NULL);
 }
 
 UsersManager::~UsersManager(){

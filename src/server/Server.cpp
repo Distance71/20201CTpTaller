@@ -5,6 +5,7 @@ Server::Server(size_t port){
     this->usersManager_ = new UsersManager(this);
     this->socket_ = new Socket();
     this->socket_->setPort(port);
+    this->transmitionManager_ = new ServerTransmitionManager(this);
     this->_initializeServer();
 }
 
@@ -78,7 +79,6 @@ void Server::waitPlayers(){
         //Here should handle validation
     }
 
-    this->transmitionManager_ = new ServerTransmitionManager(this);
 };
 
 Socket* Server::getSocket(){
