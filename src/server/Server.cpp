@@ -3,7 +3,8 @@
 Server::Server(size_t port){
     this->port_ = port;
     this->usersManager_ = new UsersManager(this);
-    this->socket_ = new Socket(port);
+    this->socket_ = new Socket();
+    this->socket_->setPort(port);
     this->_initializeServer();
 }
 
