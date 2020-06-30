@@ -44,7 +44,7 @@ class BlockingQueue {
         {
             lock_guard<std::mutex> lock(mutex);
             
-            //data_.insert(data_.begin(), item);
+            data_.insert(data_.begin(), item);
         }
         fullSlots->post();
     }

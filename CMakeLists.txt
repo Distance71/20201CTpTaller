@@ -7,6 +7,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/src/vendor/")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2TTF REQUIRED)
+find_package(Threads REQUIRED)  
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 include_directories(
                 ${SDL2_INCLUDE_DIRS} 
@@ -18,6 +21,7 @@ include_directories(src/client)
 include_directories(src/server)
 
 file(COPY src/client/assets DESTINATION ${CMAKE_BINARY_DIR})
+
 
 add_executable(tp1taller
         src/client/clientModels/ClientMap.cpp
@@ -84,6 +88,8 @@ add_executable(tp1taller
         src/common/models/State.cpp
 		src/common/models/State.h
 		src/common/models/BlockingQueue.h
+		src/common/models/Semaphore.h
+		src/common/models/Semaphore.cpp
 
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h
@@ -138,5 +144,9 @@ add_executable(tp1taller
         src/server/usersManager/UsersManager.h
         
         src/main.cpp)
-	
-target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2TTF_LIBRARY})
+
+
+
+
+target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2TTF_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+

@@ -12,8 +12,8 @@ enum LOG_LEVEL {INVALID, ERROR, INFO, DEBUG};
 static std::map<std::string, LOG_LEVEL> string2Enum {
     { "ERROR", ERROR }, 
     { "error", ERROR },
-    { "INFO", INFO }, 
-    { "info", INFO },
+    { "INFO",  INFO }, 
+    { "info",  INFO },
     { "DEBUG", DEBUG },
     { "debug", DEBUG } 
 };
@@ -25,7 +25,6 @@ class Logger {
         static Logger* instance;
         LOG_LEVEL level;
         ofstream* logFile;
-        //string fileName;
 
         Logger(const string& type_);
         string getTime();
@@ -38,7 +37,6 @@ class Logger {
         void log(LOG_LEVEL level, const string& message);
         // setLevel devuelve false si hubo error, true en caso satisfactorio
         bool setLevel(const string& level);
-        //void setTypeForFileName(const string& type_);
         virtual ~Logger();
 };
 

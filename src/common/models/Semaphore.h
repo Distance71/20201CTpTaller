@@ -9,7 +9,7 @@ using namespace std;
 class Semaphore
 {
     private:
-        mutex mutex_;
+        std::mutex mutex_;
         condition_variable conditionReacher_;
         int count_;
 
