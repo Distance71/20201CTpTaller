@@ -17,5 +17,3 @@ void Semaphore::wait()
     this->conditionReacher_.wait(lock, [&]{ return this->count_ > 0; });
     this->count_--;
 };
-
-#endif
