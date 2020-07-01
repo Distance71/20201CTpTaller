@@ -18,6 +18,7 @@ void Client::initializeClient(){
 
     if (!this->transmitionManager_->connectWithServer(this->ipHost_)){
         this->connected_ = false;
+        cout << "No se pudo conectar con el servidor con ip " + this->ipHost_ + " y puerto " + to_string(this->port_) << endl;
         return;
     }
 
@@ -32,7 +33,7 @@ int Client::run(){
     if (!this->isConnected())
         return EXIT_FAILURE;
 
-    cout << "Se Conectado con el servidor " << endl;
+    cout << "Se conecta con el servidor " << endl;
 
     //TODO agregar el nuevo login para autenticarse y entrar en espera del server 
     /*if (!this->gameScreen_->viewLogin())
