@@ -7,11 +7,28 @@
             "width": 1280,
             "height": 800
         },
-        "player": {
-            "sizeX": 95,
-            "sizeY": 74,
-            "sprite": "assets/playerReducido.png"
-        },
+        "players": [
+            {
+                "sizeX": 95,
+                "sizeY": 74,
+                "sprite": "assets/playerReducido.png"
+            },
+            {
+                "sizeX": 95,
+                "sizeY": 36,
+                "sprite": "assets/player2Reducido.png"
+            },
+            {
+                "sizeX": 95,
+                "sizeY": 68,
+                "sprite": "assets/player3Reducido.png"
+            },
+            {
+                "sizeX": 95,
+                "sizeY": 53,
+                "sprite": "assets/player4Reducido.png"
+            }
+        ],
         "level": [
             [
                 {

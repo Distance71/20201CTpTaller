@@ -10,7 +10,7 @@
 #define PATH_LOG_LEVEL "/configuracion/log/level"
 #define PATH_LEVEL "/configuracion/level"
 #define PATH_BASE_STAGE "/configuracion/level/"
-#define PATH_PLAYER "/configuracion/player/"
+#define PATH_PLAYERS "/configuracion/players/"
 #define PATH_SCREEN "/configuracion/screen/"
 #define PATH_USER "/configuracion/users"
 #define PATH_BASE_USER "/configuracion/users/"
@@ -48,15 +48,15 @@ class ConfigurationHandler {
         string getPathStageLayer(string pathStage, int numberLayer);
         string getPathStageEnemy(string pathStage, int numberEnemy, string paramEnemy);
         
-        string getPathPlayer(string paramPlayer);
-        player_t getPlayerParams();
+        string getPathPlayer(int numberPlayer, string paramPlayer);
+        player_t getPlayerParams(int numberPlayer);
+        vector<user_t> getUsersParams();
         cotasCantEnemigos_t getCotasEnemigos(unsigned int cantTotalEnemigos, unsigned int cantSteps);
 
         vector<stepParams_t> getStep(vector<enemy_t> &totalEnemies);
 
         string getPathScreen(string paramScreen);
         void setSizeScreen();
-        void setQuantityPlayer();
 
     public:
         ConfigurationHandler(bool isServer);

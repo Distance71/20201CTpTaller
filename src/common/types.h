@@ -142,21 +142,22 @@ typedef struct {
     vector<stageParams_t> stagesParams;
 } levelParams_t;
 
+//Exported to a class -> se deja por el momento
+typedef struct {
+    string username;
+    string password;
+    player_t playerParams;
+} user_t;
+
 typedef struct {
     vector<levelParams_t> levelParams;
-    player_t playerParams;
+    vector<user_t> playersParams;
 } gameParams_t;
 
 typedef struct argsThreadUser {
     void* params;
     void* handler;
 } argsThread_t;
-
-//Exported to a class -> se deja por el momento
-typedef struct {
-    string username;
-    string password;
-} user_t;
 
 typedef enum {
     SELECTED,

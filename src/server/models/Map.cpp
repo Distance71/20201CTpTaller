@@ -202,6 +202,8 @@ void Step::update(){
 }
 
 void Map::createPlayer(gameParams_t &gameSettings){
+    //TODO: parametrizarlo para mas de un jugador
+    /*
     int playerSizeX = gameSettings.playerParams.size_x;
     int playerSizeY = gameSettings.playerParams.size_y;
     string playerSprite = gameSettings.playerParams.sprite;
@@ -211,11 +213,12 @@ void Map::createPlayer(gameParams_t &gameSettings){
     positionPlayer.axis_y = (GameProvider::getHeight() - playerSizeY) / 2;
     positionPlayer.orientation = FRONT;
 
-    this->player = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); //Parametrizar
+    this->player = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY);*/
 }
 
 void Map::initializePositionPlayer(gameParams_t &gameSettings){
-    int playerSizeX = gameSettings.playerParams.size_x;
+    //TODO: parametrizarlo para mas de un jugador
+    /*int playerSizeX = gameSettings.playerParams.size_x;
     int playerSizeY = gameSettings.playerParams.size_y;
 
     position_t positionPlayer;
@@ -227,7 +230,7 @@ void Map::initializePositionPlayer(gameParams_t &gameSettings){
     playerPosition->setY(positionPlayer.axis_y);
 
     State *playerOrientation = this->player->getState<Orientation>(string("Orientation"));
-    playerOrientation->setX(FRONT);
+    playerOrientation->setX(FRONT);*/
 }
 
 

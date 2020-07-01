@@ -47,16 +47,16 @@ string ConfigurationHandler::getPathStageEnemy(string pathStage, int numberEnemy
     return pathStageEnemy;
 }
 
-string ConfigurationHandler::getPathPlayer(string paramPlayer){
-    string pathPlayer = PATH_PLAYER + paramPlayer;
+string ConfigurationHandler::getPathPlayer(int numberPlayer, string paramPlayer){
+    string pathPlayer = PATH_PLAYERS + to_string(numberPlayer) + "/" + paramPlayer;
 
     return pathPlayer;
 }
 
-player_t ConfigurationHandler::getPlayerParams(){
+player_t ConfigurationHandler::getPlayerParams(int numberPlayer){
     player_t playerParam;
 
-    string pathSizeX = getPathPlayer("sizeX");
+    string pathSizeX = getPathPlayer(numberPlayer, "sizeX");
     int sizeX = this->parserJson->getUnsignedInt(pathSizeX);
     if (sizeX >= 0){
         playerParam.size_x = sizeX;
@@ -64,7 +64,7 @@ player_t ConfigurationHandler::getPlayerParams(){
         playerParam.size_x = DEFAULT_SIZE_X;
     }    
 
-    string pathSizeY = getPathPlayer("sizeY");
+    string pathSizeY = getPathPlayer(numberPlayer, "sizeY");
     int sizeY = this->parserJson->getUnsignedInt(pathSizeY);
     if (sizeX >= 0){
         playerParam.size_y = sizeY;
@@ -76,19 +76,49 @@ player_t ConfigurationHandler::getPlayerParams(){
     unsigned int sizeScreenY = GameProvider::getHeight();
 
     if (sizeX > sizeScreenX){
-        Logger::getInstance()->log(ERROR, "El largo del jugador supera el largo de la pantalla. Se settea este ultimo como su largo");
+        Logger::getInstance()->log(ERROR, "El largo del jugador " + to_string(numberPlayer) + " supera el largo de la pantalla. Se settea este ultimo como su largo");
         playerParam.size_x = sizeScreenX;
     }
     
     if (sizeX > sizeScreenY){
-        Logger::getInstance()->log(ERROR, "El ancho del jugador supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+        Logger::getInstance()->log(ERROR, "El ancho del jugador " + to_string(numberPlayer) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
         playerParam.size_y = sizeScreenY;
     }    
 
-    string pathSprite = getPathPlayer("sprite");
+    string pathSprite = getPathPlayer(numberPlayer, "sprite");
     playerParam.sprite = this->parserJson->getString(pathSprite);
 
     return playerParam;
+}
+
+vector<user_t> ConfigurationHandler::getUsersParams(){
+
+    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
+
+    if (quantityPlayers > MAX_QUANTITY_PLAYERS){
+        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
+        quantityPlayers = MAX_QUANTITY_PLAYERS;
+    }
+
+    GameProvider::setQuantityPlayers(quantityPlayers);
+
+    vector<user_t> users (quantityPlayers);
+
+    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
+        user_t newUser;
+
+        string pathUsername = this->getPathUser(oneUser, "username");
+        string pathPassword = this->getPathUser(oneUser, "password");
+
+        newUser.username = this->parserJson->getString(pathUsername);
+        newUser.password = this->parserJson->getString(pathPassword);
+
+        newUser.playerParams = this->getPlayerParams(oneUser);
+
+        users.push_back(newUser);
+    }
+
+    return users;
 }
 
 bool ConfigurationHandler::loadFileConfiguration(const string &pathFileConfiguration){
@@ -182,8 +212,7 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
 void ConfigurationHandler::initializeData(){
 
     this->setSizeScreen();
-    this->setQuantityPlayer();
-    this->gameData.playerParams = getPlayerParams();
+    this->gameData.playersParams = getUsersParams();
 
     int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
 
@@ -299,32 +328,6 @@ string ConfigurationHandler::getPathScreen(string paramScreen){
     string pathScreen = PATH_SCREEN + paramScreen;
 
     return pathScreen;
-}
-
-void ConfigurationHandler::setQuantityPlayer(){
-
-    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
-
-    if (quantityPlayers > MAX_QUANTITY_PLAYERS){
-        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
-        quantityPlayers = MAX_QUANTITY_PLAYERS;
-    }
-
-    GameProvider::setQuantityPlayers(quantityPlayers);
-
-    vector<user_t> users (quantityPlayers);
-
-    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
-        user_t newUser;
-
-        string pathUsername = this->getPathUser(oneUser, "username");
-        string pathPassword = this->getPathUser(oneUser, "password");
-
-        newUser.username = this->parserJson->getString(pathUsername);
-        newUser.password = this->parserJson->getString(pathPassword);
-
-        users.push_back(newUser);
-    }
 }
 
 void ConfigurationHandler::setSizeScreen(){
