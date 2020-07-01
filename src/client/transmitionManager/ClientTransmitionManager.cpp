@@ -61,7 +61,7 @@ ClientTransmitionManager::~ClientTransmitionManager(){
 bool ClientTransmitionManager::connectWithServer(string ipAddress){
 
     if(!this->socket_->create()){
-        string errorMessage = "No se pudo crear el socket conectarse con el server";
+        string errorMessage = "No se pudo crear el socket para conectarse con el server";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
         return false;
