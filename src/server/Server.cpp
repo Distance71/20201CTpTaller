@@ -71,8 +71,7 @@ void Server::waitPlayers(){
                 //Some debug log
                 return;
             }
-
-            Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
+            //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>
         } else
             cout << "Se agrega el cliente " + to_string(newUserId) << endl;
 

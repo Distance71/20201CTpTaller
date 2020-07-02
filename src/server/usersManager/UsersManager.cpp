@@ -18,6 +18,10 @@ bool UsersManager::isFullGame(){
 int UsersManager::acceptUnloggedUser(){
 
     int newClientDescriptor = this->serverOwn_->getSocket()->acceptClient();
+    if (newClientDescriptor < 0){
+        Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
+        return newClientDescriptor;
+    }
     
     pthread_mutex_lock(&this->mutex_lastId_);
     Socket *socketNewUser = new Socket(newClientDescriptor);
@@ -30,7 +34,7 @@ int UsersManager::acceptUnloggedUser(){
 
     pthread_mutex_unlock(&this->mutex_lastId_); 
 
-    return newClientDescriptor;
+    return this->lastId_;
 }
 
 // void UserManager::logInUser(User* User){
