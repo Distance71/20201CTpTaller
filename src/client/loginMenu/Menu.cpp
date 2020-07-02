@@ -1,7 +1,7 @@
 #include "Menu.h"
 
-Menu::Menu(){
-    SDL_StartTextInput(ClientTranmistionManager* _client_transmition_manager);
+    Menu::Menu(ClientTransmitionManager* _client_transmition_manager){
+    SDL_StartTextInput();
     gRenderer = GameProvider::getRenderer();
     client_transmition_manager = _client_transmition_manager;
     invalid_credentials=false;
@@ -84,12 +84,12 @@ bool Menu::validateCredentials(){
     if (buttons["LOGIN"]->isSelected()){
         string username = text_boxes["USERNAME"]->getText();
         string password = text_boxes["PASSWORD"]->getText();
-        MessageRequestLoginPlayer* message = new MessageLoginPlayer(username,password);
+        MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(username,password);
         client_transmition_manager->sendMessage(message);
         bool response = client_transmition_manager -> getRequestloginPlayerResponse();
         if (!response){
             invalid_credentials = true;
-            return false
+            return false;
         }
         return true;
     }

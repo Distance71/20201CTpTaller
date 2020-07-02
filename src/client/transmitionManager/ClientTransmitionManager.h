@@ -44,7 +44,6 @@ class ClientTransmitionManager {
         void processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin);
         void processUpdateEntity(MessageUpdateEntity *updateEntity);
         void processUpdateStage(MessageUpdateStage *updateStage);
-        void processLoginPlayer(MesageLoginPlayer* loginplayer);
 
     public:
         ClientTransmitionManager(Client *client, size_t port);
@@ -58,9 +57,9 @@ class ClientTransmitionManager {
         vector<Message *> *getSendMessages();
         MessageDeserializer *getDeserializer();
         void processMessages();
-        void sendMenssage(Message* message);
+        void sendMessage(Message* message);
         void ReceiveMessage();
-        //void sendMovement(orientation_t moveOrientation);
+        void sendMovement(orientation_t moveOrientation);
         bool getRequestloginPlayerResponse();
 };
 
