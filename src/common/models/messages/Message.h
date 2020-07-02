@@ -21,14 +21,15 @@ class Message {
         virtual string getStringData();
         virtual void setStringData();
 
+        //virtual Event* deSerialize(); //Whould be great to add this
 };
 
-class NoneMessage : public Message {
+// class NoneMessage : public Message {
 
-    public:
-        NoneMessage();
-        ~NoneMessage();
-        string getStringData();
-};
+//     public:
+//         NoneMessage();
+//         ~NoneMessage();
+//         string getStringData();
+// };
 
 #endif // MESSAGE_H_
