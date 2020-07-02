@@ -10,7 +10,7 @@ void MessageDeserializer::_read(Socket *socket, void *value){
 }
 
 void MessageDeserializer::_readString(Socket *socket, void **value){
-    int status = socket->receiveMessage((char *)value, sizeof(*value));
+    int status = socket->receiveMessage((char *) *value, strlen((char *) *value) + 1);
     if (status < 0){
         //handle error
     }
@@ -45,7 +45,7 @@ MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *socket){
 
     char *source = new char[source_length + 1];
     source[source_length] = '\0';
-    //_readString(socket, (char **) &source);
+    _readString(socket, (void **) &source);
 
     _read(socket, (char *) &isPlayer);
 
