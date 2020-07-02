@@ -198,3 +198,13 @@ void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
     MessageMovementPlayer *messageMovement = new MessageMovementPlayer(moveOrientation);
     this->queueSendMessage_.push_back(messageMovement);
 };
+
+void sendMessage(Message* message){
+}
+
+void receiveMessage(){
+}
+
+bool getRequestloginPlayerResponse(){
+    
+}

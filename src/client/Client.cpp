@@ -1,5 +1,5 @@
 #include "Client.h"
-#include <stdio.h>
+
 Client::Client(string ipAddress, size_t port){
     this->name_ = "";
     this->ipHost_ = ipAddress;
@@ -32,13 +32,14 @@ int Client::run(){
     this->initializeClient();
     if (!this->isConnected())
         return EXIT_FAILURE;
-
     cout << "Se conecta con el servidor " << endl;
+    this-> gameScreen_->viewLogin();
+    
 
-    //TODO agregar el nuevo login para autenticarse y entrar en espera del server 
-    /*if (!this->gameScreen_->viewLogin())
-        return EXIT_FAILURE;*/
-   // while (this->isConnected()){}
+
+
+    
+
 
     this->transmitionManager_->processMessages();
 

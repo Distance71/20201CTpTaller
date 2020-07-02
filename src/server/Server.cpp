@@ -1,4 +1,5 @@
 #include "Server.h"
+#include <stdio.h>
 
 Server::Server(size_t port){
     this->port_ = port;
@@ -69,12 +70,13 @@ void Server::waitPlayers(){
             bool isFullGame = this->usersManager_->isFullGame();
             if(isFullGame) {
                 //Some debug log
-                return;
+                break;
             }
-            //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>
-        } else
-            cout << "Se agrega el cliente " + to_string(newUserId) << endl;
-
+            //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>*/
+        }
+        else{
+            cout << "Se agrega el cliente"+ to_string(newUserId) << endl;
+        }
         //Here should handle validation
     }
 

@@ -37,7 +37,7 @@ class GameScreen {
 
         void addLayer(size_t idLayer, string sourceLayer);
 
-        bool viewLogin();
+        void viewLogin();
         bool viewStartStage(level_t oneLevel);
         bool viewStageCleared(level_t oneLevel);
 };

@@ -64,8 +64,8 @@ void GameScreen::initializeGraphics(){
 }
 
 
-bool GameScreen::viewLogin() {
-    Menu* menu = new Menu();
+void GameScreen::viewLogin() {
+    Menu* menu = new Menu(clientOwn->getTransmitionManager);
     SDL_Event e; 
     while (GameProvider::getStatus().normalStatus){
         while (SDL_PollEvent(&e)){
@@ -77,10 +77,12 @@ bool GameScreen::viewLogin() {
             }
             menu -> processEvent();
         }
-        menu->executeActions();
+        if(menu->validateCredentials()){
+            delete menu;
+            break;
+        }
         menu->show();      
-    }
-    delete menu;
+    }   
 }
 
 

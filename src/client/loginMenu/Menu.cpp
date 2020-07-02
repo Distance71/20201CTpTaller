@@ -1,9 +1,9 @@
 #include "Menu.h"
-#include <stdio.h>
 
 Menu::Menu(){
-    SDL_StartTextInput();
+    SDL_StartTextInput(ClientTranmistionManager* _client_transmition_manager);
     gRenderer = GameProvider::getRenderer();
+    client_transmition_manager = _client_transmition_manager;
     invalid_credentials=false;
     
     MenuElement* background = new MenuElement(0,0,GameProvider::getWidth(),GameProvider::getHeight(),"assets/LoginScreen/background.png");
@@ -80,19 +80,21 @@ void Menu::update(int x, int y,bool click){
 }
 
 
-void Menu::executeActions(){
+bool Menu::validateCredentials(){
     if (buttons["LOGIN"]->isSelected()){
-        const char* username = text_boxes["USERNAME"]->getText();
-        const char* password = text_boxes["PASSWORD"]->getText();
-        if (strcmp(username,"USUARIO")== 0 && strcmp(password,"123456")== 0){
-            // hacer algo
-        }
-        else {
+        string username = text_boxes["USERNAME"]->getText();
+        string password = text_boxes["PASSWORD"]->getText();
+        MessageRequestLoginPlayer* message = new MessageLoginPlayer(username,password);
+        client_transmition_manager->sendMessage(message);
+        bool response = client_transmition_manager -> getRequestloginPlayerResponse();
+        if (!response){
             invalid_credentials = true;
+            return false
         }
+        return true;
     }
+    return false;
 }
-
 
 
 

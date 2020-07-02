@@ -11,6 +11,8 @@
 #include <string>
 #include "../../common/models/Sprite.h"
 #include "../../common/providers/GameProvider.h"
+#include "../transmitionManager/ClientTransmitionManager.h"
+#include  "../../common/models/messages/MessageRequestLoginPlayer.h"
 
 
 using namespace std;
@@ -18,13 +20,14 @@ using namespace std;
 class Menu {
 
     public:
-        Menu();
+        Menu(ClientTransmitionManager* _client_transmition_manager);
         ~Menu();
         void processEvent();
         void show();
-        void executeActions();
+        bool validateCredentials();
 
     private:
+        ClientTransmitionManager* client_transmition_manager;
         SDL_Renderer* gRenderer;
         unordered_map <string, MenuElement*> menu_elements; 
         unordered_map <string, Button*> buttons; 

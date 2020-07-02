@@ -20,11 +20,9 @@ message_t Message::getType(){
 }
 
 NoneMessage::NoneMessage() : Message(NONE){
-
 }
 
 NoneMessage::~NoneMessage(){
-
 }
 
 string NoneMessage::getStringData(){

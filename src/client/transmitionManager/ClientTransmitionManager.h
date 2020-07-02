@@ -22,6 +22,7 @@
 #include "../../common/models/messages/MessageMovementPlayer.h"
 #include "../../common/models/messages/MessageUpdateEntity.h"
 #include "../../common/models/messages/MessageUpdateStage.h"
+#include "../../common/models/messages/MessageRequestLoginPlayer.h"
 
 using namespace std;
 
@@ -43,6 +44,7 @@ class ClientTransmitionManager {
         void processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin);
         void processUpdateEntity(MessageUpdateEntity *updateEntity);
         void processUpdateStage(MessageUpdateStage *updateStage);
+        void processLoginPlayer(MesageLoginPlayer* loginplayer);
 
     public:
         ClientTransmitionManager(Client *client, size_t port);
@@ -56,8 +58,10 @@ class ClientTransmitionManager {
         vector<Message *> *getSendMessages();
         MessageDeserializer *getDeserializer();
         void processMessages();
-
-        void sendMovement(orientation_t moveOrientation);
+        void sendMenssage(Message* message);
+        void ReceiveMessage();
+        //void sendMovement(orientation_t moveOrientation);
+        bool getRequestloginPlayerResponse();
 };
 
 #endif // _CLIENT_TRANSMITION_MANAGER_H_
