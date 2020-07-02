@@ -34,8 +34,8 @@ class ClientTransmitionManager {
         Client *clientOwn_;
         Socket *socket_;
 
-        vector<Message *> queueReceiveMessage_;
-        vector<Message *> queueSendMessage_;
+        vector<Message *>* queueReceiveMessage_;
+        vector<Message *>* queueSendMessages_;
         MessageDeserializer *deserializer_;
 
         void processInitEntity(MessageInitEntity *initEntity);
@@ -46,6 +46,12 @@ class ClientTransmitionManager {
         void processUpdateStage(MessageUpdateStage *updateStage);
 
     public:
+        void sendMessage(Message* message);
+        void sendMessages();
+        
+        void receiveMessages();
+        void processMessages();
+
         ClientTransmitionManager(Client *client, size_t port);
         ~ClientTransmitionManager();
     
@@ -56,9 +62,10 @@ class ClientTransmitionManager {
         vector<Message *> *getReceivedMessages();
         vector<Message *> *getSendMessages();
         MessageDeserializer *getDeserializer();
-        void processMessages();
-        void sendMessage(Message* message);
-        void ReceiveMessage();
+        
+        
+       
+        
         void sendMovement(orientation_t moveOrientation);
         bool getRequestloginPlayerResponse();
 };

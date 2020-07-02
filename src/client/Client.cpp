@@ -33,15 +33,10 @@ int Client::run(){
     if (!this->isConnected())
         return EXIT_FAILURE;
     cout << "Se conecta con el servidor " << endl;
+    
     this-> gameScreen_->viewLogin();
     
-
-
-
-    
-
-
-    this->transmitionManager_->processMessages();
+    //this->transmitionManager_->processMessages();
 
     return EXIT_SUCCESS;    
 }
@@ -74,4 +69,8 @@ GameScreen *Client::getGameScreen(){
 
 ClientTransmitionManager *Client::getTransmitionManager(){
     return this->transmitionManager_;
+}
+
+void sendMessage(){
+
 }
