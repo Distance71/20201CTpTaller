@@ -13,6 +13,7 @@
 #include "../common/models/Socket.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/services/Logger.h"
+#include "../common/models/messages/Message.h"
 
 
 using namespace std;
@@ -44,7 +45,7 @@ class Client {
         void setName(string oneName);
         string getName();
 
-        void sendMovement(orientation_t moveOrientation);
+        void sendMessage(Message* message);
 
         GameScreen *getGameScreen();
         ClientTransmitionManager *getTransmitionManager();

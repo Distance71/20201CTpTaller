@@ -14,13 +14,14 @@
 #include "../../models/messages/MessageResponseLoginPlayer.h"
 #include "../../models/messages/MessageUpdateEntity.h"
 // #include "../../models/messages/MessageUpdateStage.h"
-#include "../../models/events/EventGameInit.h"
+//#include "../../models/events/EventGameInit.h"
 #include "../../types.h"
 //#include "../../models/BlockingQueue.h"
 #include "../../services/Logger.h"
 
 #include "../../../server/models/User.h"
 
+class Event;
 using namespace std;
 
 class MessageDeserializer {

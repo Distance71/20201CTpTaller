@@ -11,34 +11,37 @@
 #include <string>
 #include "../../common/models/Sprite.h"
 #include "../../common/providers/GameProvider.h"
-#include "../transmitionManager/ClientTransmitionManager.h"
+#include "../Client.h"
 #include  "../../common/models/messages/MessageRequestLoginPlayer.h"
-
+#include "../../common/types.h"
 
 using namespace std;
-class ClientTransmitionManager;
+class Client;
 
 class Menu {
 
     public:
-        Menu(ClientTransmitionManager* _client_transmition_manager);
+        Menu(Client* _client);
         ~Menu();
         void processEvent();
         void show();
+        void setCredentialsResponse(login_answer _answer);
         bool validateCredentials();
-
+        
     private:
-        ClientTransmitionManager* client_transmition_manager;
+        Client* client;
         SDL_Renderer* gRenderer;
         unordered_map <string, MenuElement*> menu_elements; 
         unordered_map <string, Button*> buttons; 
         unordered_map <string, TextBox*> text_boxes;
-        bool invalid_credentials; 
+        login_answer credentials_response;
+        bool invalid_credentials;
 
         void addButton(string button_name,Button* button);
         void addTextBox(string text_box_name,TextBox* text_box);
         void addMenuElement(string element_name,MenuElement* menu_element);
-        void update(int x,int y, bool update);  
+        void update(int x,int y, bool update); 
+        
 };
 
 #endif
