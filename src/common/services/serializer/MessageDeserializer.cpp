@@ -41,7 +41,8 @@ response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
 response_t MessageDeserializer::receiveInitEntity(Socket *socket, Event* &event){
 
     IdElement id;
-    int sizeX, sizeY, source_length;
+    int sizeX, sizeY, posX, posY, source_length;
+    orientation_t orientation;
 
     if (socket->receiveMessage((char *) &id, sizeof(IdElement)) <= 0)
         return this->_handleErrorStatus();
@@ -50,6 +51,15 @@ response_t MessageDeserializer::receiveInitEntity(Socket *socket, Event* &event)
         return this->_handleErrorStatus();
 
     if (socket->receiveMessage((char *) &sizeY, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &posX, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &posY, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &orientation, sizeof(orientation_t)) <= 0)
         return this->_handleErrorStatus();
 
     if (socket->receiveMessage((char *) &source_length, sizeof(int)) <= 0)
@@ -63,7 +73,7 @@ response_t MessageDeserializer::receiveInitEntity(Socket *socket, Event* &event)
         return this->_handleErrorStatus();
     }
     
-    MessageInitEntity *message = new MessageInitEntity(id, sizeX, sizeY, source);
+    MessageInitEntity *message = new MessageInitEntity(id, sizeX, sizeY, posX, posY, orientation, source);
 
     delete [] source;
     delete message;
@@ -74,6 +84,7 @@ response_t MessageDeserializer::receiveUpdateEntity(Socket *socket, Event* &even
             
     IdElement id;
     int posX, posY;
+    orientation_t orientation;
 
     if (socket->receiveMessage((char *) &id, sizeof(IdElement)) <= 0)
         return this->_handleErrorStatus();
@@ -84,7 +95,10 @@ response_t MessageDeserializer::receiveUpdateEntity(Socket *socket, Event* &even
     if (socket->receiveMessage((char *) &posY, sizeof(int)) <= 0)
         return this->_handleErrorStatus();
 
-    MessageUpdateEntity *message = new MessageUpdateEntity(id, posX, posY);
+    if (socket->receiveMessage((char *) &orientation, sizeof(orientation_t)) <= 0)
+        return this->_handleErrorStatus();
+
+    MessageUpdateEntity *message = new MessageUpdateEntity(id, posX, posY, orientation);
 
     delete message;
     return this->_handleSuccess(); 

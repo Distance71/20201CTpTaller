@@ -1,12 +1,12 @@
 #include "MessageUpdateEntity.h"
 
-MessageUpdateEntity::MessageUpdateEntity(IdElement idMapElement, int posX, int posY) : Message(UPDATE_ENTITY)
+MessageUpdateEntity::MessageUpdateEntity(IdElement idMapElement, int posX, int posY, orientation_t orientation) : Message(UPDATE_ENTITY)
 {
 
     this->idElement_ = idMapElement;
     this->pos_x_ = posX;
     this->pos_y_ = posY;
-    
+    this->orientation_ = orientation;
 };
 
 MessageUpdateEntity::~MessageUpdateEntity(){
@@ -30,6 +30,10 @@ string MessageUpdateEntity::getStringData(){
     for (unsigned int i = 0; i < sizeof(int); ++i)
         dataString.push_back(posY_arr[i]);
         
+    char* orientation_arr = (char*)&this->orientation_;
+    for (unsigned int i = 0; i < sizeof(orientation_t); ++i)
+        dataString.push_back(orientation_arr[i]);
+
     return dataString;
 };
 
@@ -43,6 +47,10 @@ int MessageUpdateEntity::getPosX(){
 
 int MessageUpdateEntity::getPosY(){
     return this->pos_y_;
+};
+
+orientation_t MessageUpdateEntity::getOrientation(){
+    return this->orientation_;
 };
 
 /*
