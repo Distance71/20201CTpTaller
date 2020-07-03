@@ -15,16 +15,18 @@ class MessageUpdateEntity : public Message {
         IdElement idElement_;
         int pos_x_;
         int pos_y_;
+        orientation_t orientation_;
     
     public:
 
-        MessageUpdateEntity(IdElement idMapElement, int posX, int posY);
+        MessageUpdateEntity(IdElement idMapElement, int posX, int posY, orientation_t orientation);
         ~MessageUpdateEntity();        
         string getStringData();
 
         IdElement getIdElement();
         int getPosX();
         int getPosY();
+        orientation_t getOrientation();
 
         //level_t getLevel();
         //stage_t getStage();

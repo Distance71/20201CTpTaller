@@ -27,8 +27,8 @@ using namespace std;
 class MessageDeserializer {
 
     private:
-        void _read(Socket *socket, void *value);
-        void _readString(Socket *socket, void **value);
+        //void _read(Socket *socket, void *value);
+        //void _readString(Socket *socket, void **value);
         // MessageActionPlayer *receiveActionPlayer(Socket *receives);
         // MessageInitEntity *receiveInitEntity(Socket *receives);
         // MessageInitLayer *receiveInitLayer(Socket *receives);

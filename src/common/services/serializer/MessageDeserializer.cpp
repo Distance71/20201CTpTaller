@@ -1,19 +1,5 @@
 #include "MessageDeserializer.h"
 
-void MessageDeserializer::_read(Socket *socket, void *value){
-    int status = socket->receiveMessage((char *)value, sizeof(value));
-    if (status < 0){
-        //handle error
-    }
-}
-
-void MessageDeserializer::_readString(Socket *socket, void **value){
-    int status = socket->receiveMessage((char *) *value, strlen((char *) *value) + 1);
-    if (status < 0){
-        //handle error
-    }
-}
-
 response_t MessageDeserializer::_handleErrorStatus(){
     Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
     response_t response = {false, ERROR_CONNECTION};
@@ -55,7 +41,8 @@ response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
 response_t MessageDeserializer::receiveInitEntity(Socket *socket, Event* &event){
 
     IdElement id;
-    int sizeX, sizeY, source_length;
+    int sizeX, sizeY, posX, posY, source_length;
+    orientation_t orientation;
 
     if (socket->receiveMessage((char *) &id, sizeof(IdElement)) <= 0)
         return this->_handleErrorStatus();
@@ -64,6 +51,15 @@ response_t MessageDeserializer::receiveInitEntity(Socket *socket, Event* &event)
         return this->_handleErrorStatus();
 
     if (socket->receiveMessage((char *) &sizeY, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &posX, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &posY, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &orientation, sizeof(orientation_t)) <= 0)
         return this->_handleErrorStatus();
 
     if (socket->receiveMessage((char *) &source_length, sizeof(int)) <= 0)
@@ -77,7 +73,7 @@ response_t MessageDeserializer::receiveInitEntity(Socket *socket, Event* &event)
         return this->_handleErrorStatus();
     }
     
-    MessageInitEntity *message = new MessageInitEntity(id, sizeX, sizeY, source);
+    MessageInitEntity *message = new MessageInitEntity(id, sizeX, sizeY, posX, posY, orientation, source);
 
     delete [] source;
     delete message;
@@ -88,6 +84,7 @@ response_t MessageDeserializer::receiveUpdateEntity(Socket *socket, Event* &even
             
     IdElement id;
     int posX, posY;
+    orientation_t orientation;
 
     if (socket->receiveMessage((char *) &id, sizeof(IdElement)) <= 0)
         return this->_handleErrorStatus();
@@ -98,7 +95,10 @@ response_t MessageDeserializer::receiveUpdateEntity(Socket *socket, Event* &even
     if (socket->receiveMessage((char *) &posY, sizeof(int)) <= 0)
         return this->_handleErrorStatus();
 
-    MessageUpdateEntity *message = new MessageUpdateEntity(id, posX, posY);
+    if (socket->receiveMessage((char *) &orientation, sizeof(orientation_t)) <= 0)
+        return this->_handleErrorStatus();
+
+    MessageUpdateEntity *message = new MessageUpdateEntity(id, posX, posY, orientation);
 
     delete message;
     return this->_handleSuccess(); 
@@ -142,7 +142,7 @@ response_t MessageDeserializer::receiveRequestLoginPlayer(Socket *socket, Event*
 response_t MessageDeserializer::receiveMovementPlayer(Socket *socket, Event* &event){
 
     orientation_t moveOrientation;
-    
+
     if (socket->receiveMessage((char *) &moveOrientation, sizeof(orientation_t)) <= 0)
         return this->_handleErrorStatus();
 
@@ -150,6 +150,26 @@ response_t MessageDeserializer::receiveMovementPlayer(Socket *socket, Event* &ev
 
     delete message;
     return this->_handleSuccess(); 
+};
+
+
+response_t MessageDeserializer::receiveResponseLoginPlayer(Socket *socket, Event* &event){
+
+    char successfulConnection, gameFull, wrongCredentials;
+
+    if (socket->receiveMessage(&successfulConnection, sizeof(char)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage(&gameFull, sizeof(char)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage(&wrongCredentials, sizeof(char)) <= 0)
+        return this->_handleErrorStatus();
+
+    MessageResponseLoginPlayer *message = new MessageResponseLoginPlayer(successfulConnection, gameFull, wrongCredentials);
+
+    delete message;  
+    return this->_handleSuccess();      
 };
 
 // MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *socket){
@@ -189,31 +209,6 @@ response_t MessageDeserializer::receiveMovementPlayer(Socket *socket, Event* &ev
 //     _read(socket, (char *) &height);
 
 //     return new MessageInitScreen(width, height);
-// };
-
-/*
-eventsManager->generate('PLAYER1_LOG', )
-
-
-eventsManager->generate('LOG', "El usuario tanto se desconectó")
-
-eventsManager::generate(key, value){
-    if(includes('GENERAL'))
-    switch(key) {
-
-        case LOG:
-            eventsQueue.push(LOG, value);
-            break;
-    }
-    
-}*/
-        
-// MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *socket){
-
-//     char authorize;
-//     _read(socket, (char *) &authorize);
-
-//     return new MessageRequestLoginPlayer(authorize);
 // };
 
 // MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *socket){
@@ -329,3 +324,17 @@ Event *MessageDeserializer::getReceivedMessage(User *user){
 //             break;
 //     }    
 // };
+
+/*void MessageDeserializer::_read(Socket *socket, void *value){
+    int status = socket->receiveMessage((char *)value, sizeof(value));
+    if (status < 0){
+        //handle error
+    }
+}
+
+void MessageDeserializer::_readString(Socket *socket, void **value){
+    int status = socket->receiveMessage((char *) *value, strlen((char *) *value) + 1);
+    if (status < 0){
+        //handle error
+    }
+}*/

@@ -11,14 +11,18 @@ using namespace std;
 class MessageResponseLoginPlayer : public Message {
 
     private:
-        bool authorize_;
+        bool successfulConnection_;
+        bool gameFull_;
+        bool wrongCredentials_;
 
     public:
-        MessageResponseLoginPlayer(bool authorize);
+        MessageResponseLoginPlayer(bool successfulConnection, bool gameFull, bool wrongCredentials);
         ~MessageResponseLoginPlayer();
         string getStringData();
 
-        bool getAuthorize();
+        bool getIsConnection();
+        bool getIsGameFull();
+        bool getIsWrongCredentials();
 
 };
 

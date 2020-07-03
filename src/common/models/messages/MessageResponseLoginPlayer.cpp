@@ -1,7 +1,9 @@
 #include "MessageResponseLoginPlayer.h"
 
-MessageResponseLoginPlayer::MessageResponseLoginPlayer(bool authorize) : Message(RESPONSE_LOGIN_PLAYER){
-    this->authorize_ = authorize;
+MessageResponseLoginPlayer::MessageResponseLoginPlayer(bool successfulConnection, bool gameFull, bool wrongCredentials) : Message(RESPONSE_LOGIN_PLAYER){
+    this->successfulConnection_ = successfulConnection;
+    this->gameFull_ = gameFull;
+    this->wrongCredentials_ = wrongCredentials;
 }
 
 MessageResponseLoginPlayer::~MessageResponseLoginPlayer(){}
@@ -11,7 +13,19 @@ string MessageResponseLoginPlayer::getStringData(){
     
     dataString.push_back(this->type_);
     
-    if (this->authorize_){
+    if (this->successfulConnection_){
+        dataString.push_back(IS_TRUE);
+    } else {
+        dataString.push_back(IS_FALSE);
+    }
+
+    if (this->gameFull_){
+        dataString.push_back(IS_TRUE);
+    } else {
+        dataString.push_back(IS_FALSE);
+    }
+
+    if (this->wrongCredentials_){
         dataString.push_back(IS_TRUE);
     } else {
         dataString.push_back(IS_FALSE);
@@ -20,6 +34,14 @@ string MessageResponseLoginPlayer::getStringData(){
     return dataString;    
 }
 
-bool MessageResponseLoginPlayer::getAuthorize(){
-    return this->authorize_;
-}
+bool MessageResponseLoginPlayer::getIsConnection(){
+    return this->successfulConnection_;
+};
+
+bool MessageResponseLoginPlayer::getIsGameFull(){
+    return this->gameFull_;
+};
+
+bool MessageResponseLoginPlayer::getIsWrongCredentials(){
+    return this->wrongCredentials_;
+};

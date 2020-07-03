@@ -15,24 +15,28 @@ class MessageInitEntity : public Message {
         IdElement idElement_; 
         int size_x_;
         int size_y_;
+        int pos_x_;
+        int pos_y_;
+        orientation_t orientation_;
         string source_;
     
     public:
 
-        MessageInitEntity(IdElement idMapElement, int sizeX, int sizeY, string oneSource);
+        MessageInitEntity(IdElement idMapElement, int sizeX, int sizeY, int posX, int posY, orientation_t orientation, string oneSource);
         ~MessageInitEntity();
         string getStringData();
 
         IdElement getIdElement();
         int getSizeX();
         int getSizeY();
+        int getPosX();
+        int getPosY();
+        orientation_t getOrientation();
         string getSource();
 
         //level_t getLevel();
         //stage_t getStage();
         //unsigned int getStep();
-        //int getPosX();
-        //int getPosY();
         //bool getIsPlayer();
 };
 
