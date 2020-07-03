@@ -23,7 +23,7 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
     args.handler = (void *) this;
     args.params = user; 
 
-    int pthreadCreateStatus =  pthread_create(&thread, nullptr, [](void *args) -> void * {
+    int pthreadCreateStatus =  pthread_create(&thread, nullptr, [](void *args)->void * {
         auto arguments = (argsThread_t *) args;
         auto *handler = (ServerTransmitionManager *) arguments->handler;
         auto *user = (User *) arguments->params;
@@ -104,7 +104,7 @@ void ServerTransmitionManager::sendingCycle(User* user) {
         if(messagesQueues_[user->getId()]->empty())
             continue;
         
-        Message* message = (Message*) messagesQueues_[user->getId()]-> pop();
+        Message* message = (Message*) messagesQueues_[user->getId()]->pop();
 
         user->sendMessage(message);
     }

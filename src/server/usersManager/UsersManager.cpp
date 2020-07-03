@@ -15,12 +15,12 @@ bool UsersManager::isFullGame(){
     return loggedUsers_ >= this->maxUsers_;
 }
 
-int UsersManager::acceptUnloggedUser(){
+IdUser UsersManager::acceptUnloggedUser(){
 
     int newClientDescriptor = this->serverOwn_->getSocket()->acceptClient();
     if (newClientDescriptor < 0){
         Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
-        return newClientDescriptor;
+        return 0;
     }
     
     pthread_mutex_lock(&this->mutex_lastId_);
