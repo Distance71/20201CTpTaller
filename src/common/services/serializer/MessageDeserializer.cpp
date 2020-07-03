@@ -104,6 +104,54 @@ response_t MessageDeserializer::receiveUpdateEntity(Socket *socket, Event* &even
     return this->_handleSuccess(); 
 };
 
+response_t MessageDeserializer::receiveRequestLoginPlayer(Socket *socket, Event* &event){
+
+    int name_length, password_length;
+    
+    if (socket->receiveMessage((char *) &name_length, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    char *userName = new char[name_length + 1];
+    userName[name_length] = '\0';
+
+    if (socket->receiveMessage(userName, sizeof(char) * name_length) <= 0){
+        delete [] userName;
+        return this->_handleErrorStatus();
+    }
+
+    if (socket->receiveMessage((char *) &password_length, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    char *password = new char[password_length + 1];
+    password[password_length] = '\0';
+
+    if (socket->receiveMessage(password, sizeof(char) * password_length) <= 0){
+        delete [] password;
+        return this->_handleErrorStatus();
+    }
+
+    MessageRequestLoginPlayer *message = new MessageRequestLoginPlayer(userName, password);
+
+    delete [] userName;
+    delete [] password;
+
+    delete message;
+    return this->_handleSuccess(); 
+};
+
+response_t MessageDeserializer::receiveMovementPlayer(Socket *socket, Event* &event){
+
+    orientation_t moveOrientation;
+    
+    if (socket->receiveMessage((char *) &moveOrientation, sizeof(orientation_t)) <= 0)
+        return this->_handleErrorStatus();
+
+    MessageMovementPlayer *message = new MessageMovementPlayer(moveOrientation);
+
+    delete message;
+    return this->_handleSuccess(); 
+};
+
 // MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *socket){
 
 //     char enterKey, quitKey;
@@ -158,58 +206,7 @@ eventsManager::generate(key, value){
             break;
     }
     
-}
-
-//Hilo procesamiento!messagesQueue.isEmpty()!messagesQueue.isEmpty()
-while(eventsQueue.size() && gameIsRunning) {
-    auto event = eventsQueue.pop()
-
-    eventSerilized = event.serialize();
-
-    transmition.addMessage(eventSerilized);
-}
-
-//Hilo general
-transmitionManager::addMessage(message){
-    messagesQueue.push(message);
-}
-
-//1 hilo por cliente
-trasmitionManager::sendingCycle(){
-    
 }*/
-
-
-// MessageLoginPlayer *MessageDeserializer::receiveLoginPlayer(Socket *socket){
-
-//     int name_length, password_length;
-    
-//     _read(socket, (char *) &name_length);
-
-//     char *userName = new char[name_length + 1];
-//     userName[name_length] = '\0';
-//     //_readString(socket, (char **) userName);
-
-//     _read(socket, (char *) &password_length);
-    
-//     char *password = new char[password_length + 1];
-//     password[password_length] = '\0';
-//     //_readString(socket, (char *) password);
-
-//     MessageLoginPlayer *message = new MessageLoginPlayer(userName, password);
-
-//     delete [] userName;
-//     delete [] password;
-//     return message;    
-// };
-
-// MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *socket){
-
-//     orientation_t moveOrientation;
-//     _read(socket, (char *) &moveOrientation);
-
-//     return new MessageMovementPlayer(moveOrientation);
-// };
         
 // MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *socket){
 

@@ -7,8 +7,6 @@ MessageRequestLoginPlayer::MessageRequestLoginPlayer(string username, string pas
 
 MessageRequestLoginPlayer::~MessageRequestLoginPlayer(){}
 
-
-//Server
 string MessageRequestLoginPlayer::getStringData(){
 
     string dataString;
@@ -39,11 +37,3 @@ string MessageRequestLoginPlayer::getUsername(){
 string MessageRequestLoginPlayer::getPassword(){
     return this->password_;
 };
-
-void MessageRequestLoginPlayer ::setStringData(){
-};
-
-//Client
-// void MesssageLoginPlayer::setStringData(){
-    
-// };
