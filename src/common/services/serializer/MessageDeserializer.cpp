@@ -1,19 +1,5 @@
 #include "MessageDeserializer.h"
 
-void MessageDeserializer::_read(Socket *socket, void *value){
-    int status = socket->receiveMessage((char *)value, sizeof(value));
-    if (status < 0){
-        //handle error
-    }
-}
-
-void MessageDeserializer::_readString(Socket *socket, void **value){
-    int status = socket->receiveMessage((char *) *value, strlen((char *) *value) + 1);
-    if (status < 0){
-        //handle error
-    }
-}
-
 response_t MessageDeserializer::_handleErrorStatus(){
     Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
     response_t response = {false, ERROR_CONNECTION};
@@ -211,31 +197,6 @@ response_t MessageDeserializer::receiveResponseLoginPlayer(Socket *socket, Event
 //     return new MessageInitScreen(width, height);
 // };
 
-/*
-eventsManager->generate('PLAYER1_LOG', )
-
-
-eventsManager->generate('LOG', "El usuario tanto se desconectó")
-
-eventsManager::generate(key, value){
-    if(includes('GENERAL'))
-    switch(key) {
-
-        case LOG:
-            eventsQueue.push(LOG, value);
-            break;
-    }
-    
-}*/
-        
-// MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *socket){
-
-//     char authorize;
-//     _read(socket, (char *) &authorize);
-
-//     return new MessageRequestLoginPlayer(authorize);
-// };
-
 // MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *socket){
 
 //     char level, isStart, isEnd;
@@ -349,3 +310,17 @@ Event *MessageDeserializer::getReceivedMessage(User *user){
 //             break;
 //     }    
 // };
+
+/*void MessageDeserializer::_read(Socket *socket, void *value){
+    int status = socket->receiveMessage((char *)value, sizeof(value));
+    if (status < 0){
+        //handle error
+    }
+}
+
+void MessageDeserializer::_readString(Socket *socket, void **value){
+    int status = socket->receiveMessage((char *) *value, strlen((char *) *value) + 1);
+    if (status < 0){
+        //handle error
+    }
+}*/
