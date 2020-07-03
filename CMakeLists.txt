@@ -23,15 +23,7 @@ include_directories(src/server)
 file(COPY src/client/assets DESTINATION ${CMAKE_BINARY_DIR})
 
 
-add_executable(tp1taller
-        src/client/clientModels/ClientMap.cpp
-        src/client/clientModels/ClientMap.h
-        src/client/clientModels/ClientMapElement.cpp
-        src/client/clientModels/ClientMapElement.h
-        
-        src/client/controllers/ClientController.cpp
-        src/client/controllers/ClientController.h
-        
+add_executable(tp1taller        
         src/client/eventsManager/ClientEventsManager.cpp
         src/client/eventsManager/ClientEventsManager.h
 
@@ -89,8 +81,15 @@ add_executable(tp1taller
 		src/common/models/State.h
 		src/common/models/BlockingQueue.h
 		src/common/models/Semaphore.h
-		src/common/models/Semaphore.cpp
-
+        src/common/models/Semaphore.cpp
+        
+        src/common/models/events/Event.h
+        src/common/models/events/Event.cpp
+        src/common/models/events/EventGameInit.h
+        src/common/models/events/EventGameInit.cpp
+        src/common/models/events/EventResponseLoginPlayer.h
+        src/common/models/events/EventResponseLoginPlayer.cpp
+        
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h
 

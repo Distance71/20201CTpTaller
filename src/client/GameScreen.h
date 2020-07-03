@@ -7,22 +7,21 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include "Client.h"
-#include "clientModels/ClientMap.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/types.h"
+#include "loginMenu/Menu.h"
 
 using namespace std;
 
-class ClientMap;
 class Client;
-class ClientMap;
+class Menu;
 
 class GameScreen {
     private:
         Client *clientOwn;
-        ClientMap *map_;
         SDL_Window *window_ = nullptr;
         SDL_Renderer *renderer_ = nullptr;
+        Menu* menu;
 
         bool waitEnter(SDL_Surface* screen);
 
@@ -35,11 +34,12 @@ class GameScreen {
         void processEvent();
         void updateGraphics();
 
-        void addLayer(size_t idLayer, string sourceLayer);
-
         int viewLogin();
         bool viewStartStage(level_t oneLevel);
         bool viewStageCleared(level_t oneLevel);
+        Menu* getMenu();
+
+
 };
 
 #endif

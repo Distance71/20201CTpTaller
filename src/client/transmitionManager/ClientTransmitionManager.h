@@ -24,6 +24,8 @@
 #include "../../common/models/messages/MessageUpdateStage.h"
 #include "../../common/models/messages/MessageRequestLoginPlayer.h"
 
+class MessageDeserializer;
+
 using namespace std;
 
 class Client;

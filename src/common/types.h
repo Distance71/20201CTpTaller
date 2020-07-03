@@ -63,7 +63,7 @@ typedef enum {
     FRONT_UP,
     FRONT_DOWN,
     BACK_DOWN,
-    BACK_UP
+    BACK_UP,
 } orientation_t;
 
 typedef struct {
@@ -176,4 +176,9 @@ typedef struct {
     responseStatus_t status;
 } response_t;
 
+typedef enum {
+    VALID_CREDENTIALS,
+    INVALID_CREDENTIALS,
+    FULL_GAME,
+}login_answer;
 #endif

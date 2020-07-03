@@ -15,8 +15,6 @@ ClientTransmitionManager::~ClientTransmitionManager(){
 
 
 
-
-
 /* Sending messages */
 
 void ClientTransmitionManager::sendMessage(Message* message){
