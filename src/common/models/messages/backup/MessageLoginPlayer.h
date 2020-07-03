@@ -1,28 +1,28 @@
-#ifndef _MESSAGE_LOGIN_PLAYER_H_
-#define _MESSAGE_LOGIN_PLAYER_H_
+// #ifndef _MESSAGE_LOGIN_PLAYER_H_
+// #define _MESSAGE_LOGIN_PLAYER_H_
 
-#include <iostream>
-#include <string.h>
-#include "Message.h"
-#include "../../types.h"
+// #include <iostream>
+// #include <string.h>
+// #include "Message.h"
+// #include "../../types.h"
 
-using namespace std;
+// using namespace std;
 
-class MessageLoginPlayer : public Message {
+// class MessageLoginPlayer : public Message {
 
-    private:
-        string username_;
-        string password_;
+//     private:
+//         string username_;
+//         string password_;
 
-    public:
-        MessageLoginPlayer(string username, string password);
-        ~MessageLoginPlayer();
-        string getStringData();
+//     public:
+//         MessageLoginPlayer(string username, string password);
+//         ~MessageLoginPlayer();
+//         string getStringData();
 
-        string getUsername();
-        string getPassword();
+//         string getUsername();
+//         string getPassword();
         
-        void setStringData();
-};
+//         void setStringData();
+// };
 
-#endif // _MESSAGE_LOGIN_PLAYER_H_
+// #endif // _MESSAGE_LOGIN_PLAYER_H_

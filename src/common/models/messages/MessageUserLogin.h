@@ -1,16 +1,16 @@
-#ifndef MESSAGE_USER_LOGIN_H_
-#define MESSAGE_USER_LOGIN_H_
+// #ifndef MESSAGE_USER_LOGIN_H_
+// #define MESSAGE_USER_LOGIN_H_
 
-#include "../events/EventGameInit.h"
-#include "../events/Event.h"
-#include "Message.h"
+// #include "../events/EventGameInit.h"
+// #include "../events/Event.h"
+// #include "Message.h"
 
-class MessageUserLogin: public Message {
+// class MessageUserLogin: public Message {
 
-    public:
-        MessageUserLogin();
+//     public:
+//         MessageUserLogin();
         
-        Event* deSerialize();
-};
+//         Event* deSerialize();
+// };
 
-#endif
+// #endif

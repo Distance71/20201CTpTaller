@@ -1,25 +1,28 @@
-#ifndef _MESSAGE_REQUEST_PLAYER_H_
-#define _MESSAGE_REQUEST_PLAYER_H_
+// #ifndef _MESSAGE_REQUEST_LOGIN_PLAYER_H_
+// #define _MESSAGE_REQUEST_LOGIN_PLAYER_H_
 
-#include <iostream>
-#include <string.h>
-#include "Message.h"
-#include "../../types.h"
+// #include <iostream>
+// #include <string.h>
+// #include "Message.h"
+// #include "../../types.h"
 
-using namespace std;
+// using namespace std;
 
-class MessageRequestLoginPlayer : public Message {
+// class MessageRequestLoginPlayer : public Message {
 
-    private:
-        bool authorize_;
+//     private:
+//         string username_;
+//         string password_;
 
-    public:
-        MessageRequestLoginPlayer(bool authorize);
-        ~MessageRequestLoginPlayer();
-        string getStringData();
+//     public:
+//         MessageRequestLoginPlayer(string username, string password);
+//         ~MessageRequestLoginPlayer();
+//         string getStringData();
 
-        bool getAuthorize();
+//         string getUsername();
+//         string getPassword();
+        
+//         void setStringData();
+// };
 
-};
-
-#endif // _MESSAGE_REQUEST_PLAYER_H_
+// #endif // _MESSAGE_LOGIN_PLAYER_H_

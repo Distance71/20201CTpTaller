@@ -1,63 +1,77 @@
 #include "ClientTransmitionManager.h"
 
-
-static void* sendMessage(void *arg){
-
-    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
-
-    Client *client = transmitionManager->getClient();
-    Socket *socket = transmitionManager->getSocket();
-    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
-    vector<Message *> *queueMessage = transmitionManager->getSendMessages();
-
-    bool error = false;
-
-    while (client->isConnected() && !error){
-
-        if (!queueMessage->empty()){
-            Message *newMessage = queueMessage->front();
-            queueMessage->erase(queueMessage->begin(), queueMessage->begin() + 1);
-            
-            string dataSend = newMessage->getStringData();
-            //delete newMessage;
-            socket->sendMessage(dataSend.c_str(), sizeof(char) *dataSend.size());
-        }
-    }
-}
-
-static void* receiveMessage(void *arg){
-
-    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
-
-    Client *client = transmitionManager->getClient();
-    Socket *socket = transmitionManager->getSocket();
-    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
-    vector<Message *> *queueMessage = transmitionManager->getReceivedMessages();
-
-    bool error = false;
-
-    while (client->isConnected() && !error){
-        // TODO: descomentado por queueMessage: cambiar de vector<Message *>* a EventsQueue*
-        //deserializer->pushNewMessage(socket, error, queueMessage);
-
-        // TODO: usleep de prueba
-        usleep(1000000);
-    }
-
-}
-
+/*Consructor and destructor */
 ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
     this->clientOwn_ = client;
     this->socket_ = new Socket();
-    this->socket_->setPort(port);
-
+    this->socket_ -> setPort(port);
     this->deserializer_ = new MessageDeserializer();
 }
+
 
 ClientTransmitionManager::~ClientTransmitionManager(){
     delete this->socket_;
 }
 
+
+
+
+
+/* Sending messages */
+
+void ClientTransmitionManager::sendMessage(Message* message){
+    queueSendMessages_->push_back(message);
+}
+
+
+static void* _sendMessages(void *arg){
+    ClientTransmitionManager *client_transmition_manager = (ClientTransmitionManager *) arg;
+    client_transmition_manager->sendMessages();
+}
+
+
+void ClientTransmitionManager::sendMessages(){
+    while (clientOwn_->isConnected()){
+        if (!queueSendMessages_->empty()){
+            Message *message = queueSendMessages_ -> front();
+            queueSendMessages_->erase(queueSendMessages_->begin(),queueSendMessages_->begin()+1);
+            string data = message->getStringData();
+            delete message;
+            socket_->sendMessage(data.c_str(), sizeof(char) *data.size());
+        }
+    }
+}
+
+
+
+
+/* Receiving messages */
+static void* _receiveMessages(void *arg){
+    ClientTransmitionManager *client_transmition_manager = (ClientTransmitionManager *) arg;
+    client_transmition_manager->receiveMessages();
+}
+
+
+void ClientTransmitionManager::receiveMessages(){
+}
+
+
+
+
+/*Processing messages*/
+static void* _processMessages(void *arg){
+    ClientTransmitionManager *client_transmition_manager = (ClientTransmitionManager *) arg;
+    client_transmition_manager->processMessages();
+}
+
+
+void ClientTransmitionManager::processMessages(){
+}
+
+
+
+
+/* Server conection and threads creation*/
 bool ClientTransmitionManager::connectWithServer(string ipAddress){
 
     if(!this->socket_->create()){
@@ -81,33 +95,109 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
         return false;
     }
     
-    pthread_t newHilo;
-    pthread_create(&newHilo, NULL, receiveMessage, this);
+    pthread_t sending_thread;
+    pthread_create(&sending_thread, NULL,_receiveMessages,this);
 
+    pthread_t receiving_thread;
+    pthread_create(&receiving_thread, NULL,_sendMessages,this);
+
+    pthread_t processing_thread;
+    pthread_create(&processing_thread, NULL,_processMessages,this);
+    
     return true;
 };
 
+
+
+
+/*Common*/
+
+
+
+
+//-------------------------------------------------------------------------------------------------------
+/*static void* sendMessage(void *arg){
+
+    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+
+    Client *client = transmitionManager->getClient();
+    Socket *socket = transmitionManager->getSocket();
+    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
+    vector<Message *> *queueMessage = transmitionManager->getSendMessages();
+
+    bool error = false;
+
+    while (client->isConnected() && !error){
+
+        if (!queueMessage->empty()){
+            Message *newMessage = queueMessage->front();
+            queueMessage->erase(queueMessage->begin(), queueMessage->begin() + 1);
+            
+            string dataSend = newMessage->getStringData();
+            //delete newMessage;
+            socket->sendMessage(dataSend.c_str(), sizeof(char) *dataSend.size());
+        }
+    }
+}
+*/
+
+
+/*static void* receiveMessage(void *arg){
+
+    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+
+    Client *client = transmitionManager->getClient();
+    Socket *socket = transmitionManager->getSocket();
+    MessageDeserializer *deserializer = transmitionManager->getDeserializer();
+    vector<Message *> *queueMessage = transmitionManager->getReceivedMessages();
+
+    bool error = false;
+
+    while (client->isConnected() && !error){
+        // TODO: descomentado por queueMessage: cambiar de vector<Message *>* a EventsQueue*
+        //deserializer->pushNewMessage(socket, error, queueMessage);
+
+        // TODO: usleep de prueba
+        usleep(1000000);
+    }
+
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Client *ClientTransmitionManager::getClient(){
-    return this->clientOwn_;
+    return clientOwn_;
 };
 
 Socket *ClientTransmitionManager::getSocket(){
-    return this->socket_;
+    return socket_;
 };
 
 vector<Message *> *ClientTransmitionManager::getReceivedMessages(){
-    return &this->queueReceiveMessage_;
+    return queueReceiveMessage_;
 };
 
 vector<Message *> *ClientTransmitionManager::getSendMessages(){
-    return &this->queueSendMessage_;
+    return queueSendMessages_;
 };
 
 MessageDeserializer *ClientTransmitionManager::getDeserializer(){
-    return this->deserializer_;
+    return deserializer_;
 };
 
-void ClientTransmitionManager::processMessages(){
+/*void ClientTransmitionManager::processMessages(){
 
     while (this->clientOwn_->isConnected()){
 
@@ -150,7 +240,7 @@ void ClientTransmitionManager::processMessages(){
         usleep(10000000);
     }
 
-};
+};*/
 
 void ClientTransmitionManager::processInitEntity(MessageInitEntity *initEntity){
 
@@ -195,6 +285,18 @@ void ClientTransmitionManager::processUpdateStage(MessageUpdateStage *updateStag
 };
 
 void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
-    MessageMovementPlayer *messageMovement = new MessageMovementPlayer(moveOrientation);
-    this->queueSendMessage_.push_back(messageMovement);
+   /* MessageMovementPlayer *messageMovement = new MessageMovementPlayer(moveOrientation);
+    this->queueSendMessage_.push_back(messageMovement);*/
+};
+
+
+
+
+
+
+
+bool getRequestloginPlayerResponse(){
+    //TODO hacer algo
+    return true;
+    
 };

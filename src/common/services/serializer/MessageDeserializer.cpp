@@ -60,6 +60,7 @@ response_t MessageDeserializer::getReceivedMessage(User* user, Event* &event){
 
         default:
             //Log error
+            Logger::getInstance()->log(ERROR, "Mensaje invalido.");
     }
 
 };

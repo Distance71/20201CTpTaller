@@ -57,26 +57,15 @@ add_executable(tp1taller
         src/client/loginMenu/MenuElement.h
         src/client/loginMenu/MenuElement.cpp
 
-        src/common/models/messages/Message.cpp
         src/common/models/messages/Message.h
-        src/common/models/messages/MessageActionPlayer.cpp
-        src/common/models/messages/MessageActionPlayer.h
-        src/common/models/messages/MessageInitEntity.cpp
-        src/common/models/messages/MessageInitEntity.h
-        src/common/models/messages/MessageInitLayer.cpp
-        src/common/models/messages/MessageInitLayer.h
-        src/common/models/messages/MessageInitScreen.cpp
-        src/common/models/messages/MessageInitScreen.h
-        src/common/models/messages/MessageLoginPlayer.cpp
-        src/common/models/messages/MessageLoginPlayer.h
-        src/common/models/messages/MessageMovementPlayer.cpp
-        src/common/models/messages/MessageMovementPlayer.h
-        src/common/models/messages/MessageRequestLoginPlayer.cpp
-        src/common/models/messages/MessageRequestLoginPlayer.h
-        src/common/models/messages/MessageUpdateEntity.cpp
-        src/common/models/messages/MessageUpdateEntity.h
-        src/common/models/messages/MessageUpdateStage.cpp
-        src/common/models/messages/MessageUpdateStage.h
+        src/common/models/messages/Message.h
+        src/common/models/messages/MessageGameInit.cpp
+        src/common/models/messages/MessageGameInit.h
+
+        src/common/models/events/Event.h
+        src/common/models/events/EventGameInit.cpp
+        src/common/models/events/EventGameInit.h
+
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
         src/common/models/Position.cpp

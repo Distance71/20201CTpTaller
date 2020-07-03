@@ -40,7 +40,6 @@ class Client {
         
         int run();
         bool isConnected();
-
         void disconnect();
         void setName(string oneName);
         string getName();
