@@ -1,10 +1,8 @@
 #include "MessageUpdateEntity.h"
 
-MessageUpdateEntity::MessageUpdateEntity(unsigned int oneStep, 
-                                        IdElement idMapElement, int posX, int posY) : Message(UPDATE_ENTITY)
+MessageUpdateEntity::MessageUpdateEntity(IdElement idMapElement, int posX, int posY) : Message(UPDATE_ENTITY)
 {
 
-    this->step_ = oneStep;
     this->idElement_ = idMapElement;
     this->pos_x_ = posX;
     this->pos_y_ = posY;
@@ -19,11 +17,6 @@ string MessageUpdateEntity::getStringData(){
     string dataString;
 
     dataString.push_back(this->type_);
-
-    char* sizeStep_arr = (char*)&this->step_;
-    for (unsigned int i = 0; i < sizeof(unsigned int); ++i)
-        dataString.push_back(sizeStep_arr[i]);
-
 
     char* idElement_arr = (char*)&this->idElement_;
     for (unsigned int i = 0; i < sizeof(IdElement); ++i)
@@ -40,19 +33,6 @@ string MessageUpdateEntity::getStringData(){
     return dataString;
 };
 
-/*
-level_t MessageUpdateEntity::getLevel(){
-    return this->level_;
-};
-
-stage_t MessageUpdateEntity::getStage(){
-    return this->stage_;
-};*/
-
-unsigned int MessageUpdateEntity::getStep(){
-    return this->step_;
-}
-
 IdElement MessageUpdateEntity::getIdElement(){
     return this->idElement_;
 };
@@ -64,3 +44,16 @@ int MessageUpdateEntity::getPosX(){
 int MessageUpdateEntity::getPosY(){
     return this->pos_y_;
 };
+
+/*
+level_t MessageUpdateEntity::getLevel(){
+    return this->level_;
+};
+
+stage_t MessageUpdateEntity::getStage(){
+    return this->stage_;
+};
+
+unsigned int MessageUpdateEntity::getStep(){
+    return this->step_;
+}*/

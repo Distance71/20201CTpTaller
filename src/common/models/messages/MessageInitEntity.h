@@ -11,33 +11,29 @@ using namespace std;
 class MessageInitEntity : public Message {
 
     private:
-        //level_t level_; 
-        //stage_t stage_;
-        unsigned int step_;
+    
         IdElement idElement_; 
         int size_x_;
         int size_y_;
-        int pos_x_;
-        int pos_y_;
         string source_;
-        bool isPlayer_;
     
     public:
 
-        MessageInitEntity(unsigned int oneStep, IdElement idMapElement, int sizeX, int sizeY, int posX, int posY, string oneSource, bool isHuman);
+        MessageInitEntity(IdElement idMapElement, int sizeX, int sizeY, string oneSource);
         ~MessageInitEntity();
         string getStringData();
 
-        //level_t getLevel();
-        //stage_t getStage();
-        unsigned int getStep();
         IdElement getIdElement();
         int getSizeX();
         int getSizeY();
-        int getPosX();
-        int getPosY();
         string getSource();
-        bool getIsPlayer();
+
+        //level_t getLevel();
+        //stage_t getStage();
+        //unsigned int getStep();
+        //int getPosX();
+        //int getPosY();
+        //bool getIsPlayer();
 };
 
 #endif // MESSAGE_INIT_ENTITY_H_

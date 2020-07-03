@@ -34,16 +34,75 @@ response_t MessageDeserializer::_handleSuccess(){
     return response;
 }
 
-
 response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
-    /*MessageGameInit *message;
+    
+    unsigned int width, height;
 
-    if (socket->receiveMessage((char *) message, sizeof(MessageGameInit)) <= 0)
+    if (socket->receiveMessage((char *) &width, sizeof(unsigned int)) <= 0)
         return this->_handleErrorStatus();
 
-    event = message->deSerialize();*/
+    if (socket->receiveMessage((char *) &height, sizeof(unsigned int)) <= 0)
+        return this->_handleErrorStatus();
+
+    MessageGameInit *message = new MessageGameInit(width, height);
+
+    /*event = message->deSerialize();*/
+    delete message;
+
     return this->_handleSuccess();
 }
+
+response_t MessageDeserializer::receiveInitEntity(Socket *socket, Event* &event){
+
+    IdElement id;
+    int sizeX, sizeY, source_length;
+
+    if (socket->receiveMessage((char *) &id, sizeof(IdElement)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &sizeX, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &sizeY, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &source_length, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    char *source = new char[source_length + 1];
+    source[source_length] = '\0';
+
+    if (socket->receiveMessage(source, sizeof(char) * source_length) <= 0){
+        delete [] source;
+        return this->_handleErrorStatus();
+    }
+    
+    MessageInitEntity *message = new MessageInitEntity(id, sizeX, sizeY, source);
+
+    delete [] source;
+    delete message;
+    return this->_handleSuccess();
+};
+
+response_t MessageDeserializer::receiveUpdateEntity(Socket *socket, Event* &event){
+            
+    IdElement id;
+    int posX, posY;
+
+    if (socket->receiveMessage((char *) &id, sizeof(IdElement)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &posX, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage((char *) &posY, sizeof(int)) <= 0)
+        return this->_handleErrorStatus();
+
+    MessageUpdateEntity *message = new MessageUpdateEntity(id, posX, posY);
+
+    delete message;
+    return this->_handleSuccess(); 
+};
 
 // MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *socket){
 
@@ -53,34 +112,6 @@ response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
 //     _read(socket, (char *) &quitKey);
 
 //     return new MessageActionPlayer(enterKey, quitKey);   
-// };
-
-// MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *socket){
-
-//     unsigned int step;
-//     IdElement id;
-//     int sizeX, sizeY, posX, posY, source_length;
-//     char isPlayer;
-
-//     //Also could be better, but's it's less
-//     _read(socket, (char *) &step);
-//     _read(socket, (char *) &id);
-//     _read(socket, (char *) &sizeX);
-//     _read(socket, (char *) &sizeY);
-//     _read(socket, (char *) &posX);
-//     _read(socket, (char *) &posY);
-//     _read(socket, (char *) &source_length);
-
-//     char *source = new char[source_length + 1];
-//     source[source_length] = '\0';
-//     _readString(socket, (void **) &source);
-
-//     _read(socket, (char *) &isPlayer);
-
-//     MessageInitEntity *message = new MessageInitEntity(step, id, sizeX, sizeY, posX, posY, source, isPlayer);
-
-//     delete [] source;
-//     return message;
 // };
 
 // MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *socket){
@@ -186,22 +217,6 @@ trasmitionManager::sendingCycle(){
 //     _read(socket, (char *) &authorize);
 
 //     return new MessageRequestLoginPlayer(authorize);
-// };
-
-// MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *socket){
-            
-//     unsigned int step;
-//     IdElement id;
-//     int posX, posY;
-
-//     _read(socket, (char *) &step);
-//     _read(socket, (char *) &id);
-//     _read(socket, (char *) &posX);
-//     _read(socket, (char *) &posY);
-
-//     MessageUpdateEntity *message = new MessageUpdateEntity(step, id, posX, posY);
-
-//     return message; 
 // };
 
 // MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *socket){
