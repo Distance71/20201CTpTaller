@@ -26,26 +26,17 @@ using namespace std;
 class MessageDeserializer {
 
     private:
-        void _read(Socket *socket, void *value);
-        void _readString(Socket *socket, void **value);
-        // MessageActionPlayer *receiveActionPlayer(Socket *receives);
-        // MessageInitEntity *receiveInitEntity(Socket *receives);
-        // MessageInitLayer *receiveInitLayer(Socket *receives);
-        // MessageInitScreen *receiveInitScreen(Socket *receives);
-        // MessageLoginPlayer *receiveLoginPlayer(Socket *receives);
-        // MessageMovementPlayer *receiveMovementPlayer(Socket *receives);
-        // MessageRequestLoginPlayer *receiveRequestLoginPlayer(Socket *receives);
-        // MessageUpdateEntity *receiveUpdateEntity(Socket *receives);
-        // MessageUpdateStage *receiveUpdateStage(Socket *receives);
-        
-        EventGameInit *receiveGameInit(Socket *socket);
 
+        //Event *receiveUserLogin(Socket *socket, Event* &event);
+        //Event *receiveUserMovement(Socket *socket, Event* &event);
+        response_t receiveGameInit(Socket *socket, Event* &event);
 
+        response_t _handleErrorStatus();
+        response_t _handleSuccess();
     public:
         MessageDeserializer() = default;
-        ~MessageDeserializer() = default;
 
-        Event *getReceivedMessage(User *user);
+        response_t getReceivedMessage(User* user, Event* &event);
         //Message *getReceivedMessage(Socket *receives, bool &error);
         //void pushNewMessage(Socket *receives, bool &error, EventsQueue *queueMessage);
     

@@ -10,12 +10,14 @@
 using namespace std;
 
 class MessageSerializer {
+    private:
+        response_t _handleErrorStatus();
+        response_t _handleSuccess();
 
     public:
         MessageSerializer() = default;
-        ~MessageSerializer() = default;
         
-        void sendSerializedEvent(User *user, Event *event);
+        response_t sendSerializedEvent(User *user, Event *event);
 };
 
 #endif

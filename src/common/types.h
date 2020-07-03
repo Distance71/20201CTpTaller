@@ -42,16 +42,17 @@ typedef enum stage {
 } stage_t;
 
 typedef enum message {
-    NONE,
-    INIT_ENTITY,
-    UPDATE_ENTITY,
-    INIT_LAYER,
-    INIT_SCREEN,
-    UPDATE_STAGE,
-    LOGIN_PLAYER,
-    REQUEST_LOGIN_PLAYER,
-    MOVEMENT_PLAYER,
-    ACTION_PLAYER,
+    INIT_GAME,
+    
+    // INIT_ENTITY,
+    // UPDATE_ENTITY,
+    // INIT_LAYER,
+    // INIT_SCREEN,
+    // UPDATE_STAGE,
+    // LOGIN_PLAYER,
+    // REQUEST_LOGIN_PLAYER,
+    // MOVEMENT_PLAYER,
+    // ACTION_PLAYER,
 } message_t;
 
 typedef enum {
@@ -163,5 +164,15 @@ typedef enum {
     SELECTED,
     NOT_SELECTED,
 }buttonstate_t;
+
+typedef enum responseStatus {
+    OK,
+    ERROR_CONNECTION,
+} responseStatus_t;
+
+typedef struct {
+    bool ok;
+    responseStatus_t status;
+} response_t;
 
 #endif

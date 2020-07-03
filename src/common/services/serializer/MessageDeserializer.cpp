@@ -1,214 +1,42 @@
 #include "MessageDeserializer.h"
 
-MessageDeserializer::MessageDeserializer(){};
+response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
+    MessageGameInit *message;
 
-void MessageDeserializer::_read(Socket *socket, void *value){
-    int status = socket->receiveMessage((char *)value, sizeof(value));
-    if (status < 0){
-        //handle error
-    }
+    if (socket->receiveMessage((char *) message, sizeof(MessageGameInit)) <= 0)
+        return this->_handleErrorStatus();
+
+    event = message->deSerialize();
+    return this->_handleSuccess();
 }
 
-void MessageDeserializer::_readString(Socket *socket, void **value){
-    int status = socket->receiveMessage((char *) *value, strlen((char *) *value) + 1);
-    if (status < 0){
-        //handle error
-    }
+response_t MessageDeserializer::_handleErrorStatus(){
+    Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
+    response_t response = {false, ERROR_CONNECTION};
+
+    return response;
 }
 
+response_t MessageDeserializer::_handleSuccess(){
+    response_t response = {true, OK};
 
-// MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *socket){
-
-//     char enterKey, quitKey;
-
-//     _read(socket, (char *) &enterKey);
-//     _read(socket, (char *) &quitKey);
-
-//     return new MessageActionPlayer(enterKey, quitKey);   
-// };
-
-// MessageInitEntity *MessageDeserializer::receiveInitEntity(Socket *socket){
-
-//     unsigned int step;
-//     IdElement id;
-//     int sizeX, sizeY, posX, posY, source_length;
-//     char isPlayer;
-
-//     //Also could be better, but's it's less
-//     _read(socket, (char *) &step);
-//     _read(socket, (char *) &id);
-//     _read(socket, (char *) &sizeX);
-//     _read(socket, (char *) &sizeY);
-//     _read(socket, (char *) &posX);
-//     _read(socket, (char *) &posY);
-//     _read(socket, (char *) &source_length);
-
-//     char *source = new char[source_length + 1];
-//     source[source_length] = '\0';
-//     _readString(socket, (void **) &source);
-
-//     _read(socket, (char *) &isPlayer);
-
-//     MessageInitEntity *message = new MessageInitEntity(step, id, sizeX, sizeY, posX, posY, source, isPlayer);
-
-//     delete [] source;
-//     return message;
-// };
-
-// MessageInitLayer *MessageDeserializer::receiveInitLayer(Socket *socket){
-    
-//     size_t id;
-//     int source_length;
-
-//     _read(socket, (char *) &id);
-//     _read(socket, (char *) &source_length);
-
-//     char *source = new char[source_length + 1];
-//     source[source_length] = '\0';
-//     //_readString(socket, (char *) source);
-
-//     MessageInitLayer *message = new MessageInitLayer(id, source);
-
-//     delete [] source;
-//     return message;
-// };
-
-// MessageInitScreen *MessageDeserializer::receiveInitScreen(Socket *socket){
-
-//     unsigned int width;
-//     unsigned int height;
-
-//     _read(socket, (char *) &width);
-//     _read(socket, (char *) &height);
-
-//     return new MessageInitScreen(width, height);
-// };
-
-/*
-eventsManager->generate('PLAYER1_LOG', )
-
-
-eventsManager->generate('LOG', "El usuario tanto se desconectó")
-
-eventsManager::generate(key, value){
-    if(includes('GENERAL'))
-    switch(key) {
-
-        case LOG:
-            eventsQueue.push(LOG, value);
-            break;
-    }
-    
+    return response;
 }
 
-//Hilo procesamiento!messagesQueue.isEmpty()!messagesQueue.isEmpty()
-while(eventsQueue.size() && gameIsRunning) {
-    auto event = eventsQueue.pop()
-
-    eventSerilized = event.serialize();
-
-    transmition.addMessage(eventSerilized);
-}
-
-//Hilo general
-transmitionManager::addMessage(message){
-    messagesQueue.push(message);
-}
-
-//1 hilo por cliente
-trasmitionManager::sendingCycle(){
+response_t MessageDeserializer::getReceivedMessage(User* user, Event* &event){
     
-}*/
-
-
-// MessageLoginPlayer *MessageDeserializer::receiveLoginPlayer(Socket *socket){
-
-//     int name_length, password_length;
-    
-//     _read(socket, (char *) &name_length);
-
-//     char *userName = new char[name_length + 1];
-//     userName[name_length] = '\0';
-//     //_readString(socket, (char **) userName);
-
-//     _read(socket, (char *) &password_length);
-    
-//     char *password = new char[password_length + 1];
-//     password[password_length] = '\0';
-//     //_readString(socket, (char *) password);
-
-//     MessageLoginPlayer *message = new MessageLoginPlayer(userName, password);
-
-//     delete [] userName;
-//     delete [] password;
-//     return message;    
-// };
-
-// MessageMovementPlayer *MessageDeserializer::receiveMovementPlayer(Socket *socket){
-
-//     orientation_t moveOrientation;
-//     _read(socket, (char *) &moveOrientation);
-
-//     return new MessageMovementPlayer(moveOrientation);
-// };
-        
-// MessageRequestLoginPlayer *MessageDeserializer::receiveRequestLoginPlayer(Socket *socket){
-
-//     char authorize;
-//     _read(socket, (char *) &authorize);
-
-//     return new MessageRequestLoginPlayer(authorize);
-// };
-
-// MessageUpdateEntity *MessageDeserializer::receiveUpdateEntity(Socket *socket){
-            
-//     unsigned int step;
-//     IdElement id;
-//     int posX, posY;
-
-//     _read(socket, (char *) &step);
-//     _read(socket, (char *) &id);
-//     _read(socket, (char *) &posX);
-//     _read(socket, (char *) &posY);
-
-//     MessageUpdateEntity *message = new MessageUpdateEntity(step, id, posX, posY);
-
-//     return message; 
-// };
-
-// MessageUpdateStage *MessageDeserializer::receiveUpdateStage(Socket *socket){
-
-//     char level, isStart, isEnd;
-
-//     _read(socket, (char *) &level);
-//     _read(socket, (char *) &isStart);
-//     _read(socket, (char *) &isEnd);
-
-//     MessageUpdateStage *message = new MessageUpdateStage((level_t) level, isStart, isEnd);
-
-//     return message;        
-// };
-
-EventGameInit *MessageDeserializer::receiveGameInit(Socket *socket){
-    //We do not need to get params in this case
-    return new EventGameInit();
-}
-
-
-Event *MessageDeserializer::getReceivedMessage(User *user){
-    
-    char typeMessage; //message_t ?
+    message_t typeMessage;
 
     auto socket = user->getSocket();
 
-    if (socket->receiveMessage(&typeMessage, sizeof(char)) <= 0) {
-        Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
-    }
+    if (socket->receiveMessage((char *) &typeMessage, sizeof(message_t)) <= 0)
+        return this->_handleErrorStatus();
 
     switch (typeMessage){
 
-        case GAME_INIT:
-            return this->receiveGameInit(socket);
+        case INIT_GAME:
+            response_t response = this->receiveGameInit(socket, event);
+            return response;
         // case INIT_ENTITY:
         //     return this->receiveInitEntity(socket);
 
