@@ -142,7 +142,7 @@ response_t MessageDeserializer::receiveRequestLoginPlayer(Socket *socket, Event*
 response_t MessageDeserializer::receiveMovementPlayer(Socket *socket, Event* &event){
 
     orientation_t moveOrientation;
-    
+
     if (socket->receiveMessage((char *) &moveOrientation, sizeof(orientation_t)) <= 0)
         return this->_handleErrorStatus();
 
@@ -150,6 +150,26 @@ response_t MessageDeserializer::receiveMovementPlayer(Socket *socket, Event* &ev
 
     delete message;
     return this->_handleSuccess(); 
+};
+
+
+response_t MessageDeserializer::receiveResponseLoginPlayer(Socket *socket, Event* &event){
+
+    char successfulConnection, gameFull, wrongCredentials;
+
+    if (socket->receiveMessage(&successfulConnection, sizeof(char)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage(&gameFull, sizeof(char)) <= 0)
+        return this->_handleErrorStatus();
+
+    if (socket->receiveMessage(&wrongCredentials, sizeof(char)) <= 0)
+        return this->_handleErrorStatus();
+
+    MessageResponseLoginPlayer *message = new MessageResponseLoginPlayer(successfulConnection, gameFull, wrongCredentials);
+
+    delete message;  
+    return this->_handleSuccess();      
 };
 
 // MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *socket){
