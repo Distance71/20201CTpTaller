@@ -43,13 +43,15 @@ typedef enum stage {
 
 typedef enum message {
     NONE,
-    INIT_ENTITY,
-    UPDATE_ENTITY,
+    INIT_ENTITY,    
     INIT_LAYER,
     INIT_SCREEN,
+    INIT_GAME,
     UPDATE_STAGE,
+    UPDATE_ENTITY,
     LOGIN_PLAYER,
     REQUEST_LOGIN_PLAYER,
+    RESPONSE_LOGIN_PLAYER,
     MOVEMENT_PLAYER,
     ACTION_PLAYER,
 } message_t;

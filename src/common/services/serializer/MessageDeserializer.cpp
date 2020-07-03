@@ -207,7 +207,7 @@ Event *MessageDeserializer::getReceivedMessage(User *user){
 
     switch (typeMessage){
 
-        case GAME_INIT:
+        case INIT_GAME:
             return this->receiveGameInit(socket);
         // case INIT_ENTITY:
         //     return this->receiveInitEntity(socket);
@@ -232,6 +232,7 @@ Event *MessageDeserializer::getReceivedMessage(User *user){
 
         default:
             //Log error
+            Logger::getInstance()->log(ERROR, "Mensaje invalido.");
     }
 
 };

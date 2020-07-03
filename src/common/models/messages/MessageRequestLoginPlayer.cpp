@@ -1,11 +1,11 @@
-#include "MessageLoginPlayer.h"
+#include "MessageRequestLoginPlayer.h"
 
 MessageRequestLoginPlayer::MessageRequestLoginPlayer(string username, string password) : Message(LOGIN_PLAYER){
     this->username_ = username;
     this->password_ = password;
 }
 
-MessageRequestLoginPlayer::~MessageLoginPlayer(){}
+MessageRequestLoginPlayer::~MessageRequestLoginPlayer(){}
 
 
 //Server

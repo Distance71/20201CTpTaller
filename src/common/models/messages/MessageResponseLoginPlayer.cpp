@@ -1,4 +1,4 @@
-#include "MessageRequestLoginPlayer.h"
+#include "MessageResponseLoginPlayer.h"
 
 MessageResponseLoginPlayer::MessageResponseLoginPlayer(bool authorize) : Message(RESPONSE_LOGIN_PLAYER){
     this->authorize_ = authorize;

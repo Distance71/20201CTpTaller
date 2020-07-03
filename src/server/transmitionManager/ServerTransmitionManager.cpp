@@ -39,7 +39,7 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
         return;
     }
 
-    Logger::getInstance()->log(DEBUG, "Se creó el hilo de transmision.");
+    Logger::getInstance()->log(DEBUG, "Se creó el hilo de transmision receptor.");
 }
 
 void* ServerTransmitionManager::receivingCycle(User* user){
@@ -93,7 +93,7 @@ void ServerTransmitionManager::createSendingCycle(User* user) {
         return;
     }
 
-    Logger::getInstance()->log(DEBUG, "Se creó el hilo de transmision.");
+    Logger::getInstance()->log(DEBUG, "Se creó el hilo de transmision emisor.");
 }
 
 

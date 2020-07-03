@@ -296,5 +296,7 @@ void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
 
 
 bool getRequestloginPlayerResponse(){
+    //TODO hacer algo
+    return true;
     
 };
