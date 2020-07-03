@@ -38,7 +38,20 @@ class MessageDeserializer {
         // MessageUpdateEntity *receiveUpdateEntity(Socket *receives);
         // MessageUpdateStage *receiveUpdateStage(Socket *receives);
         
-        EventGameInit *receiveGameInit(Socket *socket);
+        //EventGameInit *receiveGameInit(Socket *socket);
+        
+        response_t receiveInitEntity(Socket *socket, Event* &event);
+        response_t receiveInitLayer(Socket *socket, Event* &event);
+        response_t receiveGameInit(Socket *socket, Event* &event);
+        response_t receiveLoginPlayer(Socket *socket, Event* &event);
+        response_t receiveMovementPlayer(Socket *socket, Event* &event);
+        response_t receiveRequestLoginPlayer(Socket *socket, Event* &event);
+        response_t receiveResponseLoginPlayer(Socket *socket, Event* &event);
+        response_t receiveUpdateEntity(Socket *socket, Event* &event);
+
+        response_t _handleErrorStatus();
+        response_t _handleSuccess();
+        response_t _handleErrorMessage();
 
 
     public:

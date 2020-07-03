@@ -45,7 +45,6 @@ typedef enum message {
     NONE,
     INIT_ENTITY,    
     INIT_LAYER,
-    INIT_SCREEN,
     INIT_GAME,
     UPDATE_STAGE,
     UPDATE_ENTITY,
@@ -165,5 +164,16 @@ typedef enum {
     SELECTED,
     NOT_SELECTED,
 }buttonstate_t;
+
+typedef enum responseStatus {
+    OK,
+    ERROR_CONNECTION,
+    ERROR_MESSAGE,
+} responseStatus_t;
+
+typedef struct {
+    bool ok;
+    responseStatus_t status;
+} response_t;
 
 #endif

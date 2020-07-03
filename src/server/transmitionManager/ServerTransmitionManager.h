@@ -9,7 +9,7 @@
 #include "../../common/models/messages/MessageActionPlayer.h"
 #include "../../common/models/messages/MessageInitEntity.h"
 #include "../../common/models/messages/MessageInitLayer.h"
-#include "../../common/models/messages/MessageInitScreen.h"
+#include "../../common/models/messages/MessageGameInit.h"
 #include "../../common/models/messages/MessageMovementPlayer.h"
 #include "../../common/models/messages/MessageUpdateEntity.h"
 #include "../../common/models/messages/MessageUpdateStage.h"

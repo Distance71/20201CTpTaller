@@ -18,7 +18,7 @@
 #include "../../common/models/messages/MessageActionPlayer.h"
 #include "../../common/models/messages/MessageInitEntity.h"
 #include "../../common/models/messages/MessageInitLayer.h"
-#include "../../common/models/messages/MessageInitScreen.h"
+#include "../../common/models/messages/MessageGameInit.h"
 #include "../../common/models/messages/MessageMovementPlayer.h"
 #include "../../common/models/messages/MessageUpdateEntity.h"
 #include "../../common/models/messages/MessageUpdateStage.h"
@@ -40,7 +40,7 @@ class ClientTransmitionManager {
 
         void processInitEntity(MessageInitEntity *initEntity);
         void processInitLayer(MessageInitLayer *initLayer);
-        void processInitScreen(MessageInitScreen *initScreen);
+        void processGameInit(MessageGameInit *initScreen);
         void processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin);
         void processUpdateEntity(MessageUpdateEntity *updateEntity);
         void processUpdateStage(MessageUpdateStage *updateStage);

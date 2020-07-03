@@ -1,15 +1,15 @@
-#include "MessageInitScreen.h"
+#include "MessageGameInit.h"
 
-MessageInitScreen::MessageInitScreen(unsigned int width, unsigned int height) : Message(INIT_SCREEN){
+MessageGameInit::MessageGameInit(unsigned int width, unsigned int height) : Message(INIT_GAME){
     this->screenWidth_ = width;
     this->screenHeight_ = height;
 }
 
-MessageInitScreen::~MessageInitScreen(){
+MessageGameInit::~MessageGameInit(){
 
 }
 
-string MessageInitScreen::getStringData(){
+string MessageGameInit::getStringData(){
     string dataString;
 
     dataString.push_back(this->type_);
@@ -25,10 +25,10 @@ string MessageInitScreen::getStringData(){
     return dataString;
 }
 
-unsigned int MessageInitScreen::getWidth(){
+unsigned int MessageGameInit::getWidth(){
     return this->screenWidth_;
 };
 
-unsigned int MessageInitScreen::getHeight(){
+unsigned int MessageGameInit::getHeight(){
     return this->screenHeight_;
 };

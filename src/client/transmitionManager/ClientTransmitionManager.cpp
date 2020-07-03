@@ -253,7 +253,7 @@ void ClientTransmitionManager::processInitLayer(MessageInitLayer *initLayer){
 
 };
 
-void ClientTransmitionManager::processInitScreen(MessageInitScreen *initScreen){
+void ClientTransmitionManager::processGameInit(MessageGameInit *initScreen){
 
     unsigned int width = initScreen->getWidth();
     unsigned int  height = initScreen->getHeight();

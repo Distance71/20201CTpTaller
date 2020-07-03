@@ -32,6 +32,3 @@ string NoneMessage::getStringData(){
 
     return dataString;
 }
-
-void Message::setStringData(){
-}

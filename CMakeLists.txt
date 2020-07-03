@@ -65,8 +65,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageInitEntity.h
         src/common/models/messages/MessageInitLayer.cpp
         src/common/models/messages/MessageInitLayer.h
-        src/common/models/messages/MessageInitScreen.cpp
-        src/common/models/messages/MessageInitScreen.h
+        src/common/models/messages/MessageGameInit.cpp
+        src/common/models/messages/MessageGameInit.h
         src/common/models/messages/MessageMovementPlayer.cpp
         src/common/models/messages/MessageMovementPlayer.h
         src/common/models/messages/MessageRequestLoginPlayer.cpp

@@ -1,7 +1,5 @@
 #include "MessageDeserializer.h"
 
-MessageDeserializer::MessageDeserializer(){};
-
 void MessageDeserializer::_read(Socket *socket, void *value){
     int status = socket->receiveMessage((char *)value, sizeof(value));
     if (status < 0){
@@ -16,6 +14,36 @@ void MessageDeserializer::_readString(Socket *socket, void **value){
     }
 }
 
+response_t MessageDeserializer::_handleErrorStatus(){
+    Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
+    response_t response = {false, ERROR_CONNECTION};
+
+    return response;
+}
+
+response_t MessageDeserializer::_handleErrorMessage() {
+    Logger::getInstance()->log(ERROR, "Mensaje invalido.");    
+    response_t response = {false, ERROR_MESSAGE};
+
+    return response;
+}
+
+response_t MessageDeserializer::_handleSuccess(){
+    response_t response = {true, OK};
+
+    return response;
+}
+
+
+response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
+    /*MessageGameInit *message;
+
+    if (socket->receiveMessage((char *) message, sizeof(MessageGameInit)) <= 0)
+        return this->_handleErrorStatus();
+
+    event = message->deSerialize();*/
+    return this->_handleSuccess();
+}
 
 // MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *socket){
 
@@ -189,12 +217,7 @@ trasmitionManager::sendingCycle(){
 //     return message;        
 // };
 
-EventGameInit *MessageDeserializer::receiveGameInit(Socket *socket){
-    //We do not need to get params in this case
-    return new EventGameInit();
-}
-
-
+/*
 Event *MessageDeserializer::getReceivedMessage(User *user){
     
     char typeMessage; //message_t ?
@@ -235,7 +258,7 @@ Event *MessageDeserializer::getReceivedMessage(User *user){
             Logger::getInstance()->log(ERROR, "Mensaje invalido.");
     }
 
-};
+};*/
 
 // void MessageDeserializer::pushNewMessage(Socket *socket, bool &error, EventsQueue *queueEvents){
 //     char typeMessage = NONE;

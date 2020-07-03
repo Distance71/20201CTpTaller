@@ -19,7 +19,6 @@ class Message {
         ~Message();
         message_t getType();
         virtual string getStringData();
-        virtual void setStringData();
 
         //virtual Event* deSerialize(); //Whould be great to add this
 };

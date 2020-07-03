@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class MessageInitScreen : public Message {
+class MessageGameInit : public Message {
 
     private:
         unsigned int screenWidth_;
@@ -16,8 +16,8 @@ class MessageInitScreen : public Message {
 
     public:
 
-        MessageInitScreen(unsigned int width, unsigned int height);
-        ~MessageInitScreen();
+        MessageGameInit(unsigned int width, unsigned int height);
+        ~MessageGameInit();
         string getStringData();
 
         unsigned int getWidth();
