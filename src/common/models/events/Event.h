@@ -3,6 +3,8 @@
 
 #include "../../models/messages/Message.h"
 
+class Message;
+
 class Event {
 
     public:

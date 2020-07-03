@@ -1,7 +1,9 @@
 #ifndef MESSAGE_H_
 #define MESSAGE_H_
 
-using namespace std;
+#include "../events/Event.h"
+
+class Event;
 
 class Message {
 

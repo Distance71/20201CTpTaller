@@ -168,6 +168,7 @@ typedef enum {
 typedef enum responseStatus {
     OK,
     ERROR_CONNECTION,
+    ERROR_MESSAGE,
 } responseStatus_t;
 
 typedef struct {

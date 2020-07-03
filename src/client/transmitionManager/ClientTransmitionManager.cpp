@@ -30,17 +30,17 @@ static void* _sendMessages(void *arg){
 }
 
 
-void ClientTransmitionManager::sendMessages(){
-    while (clientOwn_->isConnected()){
-        if (!queueSendMessages_->empty()){
-            Message *message = queueSendMessages_ -> front();
-            queueSendMessages_->erase(queueSendMessages_->begin(),queueSendMessages_->begin()+1);
-            string data = message->getStringData();
-            delete message;
-            socket_->sendMessage(data.c_str(), sizeof(char) *data.size());
-        }
-    }
-}
+// void ClientTransmitionManager::sendMessages(){
+//     while (clientOwn_->isConnected()){
+//         if (!queueSendMessages_->empty()){
+//             Message *message = queueSendMessages_ -> front();
+//             queueSendMessages_->erase(queueSendMessages_->begin(),queueSendMessages_->begin()+1);
+//             string data = message->getStringData();
+//             delete message;
+//             socket_->sendMessage(data.c_str(), sizeof(char) *data.size());
+//         }
+//     }
+// }
 
 
 
@@ -242,47 +242,47 @@ MessageDeserializer *ClientTransmitionManager::getDeserializer(){
 
 };*/
 
-void ClientTransmitionManager::processInitEntity(MessageInitEntity *initEntity){
+// void ClientTransmitionManager::processInitEntity(MessageInitEntity *initEntity){
 
-};
+// };
 
-void ClientTransmitionManager::processInitLayer(MessageInitLayer *initLayer){
+// void ClientTransmitionManager::processInitLayer(MessageInitLayer *initLayer){
 
-    size_t idLayer = initLayer->getIdLayer();
-    string sourceLayer = initLayer->getSource();
+//     size_t idLayer = initLayer->getIdLayer();
+//     string sourceLayer = initLayer->getSource();
 
-};
+// };
 
-void ClientTransmitionManager::processInitScreen(MessageInitScreen *initScreen){
+// void ClientTransmitionManager::processInitScreen(MessageInitScreen *initScreen){
 
-    unsigned int width = initScreen->getWidth();
-    unsigned int  height = initScreen->getHeight();
-    GameProvider::setWidth(width);
-    GameProvider::setHeight(height);
-    this->clientOwn_->getGameScreen()->initializeGraphics();
-    this->clientOwn_->getGameScreen()->viewLogin();
-};
+//     unsigned int width = initScreen->getWidth();
+//     unsigned int  height = initScreen->getHeight();
+//     GameProvider::setWidth(width);
+//     GameProvider::setHeight(height);
+//     this->clientOwn_->getGameScreen()->initializeGraphics();
+//     this->clientOwn_->getGameScreen()->viewLogin();
+// };
 
-void ClientTransmitionManager::processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin){
+// void ClientTransmitionManager::processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin){
 
-};
+// };
 
-void ClientTransmitionManager::processUpdateEntity(MessageUpdateEntity *updateEntity){
+// void ClientTransmitionManager::processUpdateEntity(MessageUpdateEntity *updateEntity){
 
-};
+// };
 
-void ClientTransmitionManager::processUpdateStage(MessageUpdateStage *updateStage){
+// void ClientTransmitionManager::processUpdateStage(MessageUpdateStage *updateStage){
 
-    level_t oneLevel = updateStage->getLevel();
+//     level_t oneLevel = updateStage->getLevel();
     
-    if (updateStage->getIsStartStage()){
-        this->clientOwn_->getGameScreen()->viewStartStage(oneLevel);
-    }
+//     if (updateStage->getIsStartStage()){
+//         this->clientOwn_->getGameScreen()->viewStartStage(oneLevel);
+//     }
 
-    if (updateStage->getIsEndStage()){
-        this->clientOwn_->getGameScreen()->viewStageCleared(oneLevel);
-    }
-};
+//     if (updateStage->getIsEndStage()){
+//         this->clientOwn_->getGameScreen()->viewStageCleared(oneLevel);
+//     }
+// };
 
 void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
    /* MessageMovementPlayer *messageMovement = new MessageMovementPlayer(moveOrientation);

@@ -12,7 +12,7 @@
 #include "../../common/models/Sprite.h"
 #include "../../common/providers/GameProvider.h"
 #include "../transmitionManager/ClientTransmitionManager.h"
-#include  "../../common/models/messages/MessageRequestLoginPlayer.h"
+//#include  "../../common/models/messages/MessageRequestLoginPlayer.h"
 
 
 using namespace std;

@@ -34,8 +34,9 @@ class MessageDeserializer {
 
         response_t _handleErrorStatus();
         response_t _handleSuccess();
+        response_t _handleErrorMessage();
     public:
-        MessageDeserializer() = default;
+        //MessageDeserializer() = default;
 
         response_t getReceivedMessage(User* user, Event* &event);
         //Message *getReceivedMessage(Socket *receives, bool &error);

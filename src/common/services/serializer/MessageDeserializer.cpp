@@ -17,6 +17,13 @@ response_t MessageDeserializer::_handleErrorStatus(){
     return response;
 }
 
+response_t MessageDeserializer::_handleErrorMessage() {
+    Logger::getInstance()->log(ERROR, "Mensaje invalido.");    
+    response_t response = {false, ERROR_MESSAGE};
+
+    return response;
+}
+
 response_t MessageDeserializer::_handleSuccess(){
     response_t response = {true, OK};
 
@@ -35,8 +42,7 @@ response_t MessageDeserializer::getReceivedMessage(User* user, Event* &event){
     switch (typeMessage){
 
         case INIT_GAME:
-            response_t response = this->receiveGameInit(socket, event);
-            return response;
+            return this->receiveGameInit(socket, event);
         // case INIT_ENTITY:
         //     return this->receiveInitEntity(socket);
 
@@ -60,7 +66,7 @@ response_t MessageDeserializer::getReceivedMessage(User* user, Event* &event){
 
         default:
             //Log error
-            Logger::getInstance()->log(ERROR, "Mensaje invalido.");
+            return _handleErrorMessage();
     }
 
 };
