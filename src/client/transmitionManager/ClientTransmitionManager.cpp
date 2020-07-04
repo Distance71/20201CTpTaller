@@ -93,14 +93,14 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
         return false;
     }
     
-    pthread_t sending_thread;
+    /*pthread_t sending_thread;
     pthread_create(&sending_thread, NULL,_receiveMessages,this);
 
     pthread_t receiving_thread;
     pthread_create(&receiving_thread, NULL,_sendMessages,this);
 
     pthread_t processing_thread;
-    pthread_create(&processing_thread, NULL,_processMessages,this);
+    pthread_create(&processing_thread, NULL,_processMessages,this);*/
     
     return true;
 };
