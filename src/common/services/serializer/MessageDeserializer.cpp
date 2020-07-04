@@ -1,9 +1,9 @@
 #include "MessageDeserializer.h"
 
 response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
-    MessageGameInit *message;
+    MessageGameInit message;
 
-    if (socket->receiveMessage((char *) message, sizeof(MessageGameInit)) <= 0)
+    if (socket->receiveMessage((char *) &message, sizeof(MessageGameInit)) <= 0)
         return this->_handleErrorStatus();
 
     event = message->deSerialize();
