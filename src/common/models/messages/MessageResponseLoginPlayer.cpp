@@ -1,10 +1,10 @@
 // #include "MessageResponseLoginPlayer.h"
 
-MessageResponseLoginPlayer::MessageResponseLoginPlayer(bool successfulConnection, bool gameFull, bool wrongCredentials) : Message(RESPONSE_LOGIN_PLAYER){
+/*MessageResponseLoginPlayer::MessageResponseLoginPlayer(bool successfulConnection, bool gameFull, bool wrongCredentials) : Message(RESPONSE_LOGIN_PLAYER){
     this->successfulConnection_ = successfulConnection;
     this->gameFull_ = gameFull;
     this->wrongCredentials_ = wrongCredentials;
-}
+}*/
 // MessageResponseLoginPlayer::~MessageResponseLoginPlayer(){}
 
 // string MessageResponseLoginPlayer::getStringData(){

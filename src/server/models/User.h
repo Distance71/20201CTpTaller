@@ -8,6 +8,8 @@
 
 using namespace std;
 
+class Message;
+
 class User {
 
 private:

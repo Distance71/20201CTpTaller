@@ -5,12 +5,17 @@
 #include "Message.h"
 #include "../events/Event.h"
 
+class Message;
+
 class MessageGameInit: public Message {
 
+	private:
+		size_t width_;
+        size_t height_;
+
     public:
-        MessageGameInit() = default;
-        
-        Event* deSerialize();
+    	MessageGameInit(size_t width, size_t height);
+        Event* deSerialize() override;
 };
 
 #endif

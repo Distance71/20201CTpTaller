@@ -80,7 +80,7 @@ void Menu::update(int x, int y,bool click){
 }
 
 
-void Menu::setCredentialsResponse(login_answer _answer){
+void Menu::setCredentialsResponse(loginAnswer_t _answer){
     credentials_response = _answer;
 }
 
@@ -89,8 +89,8 @@ bool Menu::validateCredentials(){
     if (buttons["LOGIN"]->isSelected()){
         string username = text_boxes["USERNAME"]->getText();
         string password = text_boxes["PASSWORD"]->getText();
-        MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(username,password);
-        client->getTransmitionManager()->sendMessage(message);
+        //MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(username,password);
+        //client->getTransmitionManager()->sendMessage(message);
         //bool response = client_transmition_manager -> getRequestloginPlayerResponse();
         return false;
     }

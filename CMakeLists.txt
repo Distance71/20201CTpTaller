@@ -56,10 +56,6 @@ add_executable(tp1taller
         src/common/models/messages/MessageGameInit.cpp
         src/common/models/messages/MessageGameInit.h
 
-        src/common/models/events/Event.h
-        src/common/models/events/EventGameInit.cpp
-        src/common/models/events/EventGameInit.h
-
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
         src/common/models/Position.cpp
@@ -75,7 +71,6 @@ add_executable(tp1taller
         src/common/models/Semaphore.cpp
         
         src/common/models/events/Event.h
-        src/common/models/events/Event.cpp
         src/common/models/events/EventGameInit.h
         src/common/models/events/EventGameInit.cpp
         src/common/models/events/EventResponseLoginPlayer.h

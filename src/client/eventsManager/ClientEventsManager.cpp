@@ -83,7 +83,7 @@ void ClientEventsManager::detectPlayerEvents(){
             movementOrientation = BACK_DOWN;
         }
 
-        MessageMovementPlayer* message = new MessageMovementPlayer(movementOrientation);  
-        client->sendMessage(message);
+        //MessageMovementPlayer* message = new MessageMovementPlayer(movementOrientation);  
+        //client->sendMessage(message);
     }
 }

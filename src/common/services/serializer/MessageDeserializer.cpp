@@ -21,9 +21,9 @@ response_t MessageDeserializer::_handleSuccess(){
     return response;
 }
 
-response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
+/*response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
     
-    unsigned int width, height;
+    size_t width, height;
 
     if (socket->receiveMessage((char *) &width, sizeof(unsigned int)) <= 0)
         return this->_handleErrorStatus();
@@ -31,10 +31,10 @@ response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
     if (socket->receiveMessage((char *) &height, sizeof(unsigned int)) <= 0)
         return this->_handleErrorStatus();
 
-    MessageGameInit *message = new MessageGameInit(width, height);
+    //MessageGameInit *message = new MessageGameInit(width, height);
 
-    /*event = message->deSerialize();*/
-    delete message;
+    /*event = message->deSerialize();
+    //delete message;
 
     return this->_handleSuccess();
 }
@@ -171,7 +171,7 @@ response_t MessageDeserializer::receiveResponseLoginPlayer(Socket *socket, Event
 
     delete message;  
     return this->_handleSuccess();      
-};
+};*/
 
 // MessageActionPlayer *MessageDeserializer::receiveActionPlayer(Socket *socket){
 

@@ -5,17 +5,10 @@
 #include <string.h>
 #include "../../models/Socket.h"
 #include "../../models/events/Event.h"
-// #include "../../models/messages/MessageActionPlayer.h"
-#include "../../models/messages/MessageInitEntity.h"
-// #include "../../models/messages/MessageInitLayer.h"
 #include "../../models/messages/MessageGameInit.h"
-#include "../../models/messages/MessageMovementPlayer.h"
 #include "../../models/messages/MessageRequestLoginPlayer.h"
 #include "../../models/messages/MessageResponseLoginPlayer.h"
-#include "../../models/messages/MessageUpdateEntity.h"
-// #include "../../models/messages/MessageUpdateStage.h"
 #include "../../models/events/Event.h"
-#include "../../models/messages/MessageGameInit.h"
 #include "../../types.h"
 //#include "../../models/BlockingQueue.h"
 #include "../../services/Logger.h"
@@ -28,8 +21,6 @@ using namespace std;
 class MessageDeserializer {
 
     private:
-<<<<<<< HEAD
-=======
         //void _read(Socket *socket, void *value);
         //void _readString(Socket *socket, void **value);
         // MessageActionPlayer *receiveActionPlayer(Socket *receives);
@@ -56,15 +47,10 @@ class MessageDeserializer {
         response_t _handleErrorStatus();
         response_t _handleSuccess();
         response_t _handleErrorMessage();
->>>>>>> 1f2af3267d24fb18a8055634c259c385f37a9398
 
         //Event *receiveUserLogin(Socket *socket, Event* &event);
         //Event *receiveUserMovement(Socket *socket, Event* &event);
-        response_t receiveGameInit(Socket *socket, Event* &event);
 
-        response_t _handleErrorStatus();
-        response_t _handleSuccess();
-        response_t _handleErrorMessage();
     public:
         //MessageDeserializer() = default;
 

@@ -25,7 +25,7 @@ class Menu {
         ~Menu();
         void processEvent();
         void show();
-        void setCredentialsResponse(login_answer _answer);
+        void setCredentialsResponse(loginAnswer_t _answer);
         bool validateCredentials();
         
     private:
@@ -34,7 +34,7 @@ class Menu {
         unordered_map <string, MenuElement*> menu_elements; 
         unordered_map <string, Button*> buttons; 
         unordered_map <string, TextBox*> text_boxes;
-        login_answer credentials_response;
+        loginAnswer_t credentials_response;
         bool invalid_credentials;
 
         void addButton(string button_name,Button* button);

@@ -22,10 +22,10 @@ void ClientTransmitionManager::sendMessage(Message* message){
 }
 
 
-static void* _sendMessages(void *arg){
+/*static void* _sendMessages(void *arg){
     ClientTransmitionManager *client_transmition_manager = (ClientTransmitionManager *) arg;
     client_transmition_manager->sendMessages();
-}
+}*/
 
 
 // void ClientTransmitionManager::sendMessages(){
@@ -251,7 +251,7 @@ MessageDeserializer *ClientTransmitionManager::getDeserializer(){
 
 // };
 
-void ClientTransmitionManager::processGameInit(MessageGameInit *initScreen){
+//void ClientTransmitionManager::processGameInit(MessageGameInit *initScreen){
 
 //     unsigned int width = initScreen->getWidth();
 //     unsigned int  height = initScreen->getHeight();
@@ -282,10 +282,10 @@ void ClientTransmitionManager::processGameInit(MessageGameInit *initScreen){
 //     }
 // };
 
-void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
-   /* MessageMovementPlayer *messageMovement = new MessageMovementPlayer(moveOrientation);
-    this->queueSendMessage_.push_back(messageMovement);*/
-};
+/*void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
+    MessageMovementPlayer *messageMovement = new MessageMovementPlayer(moveOrientation);
+    this->queueSendMessage_.push_back(messageMovement);
+};*/
 
 
 
@@ -293,8 +293,7 @@ void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
 
 
 
-bool ClientTransmitionManager::getRequestloginPlayerResponse(){
+/*bool ClientTransmitionManager::getRequestloginPlayerResponse(){
     //TODO hacer algo
-    return true;
-    
-};
+    return true;  
+};*/

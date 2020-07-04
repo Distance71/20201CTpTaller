@@ -183,6 +183,6 @@ typedef enum {
     VALID_CREDENTIALS,
     INVALID_CREDENTIALS,
     FULL_GAME,
-} login_answer;
+} loginAnswer_t;
 
 #endif

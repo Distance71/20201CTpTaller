@@ -1,19 +1,19 @@
 #include "EventGameInit.h"
 
-Message* EventGameInit::serialize() {
-    return (Message *) new MessageGameInit();
+EventGameInit::EventGameInit(size_t width, size_t height){
+    this->width_ = width;
+    this->height_ = height;
+    this->context_ = nullptr; 
+}
 
-EventGameInit::EventGameInit(size_t _width,size_t _height){
-    width = _width;
-    height = _height;
+Message* EventGameInit::serialize() {
+    return (Message *) new MessageGameInit(this->width_, this->height_);
 }
 
 void EventGameInit::update() {
-    if (client){
-        GameProvider::setWidth(width);
-        GameProvider::setHeight(height);
-    }
-}
+    if (!this->context_)
+		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 
-Message* EventGameInit::serialize(){
+    GameProvider::setWidth(this->width_);
+    GameProvider::setHeight(this->height_);
 }
