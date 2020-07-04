@@ -2,7 +2,6 @@
 
 GameScreen::GameScreen(Client *client){
     this->clientOwn = client;
-    this->map_ = new ClientMap();
     //this->initializeGraphics();
 }
 
@@ -15,6 +14,8 @@ GameScreen::~GameScreen(){
     this->renderer_ = nullptr;
     this->window_ = nullptr;
 
+    menu = NULL;
+   
     SDL_Quit();    
 }
 
@@ -65,7 +66,7 @@ void GameScreen::initializeGraphics(){
 
 
 int GameScreen::viewLogin() {
-    Menu* menu = new Menu(clientOwn->getTransmitionManager());
+    menu = new Menu(clientOwn);
     SDL_Event e; 
     while (GameProvider::getStatus().normalStatus){
         while (SDL_PollEvent(&e)){
@@ -73,12 +74,14 @@ int GameScreen::viewLogin() {
             if (e.type == SDL_QUIT){
                 Logger::getInstance()->log(INFO, "Cierre del juego voluntario");
                 delete menu;
+                menu = NULL;
                 return  EXIT_SUCCESS;
             }
             menu -> processEvent();
         }
         if(menu->validateCredentials()){
             delete menu;
+            menu = NULL;
             break;
         }
         menu->show();      
@@ -215,6 +218,7 @@ bool GameScreen::waitEnter(SDL_Surface* screen){
     }
 }
 
-void GameScreen::addLayer(size_t idLayer, string sourceLayer){
-    this->map_->addLayerBackground(idLayer, sourceLayer);
+
+Menu* GameScreen::getMenu(){
+    return menu;
 }

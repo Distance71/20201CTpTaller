@@ -19,7 +19,19 @@
 //         string getStringData();
 
 //         bool getAuthorize();
+/*    private:
+        bool successfulConnection_;
+        bool gameFull_;
+        bool wrongCredentials_;
 
+    public:
+        MessageResponseLoginPlayer(bool successfulConnection, bool gameFull, bool wrongCredentials);
+        ~MessageResponseLoginPlayer();
+        string getStringData();
+
+        bool getIsConnection();
+        bool getIsGameFull();
+        bool getIsWrongCredentials();*/
 // };
 
 // #endif // _MESSAGE_REQUEST_PLAYER_H_

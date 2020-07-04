@@ -64,9 +64,9 @@ void Server::waitPlayers(){
     //porque el Socket hace el accept antes de que del logeo y demas
     while (!this->usersManager_->isFullGame() && this->isConnected()){
         
-        int newUserId = this->usersManager_->acceptUnloggedUser();
+        size_t newUserId = this->usersManager_->acceptUnloggedUser();
 
-        if (newUserId < 0){
+        if (newUserId == 0){
             bool isFullGame = this->usersManager_->isFullGame();
             if(isFullGame) {
                 //Some debug log
@@ -75,7 +75,7 @@ void Server::waitPlayers(){
             //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>*/
         }
         else{
-            cout << "Se agrega el cliente"+ to_string(newUserId) << endl;
+            cout << "Se agrega el cliente " + to_string(newUserId) << endl;
         }
         //Here should handle validation
     }

@@ -15,8 +15,6 @@ ClientTransmitionManager::~ClientTransmitionManager(){
 
 
 
-
-
 /* Sending messages */
 
 void ClientTransmitionManager::sendMessage(Message* message){
@@ -95,14 +93,14 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
         return false;
     }
     
-    pthread_t sending_thread;
+    /*pthread_t sending_thread;
     pthread_create(&sending_thread, NULL,_receiveMessages,this);
 
     pthread_t receiving_thread;
     pthread_create(&receiving_thread, NULL,_sendMessages,this);
 
     pthread_t processing_thread;
-    pthread_create(&processing_thread, NULL,_processMessages,this);
+    pthread_create(&processing_thread, NULL,_processMessages,this);*/
     
     return true;
 };
@@ -253,7 +251,7 @@ MessageDeserializer *ClientTransmitionManager::getDeserializer(){
 
 // };
 
-// void ClientTransmitionManager::processInitScreen(MessageInitScreen *initScreen){
+void ClientTransmitionManager::processGameInit(MessageGameInit *initScreen){
 
 //     unsigned int width = initScreen->getWidth();
 //     unsigned int  height = initScreen->getHeight();
@@ -295,7 +293,7 @@ void ClientTransmitionManager::sendMovement(orientation_t moveOrientation){
 
 
 
-bool getRequestloginPlayerResponse(){
+bool ClientTransmitionManager::getRequestloginPlayerResponse(){
     //TODO hacer algo
     return true;
     

@@ -12,26 +12,25 @@ class MessageUpdateEntity : public Message {
 
     private:
     
-        //level_t level_; 
-        //stage_t stage_;
-        unsigned int step_;
         IdElement idElement_;
         int pos_x_;
         int pos_y_;
+        orientation_t orientation_;
     
     public:
 
-        MessageUpdateEntity(unsigned int oneStep, IdElement idMapElement, int posX, int posY);
-        ~MessageUpdateEntity();
-        
+        MessageUpdateEntity(IdElement idMapElement, int posX, int posY, orientation_t orientation);
+        ~MessageUpdateEntity();        
         string getStringData();
 
-        //level_t getLevel();
-        //stage_t getStage();
-        unsigned int getStep();
         IdElement getIdElement();
         int getPosX();
         int getPosY();
+        orientation_t getOrientation();
+
+        //level_t getLevel();
+        //stage_t getStage();
+        //unsigned int getStep();
 
 };
 
