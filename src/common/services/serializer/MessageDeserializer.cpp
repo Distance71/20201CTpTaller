@@ -1,5 +1,14 @@
 #include "MessageDeserializer.h"
 
+response_t MessageDeserializer::receiveGameInit(Socket *socket, Event* &event){
+    MessageGameInit message;
+
+    if (socket->receiveMessage((char *) &message, sizeof(MessageGameInit)) <= 0)
+        return this->_handleErrorStatus();
+
+    event = message->deSerialize();
+    return this->_handleSuccess();
+}
 
 response_t MessageDeserializer::_handleErrorStatus(){
     Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
