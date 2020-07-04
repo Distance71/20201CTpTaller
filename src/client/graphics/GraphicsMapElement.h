@@ -8,6 +8,7 @@
 #include "../../common/types.h"
 
 class Sprite;
+
 class GraphicsMapElement {
     private:
         Sprite* sprite_;
@@ -18,10 +19,12 @@ class GraphicsMapElement {
         orientation_t orientation_;
     
     public:
-        GraphicsMapElement(Sprite * sprite, int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation);
+        GraphicsMapElement(const string &source, int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation);
+        ~GraphicsMapElement();
         void update();
 
         void setNewPosition(int pos_x, int pos_y, orientation_t orientation);
+        
 };
 
 #endif

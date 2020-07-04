@@ -1,12 +1,16 @@
 #include "GraphicsMapElement.h"
 
-GraphicsMapElement::GraphicsMapElement(Sprite * sprite,  int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation){
-    this->sprite_ = sprite;
+GraphicsMapElement::GraphicsMapElement(const string &source,  int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation){
+    this->sprite_ = new Sprite(source);
     this->size_x_ = size_x;
     this->size_y_ = size_y;
     this->pos_x_ = pos_x;
     this->pos_y_ = pos_y;
     this->orientation_ = orientation;
+}
+
+GraphicsMapElement::~GraphicsMapElement(){
+    delete this->sprite_;
 }
 
 void GraphicsMapElement::update(){

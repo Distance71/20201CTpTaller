@@ -9,6 +9,7 @@
 #include "Client.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/types.h"
+#include "graphics/GraphicsGeneral.h"
 #include "loginMenu/Menu.h"
 
 using namespace std;

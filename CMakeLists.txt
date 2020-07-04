@@ -31,6 +31,8 @@ add_executable(tp1taller
         src/client/graphics/GraphicsScenario.h
         src/client/graphics/GraphicsMapElement.cpp
         src/client/graphics/GraphicsMapElement.h
+        src/client/graphics/GraphicsGeneral.cpp
+        src/client/graphics/GraphicsGeneral.h
 
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
