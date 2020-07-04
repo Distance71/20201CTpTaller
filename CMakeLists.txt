@@ -52,7 +52,6 @@ add_executable(tp1taller
         src/client/loginMenu/MenuElement.cpp
 
         src/common/models/messages/Message.h
-        src/common/models/messages/Message.h
         src/common/models/messages/MessageGameInit.cpp
         src/common/models/messages/MessageGameInit.h
 

@@ -7,7 +7,7 @@
 #include "../../providers/GameProvider.h"
 #include "../../services/Logger.h"
 
-class Event;
+using namespace std;
 
 class EventGameInit: public Event {
 
@@ -16,10 +16,10 @@ class EventGameInit: public Event {
         size_t height_;
 
     public:
-        explicit EventGameInit(size_t width, size_t height);
+        EventGameInit(size_t width, size_t height): width_(width), height_(height) {}
         
-        Message* serialize() override;
-        void update() override;
+        Message* serialize();
+        void update();
 };
 
 #endif

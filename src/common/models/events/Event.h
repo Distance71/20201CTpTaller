@@ -1,21 +1,22 @@
-#pragma once
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef EVENT_H_
+#define EVENT_H_
 
+#include <stdio.h>
 #include "../messages/Message.h"
+
+using namespace std;
 
 class Message;
 
 class Event {
 
 	protected:
-        void* context_;
-
+        void* context_ = nullptr;
     public:
         void setContext(void* context) {this->context_ = context;};
 
-        virtual Message* serialize();
-        virtual void update();
+        virtual Message* serialize() = 0;
+        virtual void update() = 0;
 };
 
 #endif

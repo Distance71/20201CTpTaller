@@ -11,9 +11,9 @@ ClientEventsManager::~ClientEventsManager(){}
 void ClientEventsManager::processEvents(){
     while(client->isConnected()){
         Event* event = getEvent();
-        if (event){
+        /*if (event){
             event->update();
-        }
+        }*/
     }
 }
 

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef MESSAGE_H_
 #define MESSAGE_H_
 
@@ -10,7 +9,7 @@ class Event;
 class Message {
 
     public:
-        virtual Event* deSerialize();
+        virtual Event* deSerialize() = 0;
 };
 
 #endif
