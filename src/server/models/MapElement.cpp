@@ -12,8 +12,8 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->size_y_ = size_y;
 
     Sprite* sprite = new Sprite(sourceSprite);
-    GraphicsMapElement* graficador = new GraphicsMapElement(sprite, this->size_x_, this->size_y_);
-    addAction("Graphics", graficador);
+    //GraphicsMapElement* graficador = new GraphicsMapElement(sprite, this->size_x_, this->size_y_);
+    //addAction("Graphics", graficador);
 
     if (type == PLAYER){
         PlayerController* playercontroller= new PlayerController(sprite);
@@ -58,8 +58,8 @@ IdElement MapElement::getIdElement(){
 }
 
 void MapElement::update(){
-     GraphicsMapElement *graficador = dynamic_cast<GraphicsMapElement*>(actions_.at("Graphics")); 
-     graficador->update(states_);
+   //GraphicsMapElement *graficador = dynamic_cast<GraphicsMapElement*>(actions_.at("Graphics")); 
+    //graficador->update(states_);
     for(auto action : actions_){
         action.second->update(states_); 
     }
