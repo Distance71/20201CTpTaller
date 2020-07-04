@@ -42,6 +42,9 @@ typedef enum stage {
 } stage_t;
 
 typedef enum message {
+    NONE,
+    INIT_ENTITY,    
+    INIT_LAYER,
     INIT_GAME,
     
     // INIT_ENTITY,
@@ -63,7 +66,7 @@ typedef enum {
     FRONT_UP,
     FRONT_DOWN,
     BACK_DOWN,
-    BACK_UP
+    BACK_UP,
 } orientation_t;
 
 typedef struct {
@@ -175,5 +178,11 @@ typedef struct {
     bool ok;
     responseStatus_t status;
 } response_t;
+
+typedef enum {
+    VALID_CREDENTIALS,
+    INVALID_CREDENTIALS,
+    FULL_GAME,
+} login_answer;
 
 #endif

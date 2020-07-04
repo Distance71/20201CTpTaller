@@ -9,6 +9,7 @@ class Message {
 
     public:
         Message() = default;
+        message_t type_;
 
         virtual Event* deSerialize();
 };

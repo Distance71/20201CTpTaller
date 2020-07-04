@@ -15,14 +15,16 @@
 #include "../../common/models/Socket.h"
 #include "../../common/services/serializer/MessageDeserializer.h"
 #include "../../common/models/messages/Message.h"
-// #include "../../common/models/messages/MessageActionPlayer.h"
-// #include "../../common/models/messages/MessageInitEntity.h"
-// #include "../../common/models/messages/MessageInitLayer.h"
-// #include "../../common/models/messages/MessageInitScreen.h"
-// #include "../../common/models/messages/MessageMovementPlayer.h"
-// #include "../../common/models/messages/MessageUpdateEntity.h"
-// #include "../../common/models/messages/MessageUpdateStage.h"
-// #include "../../common/models/messages/MessageRequestLoginPlayer.h"
+#include "../../common/models/messages/MessageActionPlayer.h"
+#include "../../common/models/messages/MessageInitEntity.h"
+#include "../../common/models/messages/MessageInitLayer.h"
+#include "../../common/models/messages/MessageGameInit.h"
+#include "../../common/models/messages/MessageMovementPlayer.h"
+#include "../../common/models/messages/MessageUpdateEntity.h"
+#include "../../common/models/messages/MessageUpdateStage.h"
+#include "../../common/models/messages/MessageRequestLoginPlayer.h"
+
+class MessageDeserializer;
 
 using namespace std;
 
@@ -38,12 +40,21 @@ class ClientTransmitionManager {
         vector<Message *>* queueSendMessages_;
         MessageDeserializer *deserializer_;
 
+<<<<<<< HEAD
         // void processInitEntity(MessageInitEntity *initEntity);
         // void processInitLayer(MessageInitLayer *initLayer);
         // void processInitScreen(MessageInitScreen *initScreen);
         // void processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin);
         // void processUpdateEntity(MessageUpdateEntity *updateEntity);
         // void processUpdateStage(MessageUpdateStage *updateStage);
+=======
+        void processInitEntity(MessageInitEntity *initEntity);
+        void processInitLayer(MessageInitLayer *initLayer);
+        void processGameInit(MessageGameInit *initScreen);
+        void processRequestLoginPlayer(MessageRequestLoginPlayer *requestLogin);
+        void processUpdateEntity(MessageUpdateEntity *updateEntity);
+        void processUpdateStage(MessageUpdateStage *updateStage);
+>>>>>>> 1f2af3267d24fb18a8055634c259c385f37a9398
 
     public:
         void sendMessage(Message* message);
