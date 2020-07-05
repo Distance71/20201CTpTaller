@@ -4,7 +4,7 @@
     SDL_StartTextInput();
     gRenderer = GameProvider::getRenderer();
     client = _client;
-    invalid_credentials=false;
+    response = NOT_RESPONSE;
     
     MenuElement* background = new MenuElement(0,0,GameProvider::getWidth(),GameProvider::getHeight(),"assets/LoginScreen/background.png");
     addMenuElement("BACKGROUND",background);
@@ -14,6 +14,9 @@
    
     MenuElement* invalid_credentials_box = new MenuElement(20,50,525,325,"assets/LoginScreen/invalidCredentialsBox.png");
     addMenuElement("INVALID CREDENTIALS BOX",invalid_credentials_box);
+
+    MenuElement* full_game_box = new MenuElement(20,50,525,325,"assets/LoginScreen/fullGameBox.png");
+    addMenuElement("FULL GAME BOX",full_game_box);
     
     TextBox* username = new TextBox(80,110,375,60,"assets/LoginScreen/username1.png","assets/LoginScreen/username2.png");
     username->setCenteringParameters(50,10,15,10);
@@ -65,12 +68,16 @@ void Menu::addMenuElement(string element_name,MenuElement* menu_element){
 void Menu::update(int x, int y,bool click){
     SDL_RenderClear(gRenderer);
     menu_elements["BACKGROUND"]->renderCopy();
-    if (invalid_credentials){
-        menu_elements["INVALID CREDENTIALS BOX"]->renderCopy();
-    }
-    else{
+    if (response == NOT_RESPONSE || response == VALID_CREDENTIALS) {
         menu_elements["NORMAL BOX"]->renderCopy();
     }
+    else if(response == INVALID_CREDENTIALS){
+        menu_elements["INVALID CREDENTIALS BOX"]->renderCopy();
+    }
+    else if(response == FULL_GAME){
+        menu_elements["FULL GAME BOX"]->renderCopy();
+    }
+
     for(auto button : buttons){
         button.second->update(x,y,click,false);
     }
@@ -80,20 +87,25 @@ void Menu::update(int x, int y,bool click){
 }
 
 
-void Menu::setCredentialsResponse(loginAnswer_t _answer){
-    credentials_response = _answer;
+void Menu::setCredentialsResponse(login_response _response){
+    response = _response;
 }
 
 
-bool Menu::validateCredentials(){
+void Menu::sendCredentialsMessage(){
     if (buttons["LOGIN"]->isSelected()){
         string username = text_boxes["USERNAME"]->getText();
         string password = text_boxes["PASSWORD"]->getText();
         //MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(username,password);
         //client->getTransmitionManager()->sendMessage(message);
-        //bool response = client_transmition_manager -> getRequestloginPlayerResponse();
-        return false;
     }
+}
+
+bool Menu::getLoggedInStatus(){
+    if (response == VALID_CREDENTIALS){
+        return true;
+    }
+    return false;
 }
 
 
@@ -115,6 +127,7 @@ void Menu::processEvent(){
         }    
     }
     update(x,y,click);
+    sendCredentialsMessage();
 }
 
 
