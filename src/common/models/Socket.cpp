@@ -75,14 +75,14 @@ int Socket::acceptClient(){
     return accept(this->fileDescriptor_, (struct sockaddr *) &sockaddr_client, (socklen_t *) &clientAddrLen);
 }
 
-int Socket::receiveMessage(char* buffer, size_t sizeData){
+int Socket::receiveMessage(void* &buffer, size_t sizeData){
 
     int totalBytesReceive = 0;
     int bytesReceive = 0;
     bool isOpen = true;
 
     while ((sizeData > totalBytesReceive) && isOpen){
-        bytesReceive = read(this->fileDescriptor_, &buffer[totalBytesReceive], (sizeData - totalBytesReceive));
+        bytesReceive = read(this->fileDescriptor_, (void *) (buffer + totalBytesReceive), (sizeData - totalBytesReceive));
         
         if (bytesReceive < 0){
             return -1;
@@ -97,14 +97,14 @@ int Socket::receiveMessage(char* buffer, size_t sizeData){
     return totalBytesReceive;
 }
 
-int Socket::sendMessage(const char* buffer, size_t sizeData){
+int Socket::sendMessage(const void* &buffer, size_t sizeData){
        
     int totalBytesWritten = 0;
     int bytesWritten = 0;;
     bool isOpen = true;
 
     while ((sizeData > totalBytesWritten) && isOpen){
-        bytesWritten = write(this->fileDescriptor_, &buffer[totalBytesWritten], (sizeData - totalBytesWritten));
+        bytesWritten = write(this->fileDescriptor_, (void *) (buffer + totalBytesWritten), (sizeData - totalBytesWritten));
 
         if (bytesWritten < 0){
             return -1;

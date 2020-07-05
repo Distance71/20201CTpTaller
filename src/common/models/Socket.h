@@ -31,8 +31,8 @@ class Socket {
 
         // Common
         void setPort(unsigned int port);
-        int receiveMessage(char* buffer, size_t sizeData);
-        int sendMessage(const char* buffer, size_t sizeData);
+        int receiveMessage(void* &buffer, size_t sizeData);
+        int sendMessage(const void* &buffer, size_t sizeData);
 
         void cerrar();    
 };
