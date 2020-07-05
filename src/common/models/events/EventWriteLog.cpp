@@ -7,6 +7,5 @@ Message* EventWriteLog::serialize() {
 void EventWriteLog::update() {
     if (!this->context_) Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 
- cout << this->message_ << endl;
     Logger::getInstance()->log((LOG_LEVEL)this->level_, this->message_);
 }

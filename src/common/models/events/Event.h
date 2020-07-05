@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "../messages/Message.h"
+#include "../../services/Logger.h"
 
 using namespace std;
 

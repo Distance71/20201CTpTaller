@@ -37,12 +37,20 @@ int Client::run(){
         return EXIT_FAILURE;
     
     cout << "Se conecta con el servidor " << endl;
+
     this-> gameScreen_->viewLogin();
     eventsManager_->RunDetectPlayerEvents();
     gameScreen_->runGraphics();
     
     return EXIT_SUCCESS;    
 }
+
+void Client::initGraphics(screen_t screenSizes){
+    GameProvider::setWidth(screenSizes.width);
+    GameProvider::setHeight(screenSizes.height);
+    this->gameScreen_->initializeGraphics();
+    this->gameScreen_->viewLogin();
+};
 
 bool Client::isConnected(){
     return this->connected_;
