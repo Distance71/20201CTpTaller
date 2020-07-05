@@ -16,6 +16,7 @@ using namespace std;
 
 class Client;
 class Menu;
+class GraphicsGeneral;
 
 class GameScreen {
     private:
@@ -37,6 +38,7 @@ class GameScreen {
         void updateGraphics();
 
         int viewLogin();
+        void runGraphics();
         bool screenTest();
         bool viewStartStage(level_t oneLevel);
         bool viewStageCleared(level_t oneLevel);

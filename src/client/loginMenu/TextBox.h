@@ -23,7 +23,7 @@ class TextBox : public Button{
         void hideText(bool _hidetext);
         void setCenteringParameters(int left,int right,int up,int down);
         void update(int x, int y,bool click);
-        string getText();
+        const char* getText();
         
 
     private:

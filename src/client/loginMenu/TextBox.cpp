@@ -100,8 +100,8 @@ SDL_Texture* TextBox:: createTextTexture(){
 }
 
 
-string TextBox::getText(){
-    return text;
+const char* TextBox::getText(){
+    return text.c_str();
 }
 
 

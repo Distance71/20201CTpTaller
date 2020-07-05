@@ -1,23 +1,11 @@
 #include "ClientEventsManager.h"
+#include <stdio.h>
 
 ClientEventsManager::ClientEventsManager(Client* client_){
     client = client_;
 }
 
 ClientEventsManager::~ClientEventsManager(){}
-
-
-
-void ClientEventsManager::processEvents(){
-    while(client->isConnected()){
-        Event* event = getEvent();
-        if (event){
-            event->setContext(client);
-            event->update();
-            delete event;
-        }
-    }
-}
 
 
 void ClientEventsManager::pushBackEvent(Event* event){
@@ -33,8 +21,24 @@ Event* ClientEventsManager::getEvent(){
     return NULL;
 }
 
-void ClientEventsManager::detectPlayerEvents(){
+Client* ClientEventsManager::getClient(){
+    return client;
+}
 
+static void* processEvents(void * arg){
+    ClientEventsManager* events_manager = (ClientEventsManager*) arg;
+    Client * client = events_manager->getClient();
+    while(client->isConnected()){
+        Event* event = events_manager->getEvent();
+        if (event){
+            event->setContext(client);
+            event->update();
+            delete event;
+        }
+    }
+}
+static void * detectPlayerEvents(void* arg){
+    Client* client = (Client*) arg;
     Uint8 up;
     Uint8 down;
     Uint8 right;
@@ -43,7 +47,6 @@ void ClientEventsManager::detectPlayerEvents(){
     const Uint8 *keystate;
     
     while (client->isConnected()){
-        
         keystate = SDL_GetKeyboardState(NULL);  
     
         up =  keystate[SDL_SCANCODE_UP];
@@ -51,7 +54,7 @@ void ClientEventsManager::detectPlayerEvents(){
         right =  keystate[SDL_SCANCODE_RIGHT];
         left = keystate[SDL_SCANCODE_LEFT];
 
-        orientation_t movementOrientation = FRONT;
+        orientation_t movementOrientation = NOT_MOVEMENT;
 
         if (up && !down && !right && !left){ 
             movementOrientation = UP;
@@ -85,7 +88,19 @@ void ClientEventsManager::detectPlayerEvents(){
             movementOrientation = BACK_DOWN;
         }
 
-        //MessageMovementPlayer* message = new MessageMovementPlayer(movementOrientation);  
-        //client->sendMessage(message);
+        if (movementOrientation!=NOT_MOVEMENT){
+            MessageUserMovement* message = new MessageUserMovement(movementOrientation);  
+            client->sendMessage(message);
+        }
     }
+}
+
+void ClientEventsManager::RunDetectPlayerEvents(){
+    pthread_t detect_player_events_thread;
+    pthread_create(&detect_player_events_thread,NULL,detectPlayerEvents,this->client);
+}
+
+void ClientEventsManager::processEventsRun(){
+    pthread_t process_events_thread;
+    pthread_create(&process_events_thread,NULL,processEvents,this);
 }

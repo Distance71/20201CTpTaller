@@ -1,6 +1,12 @@
 #include "GraphicsGeneral.h"
+#include <stdio.h>
+GraphicsGeneral::GraphicsGeneral(Client* _client){
+    client = _client;
+}
 
-GraphicsGeneral::GraphicsGeneral(){}
+Client* GraphicsGeneral::getClient(){
+    return client;
+}
 
 GraphicsGeneral::~GraphicsGeneral(){
     
@@ -9,7 +15,9 @@ GraphicsGeneral::~GraphicsGeneral(){
 }
 
 void GraphicsGeneral::update(){
-
+    if (scenario_){
+        scenario_->update();
+    }
     for(auto oneElement : this->elements_)
         oneElement.second->update();
 };
@@ -46,4 +54,26 @@ void GraphicsGeneral::setBackground(stageSource_t background){
 
     this->scenario_ = new GraphicsScenario(background);
 };
+
+static void * graph_on_screen(void* arg){
+    GraphicsGeneral* graphics_general = (GraphicsGeneral*) arg;
+    Client* client = graphics_general -> getClient();
+    SDL_Renderer* gRenderer = GameProvider::getRenderer();
+    while (client->isConnected()){
+        int a = GameProvider::getWidth();
+        int b = GameProvider::getHeight();
+        printf("ancho: %i\n",a);
+        printf("alto: %i\n",b);
+        SDL_RenderClear(gRenderer);
+        graphics_general->update();
+        SDL_RenderPresent(gRenderer);
+    }
+}
+
+
+void GraphicsGeneral::run(){
+    pthread_t graphics_thread;
+    pthread_create(&graphics_thread,NULL,graph_on_screen,NULL);
+}
+
 

@@ -67,6 +67,7 @@ typedef enum {
     FRONT_DOWN,
     BACK_DOWN,
     BACK_UP,
+    NOT_MOVEMENT,
 } orientation_t;
 
 typedef struct {

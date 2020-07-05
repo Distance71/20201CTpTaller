@@ -3,7 +3,7 @@
 
 GameScreen::GameScreen(Client *client){
     this->clientOwn = client;
-    this->graphicsGeneral_ = new GraphicsGeneral();
+    this->graphicsGeneral_ = new GraphicsGeneral(client);
 
     //TODO: mover del constructor al tener ya los mensajes -> sino habria problemas con el width y height
     initializeGraphics();
@@ -90,6 +90,11 @@ int GameScreen::viewLogin(){
         }
         menu->show();      
     }   
+}
+
+void GameScreen::runGraphics(){
+    //graphicsGeneral_->createEntity(1,"assets/LoginScreen/normalBox.png", 100, 100, 50,50, FRONT);
+    graphicsGeneral_->run();
 }
 
 void GameScreen::createEntity(IdElement id, const string &source, position_t position, spriteSize_t spriteSize){

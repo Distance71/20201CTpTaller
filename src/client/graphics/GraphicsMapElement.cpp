@@ -19,9 +19,6 @@ void GraphicsMapElement::update(){
 
     SDL_Renderer* renderer = GameProvider::getRenderer();   
     
-    //rectangulo que se usa para hace el recorte sobre la foto
-    SDL_Rect sprite ={0, 0, this->size_x_, this->size_y_}; 
-    
     //rectangulo de la pantalla donde quiero dibujar el sprite.
     SDL_Rect aux_graphics_sprite = {this->pos_x_, this->pos_y_, this->size_x_, this->size_y_};
     
@@ -34,9 +31,9 @@ void GraphicsMapElement::update(){
     //SDL_RenderCopy(renderer, spriteTexture, &sprite, &aux_graphics_sprite);
     
     if (this->orientation_ == FRONT){
-        SDL_RenderCopy(renderer, spriteTexture, &sprite, &aux_graphics_sprite);
+        SDL_RenderCopy(renderer, spriteTexture, NULL, &aux_graphics_sprite);
     } else if (this->orientation_ == BACK){
-        SDL_RenderCopyEx(renderer, spriteTexture, &sprite, &aux_graphics_sprite, 180, nullptr, SDL_FLIP_VERTICAL);
+        SDL_RenderCopyEx(renderer, spriteTexture, NULL, &aux_graphics_sprite, 180, nullptr, SDL_FLIP_VERTICAL);
     }
 }
  

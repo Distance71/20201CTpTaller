@@ -76,7 +76,6 @@ void GraphicsScenario::update(){
         SDL_RenderCopy(renderer, layerTexture, &auxParallax, &layer );
     }
 
-    GameProvider::setRenderer(renderer);
 }
 
 GraphicsScenario::~GraphicsScenario(){

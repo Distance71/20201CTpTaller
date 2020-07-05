@@ -26,6 +26,8 @@ void Client::initializeClient(){
     
     this->connected_ = true;
     transmitionManager_->run();
+    eventsManager_->processEventsRun();
+    
     Logger::getInstance()->log(INFO, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
 }
 
@@ -35,12 +37,10 @@ int Client::run(){
         return EXIT_FAILURE;
     
     cout << "Se conecta con el servidor " << endl;
-    MessageLog message_prueba = MessageLog((int)INFO,"prueba log remoto");
-    this->sendMessage((Message *) &message_prueba);
-
     this-> gameScreen_->viewLogin();
-
-
+    eventsManager_->RunDetectPlayerEvents();
+    gameScreen_->runGraphics();
+    
     return EXIT_SUCCESS;    
 }
 

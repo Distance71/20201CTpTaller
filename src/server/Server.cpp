@@ -75,7 +75,7 @@ void Server::waitPlayers(){
             //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>*/
         }
         else{
-          cout << "Se agrega el cliente " << newUserId << endl;
+          //cout << "Se agrega el cliente " << newUserId << endl;
         }
         //Here should handle validation
     }

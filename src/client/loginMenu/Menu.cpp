@@ -94,10 +94,19 @@ void Menu::setCredentialsResponse(responseStatus_t _response){
 
 void Menu::sendCredentialsMessage(){
     if (buttons["LOGIN"]->isSelected()){
-        string username = text_boxes["USERNAME"]->getText();
-        string password = text_boxes["PASSWORD"]->getText();
-        //MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(username,password);
-        //client->getTransmitionManager()->sendMessage(message);
+        const char* username = text_boxes["USERNAME"]->getText();
+        const char* password = text_boxes["PASSWORD"]->getText();
+        if (strlen(username)<=30 && strlen(password)<=30){
+            char _username[30];
+            char _password[30];
+            strncpy (_username, username, 30);
+            strncpy (_password, password, 30);
+            MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(_username,_password);
+            client->getTransmitionManager()->sendMessage(message);
+        }
+        else{
+            setCredentialsResponse(ERROR_WRONG_CREDENTIALS);
+        }
     }
 }
 

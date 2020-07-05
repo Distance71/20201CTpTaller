@@ -42,22 +42,19 @@ MessageDeserializer *ClientTransmitionManager::getDeserializer(){
 
 
 static void* sendMessages(void *arg){
-
-    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+   ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
 
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
     vector<Message *> *MessagesQueue = transmitionManager->getSendMessagesQueue();
 
-    bool error = false;
-    while (client->isConnected() && !error){
-
+    while (client->isConnected()){
         if (!(MessagesQueue->empty())){
             Message *newMessage = MessagesQueue->front();
             MessagesQueue->erase(MessagesQueue->begin(), MessagesQueue->begin() + 1); 
 
             size_t messageSize = sizeof(*newMessage);
-           // const void*& _messageSize = (const void *) &messageSize;
+          
             socket->sendMessage((const void *&) messageSize, sizeof(size_t));
             socket->sendMessage((const void *&) newMessage, sizeof(*newMessage));
         }
@@ -75,13 +72,13 @@ static void* receiveMessages(void *arg){
     Socket *socket = transmitionManager->getSocket();
 
     while (client->isConnected()){
-        Event* event; //event = deserealizer dame el evento
-        //deserealizer->getReceivedMessage(socket, event);
-        if (event){
+        Event* event;
+        if (deserealizer->getReceivedMessage(socket,event).ok){
             eventsManager->pushBackEvent(event);
         }
     }
  }
+
 
 
 bool ClientTransmitionManager::connectWithServer(string ipAddress){
