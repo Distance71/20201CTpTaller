@@ -14,8 +14,14 @@
 *hacer 'cmake ..' en build
 *hacer 'make' en build
 
-*ejecutar  './tp1taller -c../ConfigurationServer.json --p 6000 -m SERVER' para el modo server
-ó ejecutar  './tp1taller --p 6000 -i 127.0.0.1 -m CLIENT' para el modo cliente
+*ejecutar (para el modo server):
+./tp1taller -c../ConfigurationServer.json --p 6000 -m SERVER
+
+ó ejecutar (para el modo cliente): 
+./tp1taller -c../ConfigurationClient.json --p 6000 -i 127.0.0.1 -m CLIENT
+
+ó ejecutar (para el modo cliente y TEST): 
+./tp1taller -c../ConfigurationClient.json --p 6000 -i 127.0.0.1 -m CLIENT-TEST
 
 ##########################################################################################################
 problemas conocidos:

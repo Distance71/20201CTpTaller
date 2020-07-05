@@ -120,6 +120,7 @@ int mainClient(int port, string ipAddress, string levelLog, string pathConfigura
         ClientTest *newTestClient = new ClientTest(ipAddress, port);
         codExitClient = newTestClient->runTest();
         delete newTestClient;
+        cout << "FIN MODO TEST." << endl;
 
     } else {
 
