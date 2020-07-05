@@ -93,7 +93,6 @@ int GameScreen::viewLogin(){
 }
 
 void GameScreen::runGraphics(){
-    //graphicsGeneral_->createEntity(1,"assets/LoginScreen/normalBox.png", 100, 100, 50,50, FRONT);
     graphicsGeneral_->run();
 }
 

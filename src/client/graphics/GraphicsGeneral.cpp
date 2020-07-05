@@ -59,21 +59,14 @@ void GraphicsGeneral::setBackground(stageSource_t background){
     this->scenario_ = new GraphicsScenario(background);
 };
  
-static void * graph_on_screen(void* arg){
-    GraphicsGeneral* graphics_general = (GraphicsGeneral*) arg;
-    Client* client = graphics_general -> getClient();
+
+void GraphicsGeneral::run(){
     SDL_Renderer* gRenderer = GameProvider::getRenderer();
     while (client->isConnected()){
         SDL_RenderClear(gRenderer);
-        graphics_general->update();
+        update();
         SDL_RenderPresent(gRenderer);
     }
-}
-
-
-void GraphicsGeneral::run(){
-    pthread_t graphics_thread;
-    pthread_create(&graphics_thread,NULL,graph_on_screen,this);
 }
 
 
