@@ -35,8 +35,6 @@ int Client::run(){
         return EXIT_FAILURE;
     
     cout << "Se conecta con el servidor " << endl;
-    MessageLog message_prueba = MessageLog((int)INFO,"prueba log remoto");
-    this->sendMessage((Message *) &message_prueba);
 
     this-> gameScreen_->viewLogin();
 
