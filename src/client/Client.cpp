@@ -42,6 +42,13 @@ int Client::run(){
     return EXIT_SUCCESS;    
 }
 
+void Client::initGraphics(screen_t screenSizes){
+    GameProvider::setWidth(screenSizes.width);
+    GameProvider::setHeight(screenSizes.height);
+    this->gameScreen_->initializeGraphics();
+    this->gameScreen_->viewLogin();
+};
+
 bool Client::isConnected(){
     return this->connected_;
 }

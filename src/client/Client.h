@@ -45,6 +45,7 @@ class Client {
         void disconnect();
         void setName(string oneName);
         string getName();
+        void initGraphics(screen_t screenSizes);
 
         void sendMessage(Message* message);
 
