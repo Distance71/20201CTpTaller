@@ -36,6 +36,7 @@ class GameScreen {
         void updateGraphics();
 
         int viewLogin();
+        bool screenTest();
         bool viewStartStage(level_t oneLevel);
         bool viewStageCleared(level_t oneLevel);
         Menu* getMenu();

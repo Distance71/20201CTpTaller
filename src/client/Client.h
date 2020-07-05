@@ -23,7 +23,7 @@ class ClientEventsManager;
 class ClientTransmitionManager;
 
 class Client {
-    private:
+    protected:
         
         GameScreen *gameScreen_;
         ClientTransmitionManager *transmitionManager_;

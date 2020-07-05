@@ -113,6 +113,27 @@ int GameScreen::viewLogin(){
     }
 }*/
 
+bool GameScreen::screenTest() {
+    SDL_Window* window = GameProvider::getWindow();
+    SDL_Surface* surface = SDL_GetWindowSurface(window);
+    SDL_Surface* loginscreen = IMG_Load( "assets/LoginScreen/test.png");
+    if (!loginscreen){
+        Logger::getInstance()->log(ERROR, string("Error al cargar el menu principal: ").append(IMG_GetError()));
+        GameProvider::setErrorStatus("Error al cargar el menu principal" );
+        return false;
+    }
+    //SDL_BlitSurface(loginscreen, NULL, surface, NULL);
+    // La pantalla de Login se ajusta segun el tamanio de la ventana 
+    SDL_BlitScaled(loginscreen, NULL, surface, NULL);
+    SDL_UpdateWindowSurface(window);
+    while (GameProvider::getStatus().normalStatus){
+        processEvent();
+        SDL_Event e = GameProvider::getLastEvent();
+        if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
+            return true;
+    }
+}
+
 void GameScreen::clearScene(){
     this->renderer_ = GameProvider::getRenderer();
     SDL_SetRenderDrawColor(this->renderer_, 0xFF, 0xFF, 0xFF, 0xFF);

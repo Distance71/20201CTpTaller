@@ -6,6 +6,7 @@
 #include <getopt.h>
 #include <boost/algorithm/string.hpp>
 #include "../client/Client.h"
+#include "../client/ClientTest.h"
 #include "../server/Server.h"
 
 #define INDEX_MODE 1
@@ -81,7 +82,7 @@ int mainServer(int port, string levelLog, string pathConfiguration){
     return codExitServer;
 }
 
-int mainClient(int port, string ipAddress, string levelLog, string pathConfiguration){
+int mainClient(int port, string ipAddress, string levelLog, string pathConfiguration, bool modeTest=false){
 
     if (port < 0){
         cout << "Falta parámetro Port requerido para conectar el cliente." << endl;
@@ -112,9 +113,20 @@ int mainClient(int port, string ipAddress, string levelLog, string pathConfigura
     }
     delete configurationHandler;
 
-    Client *newClient = new Client(ipAddress, port);
-    int codExitClient = newClient->run();
-    delete newClient;
+    int codExitClient;
+    if (modeTest){
+
+        cout << "MODO TEST:" << endl;
+        ClientTest *newTestClient = new ClientTest(ipAddress, port);
+        codExitClient = newTestClient->runTest();
+        delete newTestClient;
+
+    } else {
+
+        Client *newClient = new Client(ipAddress, port);
+        codExitClient = newClient->run();
+        delete newClient;
+    }
 
     return codExitClient;
 }
@@ -170,6 +182,9 @@ int main(int argc, char *argv[]) {
    
     if (modeApp == "CLIENT")
         return mainClient(port, ipAddress, levelLog, pathConfig);
+    
+    if (modeApp == "CLIENT-TEST")
+        return mainClient(port, ipAddress, levelLog, pathConfig, true);
 
     cout << "Modo de juego inválido" << endl;
     showHelp();

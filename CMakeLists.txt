@@ -37,6 +37,9 @@ add_executable(tp1taller
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
 
+        src/client/ClientTest.cpp
+        src/client/ClientTest.h
+
         src/client/Client.cpp
         src/client/Client.h
         src/client/GameScreen.cpp
