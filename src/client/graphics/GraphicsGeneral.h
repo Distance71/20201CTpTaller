@@ -17,6 +17,7 @@ class GraphicsGeneral {
     private:
         unordered_map<IdElement, GraphicsMapElement*> elements_;
         GraphicsScenario *scenario_ = nullptr;
+        GraphicsMapElement* image;
         Client* client;
 
     public:

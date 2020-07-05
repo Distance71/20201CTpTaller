@@ -2,6 +2,7 @@
 #include <stdio.h>
 GraphicsGeneral::GraphicsGeneral(Client* _client){
     client = _client;
+    image = NULL;
 }
 
 Client* GraphicsGeneral::getClient(){
@@ -17,6 +18,9 @@ GraphicsGeneral::~GraphicsGeneral(){
 void GraphicsGeneral::update(){
     if (scenario_){
         scenario_->update();
+    }
+     if (image){
+        image->update();
     }
     for(auto oneElement : this->elements_)
         oneElement.second->update();
@@ -54,7 +58,7 @@ void GraphicsGeneral::setBackground(stageSource_t background){
 
     this->scenario_ = new GraphicsScenario(background);
 };
-
+ 
 static void * graph_on_screen(void* arg){
     GraphicsGeneral* graphics_general = (GraphicsGeneral*) arg;
     Client* client = graphics_general -> getClient();
