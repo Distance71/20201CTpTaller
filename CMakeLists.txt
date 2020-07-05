@@ -37,6 +37,9 @@ add_executable(tp1taller
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
 
+        src/client/ClientTest.cpp
+        src/client/ClientTest.h
+
         src/client/Client.cpp
         src/client/Client.h
         src/client/GameScreen.cpp
@@ -78,6 +81,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageEndStage.h
         src/common/models/messages/MessageEndGame.cpp
         src/common/models/messages/MessageEndGame.h
+        src/common/models/messages/MessageLog.cpp
+        src/common/models/messages/MessageLog.h
 
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
@@ -100,6 +105,9 @@ add_executable(tp1taller
         src/common/models/events/EventRequestLoginPlayer.h
         src/common/models/events/EventUserMovement.cpp
         src/common/models/events/EventUserMovement.h
+        src/common/models/events/EventWriteLog.h
+        src/common/models/events/EventWriteLog.cpp
+        src/common/models/events/EventResponseLoginPlayer.h
         src/common/models/events/EventResponseLoginPlayer.cpp
         src/common/models/events/EventResponseLoginPlayer.h
         src/common/models/events/EventAnimationInitStage.cpp

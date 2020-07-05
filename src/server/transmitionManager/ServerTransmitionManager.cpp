@@ -60,7 +60,7 @@ void* ServerTransmitionManager::receivingCycle(User* user){
         receivedMessagesQueue_->push(message);        
     }
     
-    Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente" + to_string(user->getId()));
+    Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente " + to_string(user->getId()));
 }
 
 

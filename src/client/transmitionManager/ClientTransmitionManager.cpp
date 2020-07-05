@@ -50,15 +50,16 @@ static void* sendMessages(void *arg){
     vector<Message *> *MessagesQueue = transmitionManager->getSendMessagesQueue();
 
     bool error = false;
-
     while (client->isConnected() && !error){
 
         if (!(MessagesQueue->empty())){
-            /*Message *newMessage = MessagesQueue->front();
+            Message *newMessage = MessagesQueue->front();
             MessagesQueue->erase(MessagesQueue->begin(), MessagesQueue->begin() + 1); 
-            string dataSend = newMessage->getStringData();
-            delete newMessage;
-            socket->sendMessage(dataSend.c_str(), sizeof(char) *dataSend.size());*/
+
+            size_t messageSize = sizeof(*newMessage);
+           // const void*& _messageSize = (const void *) &messageSize;
+            socket->sendMessage((const void *&) messageSize, sizeof(size_t));
+            socket->sendMessage((const void *&) newMessage, sizeof(*newMessage));
         }
     }
 }
