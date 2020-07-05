@@ -5,9 +5,8 @@ Message* EventMapElementDelete::serialize() {
 }
 
 void EventMapElementDelete::update() {
-    /*if (!this->context_)
-		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
+  /*if (!this->context_)
+	  Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");*/
 
-    GameProvider::setWidth(this->width_);
-    GameProvider::setHeight(this->height_);*/
+  //context_->getGameScreen()->deadEntity(this->id_);
 }

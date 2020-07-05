@@ -72,9 +72,11 @@ static void* receiveMessages(void *arg){
     Client *client = transmitionManager->getClient();
     ClientEventsManager* eventsManager = client->getEventsManager();
     MessageDeserializer* deserealizer = transmitionManager->getDeserializer();
+    Socket *socket = transmitionManager->getSocket();
 
     while (client->isConnected()){
         Event* event; //event = deserealizer dame el evento
+        //deserealizer->getReceivedMessage(socket, event);
         if (event){
             eventsManager->pushBackEvent(event);
         }

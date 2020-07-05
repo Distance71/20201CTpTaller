@@ -3,6 +3,9 @@
 
 GameScreen::GameScreen(Client *client){
     this->clientOwn = client;
+    this->graphicsGeneral_ = new GraphicsGeneral();
+
+    //TODO: mover del constructor al tener ya los mensajes -> sino habria problemas con el width y height
     initializeGraphics();
 }
 
@@ -89,6 +92,17 @@ int GameScreen::viewLogin(){
     }   
 }
 
+void GameScreen::createEntity(IdElement id, const string &source, position_t position, spriteSize_t spriteSize){
+    this->graphicsGeneral_->createEntity(id, source, spriteSize.width, spriteSize.height, position.axis_x, position.axis_y, position.orientation);
+};
+
+void GameScreen::updateEntity(IdElement id, position_t position){
+    this->graphicsGeneral_->updateEntity(id, position.axis_x, position.axis_y, position.orientation);
+};
+
+void GameScreen::deadEntity(IdElement id){
+    this->graphicsGeneral_->deadEntity(id);
+};
 
 /*bool GameScreen::viewLogin() {
     /*Menu* menu = new Menu();

@@ -23,6 +23,7 @@ class GameScreen {
         SDL_Window *window_ = nullptr;
         SDL_Renderer *renderer_ = nullptr;
         Menu* menu;
+        GraphicsGeneral *graphicsGeneral_;
 
         bool waitEnter(SDL_Surface* screen);
 
@@ -41,7 +42,10 @@ class GameScreen {
         bool viewStageCleared(level_t oneLevel);
         Menu* getMenu();
 
-
+        void createEntity(IdElement id, const string &source, position_t position, spriteSize_t spriteSize);
+        void updateEntity(IdElement id, position_t position);
+        void deadEntity(IdElement id);
+        //void setBackground(stageSource_t background);
 };
 
 #endif
