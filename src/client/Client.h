@@ -15,6 +15,7 @@
 #include "../common/providers/GameProvider.h"
 #include "../common/services/Logger.h"
 #include "../common/models/messages/Message.h"
+#include "../common/models/messages/MessageLog.h"
 
 
 class GameScreen;
