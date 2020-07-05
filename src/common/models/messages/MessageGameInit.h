@@ -8,11 +8,10 @@
 class MessageGameInit: public Message {
 
 	private:
-		size_t width_;
-        size_t height_;
+		screen_t screenSizes_;
 
     public:
-    	explicit MessageGameInit(size_t width, size_t height) : width_(width), height_(height) {}
+    	explicit MessageGameInit(screen_t screenSizes) : screenSizes_(screenSizes) {}
         Event* deSerialize();
 };
 

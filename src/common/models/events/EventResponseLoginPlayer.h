@@ -1,18 +1,19 @@
-/*#ifndef EVENT_RESPONSE_LOGIN_PLAYER
+#ifndef EVENT_RESPONSE_LOGIN_PLAYER
 #define EVENT_RESPONSE_LOGIN_PLAYER
 
 #include "Event.h"
 #include "../../types.h"
 #include "../messages/Message.h"
+#include "../messages/MessageResponseLoginPlayer.h"
 
 class EventResponseLoginPlayer: public Event{
     private:
-        loginAnswer_t answer_;
+        responseStatus_t response_;
 
     public:
-        explicit EventResponseLoginPlayer(loginAnswer_t answer_);
-        void update() override;
-        Message* serialize() override;
+        explicit EventResponseLoginPlayer(responseStatus_t response): response_(response) {};
+        Message* serialize();
+        void update();
 };
 
-#endif*/
+#endif

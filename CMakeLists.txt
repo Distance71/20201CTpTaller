@@ -54,6 +54,30 @@ add_executable(tp1taller
         src/common/models/messages/Message.h
         src/common/models/messages/MessageGameInit.cpp
         src/common/models/messages/MessageGameInit.h
+        src/common/models/messages/MessageRequestLoginPlayer.cpp
+        src/common/models/messages/MessageRequestLoginPlayer.h
+        src/common/models/messages/MessageUserMovement.cpp
+        src/common/models/messages/MessageUserMovement.h
+        src/common/models/messages/MessageResponseLoginPlayer.cpp
+        src/common/models/messages/MessageResponseLoginPlayer.h
+        src/common/models/messages/MessageAnimationInitStage.cpp
+        src/common/models/messages/MessageAnimationInitStage.h
+        src/common/models/messages/MessageInitStage.cpp
+        src/common/models/messages/MessageInitStage.h
+        src/common/models/messages/MessageMapElementCreate.cpp
+        src/common/models/messages/MessageMapElementCreate.h
+        src/common/models/messages/MessageMapElementUpdate.cpp
+        src/common/models/messages/MessageMapElementUpdate.h
+        src/common/models/messages/MessageMapElementDelete.cpp
+        src/common/models/messages/MessageMapElementDelete.h
+        src/common/models/messages/MessagePlayerDisconnect.cpp
+        src/common/models/messages/MessagePlayerDisconnect.h
+        src/common/models/messages/MessagePlayerReconnect.cpp
+        src/common/models/messages/MessagePlayerReconnect.h
+        src/common/models/messages/MessageEndStage.cpp
+        src/common/models/messages/MessageEndStage.h
+        src/common/models/messages/MessageEndGame.cpp
+        src/common/models/messages/MessageEndGame.h
 
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
@@ -70,11 +94,33 @@ add_executable(tp1taller
         src/common/models/Semaphore.cpp
         
         src/common/models/events/Event.h
-        src/common/models/events/EventGameInit.h
         src/common/models/events/EventGameInit.cpp
-        src/common/models/events/EventResponseLoginPlayer.h
+        src/common/models/events/EventGameInit.h
+        src/common/models/events/EventRequestLoginPlayer.cpp
+        src/common/models/events/EventRequestLoginPlayer.h
+        src/common/models/events/EventUserMovement.cpp
+        src/common/models/events/EventUserMovement.h
         src/common/models/events/EventResponseLoginPlayer.cpp
-        
+        src/common/models/events/EventResponseLoginPlayer.h
+        src/common/models/events/EventAnimationInitStage.cpp
+        src/common/models/events/EventAnimationInitStage.h
+        src/common/models/events/EventInitStage.cpp
+        src/common/models/events/EventInitStage.h
+        src/common/models/events/EventMapElementCreate.cpp
+        src/common/models/events/EventMapElementCreate.h
+        src/common/models/events/EventMapElementUpdate.cpp
+        src/common/models/events/EventMapElementUpdate.h
+        src/common/models/events/EventMapElementDelete.cpp
+        src/common/models/events/EventMapElementDelete.h
+        src/common/models/events/EventPlayerDisconnect.cpp
+        src/common/models/events/EventPlayerDisconnect.h
+        src/common/models/events/EventPlayerReconnect.cpp
+        src/common/models/events/EventPlayerReconnect.h
+        src/common/models/events/EventEndStage.cpp
+        src/common/models/events/EventEndStage.h
+        src/common/models/events/EventEndGame.cpp
+        src/common/models/events/EventEndGame.h
+
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h
 

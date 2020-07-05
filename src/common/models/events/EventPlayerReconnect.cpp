@@ -1,10 +1,10 @@
-#include "EventGameInit.h"
+#include "EventPlayerReconnect.h"
 
-Message* EventGameInit::serialize() {
-    return (Message *) new MessageGameInit(this->screenSizes_);
+Message* EventPlayerReconnect::serialize() {
+    return (Message *) new MessagePlayerReconnect(this->id_);
 }
 
-void EventGameInit::update() {
+void EventPlayerReconnect::update() {
     /*if (!this->context_)
 		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 

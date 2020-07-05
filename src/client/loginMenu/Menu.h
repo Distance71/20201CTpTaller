@@ -24,7 +24,7 @@ class Menu {
         ~Menu();
         void processEvent();
         void show();
-        void setCredentialsResponse(login_response _response);
+        void setCredentialsResponse(responseStatus_t _response);
         bool getLoggedInStatus();
         
     private:
@@ -33,7 +33,7 @@ class Menu {
         unordered_map <string, MenuElement*> menu_elements; 
         unordered_map <string, Button*> buttons; 
         unordered_map <string, TextBox*> text_boxes;
-        login_response response;
+        responseStatus_t response;
 
         void addButton(string button_name,Button* button);
         void addTextBox(string text_box_name,TextBox* text_box);

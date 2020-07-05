@@ -6,17 +6,17 @@
 #include "../messages/Message.h"
 #include "../../providers/GameProvider.h"
 #include "../../services/Logger.h"
+#include "../../types.h"
 
 using namespace std;
 
 class EventGameInit: public Event {
 
 	private:
-        size_t width_;
-        size_t height_;
+        screen_t screenSizes_;
 
     public:
-        EventGameInit(size_t width, size_t height): width_(width), height_(height) {}
+        EventGameInit(screen_t screenSizes): screenSizes_(screenSizes) {}
         
         Message* serialize();
         void update();

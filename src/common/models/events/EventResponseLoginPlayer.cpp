@@ -1,20 +1,13 @@
-/*#include "EventResponseLoginPlayer.h"
+#include "EventResponseLoginPlayer.h"
 
-EventResponseLoginPlayer::EventResponseLoginPlayer(loginAnswer_t answer){
-    this->answer_ = answer;
-    this->context_ = nullptr;
+Message* EventResponseLoginPlayer::serialize() {
+    return (Message *) new MessageResponseLoginPlayer(this->response_);
 }
 
-void EventResponseLoginPlayer::update(){
-    if(this->context_){
-        Menu* menu = ((Client *) this->context_)-> getGameScreen()-> getMenu();
-        if(menu){
-            menu->setCredentialsResponse(answer);
-        }
-    }
-}
+void EventResponseLoginPlayer::update() {
+    /*if (!this->context_)
+		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 
-Message* EventResponseLoginPlayer::serialize(){
-	
+    GameProvider::setWidth(this->width_);
+    GameProvider::setHeight(this->height_);*/
 }
-*/

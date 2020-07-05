@@ -94,6 +94,11 @@ typedef struct {
 } screen_t;
 
 typedef struct {
+    unsigned int width;
+    unsigned int height;
+} spriteSize_t;
+
+typedef struct {
     int axis_x;
     int axis_y;
     orientation_t orientation;
@@ -172,6 +177,9 @@ typedef enum responseStatus {
     OK,
     ERROR_CONNECTION,
     ERROR_MESSAGE,
+    ERROR_FULL_GAME,
+    ERROR_WRONG_CREDENTIALS,
+    NOT_RESPONSE,
 } responseStatus_t;
 
 typedef struct {
@@ -179,10 +187,4 @@ typedef struct {
     responseStatus_t status;
 } response_t;
 
-typedef enum {
-    VALID_CREDENTIALS,
-    INVALID_CREDENTIALS,
-    FULL_GAME,
-    NOT_RESPONSE,
-}login_response;
 #endif

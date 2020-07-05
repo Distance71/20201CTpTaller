@@ -1,21 +1,23 @@
-// #ifndef EVENT_USER_MOVEMENT_H
-// #define EVENT_USER_MOVEMENT_H
+#ifndef EVENT_USER_MOVEMENT_H
+#define EVENT_USER_MOVEMENT_H
 
-// #include "Event.h"
-// #include "../../types.h"
-// #include "Message.h"
-// #include "MessageUserMovement.h"
+#include "Event.h"
+#include "../../types.h"
+#include "../messages/Message.h"
+#include "../messages/MessageUserMovement.h"
 
-// class EventUserMovement: public Event {
+using namespace std;
 
-//     private:
-//         orientation_t orientation_; //Consider a default value
+class EventUserMovement: public Event {
 
-//     public:
-//         EventUserMovement(orientation_t orientation);
+    private:
+        orientation_t orientation_; //Consider a default value
+
+    public:
+        EventUserMovement(orientation_t orientation): orientation_(orientation) {};
         
-//         Message* serialize() override;
-//         void update() override;
-// };
+        Message* serialize();
+        void update();
+};
 
-// #endif
+#endif

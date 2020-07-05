@@ -1,10 +1,10 @@
-#include "EventGameInit.h"
+#include "EventEndStage.h"
 
-Message* EventGameInit::serialize() {
-    return (Message *) new MessageGameInit(this->screenSizes_);
+Message* EventEndStage::serialize() {
+    return (Message *) new MessageEndStage(this->path_);
 }
 
-void EventGameInit::update() {
+void EventEndStage::update() {
     /*if (!this->context_)
 		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 

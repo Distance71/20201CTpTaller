@@ -1,10 +1,10 @@
-#include "EventGameInit.h"
+#include "EventMapElementDelete.h"
 
-Message* EventGameInit::serialize() {
-    return (Message *) new MessageGameInit(this->screenSizes_);
+Message* EventMapElementDelete::serialize() {
+    return (Message *) new MessageMapElementDelete(this->id_);
 }
 
-void EventGameInit::update() {
+void EventMapElementDelete::update() {
     /*if (!this->context_)
 		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 

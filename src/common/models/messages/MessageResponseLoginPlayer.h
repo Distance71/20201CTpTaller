@@ -1,37 +1,21 @@
-// #ifndef _MESSAGE_RESPONSE_PLAYER_H_
-// #define _MESSAGE_RESPONSE_PLAYER_H_
+#ifndef MESSAGE_RESPONSE_LOGIN_PLAYER_H_
+#define MESSAGE_RESPONSE_LOGIN_PLAYER_H_
 
-// #include <iostream>
-// #include <string.h>
-// #include "Message.h"
-// #include "../../types.h"
+#include "Message.h"
+#include "../events/EventResponseLoginPlayer.h"
+#include "../events/Event.h"
+#include "../../types.h"
 
-// using namespace std;
+using namespace std;
 
-// class MessageResponseLoginPlayer : public Message {
+class MessageResponseLoginPlayer: public Message {
 
-//     private:
-//         bool authorize_;
-
-//     public:
-//         MessageResponseLoginPlayer(bool authorize);
-//         ~MessageResponseLoginPlayer();
-//         string getStringData();
-
-//         bool getAuthorize();
-/*    private:
-        bool successfulConnection_;
-        bool gameFull_;
-        bool wrongCredentials_;
+	private:
+        responseStatus_t response_;
 
     public:
-        MessageResponseLoginPlayer(bool successfulConnection, bool gameFull, bool wrongCredentials);
-        ~MessageResponseLoginPlayer();
-        string getStringData();
+    	explicit MessageResponseLoginPlayer(responseStatus_t response) : response_(response) {}
+        Event* deSerialize();
+};
 
-        bool getIsConnection();
-        bool getIsGameFull();
-        bool getIsWrongCredentials();*/
-// };
-
-// #endif // _MESSAGE_REQUEST_PLAYER_H_
+#endif

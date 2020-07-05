@@ -68,13 +68,13 @@ void Menu::addMenuElement(string element_name,MenuElement* menu_element){
 void Menu::update(int x, int y,bool click){
     SDL_RenderClear(gRenderer);
     menu_elements["BACKGROUND"]->renderCopy();
-    if (response == NOT_RESPONSE || response == VALID_CREDENTIALS) {
+    if (response == NOT_RESPONSE || response == OK) {
         menu_elements["NORMAL BOX"]->renderCopy();
     }
-    else if(response == INVALID_CREDENTIALS){
+    else if(response == ERROR_WRONG_CREDENTIALS){
         menu_elements["INVALID CREDENTIALS BOX"]->renderCopy();
     }
-    else if(response == FULL_GAME){
+    else if(response == ERROR_FULL_GAME){
         menu_elements["FULL GAME BOX"]->renderCopy();
     }
 
@@ -87,7 +87,7 @@ void Menu::update(int x, int y,bool click){
 }
 
 
-void Menu::setCredentialsResponse(login_response _response){
+void Menu::setCredentialsResponse(responseStatus_t _response){
     response = _response;
 }
 
@@ -102,7 +102,7 @@ void Menu::sendCredentialsMessage(){
 }
 
 bool Menu::getLoggedInStatus(){
-    if (response == VALID_CREDENTIALS){
+    if (response == OK){
         return true;
     }
     return false;
