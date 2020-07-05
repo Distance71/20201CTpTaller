@@ -1,8 +1,9 @@
 #include "GameScreen.h"
+#include "stdio.h"
 
 GameScreen::GameScreen(Client *client){
     this->clientOwn = client;
-    //this->initializeGraphics();
+    initializeGraphics();
 }
 
 GameScreen::~GameScreen(){
@@ -29,10 +30,10 @@ void GameScreen::initializeGraphics(){
         return;
     }
     
-    int screen_widht = GameProvider::getWidth();
+    int screen_width = GameProvider::getWidth();
     int screen_height = GameProvider::getHeight();
 
-    this->window_ = SDL_CreateWindow("Gley Lancer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_widht, screen_height, SDL_WINDOW_SHOWN);
+    this->window_ = SDL_CreateWindow("Gley Lancer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, SDL_WINDOW_SHOWN);
 
     if(!this->window_) {
         Logger::getInstance()->log(ERROR, string("Error al crear la ventana! SDL_Error: ").append(SDL_GetError()));
@@ -65,7 +66,7 @@ void GameScreen::initializeGraphics(){
 }
 
 
-int GameScreen::viewLogin() {
+int GameScreen::viewLogin(){
     menu = new Menu(clientOwn);
     SDL_Event e; 
     while (GameProvider::getStatus().normalStatus){
@@ -79,7 +80,7 @@ int GameScreen::viewLogin() {
             }
             menu -> processEvent();
         }
-        if(menu->validateCredentials()){
+        if (menu->getLoggedInStatus()){
             delete menu;
             menu = NULL;
             break;

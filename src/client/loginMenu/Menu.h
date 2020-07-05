@@ -15,7 +15,6 @@
 #include  "../../common/models/messages/MessageRequestLoginPlayer.h"
 #include "../../common/types.h"
 
-using namespace std;
 class Client;
 
 class Menu {
@@ -25,8 +24,8 @@ class Menu {
         ~Menu();
         void processEvent();
         void show();
-        void setCredentialsResponse(loginAnswer_t _answer);
-        bool validateCredentials();
+        void setCredentialsResponse(login_response _response);
+        bool getLoggedInStatus();
         
     private:
         Client* client;
@@ -34,13 +33,13 @@ class Menu {
         unordered_map <string, MenuElement*> menu_elements; 
         unordered_map <string, Button*> buttons; 
         unordered_map <string, TextBox*> text_boxes;
-        loginAnswer_t credentials_response;
-        bool invalid_credentials;
+        login_response response;
 
         void addButton(string button_name,Button* button);
         void addTextBox(string text_box_name,TextBox* text_box);
         void addMenuElement(string element_name,MenuElement* menu_element);
-        void update(int x,int y, bool update); 
+        void update(int x,int y, bool update);
+        void sendCredentialsMessage();
         
 };
 

@@ -10,28 +10,28 @@
 #include "GameScreen.h"
 #include "loginMenu/Menu.h"
 #include "transmitionManager/ClientTransmitionManager.h"
+#include "eventsManager/ClientEventsManager.h"
 #include "../common/models/Socket.h"
 #include "../common/providers/GameProvider.h"
 #include "../common/services/Logger.h"
 #include "../common/models/messages/Message.h"
 
 
-using namespace std;
-
 class GameScreen;
+class ClientEventsManager;
 class ClientTransmitionManager;
 
 class Client {
     private:
+        
         GameScreen *gameScreen_;
         ClientTransmitionManager *transmitionManager_;
+        ClientEventsManager* eventsManager_;
 
-        //Socket *socket_;
-        bool connected_;
-        
         string name_;
         string ipHost_;
         size_t port_;
+        bool connected_;
 
         void initializeClient();
 
@@ -49,6 +49,7 @@ class Client {
 
         GameScreen *getGameScreen();
         ClientTransmitionManager *getTransmitionManager();
+        ClientEventsManager* getEventsManager();
 };
 
 #endif
