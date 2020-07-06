@@ -76,6 +76,7 @@ void Server::waitPlayers(){
         }
         else{
           //cout << "Se agrega el cliente " << newUserId << endl;
+          cout << "Se agrega un cliente. " << endl;
         }
         //Here should handle validation
     }
