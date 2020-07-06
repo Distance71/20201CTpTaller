@@ -24,8 +24,9 @@ class Menu {
         ~Menu();
         void processEvent();
         void show();
-        void setCredentialsResponse(responseStatus_t _response);
+        void setLoginResponse(responseStatus_t response_);
         bool getLoggedInStatus();
+        
         
     private:
         Client* client;
@@ -40,7 +41,7 @@ class Menu {
         void addMenuElement(string element_name,MenuElement* menu_element);
         void update(int x,int y, bool update);
         void sendCredentialsMessage();
-        
+         
 };
 
 #endif

@@ -5,9 +5,9 @@ Message* EventResponseLoginPlayer::serialize() {
 }
 
 void EventResponseLoginPlayer::update() {
-    /*if (!this->context_)
+    if (!this->context_)
 		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 
-    GameProvider::setWidth(this->width_);
-    GameProvider::setHeight(this->height_);*/
+    Client* client = (Client *) context_;
+    client -> getGameScreen()->setLoginResponse(response_);
 }

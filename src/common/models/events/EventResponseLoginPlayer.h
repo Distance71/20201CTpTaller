@@ -5,6 +5,7 @@
 #include "../../types.h"
 #include "../messages/Message.h"
 #include "../messages/MessageResponseLoginPlayer.h"
+#include "../../../client/Client.h"
 
 class EventResponseLoginPlayer: public Event{
     private:

@@ -42,11 +42,11 @@ class GameScreen {
         bool screenTest();
         bool viewStartStage(level_t oneLevel);
         bool viewStageCleared(level_t oneLevel);
-        Menu* getMenu();
 
         void createEntity(IdElement id, const string &source, position_t position, spriteSize_t spriteSize);
         void updateEntity(IdElement id, position_t position);
         void deadEntity(IdElement id);
+        void setLoginResponse(responseStatus_t response);
         //void setBackground(stageSource_t background);
 };
 

@@ -87,11 +87,6 @@ void Menu::update(int x, int y,bool click){
 }
 
 
-void Menu::setCredentialsResponse(responseStatus_t _response){
-    response = _response;
-}
-
-
 void Menu::sendCredentialsMessage(){
     if (buttons["LOGIN"]->isSelected()){
         const char* username = text_boxes["USERNAME"]->getText();
@@ -105,8 +100,9 @@ void Menu::sendCredentialsMessage(){
             client->getTransmitionManager()->sendMessage(message);
         }
         else{
-            setCredentialsResponse(ERROR_WRONG_CREDENTIALS);
+            setLoginResponse(ERROR_WRONG_CREDENTIALS);
         }
+        buttons["LOGIN"]->deselect();
     }
 }
 
@@ -124,11 +120,9 @@ void Menu::processEvent(){
     int x = -1;
     int y = -1;
     SDL_Event e = GameProvider::getLastEvent();
-    if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN){
+    if(e.type == SDL_MOUSEBUTTONDOWN){
         SDL_GetMouseState(&x, &y);
-        if (e.type==SDL_MOUSEBUTTONDOWN){
-            click = true;
-        }
+        click = true;
     }
     else if (e.type == SDL_TEXTINPUT || e.type == SDL_KEYDOWN){
         for(auto text_box : text_boxes){
@@ -144,4 +138,8 @@ void Menu::processEvent(){
 void Menu::show(){
     update(-1,-1,false);
     SDL_RenderPresent(gRenderer);  
+}
+
+void Menu::setLoginResponse(responseStatus_t response_){
+    response = response_;
 }

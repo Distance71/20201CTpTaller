@@ -70,3 +70,8 @@ void Button::update(int x, int y,bool click,bool force_selected_sprite){
  
     SDL_RenderCopy( gRenderer, actual_sprite->getTexture(),NULL,&button);
 }
+
+void Button::deselect(){
+    state =  NOT_SELECTED;
+
+}

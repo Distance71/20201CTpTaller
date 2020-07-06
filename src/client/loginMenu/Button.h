@@ -18,6 +18,7 @@ class Button{
         ~Button();
         bool isSelected();
         void update(int x, int y,bool click,bool force_selected_sprite);
+        void deselect();
         
     protected:
         SDL_Renderer* gRenderer;
@@ -28,7 +29,8 @@ class Button{
         int y_pos;        
         int button_width;
         int button_height;
-        void selectState(int x, int y,bool click);       
+        void selectState(int x, int y,bool click);
+               
 };
 
 #endif

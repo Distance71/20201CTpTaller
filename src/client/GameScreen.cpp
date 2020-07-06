@@ -4,9 +4,11 @@
 GameScreen::GameScreen(Client *client){
     this->clientOwn = client;
     this->graphicsGeneral_ = new GraphicsGeneral(client);
+    
 
     //TODO: mover del constructor al tener ya los mensajes -> sino habria problemas con el width y height
     initializeGraphics();
+    this->menu = new Menu(clientOwn);
 }
 
 GameScreen::~GameScreen(){
@@ -70,7 +72,6 @@ void GameScreen::initializeGraphics(){
 
 
 int GameScreen::viewLogin(){
-    menu = new Menu(clientOwn);
     SDL_Event e; 
     while (GameProvider::getStatus().normalStatus){
         while (SDL_PollEvent(&e)){
@@ -107,6 +108,10 @@ void GameScreen::updateEntity(IdElement id, position_t position){
 void GameScreen::deadEntity(IdElement id){
     this->graphicsGeneral_->deadEntity(id);
 };
+
+void GameScreen::setLoginResponse(responseStatus_t response){
+    menu->setLoginResponse(response);
+}
 
 /*bool GameScreen::viewLogin() {
     /*Menu* menu = new Menu();
@@ -256,9 +261,4 @@ bool GameScreen::waitEnter(SDL_Surface* screen){
         if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN)
             return true;
     }
-}
-
-
-Menu* GameScreen::getMenu(){
-    return menu;
 }
