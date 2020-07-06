@@ -54,9 +54,10 @@ static void* sendMessages(void *arg){
             MessagesQueue->erase(MessagesQueue->begin(), MessagesQueue->begin() + 1); 
 
             size_t messageSize = sizeof(*newMessage);
+            void *messageRef = &messageSize;
           
-            socket->sendMessage((const void *&) messageSize, sizeof(size_t));
-            socket->sendMessage((const void *&) newMessage, sizeof(*newMessage));
+            socket->sendMessage((const void *&) messageRef, sizeof(size_t));
+            socket->sendMessage((const void *&) newMessage, messageSize);
         }
     }
 }

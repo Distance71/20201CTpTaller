@@ -116,6 +116,8 @@ int Socket::sendMessage(const void* &buffer, size_t sizeData){
         }
     }
 
+    cout << "se pudo" << totalBytesWritten << endl;
+
     return totalBytesWritten;
 }
 
