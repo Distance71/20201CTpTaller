@@ -47,6 +47,7 @@ class GameScreen {
         void updateEntity(IdElement id, position_t position);
         void deadEntity(IdElement id);
         void setLoginResponse(responseStatus_t response);
+        void setImage(const string &source);
         //void setBackground(stageSource_t background);
 };
 

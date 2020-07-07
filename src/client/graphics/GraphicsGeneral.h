@@ -30,6 +30,7 @@ class GraphicsGeneral {
         void updateEntity(IdElement id, int posX, int posY, orientation_t orientation);
         void deadEntity(IdElement id);
         void setBackground(stageSource_t background);
+        void setImage(const string &source);
         void run();
         Client* getClient();
 

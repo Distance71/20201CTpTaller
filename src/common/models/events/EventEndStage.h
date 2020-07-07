@@ -4,6 +4,7 @@
 #include "Event.h"
 #include "../messages/MessageEndStage.h"
 #include "../messages/Message.h"
+#include "../../../client/Client.h"
 
 #define MAX_SIZE 100 
 
