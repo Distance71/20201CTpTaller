@@ -3,7 +3,6 @@
 
 
 #include "../../models/Socket.h"
-#include "../../../server/models/User.h"
 #include "../../models/events/Event.h"
 #include "../../services/Logger.h"
 
@@ -15,9 +14,7 @@ class MessageSerializer {
         response_t _handleSuccess();
 
     public:
-        MessageSerializer() = default;
-        
-        response_t sendSerializedEvent(User *user, Event *event);
+        response_t sendSerializedEvent(Socket *socket, Event *event);
 };
 
 #endif

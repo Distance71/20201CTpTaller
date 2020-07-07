@@ -97,7 +97,7 @@ int Socket::receiveMessage(void* &buffer, size_t sizeData){
     return totalBytesReceive;
 }
 
-int Socket::sendMessage(const void* &buffer, size_t sizeData){
+int Socket::sendMessage(void* &buffer, size_t sizeData){
        
     int totalBytesWritten = 0;
     int bytesWritten = 0;;
@@ -115,8 +115,6 @@ int Socket::sendMessage(const void* &buffer, size_t sizeData){
             totalBytesWritten += bytesWritten;
         }
     }
-
-    cout << "se pudo" << totalBytesWritten << endl;
 
     return totalBytesWritten;
 }

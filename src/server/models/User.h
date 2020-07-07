@@ -5,6 +5,9 @@
 #include "../../common/models/Socket.h"
 #include "../../common/types.h"
 #include "../../common/models/messages/Message.h"
+#include "../../common/models/events/Event.h"
+#include "../../common/services/serializer/MessageDeserializer.h"
+#include "../../common/services/serializer/MessageSerializer.h"
 
 using namespace std;
 
@@ -18,6 +21,8 @@ private:
     Socket *socket_;
     character_t character_;
     IdUser userId_;
+    MessageDeserializer *deserializer_;
+    MessageSerializer *serializer_;
 
     bool connected_ = false;
     bool logged_ = false;
@@ -43,12 +48,13 @@ public:
     Socket *getSocket();
 
     IdUser getId();
+    void setId(IdUser id);
 
     bool isConnected();
     void setDisconnection();
 
-    void sendMessage(Message *message);
-    Message* receiveMessage();
+    response_t sendMessage(Event* event);
+    Event* receiveMessage();
 };
 
 

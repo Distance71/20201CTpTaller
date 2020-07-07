@@ -10,6 +10,7 @@
 class EventResponseLoginPlayer: public Event{
     private:
         responseStatus_t response_;
+        size_t asdad;
 
     public:
         explicit EventResponseLoginPlayer(responseStatus_t response): response_(response) {};

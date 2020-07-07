@@ -62,22 +62,23 @@ void Server::waitPlayers(){
 
     //Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
     //porque el Socket hace el accept antes de que del logeo y demas
-    while (!this->usersManager_->isFullGame() && this->isConnected()){
+    while (/*!this->usersManager_->isFullGame() &&*/ this->isConnected()){
         
         size_t newUserId = this->usersManager_->acceptUnloggedUser();
 
-        if (newUserId == 0){
-            bool isFullGame = this->usersManager_->isFullGame();
-            if(isFullGame) {
-                //Some debug log
-                break;
-            }
-            //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>*/
-        }
-        else{
+        // cout << "Se conectó un tipo" << newUserId << endl;
+        // if (newUserId == 0){
+        //     bool isFullGame = this->usersManager_->isFullGame();
+        //     if(isFullGame) {
+        //         //Some debug log
+        //         break;
+        //     }
+        //     //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>*/
+        // }
+        // else{
           //cout << "Se agrega el cliente " << newUserId << endl;
           cout << "Se agrega un cliente. " << endl;
-        }
+        //}
         //Here should handle validation
     }
 
@@ -87,9 +88,9 @@ Socket* Server::getSocket(){
     return this->socket_;
 }
 
-BlockingQueue<Message *>* Server::getEventsToProcess(){
-    return transmitionManager_->getMessagesToProcess();
-}
+// BlockingQueue<Message *>* Server::getEventsToProcess(){
+//     return transmitionManager_->getMessagesToProcess();
+// }
 
 void Server::addPlayer(User *newUser){
     if(!newUser || usersManager_->isFullGame()) {
@@ -98,7 +99,7 @@ void Server::addPlayer(User *newUser){
     }
 
     this->transmitionManager_->addUser(newUser);
-    
+
     // pthread_mutex_lock(&this->mutex_players_);
 
     // if (this->isFull()){
@@ -115,7 +116,7 @@ void Server::addPlayer(User *newUser){
 int Server::run(){
 
     if(!this->isConnected()) {
-        //Handle error
+        Logger::getInstance()->log(ERROR, "El servidor no se pudo iniciar");
         return EXIT_FAILURE;
     }
         

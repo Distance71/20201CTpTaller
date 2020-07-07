@@ -1,17 +1,18 @@
 #include "ServerTransmitionManager.h"
 
 ServerTransmitionManager::ServerTransmitionManager(Server *server){
-    serverOwn_ = server;
-    receivedMessagesQueue_ =   new BlockingQueue <Message*>();
+    this->serverOwn_ = server;
+    //cout << this << endl;
+    //receivedMessagesQueue_ = new BlockingQueue <Message*>();
 }
 
 ServerTransmitionManager::~ServerTransmitionManager(){
     //pthread_mutex_destroy(&this->mutex_lastId_);
-    delete this->receivedMessagesQueue_;
+    //delete this->receivedMessagesQueue_;
 }
 
 void ServerTransmitionManager::addUser(User* user){
-    this->createReceivingCycle(user);
+    //this->createReceivingCycle(user);
     this->createSendingCycle(user);
 }
 
@@ -28,8 +29,7 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
         auto *handler = (ServerTransmitionManager *) arguments->handler;
         auto *user = (User *) arguments->params;
 
-        handler->receivingCycle(user);
-        return nullptr;
+        return handler->receivingCycle(user);
     }, (void *) &args);
 
     if(pthreadCreateStatus != 0) {
@@ -46,9 +46,8 @@ void* ServerTransmitionManager::receivingCycle(User* user){
     
     while (user->isConnected() && this->serverOwn_->isConnected()) {
         
-        Message *message = user->receiveMessage();
-        if(!message){
-
+        Event *event = user->receiveMessage();
+        if(!event){
             //Add mutex to errno
             if (errno == ECONNREFUSED || errno == ENOTCONN || errno == ENOTSOCK) {
                 Logger::getInstance()->log(ERROR, "Se detecta desconexión involuntaria del cliente."+ to_string(user->getId()));
@@ -56,8 +55,9 @@ void* ServerTransmitionManager::receivingCycle(User* user){
                 return nullptr;
             }
         }
-
-        receivedMessagesQueue_->push(message);        
+        if(event != nullptr)
+            cout << "se recibio un mensaje" << endl;
+        //receivedMessagesQueue_->push(message);        
     }
     
     Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente " + to_string(user->getId()));
@@ -65,25 +65,24 @@ void* ServerTransmitionManager::receivingCycle(User* user){
 
 
 
-BlockingQueue<Message *>* ServerTransmitionManager::getMessagesToProcess(){
-    return this->receivedMessagesQueue_;
-}
+// BlockingQueue<Message *>* ServerTransmitionManager::getMessagesToProcess(){
+//     return this->receivedMessagesQueue_;
+// }
 
 void ServerTransmitionManager::createSendingCycle(User* user) {
     pthread_t thread;
 
     argsThread_t args;
-    
+
     args.handler = (void *) this;
-    args.params = user; 
+    args.params = user;
 
     int pthreadCreateStatus =  pthread_create(&thread, nullptr, [](void *args) -> void * {
         auto arguments = (argsThread_t *) args;
         auto *handler = (ServerTransmitionManager *) arguments->handler;
         auto *user = (User *) arguments->params;
 
-        handler->sendingCycle(user);
-        return nullptr;
+        return handler->sendingCycle(user);
     }, (void *) &args);
 
     if(pthreadCreateStatus != 0) {
@@ -98,14 +97,28 @@ void ServerTransmitionManager::createSendingCycle(User* user) {
 
 
 
-void ServerTransmitionManager::sendingCycle(User* user) {
+void* ServerTransmitionManager::sendingCycle(User* user) {
     
     while(user->isConnected() && this->serverOwn_->isConnected()){
-        if(messagesQueues_[user->getId()]->empty())
-            continue;
+    //     //if(messagesQueues_[user->getId()]->empty())
+    //     //    continue;
         
-        Message* message = (Message*) messagesQueues_[user->getId()]->pop();
+    //     //Message* message = (Message*) messagesQueues_[user->getId()]->pop();
+        responseStatus_t responseStatus = ERROR_FULL_GAME;
+    //     OK,
+    // ERROR_CONNECTION,
+    // ERROR_MESSAGE,
+    // ERROR_FULL_GAME,
+    // ERROR_WRONG_CREDENTIALS,
+        Event* event = new EventResponseLoginPlayer(responseStatus);
 
-        user->sendMessage(message);
+        response_t response = user->sendMessage(event);
+        //response = user->sendMessage(event);
+
+        if(response.ok)
+            cout << "Se mando ok" << endl;
+    //     return nullptr;
+        //return nullptr;
     }
+    return nullptr;
 }

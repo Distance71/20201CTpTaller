@@ -2,12 +2,17 @@
 
 User::User(Socket *socket){
 	this->socket_ = socket;
+	this->connected_ = true;
+	deserializer_ = new MessageDeserializer();
+	serializer_ = new MessageSerializer();
 }
 
 User::User(string userName, string password){
 	this->userName_ = userName;
 	this->password_ = password;
 	this->connected_ = true;
+	deserializer_ = new MessageDeserializer();
+	serializer_ = new MessageSerializer();
 }
 
 User::~User() {
@@ -15,6 +20,8 @@ User::~User() {
 	this->logged_ = false;
 	this->connected_ = false;
 	delete socket_;
+	delete deserializer_;
+	delete serializer_;
 }
 
 string User::getUserName(){
@@ -61,15 +68,23 @@ IdUser User::getId(){
 	return this->userId_;
 }
 
+void User::setId(IdUser id){
+	userId_ = id;
+}
+
 void User::setDisconnection(){
 	this->socket_ = NULL;
 	this->connected_ = false;
 }
 
-Message* User::receiveMessage(){
-	return nullptr;//;MessageDeserializer::getReceivedMessage(this);
+Event* User::receiveMessage(){
+	Event* event;
+	response_t response = deserializer_->getReceivedMessage(socket_, event); //Validar
+	if(response.ok)
+		return event;
+	return nullptr;
 }
 
-void User::sendMessage(Message* message){
-	//return MessageSerializer::serializeMessage(message); //Send also, for consistence?
+response_t User::sendMessage(Event* event){
+	return serializer_->sendSerializedEvent(this->socket_, event); //Send also, for consistence?
 }

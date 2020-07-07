@@ -31,12 +31,12 @@ response_t MessageDeserializer::getEvent(size_t messageSize, Socket *socket, Eve
 }
 
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
-    
+    cout << "daseas" << endl;
     size_t messageSize;
     void* _messageSize = (void *) &messageSize;
-
+    cout << "casi" << endl;
     if (socket->receiveMessage(_messageSize, sizeof(size_t)) <= 0)
         return this->_handleErrorStatus();
-
+    cout << "done"<< endl;
     return this->getEvent(messageSize, socket, event);
 };

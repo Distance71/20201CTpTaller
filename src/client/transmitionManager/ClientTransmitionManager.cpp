@@ -49,6 +49,7 @@ static void* sendMessages(void *arg){
     vector<Message *> *MessagesQueue = transmitionManager->getSendMessagesQueue();
 
     while (client->isConnected()){
+        
         if (!(MessagesQueue->empty())){
             Message *newMessage = MessagesQueue->front();
             MessagesQueue->erase(MessagesQueue->begin(), MessagesQueue->begin() + 1); 
@@ -56,15 +57,16 @@ static void* sendMessages(void *arg){
             size_t messageSize = sizeof(*newMessage);
             void *messageRef = &messageSize;
           
-            socket->sendMessage((const void *&) messageRef, sizeof(size_t));
-            socket->sendMessage((const void *&) newMessage, messageSize);
+            socket->sendMessage((void *&) messageRef, sizeof(size_t));
+            socket->sendMessage((void *&) newMessage, messageSize);
         }
     }
+    return nullptr;
 }
 
 
 static void* receiveMessages(void *arg){
-
+    Logger::getInstance()->log(DEBUG, "Se creo el hilo de recepcion");
     ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
 
     Client *client = transmitionManager->getClient();
@@ -75,9 +77,13 @@ static void* receiveMessages(void *arg){
     while (client->isConnected()){
         Event* event;
         if (deserealizer->getReceivedMessage(socket,event).ok){
-            eventsManager->pushBackEvent(event);
+            cout << "Se recibio" << endl;
+            //eventsManager->pushBackEvent(event);
         }
     }
+
+    cout << "Se cerro hilo"<< endl;
+    Logger::getInstance()->log(DEBUG, "Se cerro el hilo de recepcion");
  }
 
 
@@ -110,8 +116,8 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
 
 
 void ClientTransmitionManager::run(){
-    pthread_t sending_thread;
-    pthread_create(&sending_thread,NULL,sendMessages,this);
+    // pthread_t sending_thread;
+    // pthread_create(&sending_thread,NULL,sendMessages,this);
 
     pthread_t receiving_thread;
     pthread_create(&receiving_thread, NULL,receiveMessages,this);

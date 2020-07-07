@@ -9,6 +9,8 @@
 #include "../../common/models/BlockingQueue.h"
 #include "../../common/services/ThreadsHandler.h"
 
+#include "../../common/models/events/EventResponseLoginPlayer.h" //Borrar
+
 #include "../Server.h"
 #include "../models/User.h"
 
@@ -19,13 +21,13 @@ class Server;
 class ServerTransmitionManager {
     private:
         Server *serverOwn_;
-        BlockingQueue <Message*>* receivedMessagesQueue_;
-        unordered_map<IdUser, BlockingQueue<Message *> *> messagesQueues_;
+        //BlockingQueue <Message*>* receivedMessagesQueue_;
+        //unordered_map<IdUser, BlockingQueue<Message *> *> messagesQueues_;
 
         void createReceivingCycle(User* user);
         void* receivingCycle(User* user);
         void createSendingCycle(User* user);
-        void sendingCycle(User* user);
+        void* sendingCycle(User* user);
 
     public:
         ServerTransmitionManager(Server *server);
