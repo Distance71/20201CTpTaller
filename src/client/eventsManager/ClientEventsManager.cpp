@@ -3,22 +3,22 @@
 
 ClientEventsManager::ClientEventsManager(Client* client_){
     client = client_;
+    events_queue = new BlockingQueue<Event*>();
 }
 
 ClientEventsManager::~ClientEventsManager(){}
 
 
 void ClientEventsManager::pushBackEvent(Event* event){
-    events_queue.push_back(event);
+    events_queue->push(event);
 }
 
 Event* ClientEventsManager::getEvent(){
-    if (!events_queue.empty()){
-        Event* event = events_queue.front();
-        events_queue.erase(events_queue.begin(),events_queue.begin()+1);
+    if (!events_queue->empty()){
+        Event* event = *events_queue->pop();
         return event;
     }
-    return NULL;
+    return nullptr;
 }
 
 Client* ClientEventsManager::getClient(){

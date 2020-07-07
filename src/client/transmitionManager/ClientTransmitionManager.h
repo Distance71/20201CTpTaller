@@ -13,6 +13,7 @@
 #include "../../common/models/Socket.h"
 #include "../../common/services/serializer/MessageDeserializer.h"
 #include "../../common/models/messages/Message.h"
+#include "../../common/models/BlockingQueue.h"
 
 class MessageDeserializer;
 
@@ -22,7 +23,7 @@ class ClientTransmitionManager {
         Client* client_;
         Socket* socket_;
         MessageDeserializer *deserializer_;
-        vector<Message*>* sendMessagesQueue_;
+        BlockingQueue<Message*>* sendMessagesQueue_;
 
     public:
     
@@ -33,7 +34,7 @@ class ClientTransmitionManager {
         Client *getClient();
         Socket *getSocket();
         MessageDeserializer *getDeserializer();
-        vector<Message *> *getSendMessagesQueue();
+        BlockingQueue<Message*> *getSendMessagesQueue();
         void run();
 };
 #endif 
