@@ -4,6 +4,8 @@
 #include "Event.h"
 #include "../messages/MessageInitStage.h"
 #include "../messages/Message.h"
+#include "../../types.h"
+#include "../../../client/Client.h"
 
 #define MAX_SIZE 100
 #define QUANTITY_LAYERS 7

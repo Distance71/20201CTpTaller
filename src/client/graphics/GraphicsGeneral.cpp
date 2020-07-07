@@ -56,6 +56,9 @@ void GraphicsGeneral::setBackground(stageSource_t background){
     if (this->scenario_)
         delete this->scenario_;
 
+    if (this->image)
+        delete this->image;
+
     this->scenario_ = new GraphicsScenario(background);
 };
  
@@ -69,4 +72,15 @@ void GraphicsGeneral::run(){
     }
 }
 
+void GraphicsGeneral::setImage(const string &source){
+    int sizeX, sizeY, posX, posY;
+    orientation_t orientation = FRONT;
 
+    sizeX = GameProvider::getWidth();
+    sizeY = GameProvider::getHeight();
+    posX = 0;
+    posY = 0;
+
+    this->image = new GraphicsMapElement(source, sizeX, sizeY, posX, posY, orientation);
+
+};

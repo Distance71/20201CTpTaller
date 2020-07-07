@@ -7,7 +7,7 @@ ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
     this->socket_ = new Socket();
     this->socket_-> setPort(port);
     this->deserializer_= new MessageDeserializer();
-    sendMessagesQueue_ = new vector <Message*>;
+    sendMessagesQueue_ = new BlockingQueue<Message*>();
 }
 
 
@@ -17,7 +17,7 @@ ClientTransmitionManager::~ClientTransmitionManager(){
 
 
 void ClientTransmitionManager::sendMessage(Message* message){
-    this->sendMessagesQueue_->push_back(message);
+    this->sendMessagesQueue_->push(message);
 }
 
 
@@ -31,7 +31,7 @@ Socket *ClientTransmitionManager::getSocket(){
 };
 
 
-vector<Message * >*ClientTransmitionManager::getSendMessagesQueue(){
+BlockingQueue<Message*> *ClientTransmitionManager::getSendMessagesQueue(){
     return this->sendMessagesQueue_;
 };
 
@@ -46,13 +46,11 @@ static void* sendMessages(void *arg){
 
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
-    vector<Message *> *MessagesQueue = transmitionManager->getSendMessagesQueue();
+    BlockingQueue<Message*> *messagesQueue = transmitionManager->getSendMessagesQueue();
 
     while (client->isConnected()){
-        
-        if (!(MessagesQueue->empty())){
-            Message *newMessage = MessagesQueue->front();
-            MessagesQueue->erase(MessagesQueue->begin(), MessagesQueue->begin() + 1); 
+        if (!(messagesQueue->empty())){
+            Message *newMessage = *messagesQueue->pop(); 
 
             size_t messageSize = sizeof(*newMessage);
             void *messageRef = &messageSize;

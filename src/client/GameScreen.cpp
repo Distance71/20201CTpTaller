@@ -113,6 +113,14 @@ void GameScreen::setLoginResponse(responseStatus_t response){
     menu->setLoginResponse(response);
 }
 
+void GameScreen::setImage(const string &source){
+    this->graphicsGeneral_->setImage(source);
+};
+
+void GameScreen::setBackground(stageSource_t background){
+    this->graphicsGeneral_->setBackground(background);
+};
+
 /*bool GameScreen::viewLogin() {
     /*Menu* menu = new Menu();
     menu->run();
