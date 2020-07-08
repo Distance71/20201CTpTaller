@@ -1,9 +1,8 @@
 #include "Menu.h"
 
-Menu::Menu(Client* _client){
+Menu::Menu(){
     SDL_StartTextInput();
     gRenderer = GameProvider::getRenderer();
-    client = _client;
     response = NOT_RESPONSE;
     
     MenuElement* background = new MenuElement(0,0,GameProvider::getWidth(),GameProvider::getHeight(),"assets/LoginScreen/background.png");

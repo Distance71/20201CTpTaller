@@ -24,35 +24,31 @@ file(COPY src/client/assets DESTINATION ${CMAKE_BINARY_DIR})
 
 
 add_executable(tp1taller        
-        src/client/eventsManager/ClientEventsManager.cpp
-        src/client/eventsManager/ClientEventsManager.h
-
-        src/client/graphics/GraphicsScenario.cpp
-        src/client/graphics/GraphicsScenario.h
-        src/client/graphics/GraphicsMapElement.cpp
-        src/client/graphics/GraphicsMapElement.h
-        src/client/graphics/GraphicsGeneral.cpp
-        src/client/graphics/GraphicsGeneral.h
-
-        src/client/transmitionManager/ClientTransmitionManager.cpp
-        src/client/transmitionManager/ClientTransmitionManager.h
-
+        
         src/client/ClientTest.cpp
         src/client/ClientTest.h
-
         src/client/Client.cpp
         src/client/Client.h
-        src/client/GameScreen.cpp
-        src/client/GameScreen.h
-
-        src/client/loginMenu/Button.h
-        src/client/loginMenu/Button.cpp
-        src/client/loginMenu/Menu.h
-        src/client/loginMenu/Menu.cpp
-        src/client/loginMenu/TextBox.h
-        src/client/loginMenu/TextBox.cpp
-        src/client/loginMenu/MenuElement.h
-        src/client/loginMenu/MenuElement.cpp
+        src/client/transmitionManager/ClientTransmitionManager.cpp
+        src/client/transmitionManager/ClientTransmitionManager.h
+        src/client/eventsManager/ClientEventsManager.cpp
+        src/client/eventsManager/ClientEventsManager.h
+        src/client/screenManager/graphics/GraphicsScenario.cpp
+        src/client/screenManager/graphics/GraphicsScenario.h
+        src/client/screenManager/graphics/GraphicsMapElement.cpp
+        src/client/screenManager/graphics/GraphicsMapElement.h
+        src/client/screenManager/graphics/GameGraphics.cpp
+        src/client/screenManager/graphics/GameGraphics.h
+        src/client/screenManager/ScreenManager.cpp
+        src/client/screenManager/ScreenManager.h
+        src/client/screenManager/loginMenu/Button.h
+        src/client/screenManager/loginMenu/Button.cpp
+        src/client/screenManager/loginMenu/Menu.h
+        src/client/screenManager/loginMenu/Menu.cpp
+        src/client/screenManager/loginMenu/TextBox.h
+        src/client/screenManager/loginMenu/TextBox.cpp
+        src/client/screenManager/loginMenu/MenuElement.h
+        src/client/screenManager/loginMenu/MenuElement.cpp
 
         src/common/models/messages/Message.h
         src/common/models/messages/MessageGameInit.cpp

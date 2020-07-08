@@ -5,12 +5,12 @@ class Sprite;
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "../../common/providers/GameProvider.h"
-#include "../../common/models/Sprite.h"
-#include "../../common/models/Position.h"
-#include "../../server/models/Speed.h"
+#include "../../../common/providers/GameProvider.h"
+#include "../../../common/models/Sprite.h"
+#include "../../../common/models/Position.h"
+#include "../../../server/models/Speed.h"
 #include <vector>
-#include "../../common/types.h"
+#include "../../../common/types.h"
 
 class GraphicsScenario {
     private:

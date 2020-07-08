@@ -20,6 +20,7 @@ class MessageLog : public Message {
     	explicit MessageLog(int level, string message) : level_(level), message_(message) {}
         Event* deSerialize();
         message_t getType();
+        responseStatus_t serialize() override;
 };
 
 #endif // _MESSAGE_LOG_H_

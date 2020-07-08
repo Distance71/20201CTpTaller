@@ -19,5 +19,5 @@ void EventInitStage::update() {
   background.layer7 = this->layerPaths_[6];
 
   Client* client = (Client *) context_;
-  client->getGameScreen()->setBackground(background);
+  client->setBackground(background);
 }

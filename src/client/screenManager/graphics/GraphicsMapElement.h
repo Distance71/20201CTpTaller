@@ -3,11 +3,9 @@
 
 #include <vector>
 #include <string>
-#include "../../common/models/Sprite.h"
-#include "../../common/models/Position.h"
-#include "../../common/types.h"
-
-class Sprite;
+#include "../../../common/models/Sprite.h"
+#include "../../../common/models/Position.h"
+#include "../../../common/types.h"
 
 class GraphicsMapElement {
     private:

@@ -36,6 +36,6 @@ class ServerTransmitionManager {
 
         void addUser(User* user);
         BlockingQueue<Message *>* getMessagesToProcess();
-};
+};     
 
 #endif // _SERVER_TRANSMITION_MANAGER_H_

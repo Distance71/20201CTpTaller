@@ -9,5 +9,5 @@ void EventMapElementDelete::update() {
   if (!this->context_)
 	  Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 
-  ((Client *)context_)->getGameScreen()->deadEntity(this->id_);
+  ((Client *)context_)->deadEntity(this->id_);
 }

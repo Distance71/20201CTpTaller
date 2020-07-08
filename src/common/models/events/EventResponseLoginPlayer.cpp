@@ -9,5 +9,5 @@ void EventResponseLoginPlayer::update() {
 		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 
     Client* client = (Client *) context_;
-    client -> getGameScreen()->setLoginResponse(response_);
+    client ->setLoginResponse(response_);
 }

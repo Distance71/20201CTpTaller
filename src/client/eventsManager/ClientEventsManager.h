@@ -1,33 +1,30 @@
 #ifndef _CLIENTEVENTSMANAGER_H_
 #define _CLIENTEVENTSMANAGER_H_
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "../Client.h"
 #include "../../common/types.h"
 #include "../../common/models/events/Event.h"
-#include "../../common/models/messages/MessageUserMovement.h"
 #include "../../common/models/BlockingQueue.h"
-#include <vector>
+#include"../../common/models/messages/MessageUserMovement.h"
 
-using namespace std;
+class Client;
 
 class ClientEventsManager {
+    
     private:
-        BlockingQueue<Event*>* events_queue;
-        Client *client;
+        BlockingQueue<Event*>* eventsQueue_;
+        Client *clientOwn_;
 
     public:
         ClientEventsManager(Client* client);
         ~ClientEventsManager();
-        void processEventsRun();
-        void RunDetectPlayerEvents();
         void pushBackEvent(Event* event);
         Event* getEvent();
+        void RunDetectPlayerEventsThread();
+        void RunProcessEventsThread();
         Client* getClient();
-
 };
 
 #endif

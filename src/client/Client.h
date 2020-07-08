@@ -2,56 +2,55 @@
 #define _CLIENT_H_
 
 #include <iostream>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <strings.h>
+#include <stdbool.h>
 #include <sys/types.h>
-#include <sys/socket.h>
-#include "GameScreen.h"
-#include "loginMenu/Menu.h"
+#include "../common/services/Logger.h"
 #include "transmitionManager/ClientTransmitionManager.h"
 #include "eventsManager/ClientEventsManager.h"
-#include "../common/models/Socket.h"
-#include "../common/providers/GameProvider.h"
-#include "../common/services/Logger.h"
+#include "screenManager/ScreenManager.h"
 #include "../common/models/messages/Message.h"
-#include "../common/models/messages/MessageLog.h"
 
 
-class GameScreen;
-class ClientEventsManager;
-class ClientTransmitionManager;
 
 class Client {
-    protected:
-        
-        GameScreen *gameScreen_;
+    
+    private:
+
+        bool connected_;
+        string ipHost_;
+        size_t port_;
+
+        ScreenManager *screenManager_;
         ClientTransmitionManager *transmitionManager_;
         ClientEventsManager* eventsManager_;
 
-        string name_;
-        string ipHost_;
-        size_t port_;
-        bool connected_;
-
-        void initializeClient();
 
     public:
-        Client(string ipAddress, size_t port);
+
+        //general methods
+        Client(string ipHost,size_t port);
         ~Client();
-        
         int run();
+        bool connectWithServer();
         bool isConnected();
-        void disconnect();
-        void setName(string oneName);
-        string getName();
-        void initGraphics(screen_t screenSizes);
+        size_t getPort();
+        string getIpHost();
 
+        //Screen methods
+        void initGame();
+        void createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
+        void updateEntity(IdElement id, int posX, int posY, orientation_t orientation);
+        void deadEntity(IdElement id);
+        void setBackground(stageSource_t background);
+        void setImage(const string &source);
+        void setScreenSizes(int Xsize, int Ysize);
+        
+        //menu methods
+        void setLoginResponse(responseStatus_t response);
+        
+        //transmition methods
         void sendMessage(Message* message);
-
-        GameScreen *getGameScreen();
-        ClientTransmitionManager *getTransmitionManager();
-        ClientEventsManager* getEventsManager();
 };
 
 #endif

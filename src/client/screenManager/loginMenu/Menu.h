@@ -9,18 +9,18 @@
 #include "TextBox.h"
 #include "MenuElement.h"
 #include <string>
-#include "../../common/models/Sprite.h"
-#include "../../common/providers/GameProvider.h"
-#include "../Client.h"
-#include  "../../common/models/messages/MessageRequestLoginPlayer.h"
-#include "../../common/types.h"
+#include "../../../common/models/Sprite.h"
+#include "../../../common/providers/GameProvider.h"
+#include "../../Client.h"
+#include  "../../../common/models/messages/MessageRequestLoginPlayer.h"
+#include "../../../common/types.h"
 
 class Client;
 
 class Menu {
 
     public:
-        Menu(Client* _client);
+        Menu();
         ~Menu();
         void processEvent();
         void show();
@@ -29,7 +29,6 @@ class Menu {
         
         
     private:
-        Client* client;
         SDL_Renderer* gRenderer;
         unordered_map <string, MenuElement*> menu_elements; 
         unordered_map <string, Button*> buttons; 

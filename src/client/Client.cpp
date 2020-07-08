@@ -1,90 +1,161 @@
 #include "Client.h"
 
-Client::Client(string ipAddress, size_t port){
-    this->name_ = "";
-    this->ipHost_ = ipAddress;
-    this->port_ = port;
-    this->eventsManager_= new ClientEventsManager(this);
+Client::Client(string ipHost,size_t port){
 
-    GameProvider::setWidth(1280);
-    GameProvider::setHeight(800);
-    this->gameScreen_ = new GameScreen(this);
-    this->transmitionManager_ = new ClientTransmitionManager(this, port);
+    this->connected_ = false;
+    this->ipHost_ = ipHost;
+    this->port_ = port;
+    this->screenManager_= nullptr;
+    this->transmitionManager_ = nullptr;
+    this->eventsManager_= nullptr;
 }
+
 
 Client::~Client(){
-    delete this->gameScreen_;
+    delete this->screenManager_;
     delete this->transmitionManager_;
+    delete this->eventsManager_;
 }
 
-void Client::initializeClient(){
-    if (!this->transmitionManager_->connectWithServer(this->ipHost_)){
+
+bool Client::connectWithServer(){
+    
+    this->transmitionManager_ = new ClientTransmitionManager(this);
+    
+    if (!this->transmitionManager_->connectWithServer()){
         this->connected_ = false;
         cout << "No se pudo conectar con el servidor con ip " + this->ipHost_ + " y puerto " + to_string(this->port_) << endl;
-        return;
+        delete this->transmitionManager_;
+        this->transmitionManager_ = nullptr;
+        connected_ = false;
+        return false;
     }
     
+    transmitionManager_->runThreads();
+
+    eventsManager_ = new ClientEventsManager(this);
+
+    eventsManager_ -> RunProcessEventsThread();
+
     this->connected_ = true;
-    transmitionManager_->run();
-    eventsManager_->processEventsRun();
-    
+
     Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
+
+    return true;
 }
 
-int Client::run(){
-    this->initializeClient();
-    if (!this->isConnected()) {
-        Logger::getInstance()->log(ERROR, "No se pudo conectar con el servidor");
-        return EXIT_FAILURE;
-    }
-    
-    Logger::getInstance()->log(INFO, "Se conecta con el servidor");
-    cout << "Se conecta con el servidor " << endl;
-
-    this->gameScreen_->viewLogin();
-    this->eventsManager_->RunDetectPlayerEvents();
-    this->gameScreen_->runGraphics();
-    
-    return EXIT_SUCCESS;    
-}
-
-void Client::initGraphics(screen_t screenSizes){
-    GameProvider::setWidth(screenSizes.width);
-    GameProvider::setHeight(screenSizes.height);
-    this->gameScreen_->initializeGraphics();
-    this->gameScreen_->viewLogin();
-};
 
 bool Client::isConnected(){
     return this->connected_;
 }
 
-void Client::disconnect(){
-    this->connected_ = false;
 
-    // Cerrar conexiones, socket, logger situacion...
+int Client::run(){
+    
+    if (!this->connectWithServer()){
+        Logger::getInstance()->log(ERROR, "No se pudo conectar con el servidor, juego finalizado");
+        return EXIT_FAILURE;
+    }
+
+    Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
+    cout << "Se estableció conexión con el servidor " << endl;
+
+    this->screenManager_= new ScreenManager(this);
+    
+    // esperar por seteo del tamaño de pantalla
+    
+    if (!this->screenManager_->initializeGraphics()){
+        Logger::getInstance()->log(ERROR, "No se pudieron inicializar los gráficos, juego finalizado");
+        return EXIT_FAILURE;
+    };
+
+    bool logged = this->screenManager_-> viewLogin();
+
+    if (!logged){
+        Logger::getInstance()->log(INFO, "El ususario no ha podido loguearse,juego finalizado");
+        return EXIT_FAILURE;
+    }
+
+    this->eventsManager_->RunDetectPlayerEventsThread();
+    this->screenManager_->initGameGraphics();
+    return EXIT_SUCCESS;    
 }
 
-void Client::setName(string oneName){
-    this->name_ = oneName;
+
+void Client::createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
+    if(this->screenManager_){
+        this->screenManager_->createEntity(id,source,sizeX,sizeY,posX,posY,orientation);
+    }
+    else{
+         Logger::getInstance()->log(DEBUG, "No se ha podido crear entidad,falta crear el objeto ScreenManager");
+    }
 }
 
-string Client::getName(){
-    return this->name_;
+
+void Client::updateEntity(IdElement id, int posX, int posY, orientation_t orientation){
+    if(this->screenManager_){
+        this->screenManager_->updateEntity(id,posX,posY,orientation);
+    }
+    else{
+         Logger::getInstance()->log(DEBUG, "No se ha podido actualizar entidad,falta crear el objeto ScreenManager");
+    }
 }
 
-GameScreen *Client::getGameScreen(){
-    return this->gameScreen_;
-};
 
-ClientTransmitionManager *Client::getTransmitionManager(){
-    return this->transmitionManager_;
+void Client::deadEntity(IdElement id){
+    if(this->screenManager_){
+        this->screenManager_->deadEntity(id);
+    }
+    else{
+         Logger::getInstance()->log(DEBUG, "No se ha podido eliminar entidad,falta crear el objeto ScreenManager");
+    }
 }
 
-ClientEventsManager* Client::getEventsManager(){
-    return this->eventsManager_;
+
+void Client::setBackground(stageSource_t background){
+    if(this->screenManager_){
+        this->screenManager_->setBackground(background);
+    }
+    else{
+         Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,falta crear el objeto ScreenManager");
+    } 
 }
+
+
+void Client::setImage(const string &source){
+    if(this->screenManager_){
+        this->screenManager_->setImage(source);
+    }
+    else{
+         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,falta crear el objeto ScreenManager");
+    } 
+}
+
+
+void Client::setLoginResponse(responseStatus_t response){
+    if(this->screenManager_){
+        this->screenManager_->setLoginResponse(response);
+    }
+    else{
+         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la respuesta en el menu,falta crear el objeto ScreenManager");
+    } 
+}
+
+
+size_t Client::getPort(){
+    return this->port_;
+}
+
+
+string Client::getIpHost(){
+    return this->ipHost_;
+}
+
 
 void Client::sendMessage(Message* message){
-    transmitionManager_->sendMessage(message);
+    this->transmitionManager_->sendMessage(message);
+}
+
+void Client::setScreenSizes(int Xsize, int Ysize){
+    this->screenManager_->setScreenSizes(Xsize,Ysize);
 }

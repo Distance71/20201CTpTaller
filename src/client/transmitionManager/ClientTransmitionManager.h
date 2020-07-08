@@ -8,33 +8,28 @@
 #include <strings.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <vector>
 #include "../Client.h"
 #include "../../common/models/Socket.h"
 #include "../../common/services/serializer/MessageDeserializer.h"
 #include "../../common/models/messages/Message.h"
 #include "../../common/models/BlockingQueue.h"
 
-class MessageDeserializer;
+class Client;
 
 class ClientTransmitionManager {
 
     private:
-        Client* client_;
+        Client* clientOwn_;
         Socket* socket_;
-        MessageDeserializer *deserializer_;
         BlockingQueue<Message*>* sendMessagesQueue_;
 
+
+
     public:
-    
-        ClientTransmitionManager(Client *client, size_t port);
+        ClientTransmitionManager(Client *client);
         ~ClientTransmitionManager();
-        void sendMessage(Message* message);
-        bool connectWithServer(string ipAddress);
-        Client *getClient();
-        Socket *getSocket();
-        MessageDeserializer *getDeserializer();
-        BlockingQueue<Message*> *getSendMessagesQueue();
-        void run();
+        void runThreads();
+        bool connectWithServer();
+        void sendMessage(Message* message);   
 };
 #endif 

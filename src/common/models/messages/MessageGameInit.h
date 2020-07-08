@@ -15,6 +15,7 @@ class MessageGameInit: public Message {
     	explicit MessageGameInit(screen_t screenSizes) : screenSizes_(screenSizes) {}
         Event* deSerialize();
         message_t getType();
+		responseStatus_t serialize() override;
 };
 
 #endif

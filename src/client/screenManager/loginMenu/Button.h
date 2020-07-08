@@ -5,9 +5,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "../../common/providers/GameProvider.h"
-#include "../../common/models/Sprite.h"
-#include "../../common/types.h"
+#include "../../../common/providers/GameProvider.h"
+#include "../../../common/models/Sprite.h"
+#include "../../../common/types.h"
 
 using namespace std;
 

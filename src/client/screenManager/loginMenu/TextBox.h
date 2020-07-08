@@ -7,8 +7,8 @@
 #include <stdbool.h>
 #include "Button.h"
 #include <string>
-#include "../../common/providers/GameProvider.h"
-#include "../common/services/Logger.h"
+#include "../../../common/providers/GameProvider.h"
+#include "../../../common/services/Logger.h"
 
 using namespace std;
 

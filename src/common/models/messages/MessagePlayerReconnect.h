@@ -20,6 +20,7 @@ class MessagePlayerReconnect: public Message {
     	explicit MessagePlayerReconnect(size_t id): id_(id) {}
     	message_t getType();
         Event* deSerialize();
+		responseStatus_t serialize() override;
 };
 
 #endif

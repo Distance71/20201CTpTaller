@@ -1,4 +1,4 @@
-#include "ClientTest.h"
+/*#include "ClientTest.h"
 
 int ClientTest::runTest(){
     this->initializeClient();
@@ -13,7 +13,8 @@ int ClientTest::runTest(){
 
     //TODO cargar tests
     
-    this->gameScreen_->screenTest();
+    this->screenManager__->screenTest();
 
     return EXIT_SUCCESS;    
 }
+*/

@@ -13,6 +13,7 @@ class MessageEndGame: public Message {
     public:
         Event* deSerialize();
         message_t getType();
+        responseStatus_t serialize() override;
 };
 
 #endif

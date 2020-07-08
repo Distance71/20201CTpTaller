@@ -126,3 +126,7 @@ int Server::run(){
     Logger::getInstance()->log(INFO, "El Juego ha terminado");
     return EXIT_SUCCESS;
 }
+
+ServerTransmitionManager* Server::getTransmitionManager(){
+    return this->transmitionManager_;
+}

@@ -1,13 +1,8 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
-#include <stdio.h>
 #include "../messages/Message.h"
 #include "../../services/Logger.h"
-
-using namespace std;
-
-class Message;
 
 class Event {
 

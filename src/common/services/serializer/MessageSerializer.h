@@ -5,6 +5,9 @@
 #include "../../models/Socket.h"
 #include "../../models/events/Event.h"
 #include "../../services/Logger.h"
+#include "../../models/messages/Message.h"
+
+class Event;
 
 using namespace std;
 

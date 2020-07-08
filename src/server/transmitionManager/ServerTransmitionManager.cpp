@@ -126,3 +126,5 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
     }
     return nullptr;
 }
+
+}

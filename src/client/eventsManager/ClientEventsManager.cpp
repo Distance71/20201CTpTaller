@@ -1,42 +1,30 @@
 #include "ClientEventsManager.h"
-#include <stdio.h>
 
-ClientEventsManager::ClientEventsManager(Client* client_){
-    client = client_;
-    events_queue = new BlockingQueue<Event*>();
+ClientEventsManager::ClientEventsManager(Client* client){
+    this->clientOwn_ = client;
+    this->eventsQueue_ = new BlockingQueue<Event*>();
 }
 
-ClientEventsManager::~ClientEventsManager(){}
+
+ClientEventsManager::~ClientEventsManager(){
+    delete eventsQueue_;
+}
 
 
 void ClientEventsManager::pushBackEvent(Event* event){
-    events_queue->push(event);
+    this->eventsQueue_->push(event);
 }
 
+
 Event* ClientEventsManager::getEvent(){
-    if (!events_queue->empty()){
-        Event* event = *events_queue->pop();
+    if (!eventsQueue_->empty()){
+        Event* event = *eventsQueue_->pop();
         return event;
     }
     return nullptr;
 }
 
-Client* ClientEventsManager::getClient(){
-    return client;
-}
 
-static void* processEvents(void * arg){
-    ClientEventsManager* events_manager = (ClientEventsManager*) arg;
-    Client * client = events_manager->getClient();
-    while(client->isConnected()){
-        Event* event = events_manager->getEvent();
-        if (event){
-            event->setContext(client);
-            event->update();
-            delete event;
-        }
-    }
-}
 static void * detectPlayerEvents(void* arg){
     Client* client = (Client*) arg;
     Uint8 up;
@@ -88,19 +76,42 @@ static void * detectPlayerEvents(void* arg){
             movementOrientation = BACK_DOWN;
         }
 
-        /*if (movementOrientation!=NOT_MOVEMENT){
+        if (movementOrientation!=NOT_MOVEMENT){
             MessageUserMovement* message = new MessageUserMovement(movementOrientation);  
             client->sendMessage(message);
-        }*/
+        }
     }
 }
 
-void ClientEventsManager::RunDetectPlayerEvents(){
+
+void ClientEventsManager::RunDetectPlayerEventsThread(){
+    Logger::getInstance()->log(DEBUG, "Se inicializa hilo de detección de eventos del jugador");
     pthread_t detect_player_events_thread;
-    pthread_create(&detect_player_events_thread,NULL,detectPlayerEvents,this->client);
+    pthread_create(&detect_player_events_thread,NULL,detectPlayerEvents,this->clientOwn_);
 }
 
-void ClientEventsManager::processEventsRun(){
+
+static void* processEvents(void * arg){
+    ClientEventsManager* eventsManager = (ClientEventsManager*) arg;
+    Client * client = eventsManager->getClient();
+    while(client->isConnected()){
+        Event* event = eventsManager->getEvent();
+        if (event){
+            event->setContext(client);
+            event->update();
+            delete event;
+        }
+    }
+}
+
+
+void ClientEventsManager::RunProcessEventsThread(){
+    Logger::getInstance()->log(DEBUG, "Se inicializa hilo de proceso de eventos");
     pthread_t process_events_thread;
     pthread_create(&process_events_thread,NULL,processEvents,this);
+}
+
+
+Client* ClientEventsManager:: getClient(){
+    return this->clientOwn_;
 }

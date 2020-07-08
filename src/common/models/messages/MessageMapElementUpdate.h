@@ -23,6 +23,7 @@ class MessageMapElementUpdate: public Message {
     	explicit MessageMapElementUpdate(size_t id, position_t position): id_(id), position_(position) {}
     	message_t getType();
         Event* deSerialize();
+        responseStatus_t serialize() override;
 };
 
 #endif
