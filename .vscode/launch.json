@@ -9,9 +9,9 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/tp1taller",
-            "args": [],
+            "args": [ "-c", "${workspaceFolder}/ConfigurationServer.json", "-p", " 6000", "-i", "127.0.0.1", "-m" , "SERVER" ] ,
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/build/",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -20,8 +20,16 @@
                     "description": "Habilitar la impresión con sangría para gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
-                }
-            ]
+                },
+                {
+                    "description": "Skip <path> files",
+                    "text": "-interpreter-exec console \"skip -gfi /build/glibc-t7JzpG/glibc-2.30/**/*\""
+                 }
+            ],
+            "miDebuggerPath":"/usr/bin/gdb",
+            "sourceFileMap":{
+                "/build/glibc-t7JzpG":"usr/src/glibc"
+            }
         }
     ]
 }
