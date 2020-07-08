@@ -17,6 +17,7 @@ class MessageResponseLoginPlayer: public Message {
     public:
     	explicit MessageResponseLoginPlayer(responseStatus_t response) : response_(response) {}
         Event* deSerialize();
+     	responseStatus_t serialize() {};
         message_t getType();
 };
 

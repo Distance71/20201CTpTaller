@@ -30,6 +30,7 @@ class MessageRequestLoginPlayer: public Message {
 
         Event* deSerialize();
         message_t getType();
+     	responseStatus_t serialize() {};
 };
 
 #endif

@@ -20,6 +20,7 @@ class MessagePlayerDisconnect: public Message {
     	explicit MessagePlayerDisconnect(size_t id): id_(id) {}
     	message_t getType();
         Event* deSerialize();
+     	responseStatus_t serialize() {};
 };
 
 #endif
