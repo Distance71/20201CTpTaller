@@ -9,18 +9,25 @@
 
 using namespace std;
 
+#define MAX_MESSAGE 100;
+
 class MessageLog : public Message {
 
     private:
         int level_;
-        string message_;    
+        char message_[MAX_MESSAGE];    
         const message_t type_ = LOG;    
 
     public:
-    	explicit MessageLog(int level, string message) : level_(level), message_(message) {}
+    	explicit MessageLog(int level, char message[MAX_MESSAGE]) {
+            level_ = level;
+            for(size_t i = 0; i < MAX_MESSAGE; i++){
+                message_[i] = message[i];
+            }
+        };
         Event* deSerialize();
         message_t getType();
-        responseStatus_t serialize() override;
+        responseStatus_t serialize() {};
 };
 
 #endif // _MESSAGE_LOG_H_
