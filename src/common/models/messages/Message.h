@@ -10,6 +10,7 @@ class Message {
 
     public:
         virtual Event* deSerialize() = 0;
+        virtual message_t getType() = 0;
 };
 
 #endif

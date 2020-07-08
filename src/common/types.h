@@ -42,20 +42,20 @@ typedef enum stage {
 } stage_t;
 
 typedef enum message {
-    NONE,
-    INIT_ENTITY,    
-    INIT_LAYER,
-    INIT_GAME,
-    
-    // INIT_ENTITY,
-    // UPDATE_ENTITY,
-    // INIT_LAYER,
-    // INIT_SCREEN,
-    // UPDATE_STAGE,
-    // LOGIN_PLAYER,
-    // REQUEST_LOGIN_PLAYER,
-    // MOVEMENT_PLAYER,
-    // ACTION_PLAYER,
+    ANIMATION_INIT_STAGE,
+    END_GAME,
+    END_STAGE,
+    GAME_INIT,
+    INIT_STAGE,
+    LOG,
+    MAP_ELEMENT_CREATE,
+    MAP_ELEMENT_DELETE,
+    MAP_ELEMENT_UPDATE,
+    PLAYER_DISCONNECT,
+    PLAYER_RECONNECT,
+    REQUEST_LOGIN_PLAYER,
+    RESPONSE_LOGIN_PLAYER,
+    USER_MOVEMENT,
 } message_t;
 
 typedef enum {

@@ -12,10 +12,12 @@ class MessageResponseLoginPlayer: public Message {
 
 	private:
         responseStatus_t response_;
+        const message_t type_ = RESPONSE_LOGIN_PLAYER;
 
     public:
     	explicit MessageResponseLoginPlayer(responseStatus_t response) : response_(response) {}
         Event* deSerialize();
+        message_t getType();
 };
 
 #endif

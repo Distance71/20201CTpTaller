@@ -17,7 +17,19 @@ ClientTransmitionManager::~ClientTransmitionManager(){
 
 
 void ClientTransmitionManager::sendMessage(Message* message){
-    this->sendMessagesQueue_->push(message);
+    
+    //Para testear
+    message_t type = message->getType();
+    void *typeRef = &type;
+    if(socket_->sendMessage((void *&) typeRef, sizeof(message_t)) <= 0)
+        cout << "Error al enviar mensaje" << endl;
+
+    if(socket_->sendMessage((void *&)message, sizeof(*message)) <= 0)
+        cout << "Error al enviar mensaje" << endl;
+
+    cout << "el mensaje se manda ok" << endl;
+
+    //this->sendMessagesQueue_->push(message); esto rompe
 }
 
 

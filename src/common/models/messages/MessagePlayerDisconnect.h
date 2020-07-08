@@ -14,10 +14,11 @@ class MessagePlayerDisconnect: public Message {
 
 	private:
 		size_t id_;
+		const message_t type_ = PLAYER_DISCONNECT;
 
     public:
     	explicit MessagePlayerDisconnect(size_t id): id_(id) {}
-
+    	message_t getType();
         Event* deSerialize();
 };
 

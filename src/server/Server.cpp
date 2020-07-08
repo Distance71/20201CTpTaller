@@ -13,7 +13,7 @@ Server::Server(size_t port){
 Server::~Server(){
     delete this->usersManager_;
     delete this->transmitionManager_;
-    Logger::getInstance()->log(INFO, "Fin del juego");
+    Logger::getInstance()->log(DEBUG, "Se han eliminado todos los recursos utilizados");
 }
 
 void Server::_initializeServer() {
@@ -62,27 +62,24 @@ void Server::waitPlayers(){
 
     //Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
     //porque el Socket hace el accept antes de que del logeo y demas
-    while (/*!this->usersManager_->isFullGame() &&*/ this->isConnected()){
+    while (!this->usersManager_->isFullGame() && this->isConnected()){
         
         size_t newUserId = this->usersManager_->acceptUnloggedUser();
 
-        // cout << "Se conectó un tipo" << newUserId << endl;
-        // if (newUserId == 0){
-        //     bool isFullGame = this->usersManager_->isFullGame();
-        //     if(isFullGame) {
-        //         //Some debug log
-        //         break;
-        //     }
-        //     //error de accept ya fue informado en acceptUnloggedUser <borrar esta linea>*/
-        // }
-        // else{
-          //cout << "Se agrega el cliente " << newUserId << endl;
-          cout << "Se agrega un cliente. " << endl;
-        //}
-        //Here should handle validation
+        if (newUserId <= 0){
+            bool isFullGame = this->usersManager_->isFullGame();
+            if(isFullGame) {
+                Logger::getInstance()->log(DEBUG, "Se ha querido conectar usuario con el juego lleno");
+                break;
+            }
+        }
+        else{
+            cout << "Se agrega un cliente. " << endl;
+            Logger::getInstance()->log(INFO, "Se ha conectado un usuario nuevo");
+        }
     }
-
-};
+    Logger::getInstance()->log(DEBUG, "Se ha terminado de esperar jugadores");
+}
 
 Socket* Server::getSocket(){
     return this->socket_;
@@ -94,7 +91,7 @@ Socket* Server::getSocket(){
 
 void Server::addPlayer(User *newUser){
     if(!newUser || usersManager_->isFullGame()) {
-        //Handle error
+        Logger::getInstance()->log(ERROR, "Se ha querido iniciar un usuario en el servidor sin contenido");
         return;
     }
 
@@ -123,23 +120,9 @@ int Server::run(){
 
     this->waitPlayers();
 
-    //Here goes gameRun that generates events for events manager
+    //this->game->run();
 
-    /*while (this->isConnected()){
-        string strQuit;
-        cin >> strQuit;
-        boost::to_upper(strQuit);
-        if (strQuit == "QUIT"){
-            this->connected_ = false;
-            cout << "Has cerrado la partida." << endl;
-        } else {
-            cout << "Comando no válido." << endl;
-        }
-    }*/
 
+    Logger::getInstance()->log(INFO, "El Juego ha terminado");
     return EXIT_SUCCESS;
-}
-
-void Server::runGame(){
-
 }

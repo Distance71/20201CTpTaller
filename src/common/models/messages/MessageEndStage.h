@@ -15,6 +15,7 @@ class MessageEndStage: public Message {
 
 	private:
 		char path_[MAX_SIZE];
+		const message_t type_ = END_STAGE;
 
     public:
     	explicit MessageEndStage(char path[MAX_SIZE]) {
@@ -22,7 +23,7 @@ class MessageEndStage: public Message {
                 path_[i] = path[i];
             }
         }
-
+        message_t getType();
         Event* deSerialize();
 };
 

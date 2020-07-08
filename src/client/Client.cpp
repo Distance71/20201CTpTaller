@@ -26,22 +26,24 @@ void Client::initializeClient(){
     
     this->connected_ = true;
     transmitionManager_->run();
-    //eventsManager_->processEventsRun();
+    eventsManager_->processEventsRun();
     
-    Logger::getInstance()->log(INFO, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
+    Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
 }
 
 int Client::run(){
     this->initializeClient();
-    if (!this->isConnected())
+    if (!this->isConnected()) {
+        Logger::getInstance()->log(ERROR, "No se pudo conectar con el servidor");
         return EXIT_FAILURE;
+    }
     
+    Logger::getInstance()->log(INFO, "Se conecta con el servidor");
     cout << "Se conecta con el servidor " << endl;
 
-    while(true){}
-    // this->gameScreen_->viewLogin();
-    // eventsManager_->RunDetectPlayerEvents();
-    // gameScreen_->runGraphics();
+    this->gameScreen_->viewLogin();
+    this->eventsManager_->RunDetectPlayerEvents();
+    this->gameScreen_->runGraphics();
     
     return EXIT_SUCCESS;    
 }

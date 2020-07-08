@@ -30,14 +30,12 @@ private:
 public:
     //User() = default;
     ~User();
-    User(string userName, string password);
     User(Socket *socket);
 
     string getUserName();
     string getPassword();
 
-    void setUserName(string userName);
-    void setPassword(string password);
+    void setCredentials(string userName, string password);
 
     void setLoggedIn();
 

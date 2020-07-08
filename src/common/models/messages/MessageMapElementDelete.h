@@ -14,10 +14,11 @@ class MessageMapElementDelete: public Message {
 
 	private:
 		size_t id_;
+		const message_t type_ = MAP_ELEMENT_DELETE;
 
     public:
     	explicit MessageMapElementDelete(size_t id): id_(id) {}
-
+    	message_t getType();
         Event* deSerialize();
 };
 

@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-    Menu::Menu(Client* _client){
+Menu::Menu(Client* _client){
     SDL_StartTextInput();
     gRenderer = GameProvider::getRenderer();
     client = _client;
@@ -32,7 +32,6 @@
 }
 
 
-
 Menu::~Menu(){
     for(auto button : buttons){
         delete button.second;
@@ -45,25 +44,17 @@ Menu::~Menu(){
     }
 }
 
-
-
 void Menu::addButton(string button_name,Button* button){
     buttons[button_name] = button;
 }
-
-
 
 void Menu::addTextBox(string text_box_name,TextBox* text_box){
     text_boxes[text_box_name] = text_box;
 }
 
-
-
 void Menu::addMenuElement(string element_name,MenuElement* menu_element){
     menu_elements[element_name] = menu_element;
 }
-
-
 
 void Menu::update(int x, int y,bool click){
     SDL_RenderClear(gRenderer);
@@ -88,7 +79,8 @@ void Menu::update(int x, int y,bool click){
 
 
 void Menu::sendCredentialsMessage(){
-    if (buttons["LOGIN"]->isSelected()){
+    cout << "debug3" << endl;
+    //if (buttons["LOGIN"]->isSelected()){
         const char* username = text_boxes["USERNAME"]->getText();
         const char* password = text_boxes["PASSWORD"]->getText();
         if (strlen(username)<=30 && strlen(password)<=30){
@@ -102,9 +94,10 @@ void Menu::sendCredentialsMessage(){
         else{
             setLoginResponse(ERROR_WRONG_CREDENTIALS);
         }
-        buttons["LOGIN"]->deselect();
-    }
+        //buttons["LOGIN"]->deselect();
+    //}
 }
+
 
 bool Menu::getLoggedInStatus(){
     if (response == OK){
@@ -113,10 +106,8 @@ bool Menu::getLoggedInStatus(){
     return false;
 }
 
-
-
 void Menu::processEvent(){  
-    bool click = false;   
+    /*bool click = false;   
     int x = -1;
     int y = -1;
     SDL_Event e = GameProvider::getLastEvent();
@@ -129,7 +120,7 @@ void Menu::processEvent(){
             text_box.second->readInput(&e);
         }    
     }
-    update(x,y,click);
+    update(x,y,click);*/
     sendCredentialsMessage();
 }
 

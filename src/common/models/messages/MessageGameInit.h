@@ -9,10 +9,12 @@ class MessageGameInit: public Message {
 
 	private:
 		screen_t screenSizes_;
+		const message_t type_ = GAME_INIT;
 
     public:
     	explicit MessageGameInit(screen_t screenSizes) : screenSizes_(screenSizes) {}
         Event* deSerialize();
+        message_t getType();
 };
 
 #endif

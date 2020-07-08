@@ -21,6 +21,7 @@ class Server;
 class ServerTransmitionManager {
     private:
         Server *serverOwn_;
+        std::mutex mtxErrno;
         //BlockingQueue <Message*>* receivedMessagesQueue_;
         //unordered_map<IdUser, BlockingQueue<Message *> *> messagesQueues_;
 

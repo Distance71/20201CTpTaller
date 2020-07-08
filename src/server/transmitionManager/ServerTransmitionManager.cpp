@@ -2,18 +2,16 @@
 
 ServerTransmitionManager::ServerTransmitionManager(Server *server){
     this->serverOwn_ = server;
-    //cout << this << endl;
     //receivedMessagesQueue_ = new BlockingQueue <Message*>();
 }
 
 ServerTransmitionManager::~ServerTransmitionManager(){
-    //pthread_mutex_destroy(&this->mutex_lastId_);
     //delete this->receivedMessagesQueue_;
 }
 
 void ServerTransmitionManager::addUser(User* user){
-    //this->createReceivingCycle(user);
-    this->createSendingCycle(user);
+    this->createReceivingCycle(user);
+    //this->createSendingCycle(user);
 }
 
 void ServerTransmitionManager::createReceivingCycle(User* user) {
@@ -32,6 +30,8 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
         return handler->receivingCycle(user);
     }, (void *) &args);
 
+
+    //Not handled
     if(pthreadCreateStatus != 0) {
         string errorMessage = "No se pudo crear el hilo para manejar el receptor de mensajes para el usuario" + to_string(user->getId());
         Logger::getInstance()->log(ERROR, errorMessage);
@@ -48,19 +48,23 @@ void* ServerTransmitionManager::receivingCycle(User* user){
         
         Event *event = user->receiveMessage();
         if(!event){
-            //Add mutex to errno
+            mtxErrno.lock();
             if (errno == ECONNREFUSED || errno == ENOTCONN || errno == ENOTSOCK) {
-                Logger::getInstance()->log(ERROR, "Se detecta desconexión involuntaria del cliente."+ to_string(user->getId()));
+                Logger::getInstance()->log(DEBUG, "Se detecta desconexión del cliente."+ to_string(user->getId()));
                 user->setDisconnection();
                 return nullptr;
             }
+            mtxErrno.unlock();
+            Logger::getInstance()->log(ERROR, "Se ha recibido un evento invalido. Se cerrará la conexión con el cliente");
+            return nullptr;
         }
-        if(event != nullptr)
-            cout << "se recibio un mensaje" << endl;
+        Logger::getInstance()->log(DEBUG, "Se recibio un evento");
+        cout << "se recibio un mensaje" << endl;
         //receivedMessagesQueue_->push(message);        
     }
     
     Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente " + to_string(user->getId()));
+    return nullptr;
 }
 
 

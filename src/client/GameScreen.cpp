@@ -72,6 +72,7 @@ void GameScreen::initializeGraphics(){
 
 
 int GameScreen::viewLogin(){
+    cout << "debug4" << endl;
     SDL_Event e; 
     while (GameProvider::getStatus().normalStatus){
         while (SDL_PollEvent(&e)){
@@ -122,8 +123,9 @@ void GameScreen::setBackground(stageSource_t background){
 };
 
 /*bool GameScreen::viewLogin() {
-    /*Menu* menu = new Menu();
+    Menu* menu = new Menu(this->clientOwn);
     menu->run();
+
     SDL_Window* window = GameProvider::getWindow();
     SDL_Surface* surface = SDL_GetWindowSurface(window);
     SDL_Surface* loginscreen = IMG_Load("assets/LoginScreen/loginscreen.png");

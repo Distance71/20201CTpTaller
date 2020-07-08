@@ -27,14 +27,13 @@ IdUser UsersManager::acceptUnloggedUser(){
     Socket *socketNewUser = new Socket(newClientDescriptor);
     
     User* newUser = new User(socketNewUser);
-    this->users_[this->lastId_] = newUser;
-    this->lastId_++; 
+    this->users_[this->lastId_++] = newUser;
 
     this->serverOwn_->addPlayer(newUser);
 
     pthread_mutex_unlock(&this->mutex_lastId_); 
 
-    return this->lastId_;
+    return this->lastId_ - 1;
 }
 
 // void UserManager::logInUser(User* User){

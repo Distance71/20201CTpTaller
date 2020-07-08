@@ -13,11 +13,13 @@ class MessageLog : public Message {
 
     private:
         int level_;
-        string message_;        
+        string message_;    
+        const message_t type_ = LOG;    
 
     public:
     	explicit MessageLog(int level, string message) : level_(level), message_(message) {}
         Event* deSerialize();
+        message_t getType();
 };
 
 #endif // _MESSAGE_LOG_H_

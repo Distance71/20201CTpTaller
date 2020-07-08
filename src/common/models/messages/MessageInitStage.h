@@ -16,6 +16,7 @@ class MessageInitStage: public Message {
 
 	private:
 		char layerPaths_[QUANTITY_LAYERS][MAX_SIZE];
+        const message_t type_ = INIT_STAGE;
 
     public:
     	explicit MessageInitStage(char layerPaths[QUANTITY_LAYERS][MAX_SIZE]) {
@@ -24,7 +25,7 @@ class MessageInitStage: public Message {
                     layerPaths_[i][j] = layerPaths[i][j];
             }
         }
-
+        message_t getType();
         Event* deSerialize();
 };
 

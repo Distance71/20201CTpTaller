@@ -7,14 +7,6 @@ User::User(Socket *socket){
 	serializer_ = new MessageSerializer();
 }
 
-User::User(string userName, string password){
-	this->userName_ = userName;
-	this->password_ = password;
-	this->connected_ = true;
-	deserializer_ = new MessageDeserializer();
-	serializer_ = new MessageSerializer();
-}
-
 User::~User() {
 	this->socket_ = nullptr;
 	this->logged_ = false;
@@ -36,11 +28,8 @@ void User::setLoggedIn(){
 	this->logged_ = true;
 }
 
-void User::setUserName(string userName){
+void User::setCredentials(string userName, string password){
 	this->userName_ = userName;
-}
-
-void User::setPassword(string password){
 	this->password_ = password;
 }
 

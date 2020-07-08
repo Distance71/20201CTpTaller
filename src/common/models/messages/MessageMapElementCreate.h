@@ -19,6 +19,7 @@ class MessageMapElementCreate: public Message {
         char imagePath_[MAX_SIZE];
         position_t position_;
         spriteSize_t spriteSize_;
+        const message_t type_ = MAP_ELEMENT_CREATE;
 
     public:
     	explicit MessageMapElementCreate(size_t id, char imagePath[MAX_SIZE], position_t position, spriteSize_t spriteSize) {
@@ -29,7 +30,7 @@ class MessageMapElementCreate: public Message {
             position_ = position;
             spriteSize_ = spriteSize;
         }
-
+        message_t getType();
         Event* deSerialize();
 };
 

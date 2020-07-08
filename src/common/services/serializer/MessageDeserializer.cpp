@@ -20,23 +20,37 @@ response_t MessageDeserializer::_handleSuccess(){
     return response;
 }
 
-response_t MessageDeserializer::getEvent(size_t messageSize, Socket *socket, Event* &event){
-    void* buffer;
+response_t MessageDeserializer::getEvent(message_t messageType, Socket *socket, Event* &event){
+    
+    if(!socket){
+        Logger::getInstance()->log(DEBUG, "Se recibio puntero null al recibir evento");
+        Logger::getInstance()->log(ERROR, "Error interno al recibir evento");
+        cout << "No se ha podido recibir un evento, puntero null" << endl;
+    }
 
-    if (socket->receiveMessage(buffer, messageSize) <= 0)
+    Message *buffer = new MessageRequestLoginPlayer(); //For testing
+
+    if (socket->receiveMessage((void *&) buffer, sizeof(*buffer)) <= 0)
         return this->_handleErrorStatus();
 
-    event = ((Message *) buffer)->deSerialize(); //Dudando esta expresión, debo probarlo
+    event = buffer->deSerialize();
+
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        cout << "No se ha podido recibir un evento" << endl;
+        return this->_handleErrorStatus();
+    }
     return this->_handleSuccess();
 }
 
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
-    cout << "daseas" << endl;
-    size_t messageSize;
-    void* _messageSize = (void *) &messageSize;
-    cout << "casi" << endl;
-    if (socket->receiveMessage(_messageSize, sizeof(size_t)) <= 0)
+    message_t messageType;
+    void* _typeRef = (void *) &messageType;
+
+    if (socket->receiveMessage(_typeRef, sizeof(message_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje.");
         return this->_handleErrorStatus();
-    cout << "done"<< endl;
-    return this->getEvent(messageSize, socket, event);
+    }
+    Logger::getInstance()->log(DEBUG, "Se recibio el tamaño de un mensaje.");
+    return this->getEvent(messageType, socket, event);
 };

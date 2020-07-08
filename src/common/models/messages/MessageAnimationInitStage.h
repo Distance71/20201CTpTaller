@@ -11,13 +11,14 @@ class MessageAnimationInitStage: public Message {
 
 	private:
         char path_[MAX_SIZE];
+        const message_t type_ = ANIMATION_INIT_STAGE;
 
     public:
     	explicit MessageAnimationInitStage(char path[MAX_SIZE]) {
             for(size_t i = 0; i < MAX_SIZE; i++)
                 path_[i] = path[i];
         }
-
+        message_t getType();
         Event* deSerialize();
 };
 

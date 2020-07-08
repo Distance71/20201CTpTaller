@@ -88,10 +88,10 @@ static void * detectPlayerEvents(void* arg){
             movementOrientation = BACK_DOWN;
         }
 
-        if (movementOrientation!=NOT_MOVEMENT){
+        /*if (movementOrientation!=NOT_MOVEMENT){
             MessageUserMovement* message = new MessageUserMovement(movementOrientation);  
             client->sendMessage(message);
-        }
+        }*/
     }
 }
 

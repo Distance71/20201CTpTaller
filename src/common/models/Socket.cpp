@@ -98,7 +98,6 @@ int Socket::receiveMessage(void* &buffer, size_t sizeData){
 }
 
 int Socket::sendMessage(void* &buffer, size_t sizeData){
-       
     int totalBytesWritten = 0;
     int bytesWritten = 0;;
     bool isOpen = true;
@@ -115,6 +114,8 @@ int Socket::sendMessage(void* &buffer, size_t sizeData){
             totalBytesWritten += bytesWritten;
         }
     }
+
+    cout << "debug2 " << totalBytesWritten << endl;
 
     return totalBytesWritten;
 }
