@@ -28,12 +28,14 @@ response_t MessageDeserializer::getEvent(message_t messageType, Socket *socket, 
         cout << "No se ha podido recibir un evento, puntero null" << endl;
     }
 
-    Message *buffer = new MessageRequestLoginPlayer(); //For testing
+    Message *buffer = (Message*) malloc (sizeof(MessageRequestLoginPlayer)); //For testing
 
+    cout << "Here" << endl;
     if (socket->receiveMessage((void *&) buffer, sizeof(*buffer)) <= 0)
         return this->_handleErrorStatus();
 
-    event = buffer->deSerialize();
+    cout << "el tipo " << endl;
+    event = ((Message *)buffer)->deSerialize();
 
     if(!event){
         Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");

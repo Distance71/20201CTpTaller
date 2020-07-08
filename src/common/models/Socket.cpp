@@ -77,13 +77,15 @@ int Socket::acceptClient(){
 
 int Socket::receiveMessage(void* &buffer, size_t sizeData){
 
+    cout << "llegue " << sizeof(buffer) << endl;
     int totalBytesReceive = 0;
     int bytesReceive = 0;
     bool isOpen = true;
 
-    while ((sizeData > totalBytesReceive) && isOpen){
-        bytesReceive = read(this->fileDescriptor_, (void *) (buffer + totalBytesReceive), (sizeData - totalBytesReceive));
-        
+    while ((totalBytesReceive < sizeData) && isOpen){
+        cout << "ok" << endl;
+        bytesReceive = read(this->fileDescriptor_, (void *) buffer + totalBytesReceive - 1, (sizeData - totalBytesReceive));
+        cout << "Aca" << endl;
         if (bytesReceive < 0){
             return -1;
         } else if (bytesReceive == 0){
@@ -93,6 +95,8 @@ int Socket::receiveMessage(void* &buffer, size_t sizeData){
             totalBytesReceive += bytesReceive;
         }
     }
+
+    cout << "bits "<< totalBytesReceive << endl;
 
     return totalBytesReceive;
 }

@@ -72,9 +72,8 @@ void GameScreen::initializeGraphics(){
 
 
 int GameScreen::viewLogin(){
-    cout << "debug4" << endl;
     SDL_Event e; 
-    while (GameProvider::getStatus().normalStatus){
+    /*while (GameProvider::getStatus().normalStatus){
         while (SDL_PollEvent(&e)){
             GameProvider::setLastEvent(e);
             if (e.type == SDL_QUIT){
@@ -82,16 +81,16 @@ int GameScreen::viewLogin(){
                 delete menu;
                 menu = NULL;
                 return  EXIT_SUCCESS;
-            }
+            }*/
             menu -> processEvent();
-        }
+        /*}
         if (menu->getLoggedInStatus()){
             delete menu;
             menu = NULL;
             break;
         }
         menu->show();      
-    }   
+    }*/   
 }
 
 void GameScreen::runGraphics(){

@@ -8,9 +8,13 @@ class Event;
 
 class Message {
 
+	protected:
+        void* context_ = nullptr;
+        
     public:
         virtual Event* deSerialize() = 0;
         virtual message_t getType() = 0;
+        virtual responseStatus_t serialize() = 0;
 };
 
 #endif
