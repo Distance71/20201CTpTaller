@@ -4,6 +4,7 @@
 #include "Message.h"
 #include "../events/EventAnimationInitStage.h"
 #include "../events/Event.h"
+#include "../../../client/Client.h"
 
 #define MAX_SIZE 100
 
@@ -20,6 +21,7 @@ class MessageAnimationInitStage: public Message {
         }
         message_t getType();
         Event* deSerialize();
+        responseStatus_t serialize();
 };
 
 #endif

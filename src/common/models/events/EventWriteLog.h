@@ -8,14 +8,23 @@
 
 using namespace std;
 
+class MessageLog;
+
+#ifndef MAX_MESSAGE_LOG
+#define MAX_MESSAGE_LOG 100
+#endif
+
 class EventWriteLog: public Event {
 
     private:
         int level_;
-        string message_;     
+        char message_[MAX_MESSAGE_LOG]; 
 
     public:
-        EventWriteLog(int level, string message) : level_(level), message_(message) {}
+        explicit EventWriteLog(int level, char message[MAX_MESSAGE_LOG]) {
+            for(size_t i = 0; i < MAX_MESSAGE_LOG; i++)
+                message_[i] = message[i];
+        }
         
         Message* serialize();
         void update();
