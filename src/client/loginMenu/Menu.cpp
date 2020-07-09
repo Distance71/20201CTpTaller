@@ -79,23 +79,23 @@ void Menu::update(int x, int y,bool click){
 
 
 void Menu::sendCredentialsMessage(){
-    cout << "debug3" << endl;
-    //if (buttons["LOGIN"]->isSelected()){
-        const char* username = text_boxes["USERNAME"]->getText();
-        const char* password = text_boxes["PASSWORD"]->getText();
-        if (strlen(username)<=30 && strlen(password)<=30){
-            char _username[30];
-            char _password[30];
-            strncpy (_username, username, 30);
-            strncpy (_password, password, 30);
-            MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(_username,_password);
-            client->getTransmitionManager()->sendMessage(message);
-        }
-        else{
-            setLoginResponse(ERROR_WRONG_CREDENTIALS);
-        }
-        //buttons["LOGIN"]->deselect();
-    //}
+    // cout << "debug3" << endl;
+    // //if (buttons["LOGIN"]->isSelected()){
+    //     const char* username = text_boxes["USERNAME"]->getText();
+    //     const char* password = text_boxes["PASSWORD"]->getText();
+    //     if (strlen(username)<=30 && strlen(password)<=30){
+    //         char _username[30];
+    //         char _password[30];
+    //         strncpy (_username, username, 30);
+    //         strncpy (_password, password, 30);
+    //         MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(_username,_password);
+    //         client->getTransmitionManager()->sendMessage(message);
+    //     }
+    //     else{
+    //         setLoginResponse(ERROR_WRONG_CREDENTIALS);
+    //     }
+    //     //buttons["LOGIN"]->deselect();
+    // //}
 }
 
 

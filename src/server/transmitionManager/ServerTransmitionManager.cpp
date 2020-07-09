@@ -43,7 +43,7 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
 }
 
 void* ServerTransmitionManager::receivingCycle(User* user){
-    
+    Logger::getInstance()->log(DEBUG, "Se va iniciar el ciclo del receptor transmitionManager");
     while (user->isConnected() && this->serverOwn_->isConnected()) {
         
         Event *event = user->receiveMessage();

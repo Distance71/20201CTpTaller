@@ -20,12 +20,12 @@ void ClientTransmitionManager::sendMessage(Message* message){
     
     //Para testear
     message_t type = message->getType();
-    void *typeRef = &type;
-    if(socket_->sendMessage((void *&) typeRef, sizeof(message_t)) <= 0)
+
+    if(socket_->sendMessage((void *) &type, sizeof(message_t)) <= 0)
         cout << "Error al enviar mensaje" << endl;
 
-    if(socket_->sendMessage((void *&)message, sizeof(*message)) <= 0)
-        cout << "Error al enviar mensaje" << endl;
+    // if(socket_->sendMessage((void *) message, sizeof(*message)) <= 0)
+    //     cout << "Error al enviar mensaje" << endl;
 
     cout << "el mensaje se manda ok" << endl;
 
@@ -54,24 +54,35 @@ MessageDeserializer *ClientTransmitionManager::getDeserializer(){
 
 
 static void* sendMessages(void *arg){
-   ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+//    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
 
-    Client *client = transmitionManager->getClient();
-    Socket *socket = transmitionManager->getSocket();
-    BlockingQueue<Message*> *messagesQueue = transmitionManager->getSendMessagesQueue();
+//     Client *client = transmitionManager->getClient();
+//     Socket *socket = transmitionManager->getSocket();
+//     BlockingQueue<Message*> *messagesQueue = transmitionManager->getSendMessagesQueue();
 
-    while (client->isConnected()){
-        if (!(messagesQueue->empty())){
-            Message *newMessage = *messagesQueue->pop(); 
+//     while (client->isConnected()){
+//         if (!(messagesQueue->empty())){
+//             Message *newMessage = *messagesQueue->pop(); 
 
-            size_t messageSize = sizeof(*newMessage);
-            void *messageRef = &messageSize;
+//             size_t messageSize = sizeof(*newMessage);
+//             void *messageRef = &messageSize;
           
-            socket->sendMessage((void *&) messageRef, sizeof(size_t));
-            socket->sendMessage((void *&) newMessage, messageSize);
-        }
-    }
-    return nullptr;
+//             socket->sendMessage((void *&) messageRef, sizeof(size_t));
+//             socket->sendMessage((void *&) newMessage, messageSize);
+//         }
+//     }
+//     return nullptr;
+    
+    //TODO para testing
+    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+
+    //Socket *socket = transmitionManager->getSocket();
+
+    //Message *newMessage = *messagesQueue->pop(); 
+
+    Message *newMessage = new MessageEndGame();
+
+    transmitionManager->sendMessage(newMessage);
 }
 
 
@@ -126,9 +137,9 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
 
 
 void ClientTransmitionManager::run(){
-    // pthread_t sending_thread;
-    // pthread_create(&sending_thread,NULL,sendMessages,this);
+    pthread_t sending_thread;
+    pthread_create(&sending_thread,NULL,sendMessages,this);
 
-    pthread_t receiving_thread;
-    pthread_create(&receiving_thread, NULL,receiveMessages,this);
+    // pthread_t receiving_thread;
+    // pthread_create(&receiving_thread, NULL,receiveMessages,this);
 }

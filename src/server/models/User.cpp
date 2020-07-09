@@ -68,10 +68,17 @@ void User::setDisconnection(){
 
 Event* User::receiveMessage(){
 	Event* event;
-	response_t response = deserializer_->getReceivedMessage(socket_, event); //Validar
-	if(response.ok)
+	Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje en User");
+	response_t response = deserializer_->getReceivedMessage(socket_, event);
+	if(response.ok){
+		Logger::getInstance()->log(DEBUG, "Se recibio del deserializer un evento con exito en User");
 		return event;
-	return nullptr;
+	}
+	else {
+		Logger::getInstance()->log(ERROR, "No se pudo recibir un evento con exito en User");
+		return nullptr;
+	}
+	
 }
 
 response_t User::sendMessage(Event* event){
