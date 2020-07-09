@@ -6,17 +6,19 @@
 #include "../events/Event.h"
 #include "../../../client/Client.h"
 
-#define MAX_SIZE 100
+#ifndef MAX_SIZE_MESSAGE
+#define MAX_SIZE_MESSAGE 100
+#endif
 
 class MessageAnimationInitStage: public Message {
 
 	private:
-        char path_[MAX_SIZE];
+        char path_[MAX_SIZE_MESSAGE];
         const message_t type_ = ANIMATION_INIT_STAGE;
 
     public:
-    	explicit MessageAnimationInitStage(char path[MAX_SIZE]) {
-            for(size_t i = 0; i < MAX_SIZE; i++)
+    	explicit MessageAnimationInitStage(char path[MAX_SIZE_MESSAGE]) {
+            for(size_t i = 0; i < MAX_SIZE_MESSAGE; i++)
                 path_[i] = path[i];
         }
         message_t getType();

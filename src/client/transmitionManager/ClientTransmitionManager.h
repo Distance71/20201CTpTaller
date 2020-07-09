@@ -15,6 +15,8 @@
 #include "../../common/models/messages/Message.h"
 #include "../../common/models/BlockingQueue.h"
 
+#include "../../common/models/messages/MessageEndGame.h"
+
 class MessageDeserializer;
 
 class ClientTransmitionManager {

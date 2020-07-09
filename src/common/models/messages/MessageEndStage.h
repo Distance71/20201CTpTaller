@@ -7,19 +7,21 @@
 #include "../events/EventEndStage.h"
 #include "../events/Event.h"
 
-#define MAX_SIZE 100
+#ifndef MAX_SIZE_MESSAGE
+#define MAX_SIZE_MESSAGE 100
+#endif
 
 using namespace std;
 
 class MessageEndStage: public Message {
 
 	private:
-		char path_[MAX_SIZE];
+		char path_[MAX_SIZE_MESSAGE];
 		const message_t type_ = END_STAGE;
 
     public:
-    	explicit MessageEndStage(char path[MAX_SIZE]) {
-            for(size_t i = 0; i < MAX_SIZE; i++){
+    	explicit MessageEndStage(char path[MAX_SIZE_MESSAGE]) {
+            for(size_t i = 0; i < MAX_SIZE_MESSAGE; i++){
                 path_[i] = path[i];
             }
         }

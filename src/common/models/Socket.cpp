@@ -75,51 +75,80 @@ int Socket::acceptClient(){
     return accept(this->fileDescriptor_, (struct sockaddr *) &sockaddr_client, (socklen_t *) &clientAddrLen);
 }
 
-int Socket::receiveMessage(void* &buffer, size_t sizeData){
+int Socket::receiveMessage(void* buffer, size_t sizeData){
 
-    cout << "llegue " << sizeof(buffer) << endl;
     int totalBytesReceive = 0;
     int bytesReceive = 0;
     bool isOpen = true;
 
+    std::stringstream ss;
+    sizeData = 4; //Borrar
+
+    char myBuffer[5];
+    myBuffer[4] = '\0';
+
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje de tamaño " + std::to_string((int)sizeData));
+
     while ((totalBytesReceive < sizeData) && isOpen){
-        cout << "ok" << endl;
-        bytesReceive = read(this->fileDescriptor_, (void *) buffer + totalBytesReceive - 1, (sizeData - totalBytesReceive));
-        cout << "Aca" << endl;
+        bytesReceive = read(this->fileDescriptor_, (void *) myBuffer + totalBytesReceive - 1, (sizeData - totalBytesReceive));
         if (bytesReceive < 0){
+            Logger::getInstance()->log(DEBUG, "Se ha producido un error al recibir el mensaje en socket");
             return -1;
         } else if (bytesReceive == 0){
             isOpen = false;
+            Logger::getInstance()->log(DEBUG, "Se ha cerrado el socket de origen en Socket");
             return 0;
         } else {
             totalBytesReceive += bytesReceive;
         }
     }
 
+    for(size_t i = 0; i< 5; i++)
+        cout << myBuffer[i];
+
+    cout << endl;
+
+    //For testing
+    int tipo;
+    ss >> tipo;
+
+    cout << "la cosa " << tipo << endl;
+
     cout << "bits "<< totalBytesReceive << endl;
 
     return totalBytesReceive;
 }
 
-int Socket::sendMessage(void* &buffer, size_t sizeData){
+int Socket::sendMessage(void* buffer, size_t sizeData){
     int totalBytesWritten = 0;
     int bytesWritten = 0;;
     bool isOpen = true;
 
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje");
+
+    std::stringstream ss;
+    ss << std::setw(4) << std::setfill('0') << 4;
+
+    string msg = ss.str();
+
+    cout << "el mandado " << msg.c_str() << endl;
+
     while ((sizeData > totalBytesWritten) && isOpen){
-        bytesWritten = write(this->fileDescriptor_, (void *) (buffer + totalBytesWritten), (sizeData - totalBytesWritten));
+        bytesWritten = write(this->fileDescriptor_, (void *) (msg.c_str() + totalBytesWritten), (msg.size() - totalBytesWritten));
 
         if (bytesWritten < 0){
             return -1;
+            Logger::getInstance()->log(DEBUG, "Se ha producido un error al mandar el mensaje en socket");
         } else if (bytesWritten == 0){
             isOpen = false;
+            Logger::getInstance()->log(DEBUG, "Se ha cerrado el socket de destino en Socket");
             return 0;
         } else {
             totalBytesWritten += bytesWritten;
         }
     }
 
-    cout << "debug2 " << totalBytesWritten << endl;
+    Logger::getInstance()->log(DEBUG, "Se mando mensaje ok en Socket de tamaño " + std::to_string((int)sizeData));
 
     return totalBytesWritten;
 }

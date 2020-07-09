@@ -8,7 +8,9 @@
 #include "../events/Event.h"
 #include "../../types.h"
 
-#define MAX_SIZE 30
+#ifndef MAX_SIZE_CREDENTIALS
+#define MAX_SIZE_CREDENTIALS 30
+#endif
 
 using namespace std;
 
@@ -16,13 +18,13 @@ class MessageRequestLoginPlayer: public Message {
 
 	private:
         const message_t type_ = REQUEST_LOGIN_PLAYER;
-		char userName_[MAX_SIZE];
-        char password_[MAX_SIZE];
+		char userName_[MAX_SIZE_CREDENTIALS];
+        char password_[MAX_SIZE_CREDENTIALS];
 
     public:
         explicit MessageRequestLoginPlayer(){}
-    	explicit MessageRequestLoginPlayer(char userName[MAX_SIZE], char password[MAX_SIZE]) {
-            for(size_t i = 0; i < MAX_SIZE; i++){
+    	explicit MessageRequestLoginPlayer(char userName[MAX_SIZE_CREDENTIALS], char password[MAX_SIZE_CREDENTIALS]) {
+            for(size_t i = 0; i < MAX_SIZE_CREDENTIALS; i++){
                 userName_[i] = userName[i];
                 password_[i] = password[i];
             }

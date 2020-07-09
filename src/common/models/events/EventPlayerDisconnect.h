@@ -8,8 +8,6 @@
 #include "../events/Event.h"
 #include "../../types.h"
 
-#define MAX_SIZE 100
-
 using namespace std;
 
 class EventPlayerDisconnect: public Event {

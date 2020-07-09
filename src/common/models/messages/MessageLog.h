@@ -9,19 +9,21 @@
 
 using namespace std;
 
-#define MAX_MESSAGE 100
+#ifndef MAX_SIZE_MESSAGE
+#define MAX_SIZE_MESSAGE 100
+#endif
 
 class MessageLog : public Message {
 
     private:
         int level_;
-        char message_[MAX_MESSAGE];    
+        char message_[MAX_SIZE_MESSAGE];    
         const message_t type_ = LOG;    
 
     public:
-    	explicit MessageLog(int level, char message[MAX_MESSAGE]) {
+    	explicit MessageLog(int level, char message[MAX_SIZE_MESSAGE]) {
             level_ = level;
-            for(size_t i = 0; i < MAX_MESSAGE; i++){
+            for(size_t i = 0; i < MAX_SIZE_MESSAGE; i++){
                 message_[i] = message[i];
             }
         };
