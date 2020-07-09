@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#define MAX_MESSAGE 100;
+#define MAX_MESSAGE 100
 
 class MessageLog : public Message {
 
