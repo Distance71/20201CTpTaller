@@ -7,19 +7,22 @@
 #include "../../types.h"
 #include "../../../client/Client.h"
 
-#define MAX_SIZE 100
+#ifndef MAX_SIZE_MESSAGE
+#define MAX_SIZE_MESSAGE 100
+#endif
+
 #define QUANTITY_LAYERS 7
 
 using namespace std;
 
 class EventInitStage: public Event {
     private:
-		char layerPaths_[QUANTITY_LAYERS][MAX_SIZE];
+		char layerPaths_[QUANTITY_LAYERS][MAX_SIZE_MESSAGE];
 
     public:
-        explicit EventInitStage(char layerPaths[QUANTITY_LAYERS][MAX_SIZE]) {
+        explicit EventInitStage(char layerPaths[QUANTITY_LAYERS][MAX_SIZE_MESSAGE]) {
             for(size_t i = 0; i < QUANTITY_LAYERS; i++){
-                for(size_t j = 0; j < MAX_SIZE; j++)
+                for(size_t j = 0; j < MAX_SIZE_MESSAGE; j++)
                     layerPaths_[i][j] = layerPaths[i][j];
             }
         }

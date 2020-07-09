@@ -7,7 +7,9 @@
 #include "../events/EventInitStage.h"
 #include "../events/Event.h"
 
-#define MAX_SIZE 100
+#ifndef MAX_SIZE_MESSAGE
+#define MAX_SIZE_MESSAGE 100
+#endif
 #define QUANTITY_LAYERS 7
 
 using namespace std;
@@ -15,13 +17,13 @@ using namespace std;
 class MessageInitStage: public Message {
 
 	private:
-		char layerPaths_[QUANTITY_LAYERS][MAX_SIZE];
+		char layerPaths_[QUANTITY_LAYERS][MAX_SIZE_MESSAGE];
         const message_t type_ = INIT_STAGE;
 
     public:
-    	explicit MessageInitStage(char layerPaths[QUANTITY_LAYERS][MAX_SIZE]) {
+    	explicit MessageInitStage(char layerPaths[QUANTITY_LAYERS][MAX_SIZE_MESSAGE]) {
             for(size_t i = 0; i < QUANTITY_LAYERS; i++){
-                for(size_t j = 0; j < MAX_SIZE; j++)
+                for(size_t j = 0; j < MAX_SIZE_MESSAGE; j++)
                     layerPaths_[i][j] = layerPaths[i][j];
             }
         }
