@@ -65,8 +65,8 @@ void Server::waitPlayers(){
     while (!this->usersManager_->isFullGame() && this->isConnected()){
         
         size_t newUserId = this->usersManager_->acceptUnloggedUser();
-
-        if (newUserId < 0){
+        
+        if (newUserId == 0){
             bool isFullGame = this->usersManager_->isFullGame();
             if(isFullGame) {
                 Logger::getInstance()->log(DEBUG, "Se ha querido conectar usuario con el juego lleno");

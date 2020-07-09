@@ -20,7 +20,7 @@ IdUser UsersManager::acceptUnloggedUser(){
     int newClientDescriptor = this->serverOwn_->getSocket()->acceptClient();
     if (newClientDescriptor < 0){
         Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
-        return -1;
+        return 0;
     }
     
     pthread_mutex_lock(&this->mutex_lastId_);
@@ -33,7 +33,7 @@ IdUser UsersManager::acceptUnloggedUser(){
 
     pthread_mutex_unlock(&this->mutex_lastId_); 
 
-    return this->lastId_ - 1;
+    return this->lastId_;
 }
 
 // void UserManager::logInUser(User* User){
