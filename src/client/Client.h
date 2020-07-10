@@ -36,6 +36,7 @@ class Client {
         bool connectWithServer();
         bool isConnected();
         void disconnect();
+        void reconnect();
         size_t getPort();
         string getIpHost();
 
@@ -47,6 +48,7 @@ class Client {
         void setBackground(stageSource_t background);
         void setImage(const string &source);
         void setScreenSizes(int Xsize, int Ysize);
+        void endGame();
         
         //menu methods
         void setLoginResponse(responseStatus_t response);

@@ -5,7 +5,7 @@
 #include "../messages/MessageLog.h"
 #include "../messages/Message.h"
 #include "../../services/Logger.h"
-
+#include "../../../client/Client.h"
 using namespace std;
 
 class MessageLog;

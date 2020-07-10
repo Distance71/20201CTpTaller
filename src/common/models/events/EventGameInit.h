@@ -7,6 +7,7 @@
 #include "../../providers/GameProvider.h"
 #include "../../services/Logger.h"
 #include "../../types.h"
+#include "../../../client/Client.h"
 
 using namespace std;
 

@@ -6,8 +6,12 @@ Message* EventGameInit::serialize() {
 }
 
 void EventGameInit::update() {
-    if (!this->context_)
-		  Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
-    
-    ((Client *)context_)->setScreenSizes(this->screenSizes_.width, this->screenSizes_.height);
+    if (!this->context_){
+		  Logger::getInstance()->log(DEBUG, "No hay conecto para el evento EventGameInit");
+    }
+    else{
+        Client* client = (Client*) Event::context_;
+        client->setScreenSizes(screenSizes_.width,screenSizes_.height);
+        Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventGameInit");
+    }
 }

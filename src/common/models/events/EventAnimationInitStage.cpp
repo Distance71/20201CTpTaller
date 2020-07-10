@@ -4,10 +4,13 @@ Message* EventAnimationInitStage::serialize() {
     return (Message *) new MessageAnimationInitStage(this->path_);
 }
 
-void EventAnimationInitStage::update() {
-    /*if (!this->context_)
-		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
-
-    GameProvider::setWidth(this->width_);
-    GameProvider::setHeight(this->height_);*/
+void EventAnimationInitStage::update(){
+    if (!this->context_){
+		  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento AnimationInitStage");
+    }
+    else{
+      Client * client = (Client*) Event::context_;
+      client ->setImage(this->path_);
+      Logger::getInstance()->log(DEBUG, "Se ejecutó el evento AnimationInitStage");
+    }
 }

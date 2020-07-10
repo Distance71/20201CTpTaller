@@ -157,3 +157,11 @@ void Client::disconnect(){
     this->connected_ = false;
      Logger::getInstance()->log(DEBUG, "Se desconecta el cliente");
 }
+
+void Client::reconnect(){
+
+}
+
+void Client::endGame(){
+    
+}

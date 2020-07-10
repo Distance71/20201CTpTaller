@@ -5,9 +5,12 @@ Message* EventEndStage::serialize() {
 }
 
 void EventEndStage::update() {
-  if (!this->context_)
-	  Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
-
-  Client* client = (Client *) context_;
-  client->setImage(this->path_);
+  if (!this->context_){
+	  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventEndStage");
+  }
+  else{
+    Client* client = (Client *) Event::context_;
+    client->setImage(this->path_);
+    Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventEndStage");
+  }
 }
