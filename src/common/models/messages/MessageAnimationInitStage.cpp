@@ -9,5 +9,11 @@ message_t MessageAnimationInitStage::getType(){
 }
 
 responseStatus_t MessageAnimationInitStage::serialize(){
-    return OK;
+	if (!this->context_)
+		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
+
+	//int result = ((Client*) context_)->getTransmitionManager()->getSocket()->sendMessage((void *&) this->path_, sizeof(this->path_));
+
+	//return result > 0 ? OK : ERROR_MESSAGE;
+	return OK;
 }

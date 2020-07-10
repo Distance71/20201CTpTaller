@@ -13,23 +13,41 @@
 #include "../../common/services/serializer/MessageDeserializer.h"
 #include "../../common/models/messages/Message.h"
 #include "../../common/models/BlockingQueue.h"
+#include "../../common/models/messages/MessageEndGame.h"
 
 class Client;
+class MessageDeserializer;
 
 class ClientTransmitionManager {
 
     private:
-        Client* clientOwn_;
+        // Client* clientOwn_;
+        // Socket* socket_;
+        // BlockingQueue<Message*>* sendMessagesQueue_;
+
+        Client* client_;
         Socket* socket_;
+        MessageDeserializer *deserializer_;
         BlockingQueue<Message*>* sendMessagesQueue_;
 
 
-
     public:
-        ClientTransmitionManager(Client *client);
+        // ClientTransmitionManager(Client *client);
+        // ~ClientTransmitionManager();
+        // Client *getClient();
+        // Socket *getSocket();
+        // void runThreads();
+        // bool connectWithServer();
+        // void sendMessage(Message* message);   
+
+         ClientTransmitionManager(Client *client, size_t port);
         ~ClientTransmitionManager();
-        void runThreads();
-        bool connectWithServer();
-        void sendMessage(Message* message);   
+        void sendMessage(Message* message);
+        bool connectWithServer(string ipAddress);
+        Client *getClient();
+        Socket *getSocket();
+        MessageDeserializer *getDeserializer();
+        BlockingQueue<Message*> *getSendMessagesQueue();
+        void run();
 };
 #endif 

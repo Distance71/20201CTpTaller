@@ -1,13 +1,12 @@
 #include "ClientTransmitionManager.h"
 
-ClientTransmitionManager::ClientTransmitionManager(Client *client){
-    this->clientOwn_ = client;
+ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
+    this->client_ = client;
     this->socket_ = new Socket();
-    this->socket_-> setPort(client->getPort());
+    this->socket_-> setPort(port);
+    this->deserializer_= new MessageDeserializer();
     sendMessagesQueue_ = new BlockingQueue<Message*>();
-
 }
-
 
 ClientTransmitionManager::~ClientTransmitionManager(){
     delete this->socket_;
@@ -15,7 +14,34 @@ ClientTransmitionManager::~ClientTransmitionManager(){
 }
 
 
-bool ClientTransmitionManager::connectWithServer(){
+
+void ClientTransmitionManager::sendMessage(Message* message){
+    
+    //Para testear
+    message_t type = message->getType();
+
+    if(socket_->sendMessage((void *) &type, sizeof(message_t)) <= 0)
+        cout << "Error al enviar mensaje" << endl;
+
+    // if(socket_->sendMessage((void *) message, sizeof(*message)) <= 0)
+    //     cout << "Error al enviar mensaje" << endl;
+
+    cout << "el mensaje se manda ok" << endl;
+
+    //this->sendMessagesQueue_->push(message); esto rompe
+}
+
+
+Client *ClientTransmitionManager::getClient(){
+    return this->client_;
+};
+
+
+Socket *ClientTransmitionManager::getSocket(){
+    return this->socket_;
+};
+
+bool ClientTransmitionManager::connectWithServer(string ipAddress){
 
     if(!this->socket_->create()){
         string errorMessage = "No se pudo crear el socket para conectarse con el server";
@@ -31,7 +57,7 @@ bool ClientTransmitionManager::connectWithServer(){
         return false;
     }
 
-    if (!this->socket_->connectWithServer(this->clientOwn_->getIpHost())){
+    if (!this->socket_->connectWithServer(ipAddress)){
         string errorMessage = "No se pudo conectar el cliente con el servidor.";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -43,24 +69,35 @@ bool ClientTransmitionManager::connectWithServer(){
 
 
 static void* sendMessages(void *arg){
-   /*ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+//    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
 
-    Client *client = transmitionManager->getClient();
-    Socket *socket = transmitionManager->getSocket();
-    BlockingQueue<Message*> *messagesQueue = transmitionManager->getSendMessagesQueue();
+//     Client *client = transmitionManager->getClient();
+//     Socket *socket = transmitionManager->getSocket();
+//     BlockingQueue<Message*> *messagesQueue = transmitionManager->getSendMessagesQueue();
 
-    while (client->isConnected()){
-        if (!(messagesQueue->empty())){
-            Message *newMessage = *messagesQueue->pop(); 
+//     while (client->isConnected()){
+//         if (!(messagesQueue->empty())){
+//             Message *newMessage = *messagesQueue->pop(); 
 
-            size_t messageSize = sizeof(*newMessage);
-            void *messageRef = &messageSize;
+//             size_t messageSize = sizeof(*newMessage);
+//             void *messageRef = &messageSize;
           
             //socket->sendMessage((void *&) messageRef, sizeof(size_t));
             //socket->sendMessage((void *&) newMessage, messageSize);
-        }
-    }*/
-    return nullptr;
+//         }
+//     }
+//     return nullptr;
+    
+    //TODO para testing
+    ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
+
+    //Socket *socket = transmitionManager->getSocket();
+
+    //Message *newMessage = *messagesQueue->pop(); 
+
+    Message *newMessage = new MessageEndGame();
+
+    transmitionManager->sendMessage(newMessage);
 }
 
 
@@ -88,18 +125,12 @@ static void* receiveMessages(void *arg){
  }
 
 
-void ClientTransmitionManager::runThreads(){
+void ClientTransmitionManager::run(){
     Logger::getInstance()->log(DEBUG, "Se inicializan hilos de envío y recepción de mensajes");
     
     pthread_t sending_thread;
     pthread_create(&sending_thread,NULL,sendMessages,this);
 
-    pthread_t receiving_thread;
-    pthread_create(&receiving_thread, NULL,receiveMessages,this);
-}
-
-
-void ClientTransmitionManager::sendMessage(Message* message){
-    //this->sendMessagesQueue_->push(message); //esto rompe
-    //Logger::getInstance()->log(DEBUG, "Se agrega mensaje a la cola de salida");
+    // pthread_t receiving_thread;
+    // pthread_create(&receiving_thread, NULL,receiveMessages,this);
 }

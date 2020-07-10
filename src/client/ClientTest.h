@@ -1,4 +1,4 @@
-/*#ifndef _CLIENT_TEST_H_
+#ifndef _CLIENT_TEST_H_
 #define _CLIENT_TEST_H_
 
 #include "Client.h"
@@ -13,4 +13,4 @@ class ClientTest : public Client {
     
 };
 
-#endif*/
+#endif

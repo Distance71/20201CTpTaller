@@ -82,15 +82,11 @@ int Socket::receiveMessage(void* buffer, size_t sizeData){
     bool isOpen = true;
 
     std::stringstream ss;
-    sizeData = 4; //Borrar
-
-    char myBuffer[5];
-    myBuffer[4] = '\0';
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje de tamaño " + std::to_string((int)sizeData));
 
     while ((totalBytesReceive < sizeData) && isOpen){
-        bytesReceive = read(this->fileDescriptor_, (void *) myBuffer + totalBytesReceive - 1, (sizeData - totalBytesReceive));
+        bytesReceive = read(this->fileDescriptor_, (void *) buffer + totalBytesReceive - 1, (sizeData - totalBytesReceive));
         if (bytesReceive < 0){
             Logger::getInstance()->log(DEBUG, "Se ha producido un error al recibir el mensaje en socket");
             return -1;
@@ -102,12 +98,6 @@ int Socket::receiveMessage(void* buffer, size_t sizeData){
             totalBytesReceive += bytesReceive;
         }
     }
-
-    for(size_t i = 0; i< 5; i++)
-        cout << myBuffer[i];
-
-    cout << endl;
-
     //For testing
     int tipo;
     ss >> tipo;

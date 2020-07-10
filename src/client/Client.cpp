@@ -5,7 +5,7 @@ Client::Client(string ipHost,size_t port){
     this->ipHost_ = ipHost;
     this->port_ = port;
     this->screenManager_= new ScreenManager(this);
-    this->transmitionManager_ = new ClientTransmitionManager(this);
+    this->transmitionManager_ = new ClientTransmitionManager(this, port);
     this->eventsManager_= new ClientEventsManager(this);
 }
 
@@ -18,13 +18,13 @@ Client::~Client(){
 
 
 bool Client::connectWithServer(){
-    if (!this->transmitionManager_->connectWithServer()){
+    if (!this->transmitionManager_->connectWithServer(this->ipHost_)){
         this->connected_ = false;
         cout << "No se pudo conectar con el servidor con ip " + this->ipHost_ + " y puerto " + to_string(this->port_) << endl;
         connected_ = false;
         return false;
     }
-    this->transmitionManager_->runThreads();
+    this->transmitionManager_->run();
 
     this-> eventsManager_ -> RunProcessEventsThread();
 
