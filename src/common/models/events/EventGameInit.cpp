@@ -9,9 +9,5 @@ void EventGameInit::update() {
     if (!this->context_)
 		  Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
     
-
-    int Xsize = this->screenSizes_.width;
-    int Ysize = this->screenSizes_.height;
-    
-    ((Client *)context_)->setScreenSizes(Xsize,Ysize);
+    ((Client *)context_)->setScreenSizes(this->screenSizes_.width, this->screenSizes_.height);
 }

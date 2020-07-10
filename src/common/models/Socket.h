@@ -2,10 +2,13 @@
 #define SOCKET_H_
 
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <string.h>
 #include <unistd.h>
+#include "../services/Logger.h"
 
 using namespace std;
 
@@ -31,8 +34,8 @@ class Socket {
 
         // Common
         void setPort(unsigned int port);
-        int receiveMessage(void* &buffer, size_t sizeData);
-        int sendMessage(void* &buffer, size_t sizeData);
+        int receiveMessage(void* buffer, size_t sizeData);
+        int sendMessage(void* buffer, size_t sizeData);
 
         void cerrar();    
 };

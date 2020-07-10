@@ -7,18 +7,20 @@
 #include "../../providers/GameProvider.h"
 #include "../../services/Logger.h"
 
-#define MAX_SIZE 100
+#ifndef MAX_SIZE_MESSAGE
+#define MAX_SIZE_MESSAGE 100
+#endif
 
 using namespace std;
 
 class EventAnimationInitStage: public Event {
 
 	private:
-        char path_[MAX_SIZE];
+        char path_[MAX_SIZE_MESSAGE];
 
     public:
-        EventAnimationInitStage(char path[MAX_SIZE]) {
-            for(size_t i = 0; i < MAX_SIZE; i++)
+        EventAnimationInitStage(char path[MAX_SIZE_MESSAGE]) {
+            for(size_t i = 0; i < MAX_SIZE_MESSAGE; i++)
                 path_[i] = path[i];
         }
         

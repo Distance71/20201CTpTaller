@@ -9,5 +9,5 @@ void EventEndStage::update() {
 	  Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
 
   Client* client = (Client *) context_;
-  client->getGameScreen()->setImage(this->path_);
+  client->setImage(this->path_);
 }

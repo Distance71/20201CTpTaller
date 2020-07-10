@@ -76,6 +76,7 @@ void Logger::log(LOG_LEVEL level, const string& message){
         case DEBUG:
             return "DEBUG";
     }
+	return "";
 }
 
 Logger::~Logger(){

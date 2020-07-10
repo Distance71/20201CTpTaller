@@ -8,8 +8,6 @@
 #include "../events/Event.h"
 #include "../../types.h"
 
-#define MAX_SIZE 100
-
 using namespace std;
 
 class MessageMapElementUpdate: public Message {
@@ -23,7 +21,7 @@ class MessageMapElementUpdate: public Message {
     	explicit MessageMapElementUpdate(size_t id, position_t position): id_(id), position_(position) {}
     	message_t getType();
         Event* deSerialize();
-        responseStatus_t serialize() {};
+        responseStatus_t serialize();
 };
 
 #endif

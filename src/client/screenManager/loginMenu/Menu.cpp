@@ -1,11 +1,12 @@
 #include "Menu.h"
 
-Menu::Menu(){
+Menu::Menu(Client* clientOwn){
+    this->clientOwn_ = clientOwn;
     SDL_StartTextInput();
     gRenderer = GameProvider::getRenderer();
-    response = NOT_RESPONSE;
+    this->response_ = NOT_RESPONSE;
     
-    MenuElement* background = new MenuElement(0,0,GameProvider::getWidth(),GameProvider::getHeight(),"assets/LoginScreen/background.png");
+    MenuElement* background = new MenuElement(0,0,-1,-1,"assets/LoginScreen/background.png");
     addMenuElement("BACKGROUND",background);
     
     MenuElement* normal_box = new MenuElement(20,50,525,325,"assets/LoginScreen/normalBox.png");
@@ -57,14 +58,16 @@ void Menu::addMenuElement(string element_name,MenuElement* menu_element){
 
 void Menu::update(int x, int y,bool click){
     SDL_RenderClear(gRenderer);
-    menu_elements["BACKGROUND"]->renderCopy();
-    if (response == NOT_RESPONSE || response == OK) {
+    
+    this-> menu_elements["BACKGROUND"]->renderCopy();
+    
+    if (this->response_ == NOT_RESPONSE || this->response_ == OK) {
         menu_elements["NORMAL BOX"]->renderCopy();
     }
-    else if(response == ERROR_WRONG_CREDENTIALS){
+    else if(this->response_ == ERROR_WRONG_CREDENTIALS){
         menu_elements["INVALID CREDENTIALS BOX"]->renderCopy();
     }
-    else if(response == ERROR_FULL_GAME){
+    else if(this->response_ == ERROR_FULL_GAME){
         menu_elements["FULL GAME BOX"]->renderCopy();
     }
 
@@ -78,8 +81,7 @@ void Menu::update(int x, int y,bool click){
 
 
 void Menu::sendCredentialsMessage(){
-    cout << "debug3" << endl;
-    //if (buttons["LOGIN"]->isSelected()){
+    if (buttons["LOGIN"]->isSelected()){
         const char* username = text_boxes["USERNAME"]->getText();
         const char* password = text_boxes["PASSWORD"]->getText();
         if (strlen(username)<=30 && strlen(password)<=30){
@@ -88,25 +90,25 @@ void Menu::sendCredentialsMessage(){
             strncpy (_username, username, 30);
             strncpy (_password, password, 30);
             MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer(_username,_password);
-            client->getTransmitionManager()->sendMessage(message);
+            this->clientOwn_->sendMessage(message);
         }
         else{
             setLoginResponse(ERROR_WRONG_CREDENTIALS);
         }
-        //buttons["LOGIN"]->deselect();
-    //}
+        buttons["LOGIN"]->deselect();
+    }
 }
 
 
 bool Menu::getLoggedInStatus(){
-    if (response == OK){
+    if (this->response_ == OK){
         return true;
     }
     return false;
 }
 
 void Menu::processEvent(){  
-    /*bool click = false;   
+    bool click = false;   
     int x = -1;
     int y = -1;
     SDL_Event e = GameProvider::getLastEvent();
@@ -119,7 +121,7 @@ void Menu::processEvent(){
             text_box.second->readInput(&e);
         }    
     }
-    update(x,y,click);*/
+    update(x,y,click);
     sendCredentialsMessage();
 }
 
@@ -127,9 +129,9 @@ void Menu::processEvent(){
 
 void Menu::show(){
     update(-1,-1,false);
-    SDL_RenderPresent(gRenderer);  
+    SDL_RenderPresent(this->gRenderer);  
 }
 
-void Menu::setLoginResponse(responseStatus_t response_){
-    response = response_;
+void Menu::setLoginResponse(responseStatus_t response){
+    this->response_ = response;
 }

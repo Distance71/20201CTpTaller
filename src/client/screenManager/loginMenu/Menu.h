@@ -20,11 +20,11 @@ class Client;
 class Menu {
 
     public:
-        Menu();
+        Menu(Client* clientOwn);
         ~Menu();
         void processEvent();
         void show();
-        void setLoginResponse(responseStatus_t response_);
+        void setLoginResponse(responseStatus_t response);
         bool getLoggedInStatus();
         
         
@@ -33,14 +33,14 @@ class Menu {
         unordered_map <string, MenuElement*> menu_elements; 
         unordered_map <string, Button*> buttons; 
         unordered_map <string, TextBox*> text_boxes;
-        responseStatus_t response;
+        responseStatus_t response_;
+        Client* clientOwn_;
 
         void addButton(string button_name,Button* button);
         void addTextBox(string text_box_name,TextBox* text_box);
         void addMenuElement(string element_name,MenuElement* menu_element);
         void update(int x,int y, bool update);
         void sendCredentialsMessage();
-         
 };
 
 #endif

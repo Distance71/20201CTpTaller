@@ -1,13 +1,12 @@
 #include "Client.h"
 
 Client::Client(string ipHost,size_t port){
-
     this->connected_ = false;
     this->ipHost_ = ipHost;
     this->port_ = port;
-    this->screenManager_= nullptr;
-    this->transmitionManager_ = nullptr;
-    this->eventsManager_= nullptr;
+    this->screenManager_= new ScreenManager(this);
+    this->transmitionManager_ = new ClientTransmitionManager(this);
+    this->eventsManager_= new ClientEventsManager(this);
 }
 
 
@@ -19,34 +18,21 @@ Client::~Client(){
 
 
 bool Client::connectWithServer(){
-    
-    this->transmitionManager_ = new ClientTransmitionManager(this);
-    
     if (!this->transmitionManager_->connectWithServer()){
         this->connected_ = false;
         cout << "No se pudo conectar con el servidor con ip " + this->ipHost_ + " y puerto " + to_string(this->port_) << endl;
-        delete this->transmitionManager_;
-        this->transmitionManager_ = nullptr;
         connected_ = false;
         return false;
     }
-    
-    transmitionManager_->runThreads();
+    this->transmitionManager_->runThreads();
 
-    eventsManager_ = new ClientEventsManager(this);
-
-    eventsManager_ -> RunProcessEventsThread();
+    this-> eventsManager_ -> RunProcessEventsThread();
 
     this->connected_ = true;
 
     Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
 
     return true;
-}
-
-
-bool Client::isConnected(){
-    return this->connected_;
 }
 
 
@@ -59,9 +45,8 @@ int Client::run(){
 
     Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
     cout << "Se estableció conexión con el servidor " << endl;
-
-    this->screenManager_= new ScreenManager(this);
     
+    setScreenSizes(1280,800);
     // esperar por seteo del tamaño de pantalla
     
     if (!this->screenManager_->initializeGraphics()){
@@ -69,15 +54,18 @@ int Client::run(){
         return EXIT_FAILURE;
     };
 
+    Logger::getInstance()->log(INFO, "Se incializaron los graficos");
+
     bool logged = this->screenManager_-> viewLogin();
 
     if (!logged){
         Logger::getInstance()->log(INFO, "El ususario no ha podido loguearse,juego finalizado");
+        disconnect();
         return EXIT_FAILURE;
     }
 
     this->eventsManager_->RunDetectPlayerEventsThread();
-    this->screenManager_->initGameGraphics();
+    this->screenManager_->initGameGraphicsThread();
     return EXIT_SUCCESS;    
 }
 
@@ -158,4 +146,14 @@ void Client::sendMessage(Message* message){
 
 void Client::setScreenSizes(int Xsize, int Ysize){
     this->screenManager_->setScreenSizes(Xsize,Ysize);
+}
+
+
+bool Client::isConnected(){
+    return this->connected_;
+}
+
+void Client::disconnect(){
+    this->connected_ = false;
+     Logger::getInstance()->log(DEBUG, "Se desconecta el cliente");
 }

@@ -11,7 +11,7 @@ ClientTransmitionManager::ClientTransmitionManager(Client *client){
 
 ClientTransmitionManager::~ClientTransmitionManager(){
     delete this->socket_;
-    delete this->sendMessagesQueue_;
+    //delete this->sendMessagesQueue_;
 }
 
 
@@ -59,8 +59,8 @@ static void* sendMessages(void *arg){
             //socket->sendMessage((void *&) messageRef, sizeof(size_t));
             //socket->sendMessage((void *&) newMessage, messageSize);
         }
-    }
-    return nullptr;*/
+    }*/
+    return nullptr;
 }
 
 
@@ -83,8 +83,8 @@ static void* receiveMessages(void *arg){
     }
 
     cout << "Se cerro hilo"<< endl;
-    Logger::getInstance()->log(DEBUG, "Se cerro el hilo de recepcion");
-    return nullptr;*/
+    Logger::getInstance()->log(DEBUG, "Se cerro el hilo de recepcion");*/
+    return nullptr;
  }
 
 
@@ -100,6 +100,6 @@ void ClientTransmitionManager::runThreads(){
 
 
 void ClientTransmitionManager::sendMessage(Message* message){
-    this->sendMessagesQueue_->push(message); //esto rompe
-    Logger::getInstance()->log(DEBUG, "Se agrega mensaje a la cola de salida");
+    //this->sendMessagesQueue_->push(message); //esto rompe
+    //Logger::getInstance()->log(DEBUG, "Se agrega mensaje a la cola de salida");
 }

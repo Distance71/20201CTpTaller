@@ -47,7 +47,6 @@ class Server {
         bool isFull();
         int run();
         void runGame();
-        ServerTransmitionManager* getTransmitionManager();
         
         Socket* getSocket();
         BlockingQueue<Message *>* getEventsToProcess();
