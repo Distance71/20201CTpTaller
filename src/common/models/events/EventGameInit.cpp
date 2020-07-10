@@ -11,7 +11,7 @@ void EventGameInit::update() {
     }
     else{
         Client* client = (Client*) Event::context_;
-        client->setScreenSizes(screenSizes_.width,screenSizes_.height);
+        client->initGame(screenSizes_.width,screenSizes_.height);
         Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventGameInit");
     }
 }

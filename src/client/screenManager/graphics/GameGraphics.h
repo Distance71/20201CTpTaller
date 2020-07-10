@@ -20,6 +20,7 @@ class GameGraphics {
         GraphicsScenario * scenario_;
         GraphicsMapElement* image_;
         
+        
     public:
         
         GameGraphics(SDL_Renderer* renderer);
