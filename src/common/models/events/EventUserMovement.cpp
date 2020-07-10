@@ -5,5 +5,10 @@ Message* EventUserMovement::serialize() {
 }
 
 void EventUserMovement::update() {
-    //Do stuff
+    if (!this->context_)
+		Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventUserMovement");
+    else{
+        //completar
+        Logger::getInstance()->log(DEBUG, "se ejecutó el evento EventUserMovement");
+    }
 }

@@ -7,7 +7,7 @@ ScreenManager::ScreenManager(Client *client){
     this->window_ = nullptr;
     this->renderer_ = nullptr;
     this->gameGraphics_=nullptr;
-    
+    this->waiting_ = false;
 }
 
 
@@ -28,9 +28,20 @@ ScreenManager::~ScreenManager(){
 
 
 void ScreenManager::setScreenSizes(int Xsize, int Ysize){
+    if (this->window_){
+        if (Xsize>0 && Ysize>0){
+            SDL_SetWindowSize(this->window_,Xsize,Ysize);
+            this->screenWidth_=Xsize;
+            this->screenHeight_ = Ysize;
+            Logger::getInstance()->log(DEBUG, "Se cambió el tamaño de la pantalla");
+        }
+        else{
+            Logger::getInstance()->log(DEBUG, "No se pudo cambiar el damaño de la ventana, las dimensiones no son válidas");
+        }
+    }
     this->screenWidth_ = Xsize;
     this->screenHeight_= Ysize;
-    Logger::getInstance()->log(DEBUG, "Se recibió el tamaño de la pantalla");
+    Logger::getInstance()->log(DEBUG, "Se preestablece el tamaño de la ventana");
 }
 
 
@@ -231,4 +242,50 @@ bool ScreenManager::viewLogin(){
     Logger::getInstance()->log(ERROR ,"Se ha cerrado el menu debido a un problema");
     SDL_RenderClear(this->renderer_);
     return false;
+}
+
+
+int ScreenManager::waitForPlayers(){
+    if(!this->gameGraphics_){
+        Logger::getInstance()->log(DEBUG,"No se puede presentar la pantalla de espera, no se han inicializado gráficos");
+        return -1;
+    }
+    else{
+        SDL_Event e;
+        Logger::getInstance()->log(ERROR ,"Se esperan jugadores");
+        this->waiting_= true;
+        this->gameGraphics_->setImage("assets/Waiting/waitingForPlayers.png");
+        while(this->waiting_){
+            while (SDL_PollEvent(&e)){
+                if (e.type == SDL_QUIT){
+                    Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego mientras se esperaban jugadores");
+                    SDL_RenderClear(this->renderer_);
+                    return 0;
+                }
+            this->gameGraphics_->update();
+        }
+        return 1;
+        }
+    }
+    return 0;
+}
+
+void ScreenManager::stopWaiting(){
+    this->waiting_= false;
+}
+
+void ScreenManager::viewEndGameScreen(){
+    this->gameGraphics_->setImage("assets/GameOver/gameOver.png");
+    bool quit = false;
+    SDL_Event e;
+    while (!quit){
+        this->gameGraphics_->update();
+        while (SDL_PollEvent(&e)){
+            if (e.type == SDL_QUIT){
+                Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego correctamente");
+                quit = true;
+            }
+        }
+        this->gameGraphics_->update();
+    }
 }

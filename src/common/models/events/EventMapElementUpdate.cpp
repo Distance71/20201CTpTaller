@@ -6,8 +6,12 @@ Message* EventMapElementUpdate::serialize() {
 }
 
 void EventMapElementUpdate::update() {
-  if (!this->context_)
-	  Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
-
-  ((Client *)context_)->updateEntity(this->id_, this->position_.axis_x,this->position_.axis_y,FRONT);
+  if (!this->context_){
+	  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventMapElementUpdate");
+  }
+  else{
+    Client* client = (Client*) Event::context_;
+    client -> updateEntity(this->id_, this->position_.axis_x,this->position_.axis_y,this->position_.orientation);
+    Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventMapElementUpdate");
+  }
 }

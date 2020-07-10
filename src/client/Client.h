@@ -36,17 +36,20 @@ class Client {
         bool connectWithServer();
         bool isConnected();
         void disconnect();
+        void reconnect();
         size_t getPort();
         string getIpHost();
 
         //Screen methods
-        void initGame();
+        int waitForPlayers();
+        void initGame(int Xsize, int Ysize);
         void createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
         void updateEntity(IdElement id, int posX, int posY, orientation_t orientation);
         void deadEntity(IdElement id);
         void setBackground(stageSource_t background);
         void setImage(const string &source);
         void setScreenSizes(int Xsize, int Ysize);
+        void endGame();
         
         //menu methods
         void setLoginResponse(responseStatus_t response);

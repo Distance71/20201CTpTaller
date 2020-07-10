@@ -5,9 +5,12 @@ Message* EventPlayerDisconnect::serialize() {
 }
 
 void EventPlayerDisconnect::update() {
-    /*if (!this->context_)
-		Logger::getInstance()->log(ERROR, "Se seteo un evento sin contexto");
-
-    GameProvider::setWidth(this->width_);
-    GameProvider::setHeight(this->height_);*/
+    if (!this->context_){
+		  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventPlayerDisconnect");
+    }
+    else{
+      Client* client = (Client*) Event::context_;
+      client->disconnect();
+      Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventPlayerDisconnect");
+    }
 }

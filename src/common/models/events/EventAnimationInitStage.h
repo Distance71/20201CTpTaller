@@ -6,6 +6,7 @@
 #include "../messages/Message.h"
 #include "../../providers/GameProvider.h"
 #include "../../services/Logger.h"
+#include "../../../client/Client.h"
 
 #ifndef MAX_SIZE_MESSAGE
 #define MAX_SIZE_MESSAGE 100

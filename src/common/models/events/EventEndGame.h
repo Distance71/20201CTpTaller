@@ -4,6 +4,7 @@
 #include "Event.h"
 #include "../messages/MessageEndGame.h"
 #include "../messages/Message.h"
+#include "../../../client/Client.h"
 
 using namespace std;
 

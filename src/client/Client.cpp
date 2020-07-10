@@ -64,8 +64,21 @@ int Client::run(){
         return EXIT_FAILURE;
     }
 
-    this->eventsManager_->RunDetectPlayerEventsThread();
+    int res = this->waitForPlayers();
+
+    if(res==0){
+        Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
+        return EXIT_SUCCESS;
+    }
+    else if (res<0){
+        Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
+        return EXIT_FAILURE;
+    }
+
     this->screenManager_->initGameGraphicsThread();
+
+    this->eventsManager_->RunDetectPlayerEventsThread();
+    
     return EXIT_SUCCESS;    
 }
 
@@ -156,4 +169,24 @@ bool Client::isConnected(){
 void Client::disconnect(){
     this->connected_ = false;
      Logger::getInstance()->log(DEBUG, "Se desconecta el cliente");
+}
+
+void Client::reconnect(){
+
+}
+
+void Client::endGame(){
+    this->disconnect(); // esto debería cortar todos los hilos
+    Logger::getInstance()->log(DEBUG, "El juego ha finalizado");
+    this->screenManager_->viewEndGameScreen();
+
+}
+
+int Client::waitForPlayers(){
+    return this->screenManager_->waitForPlayers();
+}
+
+void Client::initGame(int Xsize, int Ysize){
+    this->screenManager_->stopWaiting();
+    setScreenSizes(Xsize,Ysize);
 }
