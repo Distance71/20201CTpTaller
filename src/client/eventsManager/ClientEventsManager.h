@@ -16,6 +16,7 @@ class ClientEventsManager {
     private:
         BlockingQueue<Event*>* eventsQueue_;
         Client *clientOwn_;
+        bool stop_;
 
     public:
         ClientEventsManager(Client* client);

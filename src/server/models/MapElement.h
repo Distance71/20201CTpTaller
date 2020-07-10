@@ -8,9 +8,9 @@
 #include "../../common/models/State.h"
 #include "../../common/models/Action.h"
 #include "../../common/models/Orientation.h"
+#include "../../common/models/Position.h"
 #include "Speed.h"
 #include "../../common/types.h"
-#include "../../client/graphics/GraphicsMapElement.h"
 #include "PlayerController.h"
 #include "EnemyIA.h"
 

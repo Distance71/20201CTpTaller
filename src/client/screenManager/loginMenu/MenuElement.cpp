@@ -18,6 +18,11 @@ MenuElement::~MenuElement(){
 
 
 void MenuElement::renderCopy(){
-    SDL_Rect rect = {xpos,ypos,width,height};
-    SDL_RenderCopy(gRenderer,sprite->getTexture(),NULL,&rect);
+    if (width>0 && height>0){
+        SDL_Rect rect = {xpos,ypos,width,height};
+        SDL_RenderCopy(gRenderer,sprite->getTexture(),NULL,&rect);
+    }
+    else{
+        SDL_RenderCopy(gRenderer,sprite->getTexture(),NULL,NULL);
+    }
 }

@@ -116,11 +116,11 @@ int mainClient(int port, string ipAddress, string levelLog, string pathConfigura
     int codExitClient;
     if (modeTest){
 
-        cout << "MODO TEST:" << endl;
+        /*cout << "MODO TEST:" << endl;
         ClientTest *newTestClient = new ClientTest(ipAddress, port);
         codExitClient = newTestClient->runTest();
         delete newTestClient;
-        cout << "FIN MODO TEST." << endl;
+        cout << "FIN MODO TEST." << endl;*/
 
     } else {
 

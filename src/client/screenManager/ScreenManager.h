@@ -15,6 +15,7 @@
 #include "../common/types.h"
 
 class Client;
+class Menu;
 
 class ScreenManager{
    
@@ -28,6 +29,10 @@ class ScreenManager{
         Menu* menu_;
         GameGraphics* gameGraphics_;
 
+        bool initMenu();
+        bool initSDL();
+        bool initGameGraphics();
+
 
     public:
         ScreenManager(Client *client);
@@ -35,7 +40,7 @@ class ScreenManager{
         void setScreenSizes(int Xsize, int YSize);
         bool initializeGraphics();
         bool viewLogin();
-        void initGameGraphics();
+        void initGameGraphicsThread();
         void createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
         void updateEntity(IdElement id, int posX, int posY, orientation_t orientation);
         void deadEntity(IdElement id);

@@ -1,9 +1,12 @@
 #ifndef MESSAGE_RESPONSE_LOGIN_PLAYER_H_
 #define MESSAGE_RESPONSE_LOGIN_PLAYER_H_
 
-#include "../events/Event.h"
 #include "Message.h"
+#include "../events/EventResponseLoginPlayer.h"
+#include "../events/Event.h"
 #include "../../types.h"
+
+using namespace std;
 
 class MessageResponseLoginPlayer: public Message {
 
@@ -14,9 +17,8 @@ class MessageResponseLoginPlayer: public Message {
     public:
     	explicit MessageResponseLoginPlayer(responseStatus_t response) : response_(response) {}
         Event* deSerialize();
-     	responseStatus_t serialize() {};
+     	responseStatus_t serialize();
         message_t getType();
-        responseStatus_t serialize() override;
 };
 
 #endif

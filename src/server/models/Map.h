@@ -10,14 +10,14 @@
 #include "../../common/providers/GameProvider.h"
 #include "../../common/models/Position.h"
 #include "../../common/models/Orientation.h"
-#include "../../client/graphics/GraphicsScenario.h"
+#include "../../client/screenManager/graphics/GraphicsScenario.h"
 #include "MovementHandler.h"
 #include "PlayerController.h"
 #include "../../common/types.h"
 
 
 //Para probar
-#include "../../client/graphics/GraphicsMapElement.h"
+#include "../../client/screenManager/graphics/GraphicsMapElement.h"
 
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 class MapElement;

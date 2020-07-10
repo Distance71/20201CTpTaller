@@ -1,25 +1,24 @@
 #include "ScreenManager.h"
-
+#include <stdio.h>
 ScreenManager::ScreenManager(Client *client){
     this->clientOwn_ = client;
-    this->quit_ = false;
     this->screenWidth_ = -1;
     this->screenHeight_ = -1;
     this->window_ = nullptr;
     this->renderer_ = nullptr;
-    this->menu_ = nullptr;
     this->gameGraphics_=nullptr;
+    
 }
 
 
 ScreenManager::~ScreenManager(){
     if (this->window_){
         Logger::getInstance()->log(INFO, "Se destruye la ventana.");
-        delete window_;
+        SDL_DestroyWindow(this->window_);
     }
     if(this->renderer_){
         Logger::getInstance()->log(INFO, "Se destruye el renderer.");
-        delete renderer_;
+        SDL_DestroyRenderer(this->renderer_);
     }
     if (this->menu_){
         Logger::getInstance()->log(INFO, "Se destruye el menu");
@@ -36,14 +35,24 @@ void ScreenManager::setScreenSizes(int Xsize, int Ysize){
 
 
 bool ScreenManager::initializeGraphics(){
+    Logger::getInstance()->log(DEBUG, "Se inicializarán los graficos del juego con las dimensiones de pantalla preestablecidas");
+    bool r1 = initSDL();
+    bool r2 = initMenu();
+    bool r3 = initGameGraphics();
+    if(r1 && r2 && r3){
+        Logger::getInstance()->log(DEBUG, "Se inicializarán los graficos del juego correctamente");
+        return true;
+    }
+    Logger::getInstance()->log(ERROR, "No se pudieron inicializar graficos");
+    return false;
+}
 
-    Logger::getInstance()->log(DEBUG, "Se inicializarán los graficos de la aplicación");
 
+bool ScreenManager::initSDL(){
     if (this->screenWidth_<0 || this->screenHeight_<0){
         Logger::getInstance()->log(ERROR, "No se han podido inicializar gráficos debido a que la dimensiones de la ventana no son válidas");
         return false;
     }
-
 
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         Logger::getInstance()->log(ERROR, string("Error al inicializar SDL! Error: ").append(SDL_GetError()));
@@ -51,7 +60,6 @@ bool ScreenManager::initializeGraphics(){
         return false;
     }
     
-
     this->window_ = SDL_CreateWindow("Gley Lancer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,this->screenWidth_,this->screenHeight_, SDL_WINDOW_SHOWN);
     
     if(!this->window_) {
@@ -84,59 +92,46 @@ bool ScreenManager::initializeGraphics(){
         return false;
     }
 
-    Logger::getInstance()->log(INFO, "Se inicializaron los gráficos de la aplicación correctamente");
-    
     return true;
 }
 
 
-bool ScreenManager::viewLogin(){
+bool ScreenManager::initMenu(){
     
     Logger::getInstance()->log(INFO, "Se creará el menu del juego");
-    
-    this->menu_ = new Menu();
 
-    SDL_Event e; 
-    
-    while (GameProvider::getStatus().normalStatus){
-        
-        while (SDL_PollEvent(&e)){
-            
-            GameProvider::setLastEvent(e);
-            
-            if (e.type == SDL_QUIT)
-                Logger::getInstance()->log(INFO, "El ususario ha cerrado el menu de forma voluntaria");
-                delete this->menu_;
-                this->menu_=nullptr;
-                return false;
-            
-            this->menu_ -> processEvent();
-        }
-        
-        if (this->menu_->getLoggedInStatus())
-            Logger::getInstance()->log(INFO, "El ususario se ha logueado con exito");
-            delete this->menu_;
-            this->menu_=nullptr;
-            return true;
+    this->menu_ = new Menu(this->clientOwn_);
 
-        this->menu_->show();      
+    if(!this->menu_){
+         Logger::getInstance()->log(ERROR, "No se pudo inicializar el menu.");
+         return false;
+    }
+    else{
+        Logger::getInstance()->log(DEBUG, "El menu se creó correctamente.");
     }
 
-    Logger::getInstance()->log(ERROR ,"Se ha cerrado el menu debido a un problema");
-    delete this->menu_;
-    this->menu_=nullptr;
-    return false;
+    return true;
+
 }
 
 
-void ScreenManager::initGameGraphics(){
+bool ScreenManager::initGameGraphics(){
+    Logger::getInstance()->log(DEBUG, "Se crea el la estructura gameGraphics");
+    this->gameGraphics_ = new GameGraphics(this->renderer_);
+    if (!gameGraphics_){
+        Logger::getInstance()->log(ERROR," No se pudo crear la estructura gameGraphics");
+        return false;
+    }
+    Logger::getInstance()->log(DEBUG, "Se crea el la estructura gameGraphics se creó correctamente");
+    return true;
+}
+
+
+void ScreenManager::initGameGraphicsThread(){
 
     Logger::getInstance()->log(DEBUG, "Se inicia el hilo graficador");
     
-    this->gameGraphics_ = new GameGraphics(this->renderer_);
-    
-    
-    while(this->clientOwn_->isConnected() && !this->quit_){
+    while(this->clientOwn_->isConnected()){
         this->gameGraphics_->update();
     }
 
@@ -150,7 +145,7 @@ void ScreenManager::createEntity(IdElement id, const string &source, int sizeX, 
         this->gameGraphics_->createEntity(id,source,sizeX,sizeY,posX,posY,orientation);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido crear entidad, llame a initGameGraphics primero");
+        Logger::getInstance()->log(DEBUG, "No se ha podido crear entidad,  no se han inicializado graficos");
     }
 }
 
@@ -160,7 +155,7 @@ void ScreenManager::updateEntity(IdElement id, int posX, int posY, orientation_t
         this->gameGraphics_->updateEntity(id,posX,posY,orientation);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido actualizar la entidad, llame a initGameGraphics primero");
+        Logger::getInstance()->log(DEBUG, "No se ha podido actualizar la entidad, no se han inicializado graficos");
     }
 }
 
@@ -170,7 +165,7 @@ void ScreenManager::deadEntity(IdElement id){
         this->gameGraphics_->deadEntity(id);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido eliminar la entidad, llame a initGameGraphics primero");
+        Logger::getInstance()->log(DEBUG, "No se ha podido eliminar la entidad,  no se han inicializado graficos");
     }
 }
 
@@ -180,7 +175,7 @@ void ScreenManager::setBackground(stageSource_t background){
         this->gameGraphics_->setBackground(background);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background, llame a initGameGraphics primero");
+        Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,  no se han inicializado graficos");
     }
 }
 
@@ -190,7 +185,7 @@ void ScreenManager::setImage(const string &source){
         this->gameGraphics_->setImage(source);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen, llame a viewloginprimero");
+        Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,  no se han inicializado graficos");
     } 
 }
 
@@ -200,7 +195,40 @@ void ScreenManager::setLoginResponse(responseStatus_t response){
         this->menu_->setLoginResponse(response);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido cargar la respuesta en el menu, llame a viewLogin primero");
+        Logger::getInstance()->log(DEBUG, "No se ha podido cargar la respuesta en el menu, no se han inicializado graficos");
     } 
 }
 
+
+
+bool ScreenManager::viewLogin(){
+
+    SDL_Event e; 
+    
+    while (GameProvider::getStatus().normalStatus){
+        
+        while (SDL_PollEvent(&e)){
+            
+            GameProvider::setLastEvent(e);
+            
+            if (e.type == SDL_QUIT){
+                Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
+                SDL_RenderClear(this->renderer_);
+                return false;
+            }
+            this->menu_ -> processEvent();
+        }
+        
+        if (this->menu_->getLoggedInStatus()){
+            Logger::getInstance()->log(INFO, "El ususario se ha logueado con exito");
+            SDL_RenderClear(this->renderer_);
+            return true;
+        }
+
+        this->menu_->show();     
+    }
+
+    Logger::getInstance()->log(ERROR ,"Se ha cerrado el menu debido a un problema");
+    SDL_RenderClear(this->renderer_);
+    return false;
+}

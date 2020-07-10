@@ -20,7 +20,7 @@ class MessageMapElementDelete: public Message {
     	explicit MessageMapElementDelete(size_t id): id_(id) {}
     	message_t getType();
         Event* deSerialize();
-        responseStatus_t serialize() {};
+        responseStatus_t serialize();
 };
 
 #endif

@@ -10,10 +10,10 @@ class MessageEndGame: public Message {
 	private:
 		const message_t type_ = END_GAME;
 
-    public:
-        Event* deSerialize();
-        message_t getType();
-        responseStatus_t serialize() override;
+  public:
+      Event* deSerialize();
+      message_t getType();
+      responseStatus_t serialize();
 };
 
 #endif

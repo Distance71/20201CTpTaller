@@ -26,7 +26,7 @@ response_t MessageDeserializer::getEventEndGame(Socket *socket, Event* &event){
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndGame");
         return this->_handleErrorStatus();
     }
 
@@ -45,7 +45,7 @@ response_t MessageDeserializer::getEventEndStage(Socket *socket, Event* &event){
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndStage");
         return this->_handleErrorStatus();
     }
 
@@ -65,7 +65,7 @@ response_t MessageDeserializer::getEventGameInit(Socket *socket, Event* &event){
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento GameInit");
         return this->_handleErrorStatus();
     }
 
@@ -89,7 +89,7 @@ response_t MessageDeserializer::getEventInitStage(Socket *socket, Event* &event)
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento InitStage");
         return this->_handleErrorStatus();
     }
 
@@ -115,7 +115,7 @@ response_t MessageDeserializer::getEventLog(Socket *socket, Event* &event){
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento Log");
         return this->_handleErrorStatus();
     }
 
@@ -155,7 +155,7 @@ response_t MessageDeserializer::getEventMapElementCreate(Socket *socket, Event* 
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementCreate");
         return this->_handleErrorStatus();
     }
 
@@ -175,7 +175,7 @@ response_t MessageDeserializer::getEventMapElementDelete(Socket *socket, Event* 
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementDelete");
         return this->_handleErrorStatus();
     }
 
@@ -202,7 +202,7 @@ response_t MessageDeserializer::getEventMapElementUpdate(Socket *socket, Event* 
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementUpdate");
         return this->_handleErrorStatus();
     }
 
@@ -222,7 +222,7 @@ response_t MessageDeserializer::getEventPlayerDisconnect(Socket *socket, Event* 
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento PlayerDisconnect");
         return this->_handleErrorStatus();
     }
 
@@ -242,7 +242,7 @@ response_t MessageDeserializer::getEventPlayerReconnect(Socket *socket, Event* &
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento PlayerReconnect");
         return this->_handleErrorStatus();
     }
 
@@ -268,7 +268,7 @@ response_t MessageDeserializer::getEventRequestLoginPlayer(Socket *socket, Event
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento RequestLoginPlayer");
         return this->_handleErrorStatus();
     }
 
@@ -287,7 +287,7 @@ response_t MessageDeserializer::getEventResponseLoginPlayer(Socket *socket, Even
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento ResponseLoginPlayer");
         return this->_handleErrorStatus();
     }
 
@@ -306,45 +306,52 @@ response_t MessageDeserializer::getEventUserMovement(Socket *socket, Event* &eve
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento UserMovement");
         return this->_handleErrorStatus();
     }
 
     return this->_handleSuccess();
 };
 
-response_t MessageDeserializer::getEvent(message_t messageType, Socket *socket, Event* &event){
+// response_t MessageDeserializer::getEvent(message_t messageType, Socket *socket, Event* &event){
     
-    if(!socket){
-        Logger::getInstance()->log(DEBUG, "Se recibio puntero null al recibir evento");
-        Logger::getInstance()->log(ERROR, "Error interno al recibir evento");
-        cout << "No se ha podido recibir un evento, puntero null" << endl;
-    }
+//     if(!socket){
+//         Logger::getInstance()->log(DEBUG, "Se recibio puntero null al recibir evento");
+//         Logger::getInstance()->log(ERROR, "Error interno al recibir evento");
+//         cout << "No se ha podido recibir un evento, puntero null" << endl;
+//     }
 
-    Message *buffer = (Message*) malloc (sizeof(MessageRequestLoginPlayer)); //For testing
+//     Message *buffer = (Message*) malloc (sizeof(MessageRequestLoginPlayer)); //For testing
 
-    cout << "Here" << endl;
-    if (socket->receiveMessage((void *&) buffer, sizeof(*buffer)) <= 0)
-        return this->_handleErrorStatus();
+//     if (socket->receiveMessage((void *&) buffer, sizeof(*buffer)) <= 0){
+//         Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
+//         return this->_handleErrorStatus();
+//     }
 
-    cout << "el tipo " << endl;
-    event = ((Message *)buffer)->deSerialize();
+//     event = ((Message *)buffer)->deSerialize();
 
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento");
-        cout << "No se ha podido recibir un evento" << endl;
-        return this->_handleErrorStatus();
-    }
-    return this->_handleSuccess();
-}
+//     if(!event){
+//         Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento en Deserializer");
+//         cout << "No se ha podido recibir un evento en Deserializer" << endl;
+//         return this->_handleErrorStatus();
+//     }
+//     return this->_handleSuccess();
+// }
 
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
     message_t messageType;
+    void *messageRef = &messageType;
 
-    if (socket->receiveMessage((void *&) messageType, sizeof(message_t)) <= 0){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje en Deserializer.");
+
+    if (socket->receiveMessage((void *&) messageRef, sizeof(message_t)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje.");
         return this->_handleErrorStatus();
     }
+
+    cout << END_GAME << " " << (message_t)messageType << endl;;
+
+    Logger::getInstance()->log(DEBUG, "Se ha recibido un tipo de mensaje en Deserializer.");
     
     switch (messageType){
         /*

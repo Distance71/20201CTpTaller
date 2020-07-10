@@ -7,7 +7,7 @@ ClientEventsManager::ClientEventsManager(Client* client){
 
 
 ClientEventsManager::~ClientEventsManager(){
-    delete eventsQueue_;
+    //delete this->eventsQueue_; esto da violación de segmento
 }
 
 
@@ -26,7 +26,8 @@ Event* ClientEventsManager::getEvent(){
 
 
 static void * detectPlayerEvents(void* arg){
-    Client* client = (Client*) arg;
+    ClientEventsManager* eventsManager = (ClientEventsManager*) arg;
+    Client* client = eventsManager->getClient();
     Uint8 up;
     Uint8 down;
     Uint8 right;
@@ -35,6 +36,19 @@ static void * detectPlayerEvents(void* arg){
     const Uint8 *keystate;
     
     while (client->isConnected()){
+
+        SDL_Event e;
+
+        while (SDL_PollEvent(&e)){
+            
+            GameProvider::setLastEvent(e);
+            
+            if (e.type == SDL_QUIT){
+                Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
+                client->disconnect();
+            }
+        }
+            
         keystate = SDL_GetKeyboardState(NULL);  
     
         up =  keystate[SDL_SCANCODE_UP];
@@ -81,13 +95,16 @@ static void * detectPlayerEvents(void* arg){
             client->sendMessage(message);
         }
     }
+
+    return nullptr;
 }
 
 
 void ClientEventsManager::RunDetectPlayerEventsThread(){
+    this->stop_=false;
     Logger::getInstance()->log(DEBUG, "Se inicializa hilo de detección de eventos del jugador");
     pthread_t detect_player_events_thread;
-    pthread_create(&detect_player_events_thread,NULL,detectPlayerEvents,this->clientOwn_);
+    pthread_create(&detect_player_events_thread,NULL,detectPlayerEvents,this);
 }
 
 
@@ -102,6 +119,7 @@ static void* processEvents(void * arg){
             delete event;
         }
     }
+    return nullptr;
 }
 
 

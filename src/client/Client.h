@@ -11,7 +11,9 @@
 #include "screenManager/ScreenManager.h"
 #include "../common/models/messages/Message.h"
 
-
+class ClientTransmitionManager;
+class ClientEventsManager;
+class ScreenManager;
 
 class Client {
     
@@ -25,7 +27,6 @@ class Client {
         ClientTransmitionManager *transmitionManager_;
         ClientEventsManager* eventsManager_;
 
-
     public:
 
         //general methods
@@ -34,6 +35,7 @@ class Client {
         int run();
         bool connectWithServer();
         bool isConnected();
+        void disconnect();
         size_t getPort();
         string getIpHost();
 

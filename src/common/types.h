@@ -43,7 +43,7 @@ typedef enum stage {
 
 typedef enum message {
     ANIMATION_INIT_STAGE,
-    END_GAME,
+    END_GAME = 4,
     END_STAGE,
     GAME_INIT,
     INIT_STAGE,

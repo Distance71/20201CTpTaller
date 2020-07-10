@@ -12,8 +12,6 @@
 using namespace std;
 
 class Message;
-class MessageDeserializer;
-class Event;
 
 class User {
 

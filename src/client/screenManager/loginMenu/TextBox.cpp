@@ -73,15 +73,21 @@ void TextBox::setCenteringParameters(int left,int right,int up,int down){
 
 SDL_Texture* TextBox:: createTextTexture(){
     const char* _text;
-    if (text==""){
-        _text=" ";
+    
+    if (!hidetext){
+        if (text=="")
+            _text=" ";
+        else
+            _text = text.c_str();  
     }
-    else if (!hidetext){
-        _text = text.c_str();
-    }
+    
     else{
-        _text = substitution.c_str();  
+        if (substitution=="")
+            _text=" ";
+        else
+           _text = substitution.c_str(); 
     }
+
     SDL_Surface* text_surface = TTF_RenderText_Solid(font,_text, textColor);
     if(!text_surface){
         Logger::getInstance()->log(ERROR,string("No se pudo crear la superficie, SDL_ttf Error: ") + TTF_GetError());
