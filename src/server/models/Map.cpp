@@ -18,12 +18,11 @@ Map::Map(gameParams_t &gameSettings){
 
 void Map::setStageSource(size_t numberLevel, size_t numberStage){
     stageSource_t background = GameProvider::getConfig()->getSourcesForStage(numberLevel,numberStage);
-    this->escenario_= new GraphicsScenario(background);
+    //Event* event = new EventInitStage(pathScreen.c_str());
+    //TODO Mandar a todos los usuarios este background
+    //response_t response = user->sendMessage(event);
 }
 
-GraphicsScenario *Map::getCurrentScenario(){
-    return this->escenario_;
-}
 
 bool Map::endStep(currentStep_t currentStep){
     return this->levels_[currentStep.level]->endStep(currentStep.stage, currentStep.step);
@@ -232,81 +231,3 @@ void Map::initializePositionPlayer(gameParams_t &gameSettings){
     State *playerOrientation = this->player->getState<Orientation>(string("Orientation"));
     playerOrientation->setX(FRONT);*/
 }
-
-
-/* //No va mas este
-void Stage::createBackground(int oneLevel, int oneStage){
-
-     int screen_widht = GameProvider::getWidth();
-    int screen_height = GameProvider::getHeight();
-    MapElement *background= new MapElement(BACKGROUND,0,0,screen_widht,screen_height,"assets/Stage/Level1/layer_2.png");
-    
-    lastId_++;
-    auto stageData = GameProvider::getConfig()->getSourcesForStage(0,0);
-
-    auto *graphics = new GraphicsScenario(backgroundSource);
-    
-    background->addAction("Graphics", graphics);
-
-    mapElements_[lastId_] = background; 
-}*/
-
-// void Step::createPlayer(){ //no va mas este
-//      MapElement* player = new MapElement(PLAYER);
-//     lastId_++;
-
-//     Position *initialPosition = new Position(); //Should have a initial player positionHandler
-//     Speed *speed = new Speed(); //This should be taken from config
-//     Orientation *initialOrientation = new Orientation(); //Should be Front
-//     auto *graphics = new GraphicsSpacecraft();
-//     auto *movementHandler = new PlayerController(lastId_);
-
-//     player->addState("Position", initialPosition);
-//     player->addState("Speed", speed);
-//     player->addState("Orientation", initialOrientation);
-//     player->addAction("Graphics", graphics);
-//     player->addAction("MovementHandler", movementHandler);
-
-//     mapElements_[lastId_] = player;
-//  }
-
-// // void Step::createEnemy(){
-// //     MapElement* enemy = new MapElement(ENEMY);
-// //     lastId_++;
-
-// //     Position *initialPosition = new Position(); //Should have a initial player positionHandler() or class if grows
-// //     Speed *speed = new Speed(); //This should be taken from config
-// //     Orientation *initialOrientation = new Orientation(); //Should be Front
-// //     auto *graphics = new GraphicsSpacecraft();
-// //     auto *movementHandler = new PlayerController(lastId_);
-
-// //     enemy->addState("Position", initialPosition);
-// //     enemy->addState("Speed", speed);
-// //     enemy->addState("Orientation", initialOrientation);
-// //     enemy->addAction("Graphics", graphics);
-// //     enemy->addAction("MovementHandler", movementHandler);
-
-// //     mapElements_[lastId_] = enemy;
-// // }
-
-// // void Step::killMapElement(IdElement id){
-// //     if(!mapElements_[id] || id > lastId_){
-// //         Logger::getInstance()->log(ERROR, "Se intentó eliminar un elemento del mapa invalido");
-// //         return;
-// //     }
-// //     delete mapElements_[id];
-// //     mapElements_[id] = NULL;
-// // }
-
-// /*MapElement* Step::createMapElement(){
-//     auto *mapElement = new MapElement();
-//     IdElement lastId = lastId_;
-
-//     mapElements_[++lastId_] = mapElement;
-//     return mapElement;
-// }*/
-
-// // void Step::clearMap() {
-// //     //mapElements_.clear();
-// //     Logger::getInstance()->log(DEBUG, "Se vaciaron los elementos del mapa");
-// // }

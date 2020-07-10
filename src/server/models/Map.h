@@ -10,26 +10,22 @@
 #include "../../common/providers/GameProvider.h"
 #include "../../common/models/Position.h"
 #include "../../common/models/Orientation.h"
-#include "../../client/screenManager/graphics/GraphicsScenario.h"
 #include "MovementHandler.h"
 #include "PlayerController.h"
 #include "../../common/types.h"
 
-
-//Para probar
-#include "../../client/screenManager/graphics/GraphicsMapElement.h"
+#include "../../common/models/events/EventInitStage.h"
+#include "../../common/models/events/Event.h"
 
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
 class MapElement;
 class Step;
 class Stage;
 class Level;
-class GraphicsScenario;
 
 class Map {
     private:
-    vector <Level *> levels_;  
-    GraphicsScenario *escenario_;
+    vector <Level *> levels_;
     //void clearMap();
     MapElement *player;
 
@@ -40,7 +36,6 @@ class Map {
     void addLevel(Level *level);
     vector<Level *> getLevels();
     void setStageSource(size_t numberLevel, size_t numberStage);
-    GraphicsScenario* getCurrentScenario();
     bool endStep(currentStep_t currentStep);
     void createPlayer(gameParams_t &gameSettings);
     void initializePositionPlayer(gameParams_t &gameSettings);
