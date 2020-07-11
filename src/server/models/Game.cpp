@@ -51,9 +51,7 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     }    
     if (GameProvider::getStatus().normalStatus){
         this->viewStageCleared(actualStep.level);
-
-        //TODO este initializePositionPlayer nose q hace
-        //this->map_->initializePositionPlayer(gameSettings);
+        this->map_->initializePositionPlayers(gameSettings);
     }
 }
 
@@ -80,46 +78,14 @@ void Game::runStep(currentStep_t actualStep){
         auto end = chrono::high_resolution_clock::now();   
         auto dur = end - begin;
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-        
-        // TODO creo aca hay q escuchar todos los eventos de los jugadores
-        clearScene();
-        processEvent();   
-        //***
 
-
-        // TODO revisar esto. yo quite getCurrentScenario por q era algo de la vista
-        //(this->map_->getCurrentScenario())->update();
-        //***
-
-        while(0 >= (ms - elaptedTimeMS)) { // TODO Revisar esto
+        while(0 >= (ms - elaptedTimeMS)) { 
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
         }
         updateState(actualStep);
     }
-}
-
-void Game::clearScene(){
-    // renderer_ = GameProvider::getRenderer();
-    // SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
-    // SDL_RenderClear(renderer_);
-    // GameProvider::setRenderer(renderer_);
-   
-    //TODO Revisar si esto dispara algun evento, borrar lo de arriba
-    //Event* event = new Event???(pathScreen.c_str());
-    //response_t response = user->sendMessage(event);
-}
-
-void Game::processEvent() {
-    // SDL_Event lastEvent;
-    // if(SDL_PollEvent(&lastEvent) && (lastEvent.type == SDL_QUIT)) {
-    //     Logger::getInstance()->log(INFO, "Cierre del juego voluntario");
-    //     GameProvider::setNormalExitStatus();
-    // }
-    // GameProvider::setLastEvent(lastEvent);
-
-    //TODO Revisar si esto dispara algun evento,
 }
 
 void Game::updateState(currentStep_t actualStep) {
@@ -175,7 +141,7 @@ void Game::viewStageCleared(level_t oneLevel){
             break;
     }
 
-    //Event* event = new EventAnimationInitStage(pathScreen.c_str());
+    //Event* event = new EventEndStage(pathScreen.c_str());
     //TODO Mandar a todos los usuarios esta pantalla
     //response_t response = user->sendMessage(event);
      usleep(50000);

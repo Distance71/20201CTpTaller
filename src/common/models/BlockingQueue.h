@@ -32,13 +32,12 @@ class BlockingQueue {
     }
 
     ~BlockingQueue() {
-        int i = this->count_ - 1;
+        /*int i = this->count_ - 1;
         while (i >= 0)
-            delete data_[i--];
+            delete data_[i--];*/ // segmentation fault
         
         delete this->openSlots;
         delete this->fullSlots;
-        //delete(data_); no porque no es puntero
     }
 
     void push(const T &item) {

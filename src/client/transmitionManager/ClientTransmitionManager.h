@@ -31,14 +31,6 @@ class ClientTransmitionManager {
 
 
     public:
-        // ClientTransmitionManager(Client *client);
-        // ~ClientTransmitionManager();
-        // Client *getClient();
-        // Socket *getSocket();
-        // void runThreads();
-        // bool connectWithServer();
-        // void sendMessage(Message* message);   
-
          ClientTransmitionManager(Client *client, size_t port);
         ~ClientTransmitionManager();
         void sendMessage(Message* message);
