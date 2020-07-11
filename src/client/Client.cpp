@@ -47,7 +47,6 @@ int Client::run(){
     cout << "Se estableció conexión con el servidor " << endl;
     
     setScreenSizes(1280,800);
-    // esperar por seteo del tamaño de pantalla
     
     if (!this->screenManager_->initializeGraphics()){
         Logger::getInstance()->log(ERROR, "No se pudieron inicializar los gráficos, juego finalizado");
@@ -70,14 +69,15 @@ int Client::run(){
         Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
         return EXIT_SUCCESS;
     }
+    
     else if (res<0){
         Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
         return EXIT_FAILURE;
     }
 
-    this->screenManager_->initGameGraphicsThread();
-
     this->eventsManager_->RunDetectPlayerEventsThread();
+
+    this->screenManager_->initGameGraphicsThread();
     
     return EXIT_SUCCESS;    
 }
@@ -176,7 +176,7 @@ void Client::reconnect(){
 }
 
 void Client::endGame(){
-    this->disconnect(); // esto debería cortar todos los hilos
+    this->disconnect(); 
     Logger::getInstance()->log(DEBUG, "El juego ha finalizado");
     this->screenManager_->viewEndGameScreen();
 
@@ -189,4 +189,8 @@ int Client::waitForPlayers(){
 void Client::initGame(int Xsize, int Ysize){
     this->screenManager_->stopWaiting();
     setScreenSizes(Xsize,Ysize);
+}
+
+void Client::processEvent(Event* event){
+    this->eventsManager_->pushBackEvent(event);
 }

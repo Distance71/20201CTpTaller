@@ -33,6 +33,9 @@ void ScreenManager::setScreenSizes(int Xsize, int Ysize){
             SDL_SetWindowSize(this->window_,Xsize,Ysize);
             this->screenWidth_=Xsize;
             this->screenHeight_ = Ysize;
+            GameProvider::setWidth(Xsize);
+            GameProvider::setHeight(Ysize);
+            SDL_RenderSetLogicalSize(this->renderer_, Xsize,Ysize);
             Logger::getInstance()->log(DEBUG, "Se cambió el tamaño de la pantalla");
         }
         else{
@@ -41,6 +44,8 @@ void ScreenManager::setScreenSizes(int Xsize, int Ysize){
     }
     this->screenWidth_ = Xsize;
     this->screenHeight_= Ysize;
+    GameProvider::setWidth(Xsize);
+    GameProvider::setHeight(Ysize);
     Logger::getInstance()->log(DEBUG, "Se preestablece el tamaño de la ventana");
 }
 
@@ -252,7 +257,7 @@ int ScreenManager::waitForPlayers(){
     }
     else{
         SDL_Event e;
-        Logger::getInstance()->log(ERROR ,"Se esperan jugadores");
+        Logger::getInstance()->log( DEBUG ,"Se esperan jugadores");
         this->waiting_= true;
         this->gameGraphics_->setImage("assets/Waiting/waitingForPlayers.png");
         while(this->waiting_){
@@ -262,12 +267,11 @@ int ScreenManager::waitForPlayers(){
                     SDL_RenderClear(this->renderer_);
                     return 0;
                 }
+            }
             this->gameGraphics_->update();
         }
         return 1;
-        }
     }
-    return 0;
 }
 
 void ScreenManager::stopWaiting(){

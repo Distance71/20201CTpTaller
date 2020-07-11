@@ -1,4 +1,5 @@
 #include "ClientEventsManager.h"
+#include <stdio.h>
 
 ClientEventsManager::ClientEventsManager(Client* client){
     this->clientOwn_ = client;
@@ -60,40 +61,50 @@ static void * detectPlayerEvents(void* arg){
 
         if (up && !down && !right && !left){ 
             movementOrientation = UP;
+            printf("arriba\n");
         }
         
         else if(!up && down && !right && !left){
             movementOrientation = DOWN;
+            printf("abajo\n");
         }
         
         else if(!up && !down && right && !left){
             movementOrientation = FRONT;
+            printf("derecha\n");
         }
         
         else if(!up && !down && !right && left){
+            printf("izquierda\n");
             movementOrientation = BACK;
         }
 
         else if(up && !down && right && !left){
+            printf("DERECHA ARRIBA\n");
             movementOrientation = FRONT_UP;
         }
         
         else if(up && !down && !right && left){ 
+            printf("IZQUIERDA ARRIBA\n");
             movementOrientation = BACK_UP;
         }
         
         else if(!up && down && right && !left){ 
+            printf("DERECHA ABAJO\n");
             movementOrientation = FRONT_DOWN;
         }
         
         else if(!up && down && !right && left){
             movementOrientation = BACK_DOWN;
+            printf("IZQUIERDA ABAJO\n");
         }
 
         if (movementOrientation!=NOT_MOVEMENT){
             MessageUserMovement* message = new MessageUserMovement(movementOrientation);  
             client->sendMessage(message);
         }
+
+        SDL_Delay(100);
     }
 
     return nullptr;

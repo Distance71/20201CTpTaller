@@ -21,10 +21,6 @@ class MessageDeserializer;
 class ClientTransmitionManager {
 
     private:
-        // Client* clientOwn_;
-        // Socket* socket_;
-        // BlockingQueue<Message*>* sendMessagesQueue_;
-
         Client* client_;
         Socket* socket_;
         MessageDeserializer *deserializer_;
@@ -32,14 +28,6 @@ class ClientTransmitionManager {
 
 
     public:
-        // ClientTransmitionManager(Client *client);
-        // ~ClientTransmitionManager();
-        // Client *getClient();
-        // Socket *getSocket();
-        // void runThreads();
-        // bool connectWithServer();
-        // void sendMessage(Message* message);   
-
          ClientTransmitionManager(Client *client, size_t port);
         ~ClientTransmitionManager();
         void sendMessage(Message* message);

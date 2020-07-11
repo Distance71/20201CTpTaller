@@ -15,8 +15,6 @@ GraphicsMapElement::~GraphicsMapElement(){
 
 void GraphicsMapElement::update(){
 
-    Logger::getInstance()->log(DEBUG, "Entro al update de graphics");
-
     SDL_Renderer* renderer = GameProvider::getRenderer();   
     
     //rectangulo de la pantalla donde quiero dibujar el sprite.
