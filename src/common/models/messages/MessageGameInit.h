@@ -16,6 +16,7 @@ class MessageGameInit: public Message {
         Event* deSerialize();
      	responseStatus_t serialize();
         message_t getType();
+		screen_t getScreenSizes();
 };
 
 #endif

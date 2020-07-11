@@ -11,3 +11,7 @@ message_t MessagePlayerDisconnect::getType(){
 responseStatus_t MessagePlayerDisconnect::serialize(){
     return OK;
 }
+
+size_t MessagePlayerDisconnect::getId(){
+    return this->id_;
+}

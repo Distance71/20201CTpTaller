@@ -19,6 +19,7 @@ class MessageResponseLoginPlayer: public Message {
         Event* deSerialize();
      	responseStatus_t serialize();
         message_t getType();
+        responseStatus_t getResponse();
 };
 
 #endif

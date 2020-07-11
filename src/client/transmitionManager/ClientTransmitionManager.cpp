@@ -5,6 +5,7 @@ ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
     this->socket_ = new Socket();
     this->socket_-> setPort(port);
     this->deserializer_= new MessageDeserializer();
+    this->serializer_ = new MessageSerializer();
     sendMessagesQueue_ = new BlockingQueue<Message*>();
 }
 
@@ -13,20 +14,19 @@ ClientTransmitionManager::~ClientTransmitionManager(){
     //delete this->sendMessagesQueue_;
 }
 
-
-
 void ClientTransmitionManager::sendMessage(Message* message){
     
-    //Para testear
-    message_t type = message->getType();
+    //response_t response  = this->serializer_->sendSerializedEvent(message); add socket
 
-    if(socket_->sendMessage((void *) &type, sizeof(message_t)) <= 0)
-        cout << "Error al enviar mensaje" << endl;
+    // if(response.ok) {
+    //     Logger::getInstance()->log(DEBUG, "El mensaje se ha mandado ok");
+    //     cout << "el mensaje se manda ok" << endl;
+    // }
 
-    // if(socket_->sendMessage((void *) message, sizeof(*message)) <= 0)
-    //     cout << "Error al enviar mensaje" << endl;
-
-    cout << "el mensaje se manda ok" << endl;
+    // else {
+    //     Logger::getInstance()->log(ERROR, "El mensaje no se pudo mandar en transmitionManager");
+    //     cout << "el mensaje no se pudo mandar" << endl;
+    // }
 
     //this->sendMessagesQueue_->push(message); esto rompe
 }

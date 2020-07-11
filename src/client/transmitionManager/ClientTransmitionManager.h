@@ -11,23 +11,22 @@
 #include "../Client.h"
 #include "../../common/models/Socket.h"
 #include "../../common/services/serializer/MessageDeserializer.h"
+#include "../../common/services/serializer/MessageSerializer.h"
 #include "../../common/models/messages/Message.h"
 #include "../../common/models/BlockingQueue.h"
 #include "../../common/models/messages/MessageEndGame.h"
 
 class Client;
 class MessageDeserializer;
+class MessageSerializer;
 
 class ClientTransmitionManager {
 
     private:
-        // Client* clientOwn_;
-        // Socket* socket_;
-        // BlockingQueue<Message*>* sendMessagesQueue_;
-
         Client* client_;
         Socket* socket_;
         MessageDeserializer *deserializer_;
+        MessageSerializer *serializer_;
         BlockingQueue<Message*>* sendMessagesQueue_;
 
 

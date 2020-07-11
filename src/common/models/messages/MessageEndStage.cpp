@@ -11,3 +11,7 @@ message_t MessageEndStage::getType(){
 responseStatus_t MessageEndStage::serialize(){
     return OK;
 }
+
+char* MessageEndStage::getPath(){
+	return this->path_;
+}

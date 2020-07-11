@@ -30,6 +30,8 @@ class MessageLog : public Message {
         Event* deSerialize();
         message_t getType();
         responseStatus_t serialize();
+        char* getMessage();
+        size_t getLevel();
 };
 
 #endif // _MESSAGE_LOG_H_

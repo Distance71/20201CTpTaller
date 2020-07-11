@@ -11,3 +11,11 @@ message_t MessageRequestLoginPlayer::getType(){
 responseStatus_t MessageRequestLoginPlayer::serialize(){
     return OK;
 }
+
+char* MessageRequestLoginPlayer::getUserName(){
+    return this->userName_;
+}
+
+char* MessageRequestLoginPlayer::getPassword(){
+    return this->password_;
+}

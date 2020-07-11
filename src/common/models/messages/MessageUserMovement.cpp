@@ -11,3 +11,7 @@ message_t MessageUserMovement::getType(){
 responseStatus_t MessageUserMovement::serialize(){
     return OK;
 }
+
+orientation_t MessageUserMovement::getOrientation(){
+    return this->orientation_;
+}

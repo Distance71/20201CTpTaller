@@ -35,63 +35,53 @@ response_t MessageDeserializer::getEventEndGame(Socket *socket, Event* &event){
 
 response_t MessageDeserializer::getEventEndStage(Socket *socket, Event* &event){
 
-    // char path[100];
-    // if (socket->receiveMessage((void *&) path, sizeof(path)) <= 0){
-    //     Logger::getInstance()->log(DEBUG, "Error al recibir el path EndStage");
-    //     return this->_handleErrorStatus();
-    // }
-
-    // MessageEndStage *message = new MessageEndStage(path);
-    // event = message->deSerialize();
+    char path[100];
     
-    // if(!event){
-    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndStage");
-    //     return this->_handleErrorStatus();
-    // }
+    this->getString(socket, path);
+
+    MessageEndStage *message = new MessageEndStage(path);
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndStage");
+        return this->_handleErrorStatus();
+    }
 
     return this->_handleSuccess();
 };
 
 response_t MessageDeserializer::getEventGameInit(Socket *socket, Event* &event){
     
-    // screen_t screenSizes;
+    screen_t screenSizes;
 
-    // if (socket->receiveMessage((void *&) screenSizes, sizeof(screen_t)) <= 0){
-    //     Logger::getInstance()->log(DEBUG, "Error al recibir el path EndStage");
-    //     return this->_handleErrorStatus();
-    // }
+    this->getInteger(socket, &screenSizes.width, sizeof(unsigned int));
+    this->getInteger(socket, &screenSizes.height, sizeof(unsigned int));
 
-    // Message *message = new MessageGameInit(screenSizes);
-    // event = message->deSerialize();
+    Message *message = new MessageGameInit(screenSizes);
+    event = message->deSerialize();
     
-    // if(!event){
-    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento GameInit");
-    //     return this->_handleErrorStatus();
-    // }
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento GameInit");
+        return this->_handleErrorStatus();
+    }
 
     return this->_handleSuccess();
 };
 
 response_t MessageDeserializer::getEventInitStage(Socket *socket, Event* &event){
 
-    // char layer[7][100];
+    char layer[7][100];
 
-    // for(size_t i = 0; i < 7; i++){
-    //     for(size_t j = 0; j < 100; j++) {
-    //         if (socket->receiveMessage((void *&) layer[i], sizeof(char) * 100) <= 0){
-    //             Logger::getInstance()->log(DEBUG, "Error al recibir el message en InitStage");
-    //             return this->_handleErrorStatus();
-    //         }
-    //     }
-    // }
+    for(size_t i = 0; i < 7; i++)
+        this->getString(socket, layer[i]);
     
-    // MessageInitStage *message = new MessageInitStage(layer);
-    // event = message->deSerialize();
+    MessageInitStage *message = new MessageInitStage(layer);
+    event = message->deSerialize();
     
-    // if(!event){
-    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento InitStage");
-    //     return this->_handleErrorStatus();
-    // }
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento InitStage");
+        return this->_handleErrorStatus();
+    }
 
     return this->_handleSuccess();
 };
@@ -206,6 +196,8 @@ response_t MessageDeserializer::getEventPlayerReconnect(Socket *socket, Event* &
         return this->_handleErrorStatus();
     }
 
+    Logger::getInstance()->log(DEBUG, "Se ha podido recibir un mensaje EventPlayerReconnect");
+
     return this->_handleSuccess();
 };
 
@@ -244,6 +236,22 @@ response_t MessageDeserializer::getEventResponseLoginPlayer(Socket *socket, Even
 
     return this->_handleSuccess();
 };
+
+response_t MessageDeserializer::getEventAnimationInitStage(Socket *socket, Event* &event){
+    char path[100];
+
+    this->getString(socket, path);
+
+    MessageAnimationInitStage *message = new MessageAnimationInitStage(path);
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento RequestLoginPlayer");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
 
 
 response_t MessageDeserializer::getEventUserMovement(Socket *socket, Event* &event){
@@ -358,9 +366,9 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
     Logger::getInstance()->log(DEBUG, "Se ha recibido un tipo de mensaje en Deserializer.");
     
-    /*switch (messageType){
+    switch (messageType){
         case ANIMATION_INIT_STAGE:
-            return
+            return this->getEventAnimationInitStage(socket, event);
 
         case END_GAME:
             return this->getEventEndGame(socket, event);
@@ -400,7 +408,7 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case USER_MOVEMENT:
             return this->getEventUserMovement(socket, event);
-    }*/
+    }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");
 

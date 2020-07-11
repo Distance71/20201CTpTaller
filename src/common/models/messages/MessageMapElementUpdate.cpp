@@ -11,3 +11,11 @@ message_t MessageMapElementUpdate::getType(){
 responseStatus_t MessageMapElementUpdate::serialize(){
     return OK;
 }
+
+size_t MessageMapElementUpdate::getId(){
+    return this->id_;
+}
+
+position_t MessageMapElementUpdate::getPosition(){
+    return this->position_;
+}

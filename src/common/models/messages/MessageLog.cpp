@@ -11,3 +11,11 @@ message_t MessageLog::getType(){
 responseStatus_t MessageLog::serialize(){
     return OK;
 }
+
+char * MessageLog::getMessage(){
+    return this->message_;
+}
+
+size_t MessageLog::getLevel(){
+    return this->level_;
+}

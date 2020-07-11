@@ -11,3 +11,7 @@ message_t MessageInitStage::getType(){
 responseStatus_t MessageInitStage::serialize(){
     return OK;
 }
+
+void* MessageInitStage::getLayers(){
+    return &this->layerPaths_;
+}

@@ -20,6 +20,7 @@
 #include "../../models/messages/MessagePlayerReconnect.h"
 #include "../../models/messages/MessageRequestLoginPlayer.h"
 #include "../../models/messages/MessageResponseLoginPlayer.h"
+#include "../../models/messages/MessageAnimationInitStage.h"
 
 class Event;
 using namespace std;
@@ -47,6 +48,8 @@ class MessageDeserializer {
         response_t getEventRequestLoginPlayer(Socket *socket, Event* &event);
         response_t getEventResponseLoginPlayer(Socket *socket, Event* &event);
         response_t getEventUserMovement(Socket *socket, Event* &event);
+        response_t getEventAnimationInitStage(Socket *socket, Event* &event);
+        
         response_t getInteger(Socket *socket, void *value, size_t size);
         response_t getResponseStatus(Socket *socket, responseStatus_t &response);
         response_t getString(Socket *socket, char (&path)[100]);

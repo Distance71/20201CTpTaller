@@ -16,6 +16,7 @@ class MessageUserMovement: public Message {
         message_t getType();
         Event* deSerialize();
      	responseStatus_t serialize();
+        orientation_t getOrientation();
 };
 
 #endif

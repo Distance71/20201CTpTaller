@@ -11,3 +11,7 @@ message_t MessageMapElementDelete::getType(){
 responseStatus_t MessageMapElementDelete::serialize(){
     return OK;
 }
+
+size_t MessageMapElementDelete::getId(){
+    return this->id_;
+}

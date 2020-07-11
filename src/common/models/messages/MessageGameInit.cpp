@@ -11,3 +11,7 @@ message_t MessageGameInit::getType(){
 responseStatus_t MessageGameInit::serialize(){
     return OK;
 }
+
+screen_t MessageGameInit::getScreenSizes(){
+    return this->screenSizes_;
+}

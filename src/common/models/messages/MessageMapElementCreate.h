@@ -35,6 +35,11 @@ class MessageMapElementCreate: public Message {
         message_t getType();
         Event* deSerialize();
         responseStatus_t serialize();
+
+        size_t getId();
+        char* getPath();
+        position_t getPosition();
+        spriteSize_t getSpriteSize();
 };
 
 #endif

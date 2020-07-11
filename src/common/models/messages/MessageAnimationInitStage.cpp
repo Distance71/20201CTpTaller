@@ -17,3 +17,7 @@ responseStatus_t MessageAnimationInitStage::serialize(){
 	//return result > 0 ? OK : ERROR_MESSAGE;
 	return OK;
 }
+
+char* MessageAnimationInitStage::getPath(){
+	return this->path_;
+}

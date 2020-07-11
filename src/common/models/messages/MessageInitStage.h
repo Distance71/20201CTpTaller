@@ -30,6 +30,7 @@ class MessageInitStage: public Message {
         message_t getType();
         Event* deSerialize();
         responseStatus_t serialize();
+        void* getLayers();
 
 };
 

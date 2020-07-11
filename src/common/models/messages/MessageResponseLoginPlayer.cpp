@@ -11,3 +11,7 @@ message_t MessageResponseLoginPlayer::getType(){
 responseStatus_t MessageResponseLoginPlayer::serialize(){
     return OK;
 }
+
+responseStatus_t MessageResponseLoginPlayer::getResponse(){
+    return this->response_;
+}

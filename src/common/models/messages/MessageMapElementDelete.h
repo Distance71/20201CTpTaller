@@ -21,6 +21,7 @@ class MessageMapElementDelete: public Message {
     	message_t getType();
         Event* deSerialize();
         responseStatus_t serialize();
+		size_t getId();
 };
 
 #endif

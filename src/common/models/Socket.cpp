@@ -107,19 +107,14 @@ int Socket::receiveMessage(stringstream &s, size_t sizeData){
     return totalBytesReceive;
 }
 
-int Socket::sendMessage(void* buffer, size_t sizeData){
+int Socket::sendMessage(stringstream &s, size_t sizeData){
     int totalBytesWritten = 0;
     int bytesWritten = 0;;
     bool isOpen = true;
 
     Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje");
 
-    std::stringstream ss;
-    ss << std::setw(4) << std::setfill('0') << 4;
-
-    string msg = ss.str();
-
-    cout << "el mandado " << msg.c_str() << endl;
+    string msg = s.str();
 
     while ((sizeData > totalBytesWritten) && isOpen){
         bytesWritten = write(this->fileDescriptor_, (void *) (msg.c_str() + totalBytesWritten), (msg.size() - totalBytesWritten));

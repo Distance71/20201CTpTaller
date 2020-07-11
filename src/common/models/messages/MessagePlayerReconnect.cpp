@@ -11,3 +11,7 @@ message_t MessagePlayerReconnect::getType(){
 responseStatus_t MessagePlayerReconnect::serialize(){
     return OK;
 }
+
+size_t MessagePlayerReconnect::getId(){
+    return this->id_;
+}

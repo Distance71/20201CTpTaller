@@ -77,10 +77,10 @@ Event* User::receiveMessage(){
 	else {
 		Logger::getInstance()->log(ERROR, "No se pudo recibir un evento con exito en User");
 		return nullptr;
-	}
-	
+	}	
 }
 
 response_t User::sendMessage(Event* event){
-	return serializer_->sendSerializedEvent(this->socket_, event); //Send also, for consistence?
+	Message* message = event->serialize();
+	return serializer_->sendSerializedEvent(this->socket_, message); //Send also, for consistence?
 }
