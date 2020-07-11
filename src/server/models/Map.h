@@ -27,7 +27,8 @@ class Map {
     private:
     vector <Level *> levels_;
     //void clearMap();
-    MapElement *player;
+    //MapElement *player;
+    unordered_map<string, MapElement*> players;
 
     public:    
     Map();
@@ -37,8 +38,9 @@ class Map {
     vector<Level *> getLevels();
     void setStageSource(size_t numberLevel, size_t numberStage);
     bool endStep(currentStep_t currentStep);
-    void createPlayer(gameParams_t &gameSettings);
-    void initializePositionPlayer(gameParams_t &gameSettings);
+    void createPlayers(gameParams_t &gameSettings);
+    void initializePositionPlayers(gameParams_t &gameSettings);
+    void movePlayer(string namePlayer, orientation_t orientation);
 };
 
 class Level: public Map {

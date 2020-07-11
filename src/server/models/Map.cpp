@@ -13,7 +13,7 @@ Map::Map(gameParams_t &gameSettings){
         Level *newLevel = new Level(gameSettings.levelParams[i]);
         this->addLevel(newLevel);
     }
-    createPlayer(gameSettings);
+    createPlayers(gameSettings);
 }
 
 void Map::setStageSource(size_t numberLevel, size_t numberStage){
@@ -165,7 +165,7 @@ vector<Step *> Stage::getSteps(){
 void Map::update(currentStep_t currentStep){
     size_t actualLevel = currentStep.level;
         
-    this->player->update();
+    //this->player->update();
     levels_[actualLevel]->update(currentStep);
 }
 
@@ -200,34 +200,62 @@ void Step::update(){
     }
 }
 
-void Map::createPlayer(gameParams_t &gameSettings){
-    //TODO: parametrizarlo para mas de un jugador
-    /*
-    int playerSizeX = gameSettings.playerParams.size_x;
-    int playerSizeY = gameSettings.playerParams.size_y;
-    string playerSprite = gameSettings.playerParams.sprite;
+void Map::createPlayers(gameParams_t &gameSettings){
+    
+    size_t cantPlayers = gameSettings.playersParams.size();
+    Logger::getInstance()->log(DEBUG, "Se comienza a crear el MapElement para cada jugador.");
 
-    position_t positionPlayer;
-    positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
-    positionPlayer.axis_y = (GameProvider::getHeight() - playerSizeY) / 2;
-    positionPlayer.orientation = FRONT;
+    for (size_t i = 0; i < cantPlayers; i++){
 
-    this->player = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY);*/
+        int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
+        int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
+        string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
+        string playerName = gameSettings.playersParams[i].username;
+
+        position_t positionPlayer;
+        positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
+        positionPlayer.axis_y = (GameProvider::getHeight() - playerSizeY) / 2;
+        positionPlayer.orientation = FRONT;
+
+        this->players[playerName] = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY);
+
+    }
 }
 
-void Map::initializePositionPlayer(gameParams_t &gameSettings){
-    //TODO: parametrizarlo para mas de un jugador
-    /*int playerSizeX = gameSettings.playerParams.size_x;
-    int playerSizeY = gameSettings.playerParams.size_y;
+void Map::initializePositionPlayers(gameParams_t &gameSettings){
 
-    position_t positionPlayer;
-    positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
-    positionPlayer.axis_y = (GameProvider::getHeight() - playerSizeY) / 2;
+    size_t cantPlayers = gameSettings.playersParams.size();
+    Logger::getInstance()->log(DEBUG, "Se inicializa la posicion del MapElement para cada jugador.");
 
-    State *playerPosition = this->player->getState<Position>(string("Position"));
-    playerPosition->setX(positionPlayer.axis_x);
-    playerPosition->setY(positionPlayer.axis_y);
+    for (size_t i = 0; i < cantPlayers; i++){
 
-    State *playerOrientation = this->player->getState<Orientation>(string("Orientation"));
-    playerOrientation->setX(FRONT);*/
+        int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
+        int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
+        string playerName = gameSettings.playersParams[i].username;
+
+        position_t positionPlayer;
+        positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
+        positionPlayer.axis_y = (GameProvider::getHeight() - playerSizeY) / 2;
+
+        State *playerPosition = this->players[playerName]->getState<Position>(string("Position"));
+        playerPosition->setX(positionPlayer.axis_x);
+        playerPosition->setY(positionPlayer.axis_y);
+
+        State *playerOrientation = this->players[playerName]->getState<Orientation>(string("Orientation"));
+        playerOrientation->setX(FRONT);
+
+    }    
+}
+
+void Map::movePlayer(string namePlayer, orientation_t orientation){
+
+    MapElement *onePlayer = this->players[namePlayer];
+
+    if (!onePlayer){
+        Logger::getInstance()->log(ERROR, "No se encontro el jugador "  + namePlayer + " para mover.");
+        return;
+    }
+
+    onePlayer->moveTo(orientation);
+    Logger::getInstance()->log(DEBUG, "Se mueve el jugador "  + namePlayer);
 }
