@@ -70,19 +70,19 @@ void Server::waitPlayers(){
         
         size_t newUserId = this->usersManager_->acceptUnloggedUser();
         
-        if (newUserId == 0){
-            bool isFullGame = this->usersManager_->isFullGame();
-            if(isFullGame) {
-                Logger::getInstance()->log(DEBUG, "Se ha querido conectar usuario con el juego lleno");
-                break;
-            }
+        if (newUserId == 0){            
+            // error ya informado
         }
         else{
+            if(this->usersManager_->isFullGame()) {
+                Logger::getInstance()->log(DEBUG, "Se ha querido conectar usuario con el juego lleno");
+            }
             cout << "Se agrega un cliente. " << endl;
             Logger::getInstance()->log(INFO, "Se ha conectado un usuario nuevo");
         }
     }
-    Logger::getInstance()->log(DEBUG, "Se ha terminado de esperar jugadores");
+
+    Logger::getInstance()->log(DEBUG, "Se ha terminado de esperar jugadores");    
 }
 
 Socket* Server::getSocket(){
@@ -120,12 +120,19 @@ int Server::run(){
         Logger::getInstance()->log(ERROR, "El servidor no se pudo iniciar");
         return EXIT_FAILURE;
     }
-    
     this->waitPlayers();
 
-    //this->game->run();
-
+    this->runGame();
 
     Logger::getInstance()->log(INFO, "El Juego ha terminado");
     return EXIT_SUCCESS;
+}
+
+void Server::runGame(){
+
+    Logger::getInstance()->log(INFO, "Juego iniciado");
+
+    Game *game = new Game();
+
+    game->run();
 }

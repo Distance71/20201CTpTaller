@@ -17,6 +17,8 @@
 #include "../common/providers/GameProvider.h"
 #include "eventsManager/ServerEventsManager.h"
 
+#include "models/Game.h"
+
 class ServerTransmitionManager;
 class ServerEventsManager;
 class UsersManager;

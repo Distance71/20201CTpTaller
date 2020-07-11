@@ -7,6 +7,7 @@
 #include "../messages/MessagePlayerDisconnect.h"
 #include "../events/Event.h"
 #include "../../types.h"
+#include "../../../client/Client.h"
 
 using namespace std;
 

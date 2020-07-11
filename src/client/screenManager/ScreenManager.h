@@ -28,6 +28,7 @@ class ScreenManager{
         SDL_Renderer* renderer_;
         Menu* menu_;
         GameGraphics* gameGraphics_;
+        bool waiting_;
 
         bool initMenu();
         bool initSDL();
@@ -47,6 +48,9 @@ class ScreenManager{
         void setBackground(stageSource_t background);
         void setImage(const string &source);
         void setLoginResponse(responseStatus_t response);
+        int waitForPlayers();
+        void stopWaiting();
+        void viewEndGameScreen();
 };
 
 #endif

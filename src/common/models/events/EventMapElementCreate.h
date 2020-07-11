@@ -7,6 +7,7 @@
 #include "../messages/MessageMapElementCreate.h"
 #include "../events/Event.h"
 #include "../../types.h"
+#include "../../../client/Client.h"
 
 #ifndef MAX_SIZE_MESSAGE
 #define MAX_SIZE_MESSAGE 100
