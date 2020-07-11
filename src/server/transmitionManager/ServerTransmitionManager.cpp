@@ -44,8 +44,12 @@ void ServerTransmitionManager::createReceivingCycle(User* user) {
 
 void* ServerTransmitionManager::receivingCycle(User* user){
     Logger::getInstance()->log(DEBUG, "Se va iniciar el ciclo del receptor transmitionManager");
-    while (user->isConnected() && this->serverOwn_->isConnected()) {
+    
+    if(!user || !this->serverOwn_)
+        cout << "algo esta mal" << endl;
         
+    while (user->isConnected() && this->serverOwn_->isConnected()) {
+        Logger::getInstance()->log(DEBUG, "Se va a recibir un evento en transmitionManager");
         Event *event = user->receiveMessage();
         if(!event){
             mtxErrno.lock();

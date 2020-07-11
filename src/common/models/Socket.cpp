@@ -75,20 +75,21 @@ int Socket::acceptClient(){
     return accept(this->fileDescriptor_, (struct sockaddr *) &sockaddr_client, (socklen_t *) &clientAddrLen);
 }
 
-int Socket::receiveMessage(void* buffer, size_t sizeData){
+int Socket::receiveMessage(stringstream &s, size_t sizeData){
 
     int totalBytesReceive = 0;
     int bytesReceive = 0;
     bool isOpen = true;
 
-    std::stringstream ss;
+    char buffer[sizeData + 1];
+    buffer[sizeData] = '\0';
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje de tamaño " + std::to_string((int)sizeData));
 
     while ((totalBytesReceive < sizeData) && isOpen){
-        bytesReceive = read(this->fileDescriptor_, (void *) buffer + totalBytesReceive - 1, (sizeData - totalBytesReceive));
+        bytesReceive = read(this->fileDescriptor_, (void *) buffer + totalBytesReceive, (sizeData - totalBytesReceive));
         if (bytesReceive < 0){
-            Logger::getInstance()->log(DEBUG, "Se ha producido un error al recibir el mensaje en socket");
+            Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje en socket");
             return -1;
         } else if (bytesReceive == 0){
             isOpen = false;
@@ -98,13 +99,10 @@ int Socket::receiveMessage(void* buffer, size_t sizeData){
             totalBytesReceive += bytesReceive;
         }
     }
-    //For testing
-    int tipo;
-    ss >> tipo;
 
-    cout << "la cosa " << tipo << endl;
+    s << buffer;
 
-    cout << "bits "<< totalBytesReceive << endl;
+    Logger::getInstance()->log(DEBUG, "Se el mensaje con exito en Socket");
 
     return totalBytesReceive;
 }

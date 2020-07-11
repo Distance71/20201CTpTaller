@@ -9,7 +9,7 @@
 #include "../../types.h"
 
 #ifndef MAX_SIZE_CREDENTIALS
-#define MAX_SIZE_CREDENTIALS 30
+#define MAX_SIZE_CREDENTIALS 100
 #endif
 
 using namespace std;
