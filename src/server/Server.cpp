@@ -3,11 +3,17 @@
 
 Server::Server(size_t port){
     this->port_ = port;
-    this->usersManager_ = new UsersManager(this);
+    
     this->socket_ = new Socket();
     this->socket_->setPort(port);
-    this->transmitionManager_ = new ServerTransmitionManager(this);
     this->_initializeServer();
+    this->transmitionManager_ = new ServerTransmitionManager(this);
+    this->usersManager_ = new UsersManager(this);
+    this->eventsManager_ = new ServerEventsManager(this);
+    
+    // this->transmitionManager_->run();
+    // this->usersManager_->run();
+    // this->eventsManager_->run();
 }
 
 Server::~Server(){
@@ -60,8 +66,6 @@ bool Server::isConnected(){
 void Server::waitPlayers(){
     cout << "Esperando jugadores..." << endl;
 
-    //Se compara con el Server porque ServerTransmitionManager puede tener mas usuarios de la cantidad del juego
-    //porque el Socket hace el accept antes de que del logeo y demas
     while (!this->usersManager_->isFullGame() && this->isConnected()){
         
         size_t newUserId = this->usersManager_->acceptUnloggedUser();
@@ -116,8 +120,7 @@ int Server::run(){
         Logger::getInstance()->log(ERROR, "El servidor no se pudo iniciar");
         return EXIT_FAILURE;
     }
-        
-
+    
     this->waitPlayers();
 
     //this->game->run();

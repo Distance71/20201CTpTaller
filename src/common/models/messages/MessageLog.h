@@ -16,7 +16,7 @@ using namespace std;
 class MessageLog : public Message {
 
     private:
-        int level_;
+        size_t level_;
         char message_[MAX_SIZE_MESSAGE];    
         const message_t type_ = LOG;    
 

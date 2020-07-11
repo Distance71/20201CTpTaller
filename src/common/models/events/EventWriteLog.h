@@ -17,11 +17,11 @@ class MessageLog;
 class EventWriteLog: public Event {
 
     private:
-        int level_;
+        size_t level_;
         char message_[MAX_MESSAGE_LOG]; 
 
     public:
-        explicit EventWriteLog(int level, char message[MAX_MESSAGE_LOG]) {
+        explicit EventWriteLog(size_t level, char message[MAX_MESSAGE_LOG]) {
             for(size_t i = 0; i < MAX_MESSAGE_LOG; i++)
                 message_[i] = message[i];
         }

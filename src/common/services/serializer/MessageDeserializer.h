@@ -31,6 +31,7 @@ class MessageDeserializer {
         response_t _handleSuccess();
         response_t _handleErrorMessage();
 
+        response_t getTypeMessage(Socket *socket, message_t &message);   
         response_t getEvent(message_t messageType, Socket *socket, Event* &event);
 
         response_t getEventEndGame(Socket *socket, Event* &event);
@@ -46,8 +47,11 @@ class MessageDeserializer {
         response_t getEventRequestLoginPlayer(Socket *socket, Event* &event);
         response_t getEventResponseLoginPlayer(Socket *socket, Event* &event);
         response_t getEventUserMovement(Socket *socket, Event* &event);
-        
-
+        response_t getInteger(Socket *socket, void *value, size_t size);
+        response_t getResponseStatus(Socket *socket, responseStatus_t &response);
+        response_t getString(Socket *socket, char (&path)[100]);
+        response_t getPosition(Socket *socket, position_t &position);
+        response_t getOrientation(Socket *socket, orientation_t &orientation);
     public:
         response_t getReceivedMessage(Socket *socket, Event* &event);
 };

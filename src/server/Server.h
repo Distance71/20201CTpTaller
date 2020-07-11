@@ -23,8 +23,6 @@ class UsersManager;
 
 class Server {
     private:
-        //ServerTransmitionManager *transmitionManager_;
-
         size_t port_;
         Socket *socket_;
         UsersManager* usersManager_;
