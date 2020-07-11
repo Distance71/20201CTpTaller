@@ -18,9 +18,10 @@ Map::Map(gameParams_t &gameSettings){
 
 void Map::setStageSource(size_t numberLevel, size_t numberStage){
     stageSource_t background = GameProvider::getConfig()->getSourcesForStage(numberLevel,numberStage);
-    //Event* event = new EventInitStage(pathScreen.c_str());
+    //Event* event = new EventInitStage(background);
     //TODO Mandar a todos los usuarios este background
     //response_t response = user->sendMessage(event);
+    usleep(20000);//tiempo para garantizar q le llego a todos
 }
 
 
@@ -68,7 +69,6 @@ Step::Step(){
 }
 
 Step::Step(stepParams_t params) {
-    //Do something -> create enemies of different types, rocks, etc
     size_t nEnemies = params.enemies.size();
 
     for(size_t i = 0; i < nEnemies; i++){
@@ -81,7 +81,6 @@ Step::Step(stepParams_t params) {
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
             MapElement *newEnemy = new MapElement(ENEMY, positionEnemy,2,2,sprite, size_x, size_y);
-            //MapElement *newEnemy = new MapElement(ENEMY,positionEnemy.width,positionEnemy.height,2,2,sprite, size_x, size_y, positionEnemy.orientation);
             this->mapElements_[this->lastId_] = newEnemy;
             this->lastId_++;
         }
@@ -89,7 +88,6 @@ Step::Step(stepParams_t params) {
 }
 
 bool Step::endStep(){
-    //this->mapElements_.size() == 0
     return (this->mapElements_.empty());
 }
 
@@ -124,7 +122,6 @@ void Map::addLevel(Level *level){
     }
     
     this->levels_.push_back(level);
-    //levels_[levels_.size()] = level;
 }
 
 void Level::addStage(Stage *stage){
@@ -133,7 +130,6 @@ void Level::addStage(Stage *stage){
     }
 
     this->stages_.push_back(stage);
-    //stages_[stages_.size()] = stage;
 }
 
 void Stage::addStep(Step *step){
@@ -155,12 +151,6 @@ vector<Stage *> Level::getStages(){
 vector<Step *> Stage::getSteps(){
      return this->steps_;
 }
-
-// // int Step::move_in_direction(string movement_instruction, int id){
-// //     // si devuelve 0 todo ok, ante cualquier problema que devuelva 1 
-// //     //para poder registrarlo en el logger
-// //     return 0;
-// // }
 
 void Map::update(currentStep_t currentStep){
     size_t actualLevel = currentStep.level;

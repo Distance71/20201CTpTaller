@@ -79,11 +79,7 @@ void Game::runStep(currentStep_t actualStep){
         auto dur = end - begin;
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
 
-        // TODO revisar esto. yo quite getCurrentScenario por q era algo de la vista. no iria
-        //(this->map_->getCurrentScenario())->update();
-        //***
-
-        while(0 >= (ms - elaptedTimeMS)) { // TODO Revisar esto
+        while(0 >= (ms - elaptedTimeMS)) { 
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
@@ -145,7 +141,7 @@ void Game::viewStageCleared(level_t oneLevel){
             break;
     }
 
-    //Event* event = new EventAnimationInitStage(pathScreen.c_str());
+    //Event* event = new EventEndStage(pathScreen.c_str());
     //TODO Mandar a todos los usuarios esta pantalla
     //response_t response = user->sendMessage(event);
      usleep(50000);
