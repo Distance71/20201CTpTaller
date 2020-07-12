@@ -16,15 +16,6 @@ Map::Map(gameParams_t &gameSettings){
     createPlayers(gameSettings);
 }
 
-void Map::setStageSource(size_t numberLevel, size_t numberStage){
-    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(numberLevel,numberStage);
-    //Event* event = new EventInitStage(background);
-    //TODO Mandar a todos los usuarios este background
-    //response_t response = user->sendMessage(event);
-    usleep(2000000);//tiempo para garantizar q le llego a todos
-}
-
-
 bool Map::endStep(currentStep_t currentStep){
     return this->levels_[currentStep.level]->endStep(currentStep.stage, currentStep.step);
 }
