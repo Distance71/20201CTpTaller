@@ -10,10 +10,6 @@ Server::Server(size_t port){
     this->transmitionManager_ = new ServerTransmitionManager(this);
     this->usersManager_ = new UsersManager(this);
     this->eventsManager_ = new ServerEventsManager(this);
-    
-    // this->transmitionManager_->run();
-    // this->usersManager_->run();
-    // this->eventsManager_->run();
 }
 
 Server::~Server(){
@@ -90,10 +86,6 @@ Socket* Server::getSocket(){
     return this->socket_;
 }
 
-// BlockingQueue<Message *>* Server::getEventsToProcess(){
-//     return transmitionManager_->getMessagesToProcess();
-// }
-
 void Server::addPlayer(User *newUser){
     if(!newUser || usersManager_->isFullGame()) {
         Logger::getInstance()->log(ERROR, "Se ha querido iniciar un usuario en el servidor sin contenido");
@@ -130,7 +122,7 @@ int Server::run(){
 }
 
 void Server::processEvent(Event *event){
-    //this->eventsManager_->process(event);
+    this->eventsManager_->process(event);
 }
 
 void Server::runGame(){

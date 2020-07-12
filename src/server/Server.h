@@ -51,7 +51,6 @@ class Server {
         
         void processEvent(Event *event);
         Socket* getSocket();
-        BlockingQueue<Message *>* getEventsToProcess();
         void sendToAllUsers(Event* event);
 };
 

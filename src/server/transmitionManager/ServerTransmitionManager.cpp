@@ -64,19 +64,12 @@ void* ServerTransmitionManager::receivingCycle(User* user){
         }
         Logger::getInstance()->log(DEBUG, "Se recibio un evento");
         cout << "se recibio un mensaje" << endl;
-        //receivedEventQueue_->push(event);
         this->serverOwn_->processEvent(event);        
     }
     
     Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente " + to_string(user->getId()));
     return nullptr;
 }
-
-
-
-// BlockingQueue<Message *>* ServerTransmitionManager::getMessagesToProcess(){
-//     return this->receivedMessagesQueue_;
-// }
 
 void ServerTransmitionManager::createSendingCycle(User* user) {
     pthread_t thread;
@@ -103,8 +96,6 @@ void ServerTransmitionManager::createSendingCycle(User* user) {
 
     Logger::getInstance()->log(DEBUG, "Se creó el hilo de transmision emisor.");
 }
-
-
 
 void* ServerTransmitionManager::sendingCycle(User* user) {
     
@@ -185,8 +176,9 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
     return nullptr;
 }
 
-void ServerTransmitionManager::sendToUser(Id idUser){
-
+void ServerTransmitionManager::sendToUser(User* user, Event* event){
+    response_t response = user->sendMessage(event);
+    //TODO check response - loguear
 }
 
 void ServerTransmitionManager::sendToAllUsers(Event *event){

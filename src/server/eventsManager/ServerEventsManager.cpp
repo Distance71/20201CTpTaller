@@ -9,6 +9,10 @@ ServerEventsManager::~ServerEventsManager(){
 
 }
 
+void ServerEventsManager::process(Event *event) {
+
+}
+
 void ServerEventsManager::processingCycle() {
         //TODO: A REVISAR
     pthread_t thread;
