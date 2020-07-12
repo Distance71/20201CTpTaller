@@ -25,6 +25,7 @@ class MapElement {
         unordered_map<string, Action *> actions_;
         int size_x_;
         int size_y_;
+        string imageSource_;
 
         vector<Action *> getActions();
         vector<State *> getStates();
@@ -41,6 +42,9 @@ class MapElement {
         template<typename T> T* getAction(const string name);
         
         void update();
+        position_t getActualPosition();
+        string getImageSource();
+        spriteSize_t getSpriteSize();
 
         void moveTo(orientation_t oneOrientation);    
 

@@ -29,8 +29,7 @@ class UsersManager {
         // void setIdUser(Id idUser);
         // Id getIdUser();
         bool isFullGame();
-        Id acceptUnloggedUser();
-        
+        Id acceptUnloggedUser();       
 
         void setSocket(Socket *socket);
 };

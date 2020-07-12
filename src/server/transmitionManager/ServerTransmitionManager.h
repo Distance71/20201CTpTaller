@@ -30,7 +30,6 @@ class ServerTransmitionManager {
         Server *serverOwn_;
         std::mutex mtxErrno;
         BlockingQueue <Event*>* receivedEventQueue_;
-        //BlockingMap<Id, BlockingQueue<Message *> *> messagesQueues_;
 
         void createReceivingCycle(User* user);
         void* receivingCycle(User* user);
@@ -42,9 +41,8 @@ class ServerTransmitionManager {
         ~ServerTransmitionManager();
 
         void addUser(User* user);
-        void sendToUser(Id idUser);
+        void sendToUser(User* idUser, Event *event);
         void sendToAllUsers(Event *event);
-        BlockingQueue<Message *>* getMessagesToProcess();
 };
 
 #endif // _SERVER_TRANSMITION_MANAGER_H_

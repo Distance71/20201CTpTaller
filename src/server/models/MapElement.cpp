@@ -10,14 +10,15 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     
     this->size_x_ = size_x;
     this->size_y_ = size_y;
+    this->imageSource_ = sourceSprite; 
 
-    Sprite* sprite = new Sprite(sourceSprite);
+    //Sprite* sprite = new Sprite(sourceSprite);
     //GraphicsMapElement* graficador = new GraphicsMapElement(sprite, this->size_x_, this->size_y_);
     //addAction("Graphics", graficador);
 
     if (type == PLAYER){
-        PlayerController* playercontroller= new PlayerController(sprite);
-        addAction("PlayerController", playercontroller);
+        // PlayerController* playercontroller= new PlayerController(sprite);
+        // addAction("PlayerController", playercontroller);
     } else if(type == ENEMY){
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
@@ -63,6 +64,30 @@ void MapElement::update(){
     for(auto action : actions_){
         action.second->update(states_); 
     }
+}
+
+position_t MapElement::getActualPosition(){
+    position_t actualPosition;
+
+    State* position = states_.at("Position");
+    State* orientation = states_.at("Orientation");
+
+    actualPosition.axis_x = position->getX();
+    actualPosition.axis_y = position->getY();
+    actualPosition.orientation = (orientation_t) orientation->getX();
+
+    return actualPosition;
+}
+
+string MapElement::getImageSource(){
+    return this->imageSource_;
+}
+
+spriteSize_t MapElement::getSpriteSize(){
+    spriteSize_t spriteSize;
+    spriteSize.width = this->size_x_;
+    spriteSize.height = this->size_y_;
+    return spriteSize;
 }
 
 void MapElement::moveTo(orientation_t oneOrientation){

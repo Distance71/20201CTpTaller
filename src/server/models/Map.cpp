@@ -16,15 +16,6 @@ Map::Map(gameParams_t &gameSettings){
     createPlayers(gameSettings);
 }
 
-void Map::setStageSource(size_t numberLevel, size_t numberStage){
-    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(numberLevel,numberStage);
-    //Event* event = new EventInitStage(background);
-    //TODO Mandar a todos los usuarios este background
-    //response_t response = user->sendMessage(event);
-    usleep(2000000);//tiempo para garantizar q le llego a todos
-}
-
-
 bool Map::endStep(currentStep_t currentStep){
     return this->levels_[currentStep.level]->endStep(currentStep.stage, currentStep.step);
 }
@@ -152,26 +143,26 @@ vector<Step *> Stage::getSteps(){
      return this->steps_;
 }
 
-void Map::update(currentStep_t currentStep){
+void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
         
     //this->player->update();
-    levels_[actualLevel]->update(currentStep);
+    levels_[actualLevel]->update(currentStep, game);
 }
 
-void Level::update(currentStep_t currentStep){
+void Level::update(currentStep_t currentStep, Game *game){
     size_t actualStage = currentStep.stage;
         
-    stages_[actualStage]->update(currentStep);
+    stages_[actualStage]->update(currentStep, game);
 }
 
-void Stage::update(currentStep_t currentStep){
+void Stage::update(currentStep_t currentStep, Game *game){
     size_t actualStep = currentStep.step;
 
-    steps_[actualStep]->update();
+    steps_[actualStep]->update(game);
 }
 
-void Step::update(){
+void Step::update(Game *game){
 
     vector<Id> mapElementDead;
 
@@ -180,6 +171,12 @@ void Step::update(){
 
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
+            Event *eventDead = new EventMapElementDelete(mapElement.first);
+            game->sendEvent(eventDead);
+        } else {
+            position_t actualPosition = mapElement.second->getActualPosition();
+            Event *eventUpdate = new EventMapElementUpdate(mapElement.first, actualPosition);
+            game->sendEvent(eventUpdate);
         }
     }
 
@@ -188,6 +185,7 @@ void Step::update(){
         this->mapElements_.erase(oneIdDead);
         delete enemyDead;        
     }
+
 }
 
 void Map::createPlayers(gameParams_t &gameSettings){
@@ -248,4 +246,38 @@ void Map::movePlayer(string namePlayer, orientation_t orientation){
 
     onePlayer->moveTo(orientation);
     Logger::getInstance()->log(DEBUG, "Se mueve el jugador "  + namePlayer);
+}
+
+void Map::initializeStep(currentStep_t currentStep, Game *game){
+    size_t actualLevel = currentStep.level;
+        
+    levels_[actualLevel]->initializeStep(currentStep, game);
+}
+
+void Level::initializeStep(currentStep_t currentStep, Game *game){
+    size_t actualStage = currentStep.stage;
+        
+    stages_[actualStage]->initializeStep(currentStep, game);
+}
+
+void Stage::initializeStep(currentStep_t currentStep, Game *game){
+    size_t actualStep = currentStep.step;
+
+    steps_[actualStep]->initializeStep(game);
+}
+
+void Step::initializeStep(Game *game){
+    
+    for(auto mapElement : this->mapElements_) {
+
+        position_t actualPosition = mapElement.second->getActualPosition();
+        string sourceSprite = mapElement.second->getImageSource();
+        spriteSize_t spriteSize = mapElement.second->getSpriteSize();
+
+        char imagePath[100];
+        strcpy(imagePath, sourceSprite.c_str());
+
+        Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
+        game->sendEvent(event);
+    }
 }

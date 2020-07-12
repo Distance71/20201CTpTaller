@@ -15,6 +15,10 @@
 
 // Maneja la secuencia logica del juego
 class Server;
+class Map;
+class Level;
+class Stage;
+class Step;
 
 class Game {
 
@@ -32,7 +36,8 @@ class Game {
     void updateGraphics();
     void clearScene();
     void sendStartStage(level_t oneLevel);
-    void viewStageCleared(level_t oneLevel);
+    void sendStageCleared(level_t oneLevel);
+    void sendBackground(size_t numberLevel, size_t numberStage);
 
     public:
     Game(Server *server);
@@ -40,6 +45,7 @@ class Game {
 
     void run();
     void movePlayer(string nameUser, orientation_t orientation);
+    void sendEvent(Event *event);
 };
 
 #endif
