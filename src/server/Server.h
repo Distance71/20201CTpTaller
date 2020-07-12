@@ -16,6 +16,7 @@
 #include "../common/services/Logger.h"
 #include "../common/providers/GameProvider.h"
 #include "eventsManager/ServerEventsManager.h"
+#include "../common/models/events/Event.h"
 
 #include "models/Game.h"
 
@@ -34,7 +35,7 @@ class Server {
         bool gameRunning_ = false;
         
         pthread_mutex_t mutex_players_;
-
+        
         void _initializeServer();
         
     public:
@@ -48,6 +49,7 @@ class Server {
         int run();
         void runGame();
         
+        void processEvent(Event *event);
         Socket* getSocket();
         BlockingQueue<Message *>* getEventsToProcess();
         void sendToAllUsers(Event* event);

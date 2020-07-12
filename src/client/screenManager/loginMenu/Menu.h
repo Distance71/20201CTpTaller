@@ -14,6 +14,7 @@
 #include "../../Client.h"
 #include  "../../../common/models/messages/MessageRequestLoginPlayer.h"
 #include "../../../common/types.h"
+#include "../../../common/services/Logger.h"
 
 class Client;
 

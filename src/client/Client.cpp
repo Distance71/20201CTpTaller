@@ -57,7 +57,7 @@ int Client::run(){
     bool logged = this->screenManager_-> viewLogin();
 
     if (!logged){
-        Logger::getInstance()->log(INFO, "El ususario no ha podido loguearse,juego finalizado");
+        Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
         disconnect();
         return EXIT_FAILURE;
     }

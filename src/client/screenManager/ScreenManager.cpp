@@ -236,7 +236,7 @@ bool ScreenManager::viewLogin(){
         }
         
         if (this->menu_->getLoggedInStatus()){
-            Logger::getInstance()->log(INFO, "El ususario se ha logueado con exito");
+            Logger::getInstance()->log(DEBUG, "El usuario se ha logueado con exito en ScreenManager");
             SDL_RenderClear(this->renderer_);
             return true;
         }

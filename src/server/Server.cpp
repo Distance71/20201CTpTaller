@@ -129,6 +129,10 @@ int Server::run(){
     return EXIT_SUCCESS;
 }
 
+void Server::processEvent(Event *event){
+    //this->eventsManager_->process(event);
+}
+
 void Server::runGame(){
 
     Logger::getInstance()->log(INFO, "Juego iniciado");

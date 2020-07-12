@@ -133,5 +133,11 @@ void Menu::show(){
 }
 
 void Menu::setLoginResponse(responseStatus_t response){
+    if(response == ERROR_FULL_GAME)
+        Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse, juego completo");
+    else if (response == ERROR_WRONG_CREDENTIALS)
+        Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse, ha ingresado mal sus credenciales");
+    else
+        Logger::getInstance()->log(INFO, "El usuario se ha logueado con exito en Menu");
     this->response_ = response;
 }
