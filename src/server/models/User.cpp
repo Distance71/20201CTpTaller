@@ -62,7 +62,7 @@ void User::setId(Id id){
 }
 
 void User::setDisconnection(){
-	this->socket_ = NULL;
+	this->socket_ = nullptr;
 	this->connected_ = false;
 }
 

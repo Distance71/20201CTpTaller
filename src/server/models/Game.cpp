@@ -119,7 +119,7 @@ void Game::sendStartStage(level_t oneLevel){
 
     Event* event = new EventAnimationInitStage(path);
     this->serverOwn_->sendToAllUsers(event);
-    usleep(50000);
+    usleep(5000000);//5 seg
 }
 
 void Game::viewStageCleared(level_t oneLevel){
@@ -150,7 +150,7 @@ void Game::viewStageCleared(level_t oneLevel){
     Event* event = new EventEndStage(path);
     this->serverOwn_->sendToAllUsers(event);
     
-    usleep(50000);
+    usleep(5000000);//5 seg
 }
 
 void Game::movePlayer(string nameUser, orientation_t orientation){

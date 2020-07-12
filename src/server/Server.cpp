@@ -19,6 +19,7 @@ Server::Server(size_t port){
 Server::~Server(){
     delete this->usersManager_;
     delete this->transmitionManager_;
+    delete this->eventsManager_;
     Logger::getInstance()->log(DEBUG, "Se han eliminado todos los recursos utilizados");
 }
 

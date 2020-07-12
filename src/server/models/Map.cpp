@@ -21,7 +21,7 @@ void Map::setStageSource(size_t numberLevel, size_t numberStage){
     //Event* event = new EventInitStage(background);
     //TODO Mandar a todos los usuarios este background
     //response_t response = user->sendMessage(event);
-    usleep(20000);//tiempo para garantizar q le llego a todos
+    usleep(2000000);//tiempo para garantizar q le llego a todos
 }
 
 
