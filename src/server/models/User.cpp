@@ -53,11 +53,11 @@ bool User::isConnected(){
 	return this->connected_;
 }
 
-IdUser User::getId(){
+Id User::getId(){
 	return this->userId_;
 }
 
-void User::setId(IdUser id){
+void User::setId(Id id){
 	userId_ = id;
 }
 

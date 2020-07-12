@@ -16,7 +16,7 @@ class GameGraphics {
     
     private:
         SDL_Renderer* renderer_;
-        unordered_map <IdElement, GraphicsMapElement*> elements_;
+        unordered_map <Id, GraphicsMapElement*> elements_;
         GraphicsScenario * scenario_;
         GraphicsMapElement* image_;
         
@@ -26,9 +26,9 @@ class GameGraphics {
         GameGraphics(SDL_Renderer* renderer);
         ~GameGraphics();
         void update();
-        void createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
-        void updateEntity(IdElement id, int posX, int posY, orientation_t orientation);
-        void deadEntity(IdElement id);
+        void createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
+        void updateEntity(Id id, int posX, int posY, orientation_t orientation);
+        void deadEntity(Id id);
         void setBackground(stageSource_t background);
         void setImage(const string &source);
 };

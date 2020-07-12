@@ -173,7 +173,7 @@ void Stage::update(currentStep_t currentStep){
 
 void Step::update(){
 
-    vector<IdElement> mapElementDead;
+    vector<Id> mapElementDead;
 
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();

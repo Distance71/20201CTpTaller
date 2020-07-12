@@ -76,8 +76,8 @@ class Stage: public Level {
 
 class Step: public Stage {
     private:
-    unordered_map<IdElement, MapElement*> mapElements_;
-    IdElement lastId_ = 0;
+    unordered_map<Id, MapElement*> mapElements_;
+    Id lastId_ = 0;
     position_t getPosition(int sizeMapElement_x, int sizeMapElement_y);
 
     public:

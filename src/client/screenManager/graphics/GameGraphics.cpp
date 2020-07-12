@@ -42,13 +42,13 @@ void GameGraphics::update(){
 }
 
 
-void GameGraphics::createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
+void GameGraphics::createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
     GraphicsMapElement *newElement = new GraphicsMapElement(source, sizeX, sizeY, posX, posY, orientation);
     this->elements_[id] = newElement;    
 }
 
 
-void GameGraphics::updateEntity(IdElement id, int posX, int posY, orientation_t orientation){
+void GameGraphics::updateEntity(Id id, int posX, int posY, orientation_t orientation){
     GraphicsMapElement *oneElement = this->elements_.at(id);
     if (!oneElement){
         Logger::getInstance()->log(ERROR, "No se pudo acutualizar el estado del elemento debido a que el id es inexistente");
@@ -59,7 +59,7 @@ void GameGraphics::updateEntity(IdElement id, int posX, int posY, orientation_t 
 }
 
 
-void GameGraphics::deadEntity(IdElement id){
+void GameGraphics::deadEntity(Id id){
     GraphicsMapElement *oneElement = this->elements_.at(id);
     if (!oneElement){
         Logger::getInstance()->log(ERROR, "No se pudo eliminar el elemento debido a que el id es inexistente");

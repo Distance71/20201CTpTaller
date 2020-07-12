@@ -54,9 +54,9 @@ class Client {
 
         //EventsMethods
         void processEvent(Event* event);
-        void createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
-        void updateEntity(IdElement id, int posX, int posY, orientation_t orientation);
-        void deadEntity(IdElement id);
+        void createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
+        void updateEntity(Id id, int posX, int posY, orientation_t orientation);
+        void deadEntity(Id id);
         void setBackground(stageSource_t background);
         void setImage(const string &source);
         void setScreenSizes(int Xsize, int Ysize);

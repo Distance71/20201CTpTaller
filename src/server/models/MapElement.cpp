@@ -49,11 +49,11 @@ vector<State *> MapElement::getStates() {
     return states;
 }
 
-void MapElement::setIdElement(IdElement oneIdElement){
+void MapElement::setIdElement(Id oneIdElement){
     this->id_ = oneIdElement;
 }
 
-IdElement MapElement::getIdElement(){
+Id MapElement::getIdElement(){
     return this->id_;
 }
 

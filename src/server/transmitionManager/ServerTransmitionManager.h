@@ -23,7 +23,7 @@ class ServerTransmitionManager {
         Server *serverOwn_;
         std::mutex mtxErrno;
         //BlockingQueue <Message*>* receivedMessagesQueue_;
-        //unordered_map<IdUser, BlockingQueue<Message *> *> messagesQueues_;
+        //unordered_map<Id, BlockingQueue<Message *> *> messagesQueues_;
 
         void createReceivingCycle(User* user);
         void* receivingCycle(User* user);

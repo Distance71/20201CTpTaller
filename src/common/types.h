@@ -127,8 +127,7 @@ typedef enum {
     BACKGROUND
 } elementType_t;
 
-typedef size_t IdElement;
-typedef size_t IdUser;
+typedef size_t Id;
 
 typedef struct {
     level_t level;

@@ -56,7 +56,7 @@ bool UsersManager::isFullGame(){
     return loggedUsers_ >= this->maxUsers_;
 }
 
-IdUser UsersManager::acceptUnloggedUser(){
+Id UsersManager::acceptUnloggedUser(){
 
     int newClientDescriptor = this->serverOwn_->getSocket()->acceptClient();
     if (newClientDescriptor < 0){
@@ -101,7 +101,7 @@ IdUser UsersManager::acceptUnloggedUser(){
     // pthread_create(&newHilo, NULL, recibirInformacion, &argumentos);
 
 
-// unordered_map<IdUser, User *> UsersManager::getUsers(){
+// unordered_map<Id, User *> UsersManager::getUsers(){
 //     return this->users_;
 // }
 

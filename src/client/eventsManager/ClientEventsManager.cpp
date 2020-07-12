@@ -19,7 +19,7 @@ void ClientEventsManager::pushBackEvent(Event* event){
 
 Event* ClientEventsManager::getEvent(){
     if (!eventsQueue_->empty()){
-        Event* event = *eventsQueue_->pop();
+        Event* event = eventsQueue_->pop();
         return event;
     }
     return nullptr;

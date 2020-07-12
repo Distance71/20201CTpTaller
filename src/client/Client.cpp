@@ -83,7 +83,7 @@ int Client::run(){
 }
 
 
-void Client::createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
+void Client::createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
     if(this->screenManager_){
         this->screenManager_->createEntity(id,source,sizeX,sizeY,posX,posY,orientation);
     }
@@ -93,7 +93,7 @@ void Client::createEntity(IdElement id, const string &source, int sizeX, int siz
 }
 
 
-void Client::updateEntity(IdElement id, int posX, int posY, orientation_t orientation){
+void Client::updateEntity(Id id, int posX, int posY, orientation_t orientation){
     if(this->screenManager_){
         this->screenManager_->updateEntity(id,posX,posY,orientation);
     }
@@ -103,7 +103,7 @@ void Client::updateEntity(IdElement id, int posX, int posY, orientation_t orient
 }
 
 
-void Client::deadEntity(IdElement id){
+void Client::deadEntity(Id id){
     if(this->screenManager_){
         this->screenManager_->deadEntity(id);
     }

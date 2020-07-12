@@ -14,7 +14,7 @@ class Client;
 class ClientEventsManager {
     
     private:
-        BlockingQueue<Event*>* eventsQueue_;
+        BlockingQueue<Event *>* eventsQueue_;
         Client *clientOwn_;
         bool stop_;
 

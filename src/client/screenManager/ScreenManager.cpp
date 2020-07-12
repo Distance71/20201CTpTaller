@@ -156,7 +156,7 @@ void ScreenManager::initGameGraphicsThread(){
 }
 
 
-void ScreenManager::createEntity(IdElement id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
+void ScreenManager::createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
     if(this->gameGraphics_){
         this->gameGraphics_->createEntity(id,source,sizeX,sizeY,posX,posY,orientation);
     }
@@ -166,7 +166,7 @@ void ScreenManager::createEntity(IdElement id, const string &source, int sizeX, 
 }
 
 
-void ScreenManager::updateEntity(IdElement id, int posX, int posY, orientation_t orientation){   
+void ScreenManager::updateEntity(Id id, int posX, int posY, orientation_t orientation){   
     if(this->gameGraphics_){
         this->gameGraphics_->updateEntity(id,posX,posY,orientation);
     }
@@ -176,7 +176,7 @@ void ScreenManager::updateEntity(IdElement id, int posX, int posY, orientation_t
 }
 
 
-void ScreenManager::deadEntity(IdElement id){
+void ScreenManager::deadEntity(Id id){
     if(this->gameGraphics_){
         this->gameGraphics_->deadEntity(id);
     }

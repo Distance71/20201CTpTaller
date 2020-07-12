@@ -20,7 +20,7 @@ private:
     string password_ = "";
     Socket *socket_;
     character_t character_;
-    IdUser userId_;
+    Id userId_;
     MessageDeserializer *deserializer_;
     MessageSerializer *serializer_;
 
@@ -45,8 +45,8 @@ public:
     void setSocket(Socket *socket);
     Socket *getSocket();
 
-    IdUser getId();
-    void setId(IdUser id);
+    Id getId();
+    void setId(Id id);
 
     bool isConnected();
     void setDisconnection();

@@ -19,7 +19,7 @@ using namespace std;
 class MapElement {
 
     private:
-        IdElement id_;
+        Id id_;
         elementType_t type;
         unordered_map<string, State *> states_;
         unordered_map<string, Action *> actions_;
@@ -44,8 +44,8 @@ class MapElement {
 
         void moveTo(orientation_t oneOrientation);    
 
-        void setIdElement(IdElement oneIdElement);
-        IdElement getIdElement();
+        void setIdElement(Id oneIdElement);
+        Id getIdElement();
         bool leftScreen();
 };
 
