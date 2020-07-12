@@ -47,11 +47,11 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
-        this->map_->setStageSource(actualStep.level,actualStep.stage); //crea el escenario
+        this->sendBackground(actualStep.level,actualStep.stage);
         runStage(actualStep, stages[i]);
     }    
     if (GameProvider::getStatus().normalStatus){
-        this->viewStageCleared(actualStep.level);
+        this->sendStageCleared(actualStep.level);
         this->map_->initializePositionPlayers(gameSettings);
     }
 }
@@ -122,7 +122,7 @@ void Game::sendStartStage(level_t oneLevel){
     usleep(5000000);//5 seg
 }
 
-void Game::viewStageCleared(level_t oneLevel){
+void Game::sendStageCleared(level_t oneLevel){
 
     string pathScreen;
 
@@ -155,4 +155,23 @@ void Game::viewStageCleared(level_t oneLevel){
 
 void Game::movePlayer(string nameUser, orientation_t orientation){
     this->map_->movePlayer(nameUser, orientation);
+}
+
+void Game::sendBackground(size_t numberLevel, size_t numberStage){
+
+    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(numberLevel,numberStage);
+
+    char layerPaths[7][100];
+    strcpy(layerPaths[0], background.layer1.c_str());
+    strcpy(layerPaths[1], background.layer2.c_str());
+    strcpy(layerPaths[2], background.layer3.c_str());
+    strcpy(layerPaths[3], background.layer4.c_str());
+    strcpy(layerPaths[4], background.layer5.c_str());
+    strcpy(layerPaths[5], background.layer6.c_str());
+    strcpy(layerPaths[6], background.layer7.c_str());
+    
+    Event* event = new EventInitStage(layerPaths);
+    this->serverOwn_->sendToAllUsers(event);
+    
+    usleep(2000000);//tiempo para garantizar q le llego a todos
 }

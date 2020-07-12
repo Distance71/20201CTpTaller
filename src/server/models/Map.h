@@ -36,7 +36,6 @@ class Map {
     void update(currentStep_t currentStep);
     void addLevel(Level *level);
     vector<Level *> getLevels();
-    void setStageSource(size_t numberLevel, size_t numberStage);
     bool endStep(currentStep_t currentStep);
     void createPlayers(gameParams_t &gameSettings);
     void initializePositionPlayers(gameParams_t &gameSettings);
