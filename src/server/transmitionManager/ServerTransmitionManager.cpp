@@ -64,7 +64,7 @@ void* ServerTransmitionManager::receivingCycle(User* user){
         }
         Logger::getInstance()->log(DEBUG, "Se recibio un evento");
         cout << "se recibio un mensaje" << endl;
-        //receivedMessagesQueue_->push(message);        
+        receivedEventQueue_->push(event);        
     }
     
     Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente " + to_string(user->getId()));
@@ -182,4 +182,12 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
         //return nullptr;
     //}
     return nullptr;
+}
+
+void ServerTransmitionManager::sendToUser(Id idUser){
+
+}
+
+void ServerTransmitionManager::sendToAllUsers(Event *event){
+
 }

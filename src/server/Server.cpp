@@ -19,6 +19,7 @@ Server::Server(size_t port){
 Server::~Server(){
     delete this->usersManager_;
     delete this->transmitionManager_;
+    delete this->eventsManager_;
     Logger::getInstance()->log(DEBUG, "Se han eliminado todos los recursos utilizados");
 }
 
@@ -132,7 +133,11 @@ void Server::runGame(){
 
     Logger::getInstance()->log(INFO, "Juego iniciado");
 
-    Game *game = new Game();
+    Game *game = new Game(this);
 
     game->run();
+}
+
+void Server::sendToAllUsers(Event* event){
+    this->transmitionManager_->sendToAllUsers(event);
 }

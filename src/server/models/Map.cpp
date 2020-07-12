@@ -21,7 +21,7 @@ void Map::setStageSource(size_t numberLevel, size_t numberStage){
     //Event* event = new EventInitStage(background);
     //TODO Mandar a todos los usuarios este background
     //response_t response = user->sendMessage(event);
-    usleep(20000);//tiempo para garantizar q le llego a todos
+    usleep(2000000);//tiempo para garantizar q le llego a todos
 }
 
 
@@ -225,7 +225,7 @@ void Map::initializePositionPlayers(gameParams_t &gameSettings){
 
         position_t positionPlayer;
         positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
-        positionPlayer.axis_y = ((GameProvider::getHeight() / 4) * i) / 2;
+        positionPlayer.axis_y = ((GameProvider::getHeight() / cantPlayers) * i) / 2;
 
         State *playerPosition = this->players[playerName]->getState<Position>(string("Position"));
         playerPosition->setX(positionPlayer.axis_x);

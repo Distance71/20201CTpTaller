@@ -50,6 +50,7 @@ UsersManager::UsersManager(Server *serverOwn){
 
 UsersManager::~UsersManager(){
     this->serverOwn_ = nullptr;
+    pthread_mutex_destroy(&this->mutex_lastId_);
 }
 
 bool UsersManager::isFullGame(){

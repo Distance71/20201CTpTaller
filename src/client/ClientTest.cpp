@@ -12,6 +12,6 @@ int ClientTest::runTest(){
     this->sendMessage((Message *) &message_prueba);
 
     //TODO cargar tests
-    usleep(20000);
+    usleep(2000000);
     return EXIT_SUCCESS;
 }

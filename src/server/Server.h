@@ -50,6 +50,7 @@ class Server {
         
         Socket* getSocket();
         BlockingQueue<Message *>* getEventsToProcess();
+        void sendToAllUsers(Event* event);
 };
 
 #endif

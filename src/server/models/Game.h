@@ -11,12 +11,15 @@
 #include "../../common/models/events/EventInitStage.h"
 #include "../../common/models/events/Event.h"
 #include "MapElement.h"
+#include "../Server.h"
 
 // Maneja la secuencia logica del juego
+class Server;
 
 class Game {
 
     private:
+        Server *serverOwn_;
     Map *map_;
 
     void initializeGameParams();
@@ -32,10 +35,11 @@ class Game {
     void viewStageCleared(level_t oneLevel);
 
     public:
-    Game();
+    Game(Server *server);
     ~Game();
 
     void run();
+    void movePlayer(string nameUser, orientation_t orientation);
 };
 
 #endif
