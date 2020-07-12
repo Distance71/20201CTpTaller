@@ -63,16 +63,17 @@ IdUser UsersManager::acceptUnloggedUser(){
         Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
         return 0;
     }
-    
-    pthread_mutex_lock(&this->mutex_lastId_);
+
     Socket *socketNewUser = new Socket(newClientDescriptor);
-    
     User* newUser = new User(socketNewUser);
-    this->users_[this->lastId_++] = newUser;
+
+    pthread_mutex_lock(&this->mutex_lastId_);
+    lastId_++;
+    pthread_mutex_unlock(&this->mutex_lastId_);
+
+    this->users_[this->lastId_] = newUser;
 
     this->serverOwn_->addPlayer(newUser);
-
-    pthread_mutex_unlock(&this->mutex_lastId_); 
 
     return this->lastId_;
 }
