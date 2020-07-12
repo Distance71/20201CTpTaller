@@ -58,34 +58,32 @@ bool ClientTransmitionManager::connectWithServer(string ipAddress){
 
 static void* sendMessages(void *arg){
 
-    /*Logger::getInstance()->log(DEBUG, "Se crea el hilo de envío de mensajes");
+    Logger::getInstance()->log(DEBUG, "Se crea el hilo de envío de mensajes");
     ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
     BlockingQueue<Message*> *messagesQueue = transmitionManager->getSendMessagesQueue();
 
     while (client->isConnected()){
-         if (!(messagesQueue->empty())){
-            Message *message = *messagesQueue->pop(); 
-            message_t type = message->getType();
-            if(socket->sendMessage((void *) &type, sizeof(message_t)) <= 0){
-                cout << "Error al enviar mensaje" << endl;
-                Logger::getInstance()->log(ERROR, "Error al enviar el mensaje");
-
-            }
-            else{
-                cout << "el mensaje se manda ok" << endl;
-            }
+        if (!(messagesQueue->empty())){
+            Message *message = messagesQueue->pop(); 
+            transmitionManager->sendSerializedMessage(message);
+            cout << "Se va a mandar un mensaje" << endl;
+            Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje en TransmitionManager");
         }
     }
     
-    Logger::getInstance()->log(DEBUG, "Se cerró el hilo de envío de mensajes");*/
+    Logger::getInstance()->log(DEBUG, "Se cerró el hilo de envío de mensajes");
     return nullptr;
+}
+
+void ClientTransmitionManager::sendSerializedMessage(Message* message){
+    this->serializer_->sendSerializedEvent(this->socket_, message);
 }
 
 
 static void* receiveMessages(void *arg){
-    /*Logger::getInstance()->log(DEBUG, "Se creo el hilo de recepcion de mensajes");
+    Logger::getInstance()->log(DEBUG, "Se creo el hilo de recepcion de mensajes");
     ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
@@ -93,7 +91,9 @@ static void* receiveMessages(void *arg){
 
     while (client->isConnected()){
         Event* event;
-        if (deserealizer.getReceivedMessage(socket,event).ok){
+        response_t response = deserealizer.getReceivedMessage(socket,event); 
+        if (response.ok){
+            Logger::getInstance()->log(DEBUG, "Se recibio ok un evento en transmitionManager");
             client->processEvent(event);
             cout << "Se recibio" << endl;
         }
@@ -103,7 +103,7 @@ static void* receiveMessages(void *arg){
     }
 
     Logger::getInstance()->log(DEBUG, "Se cerro el hilo de recepcion");
-    return nullptr;*/
+    return nullptr;
  }
 
 

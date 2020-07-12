@@ -82,5 +82,5 @@ Event* User::receiveMessage(){
 
 response_t User::sendMessage(Event* event){
 	Message* message = event->serialize();
-	return serializer_->sendSerializedEvent(this->socket_, message); //Send also, for consistence?
+	return serializer_->sendSerializedEvent(this->socket_, message);
 }

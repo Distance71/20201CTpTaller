@@ -24,11 +24,10 @@ bool Client::connectWithServer(){
         connected_ = false;
         return false;
     }
-    this->transmitionManager_->run();
-
-    this-> eventsManager_ -> RunProcessEventsThread();
-
     this->connected_ = true;
+
+    this->transmitionManager_->run();
+    this-> eventsManager_ -> RunProcessEventsThread();
 
     Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
 

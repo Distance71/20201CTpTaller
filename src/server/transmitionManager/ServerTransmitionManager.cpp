@@ -10,8 +10,8 @@ ServerTransmitionManager::~ServerTransmitionManager(){
 }
 
 void ServerTransmitionManager::addUser(User* user){
-    this->createReceivingCycle(user);
-    //this->createSendingCycle(user);
+    //this->createReceivingCycle(user);
+    this->createSendingCycle(user);
 }
 
 void ServerTransmitionManager::createReceivingCycle(User* user) {
@@ -107,26 +107,79 @@ void ServerTransmitionManager::createSendingCycle(User* user) {
 
 void* ServerTransmitionManager::sendingCycle(User* user) {
     
-    while(user->isConnected() && this->serverOwn_->isConnected()){
-    //     //if(messagesQueues_[user->getId()]->empty())
-    //     //    continue;
-        
-    //     //Message* message = (Message*) messagesQueues_[user->getId()]->pop();
-        responseStatus_t responseStatus = ERROR_FULL_GAME;
-    //     OK,
-    // ERROR_CONNECTION,
-    // ERROR_MESSAGE,
-    // ERROR_FULL_GAME,
-    // ERROR_WRONG_CREDENTIALS,
-        Event* event = new EventResponseLoginPlayer(responseStatus);
+    //while(user->isConnected() && this->serverOwn_->isConnected()){
+        std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
-        response_t response = user->sendMessage(event);
+        Event* event11 = new EventResponseLoginPlayer(ERROR_WRONG_CREDENTIALS);
+        response_t response11 = user->sendMessage(event11);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+        Event* event12 = new EventResponseLoginPlayer(ERROR_FULL_GAME);
+        response_t response12 = user->sendMessage(event12);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+        Event* event13 = new EventResponseLoginPlayer(OK);
+        response_t response13 = user->sendMessage(event13);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+        screen_t screenSize;
+        screenSize.height = 800;
+        screenSize.width = 1280;
+        Event* event2 = new EventGameInit(screenSize);
+        response_t response2 = user->sendMessage(event2);
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(1412));
+
+        char path1[100];
+        strcpy(path1, "assets/TransitionScreens/Stage1.JPG");
+        Event* event3 = new EventAnimationInitStage(path1);
+        response_t response3 = user->sendMessage(event3);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+
+        char layerPaths[7][100];
+        strcpy(layerPaths[0], "assets/Stage/Level1/layer_1.png");
+        strcpy(layerPaths[1], "assets/Stage/Level1/layer_2.png");
+        strcpy(layerPaths[2], "assets/Stage/Level1/layer_3.png");
+        strcpy(layerPaths[3], "assets/Stage/Level1/layer_4.png");
+        strcpy(layerPaths[4], "assets/Stage/Level1/layer_5.png");
+        strcpy(layerPaths[5], "");
+        strcpy(layerPaths[6], "");
+        Event* event4 = new EventInitStage(layerPaths);
+        response_t response5 = user->sendMessage(event4);
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+        char path2[100];
+        strcpy(path2, "assets/TransitionScreens/Stage1Cleared");
+        Event* event5 = new EventEndStage(path2);
+
+
+
+        // response_t response4 = user->sendMessage(event5);
+
+        // while(true){
+
+        //     while(0 >= (ms - elaptedTimeMS)) { 
+        //         end = chrono::high_resolution_clock::now();
+        //         dur = end - begin;
+        //         ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+        //     }
+        // }
+
+
+        
         //response = user->sendMessage(event);
 
-        if(response.ok)
-            cout << "Se mando ok" << endl;
+        // if(response.ok)
+        //     cout << "Se mando ok" << endl;
+
+        
     //     return nullptr;
         //return nullptr;
-    }
+    //}
     return nullptr;
 }

@@ -2,17 +2,22 @@
 #define _SERVER_TRANSMITION_MANAGER_H_
 
 #include <errno.h>
+#include <thread>
+#include <chrono>
 
 #include "../../common/models/Socket.h"
 #include "../../common/types.h"
 #include "../../common/models/messages/Message.h"
 #include "../../common/models/BlockingQueue.h"
 #include "../../common/services/ThreadsHandler.h"
-
-#include "../../common/models/events/EventResponseLoginPlayer.h" //Borrar
+#include <SDL2/SDL.h>
 
 #include "../Server.h"
 #include "../models/User.h"
+
+//Borrar
+#include "../../common/models/events/EventResponseLoginPlayer.h"
+#include "../../common/models/events/EventEndStage.h"
 
 using namespace std;
 

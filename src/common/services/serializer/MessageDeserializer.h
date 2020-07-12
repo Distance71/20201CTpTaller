@@ -51,6 +51,7 @@ class MessageDeserializer {
         response_t getEventAnimationInitStage(Socket *socket, Event* &event);
         
         response_t getInteger(Socket *socket, void *value, size_t size);
+        response_t getUInteger(Socket *socket, unsigned int &value);
         response_t getResponseStatus(Socket *socket, responseStatus_t &response);
         response_t getString(Socket *socket, char (&path)[100]);
         response_t getPosition(Socket *socket, position_t &position);

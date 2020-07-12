@@ -82,6 +82,9 @@ int Socket::receiveMessage(stringstream &s, size_t sizeData){
     bool isOpen = true;
 
     char buffer[sizeData + 1];
+
+    for(size_t i = 0; i < sizeData; i++)
+        buffer[i] = 0;
     buffer[sizeData] = '\0';
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje de tamaño " + std::to_string((int)sizeData));
@@ -102,7 +105,12 @@ int Socket::receiveMessage(stringstream &s, size_t sizeData){
 
     s << buffer;
 
-    Logger::getInstance()->log(DEBUG, "Se el mensaje con exito en Socket");
+    cout << "Lo que se recibe " << buffer << endl;
+    cout << "Lo que se recibe " << buffer << endl;
+    cout << "Lo que se recibe " << buffer << endl;
+    cout << "Lo que se recibe " << buffer << endl;
+
+    Logger::getInstance()->log(DEBUG, "Se recibe el mensaje con exito en Socket");
 
     return totalBytesReceive;
 }
@@ -115,13 +123,20 @@ int Socket::sendMessage(stringstream &s, size_t sizeData){
     Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje");
 
     string msg = s.str();
+    
+    char buffer[sizeData + 1];
+
+    for(size_t i = 0; i < sizeData; i++)
+        buffer[i] = 0;
+    buffer[sizeData] = '\0';
+
+    strcpy(buffer, msg.c_str());
 
     while ((sizeData > totalBytesWritten) && isOpen){
-        bytesWritten = write(this->fileDescriptor_, (void *) (msg.c_str() + totalBytesWritten), (msg.size() - totalBytesWritten));
-
+        bytesWritten = send(this->fileDescriptor_, (void *) (buffer + totalBytesWritten), (sizeData - totalBytesWritten), MSG_NOSIGNAL | MSG_DONTWAIT);
         if (bytesWritten < 0){
-            return -1;
             Logger::getInstance()->log(DEBUG, "Se ha producido un error al mandar el mensaje en socket");
+            return -1;
         } else if (bytesWritten == 0){
             isOpen = false;
             Logger::getInstance()->log(DEBUG, "Se ha cerrado el socket de destino en Socket");
@@ -130,6 +145,8 @@ int Socket::sendMessage(stringstream &s, size_t sizeData){
             totalBytesWritten += bytesWritten;
         }
     }
+
+    cout << "Lo que se manda " << buffer << endl;
 
     Logger::getInstance()->log(DEBUG, "Se mando mensaje ok en Socket de tamaño " + std::to_string((int)sizeData));
 

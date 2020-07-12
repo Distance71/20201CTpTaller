@@ -44,8 +44,8 @@ response_t MessageSerializer::sendMessageEndStage(Socket *socket, Message *messa
 response_t MessageSerializer::sendMessageGameInit(Socket *socket, Message *message){
     screen_t screenSizes = ((MessageGameInit *) message)->getScreenSizes();
 
-    response_t responseWidth = this->sendInteger(socket, &screenSizes.width, sizeof(unsigned int));
-    response_t responseHeight = this->sendInteger(socket, &screenSizes.height, sizeof(unsigned int));
+    response_t responseWidth = this->sendUInt(socket, screenSizes.width);
+    response_t responseHeight = this->sendUInt(socket, screenSizes.height);
 
     if(!responseWidth.ok || !responseHeight.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en GameInit.");
@@ -168,14 +168,17 @@ response_t MessageSerializer::sendMessageRequestLoginPlayer(Socket *socket, Mess
 }
 
 response_t MessageSerializer::sendMessageResponseLoginPlayer(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje responseLogin.");    
+    
     responseStatus_t userResponseStatus = ((MessageResponseLoginPlayer *) message)->getResponse();
 
-    response_t responseStatus = this->sendInteger(socket, &userResponseStatus, sizeof(responseStatus_t));
+    response_t responseStatus = this->sendResponseType(socket, userResponseStatus);
 
     if(!responseStatus.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en ResponseLogin.");
         return this->_handleErrorStatus();
     }
+    Logger::getInstance()->log(DEBUG, "Se pudo enviar un mensaje responseLogin.");
     return this->_handleSuccess();
 }
 
@@ -192,16 +195,67 @@ response_t MessageSerializer::sendMessageUserMovement(Socket *socket, Message *m
     return this->_handleSuccess();
 }
 
+response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t value){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje response.");
+
+    s << value;
+
+    if (socket->sendMessage(s, sizeof(responseStatus_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de integer.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
 response_t MessageSerializer::sendInteger(Socket *socket, void *value, size_t size){
 
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje entero.");
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero.");
 
     s << *((int *)value) << endl;
 
     if (socket->sendMessage(s, sizeof(size)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de integer.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
+response_t MessageSerializer::sendMessageType(Socket *socket, message_t type){
+
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje");
+
+    s << type;
+
+    cout << "El tipo " << type << endl;
+
+    if (socket->sendMessage(s, sizeof(message_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
+response_t MessageSerializer::sendUInt(Socket *socket, unsigned int size){
+
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje");
+
+    cout << "El valor que se va a pasar " << size << endl;
+
+    s << size;
+
+    if (socket->sendMessage(s, sizeof(unsigned int)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje.");
         return this->_handleErrorStatus();
     }
 
@@ -226,9 +280,17 @@ response_t MessageSerializer::sendString(Socket *socket, char (path)[100]){
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *message)
-{
+response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *message){
     message_t type = message->getType();
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje en Serializer");
+
+    response_t response = this->sendMessageType(socket, type);
+
+    if(!response.ok){
+        cout << "No se pudo enviar el tipo" << endl;
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el tipo de mensaje");
+    }
 
     switch (type){
         case ANIMATION_INIT_STAGE:

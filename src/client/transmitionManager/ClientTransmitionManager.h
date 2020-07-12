@@ -29,10 +29,11 @@ class ClientTransmitionManager {
         MessageSerializer *serializer_;
         BlockingQueue<Message*>* sendMessagesQueue_;
 
-
     public:
          ClientTransmitionManager(Client *client, size_t port);
         ~ClientTransmitionManager();
+
+        void sendSerializedMessage(Message* message);
         void sendMessage(Message* message);
         bool connectWithServer(string ipAddress);
         Client *getClient();
