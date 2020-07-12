@@ -22,10 +22,12 @@ using namespace std;
 class Sprite {
 
     SDL_Texture *texture_;
+    string imageSource_;
 
     public:
     Sprite(const string &source);
     ~Sprite();
+    string getImageSource();
     SDL_Texture* getTexture();
     int getTextureWidth();
     int getTextureHeight();

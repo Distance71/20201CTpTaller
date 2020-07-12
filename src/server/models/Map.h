@@ -16,8 +16,10 @@
 
 #include "../../common/models/events/EventInitStage.h"
 #include "../../common/models/events/Event.h"
+#include "Game.h"
 
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
+class Game;
 class MapElement;
 class Step;
 class Stage;
@@ -33,13 +35,15 @@ class Map {
     public:    
     Map();
     Map(gameParams_t &gameSettings);
-    void update(currentStep_t currentStep);
+    void update(currentStep_t currentStep, Game *game);
     void addLevel(Level *level);
     vector<Level *> getLevels();
     bool endStep(currentStep_t currentStep);
     void createPlayers(gameParams_t &gameSettings);
     void initializePositionPlayers(gameParams_t &gameSettings);
     void movePlayer(string namePlayer, orientation_t orientation);
+
+    void initializeStep(currentStep_t currentStep, Game *game);
 };
 
 class Level: public Map {
@@ -52,7 +56,8 @@ class Level: public Map {
     Level(levelParams_t &params);
     void addStage(Stage *stage);
     vector<Stage *> getStages();
-    void update(currentStep_t currentStep);
+    void update(currentStep_t currentStep, Game *game);
+    void initializeStep(currentStep_t currentStep, Game *game);
     bool endStep(size_t numberStage, size_t numberStep);
 };
 
@@ -69,8 +74,9 @@ class Stage: public Level {
     // MapElement* createMapElement();
     void addStep(Step *step);
     vector<Step *> getSteps();
-    void update(currentStep_t currentStep);
+    void update(currentStep_t currentStep, Game *game);
     bool endStep(size_t numberStep);
+    void initializeStep(currentStep_t currentStep, Game *game);
 };
 
 class Step: public Stage {
@@ -85,7 +91,8 @@ class Step: public Stage {
     //~Step();
 
 
-    void update();
+    void update(Game *game);
+    void initializeStep(Game *game);
     bool endStep();
     // int move_in_direction(string movement_instruction,int id);
     // void createEnemy();    

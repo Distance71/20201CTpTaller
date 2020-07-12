@@ -90,7 +90,7 @@ void Game::runStep(currentStep_t actualStep){
 }
 
 void Game::updateState(currentStep_t actualStep) {
-    map_->update(actualStep);
+    map_->update(actualStep, this);
 }
 
 void Game::sendStartStage(level_t oneLevel){
@@ -118,7 +118,8 @@ void Game::sendStartStage(level_t oneLevel){
     strcpy(path, pathScreen.c_str());
 
     Event* event = new EventAnimationInitStage(path);
-    this->serverOwn_->sendToAllUsers(event);
+    this->sendEvent(event);
+    
     usleep(5000000);//5 seg
 }
 
@@ -148,7 +149,7 @@ void Game::sendStageCleared(level_t oneLevel){
     strcpy(path, pathScreen.c_str());
 
     Event* event = new EventEndStage(path);
-    this->serverOwn_->sendToAllUsers(event);
+    this->sendEvent(event);
     
     usleep(5000000);//5 seg
 }
@@ -171,7 +172,11 @@ void Game::sendBackground(size_t numberLevel, size_t numberStage){
     strcpy(layerPaths[6], background.layer7.c_str());
     
     Event* event = new EventInitStage(layerPaths);
-    this->serverOwn_->sendToAllUsers(event);
+    this->sendEvent(event);
     
     usleep(2000000);//tiempo para garantizar q le llego a todos
+}
+
+void Game::sendEvent(Event *event){
+    this->serverOwn_->sendToAllUsers(event);
 }
