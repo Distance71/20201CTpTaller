@@ -18,30 +18,30 @@ private:
     
 
 public:
-    void put(T const& id, T* value) {
+    void put(Id const& id, T* value) {
         std::lock_guard lock(this->d_mutex);
-        m_map.emplace(id, value);
+        d_map.emplace(id, value);
         d_vector.push_back(id);
     }
 
-    T* get(T const& id) {
+    T* get(Id const& id) {
         std::shared_lock lock(this->d_mutex);
-        auto it = m_map.find(id);
-        if (it != m_map.end())
+        auto it = d_map.find(id);
+        if (it != d_map.end())
             return it->second;
         return NULL;
     }
 
-     getAllKeys(){
+    vector<Id> getAllKeys(){
         return this->d_vector;
     }
 
 
-    void delete(T const& id) {
+    void deleteElement(Id const& id) {
         std::lock_guard lock(this->d_mutex);
-        auto it = m_map.find(id);
-        if (it != m_map.end()) {
-            m_map.erase(id);
+        auto it = d_map.find(id);
+        if (it != d_map.end()) {
+            d_map.erase(id);
             delete it->second;
         }
     }
