@@ -7,6 +7,13 @@ GraphicsMapElement::GraphicsMapElement(const string &source,  int size_x, int si
     this->pos_x_ = pos_x;
     this->pos_y_ = pos_y;
     this->orientation_ = orientation;
+
+    cout << "la source " << source << endl;
+    cout << "el size x " << size_x << endl;
+    cout << "el size y " << size_y << endl;
+    cout << "el pos x " << pos_x << endl;
+    cout << "el pos y " << pos_y << endl;
+    cout << "la orientation " << orientation << endl;
 }
 
 GraphicsMapElement::~GraphicsMapElement(){
@@ -39,5 +46,8 @@ void GraphicsMapElement::setNewPosition(int pos_x, int pos_y, orientation_t orie
     this->pos_x_ = pos_x;
     this->pos_y_ = pos_y;
     this->orientation_ = orientation;
+
+    cout << "La nueva pos x " << pos_x << endl;
+    cout << "La nueva pos y " << pos_y << endl;
 };
 

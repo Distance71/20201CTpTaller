@@ -30,6 +30,7 @@ class ScreenManager{
         GameGraphics* gameGraphics_;
         bool waiting_;
 
+
         bool initMenu();
         bool initSDL();
         bool initGameGraphics();

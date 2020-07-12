@@ -52,7 +52,7 @@ int Client::run(){
         return EXIT_FAILURE;
     };
 
-    Logger::getInstance()->log(INFO, "Se incializaron los graficos");
+    Logger::getInstance()->log(INFO, "Se inicializaron los graficos");
 
     bool logged = this->screenManager_-> viewLogin();
 
@@ -74,10 +74,26 @@ int Client::run(){
         return EXIT_FAILURE;
     }
 
+    // size_t id1 = 0;
+    // char pathElement1[100];
+    // strcpy(pathElement1, "assets/Enemies/enemigo1.png");
+    // position_t position1;
+    // position1.axis_x = 50;
+    // position1.axis_y = 50;
+    // position1.orientation = FRONT;
+    // spriteSize_t spriteSize1;
+    // spriteSize1.width = 200;
+    // spriteSize1.height = 200;
+
+    // this->createEntity(id1, pathElement1,spriteSize1.width,spriteSize1.height, position1.axis_x, position1.axis_y, position1.orientation);
+
     this->eventsManager_->RunDetectPlayerEventsThread();
 
     this->screenManager_->initGameGraphicsThread();
-    
+
+    this->screenManager_->viewEndGameScreen();
+
+    Logger::getInstance()->log(INFO, "El juego ha finalizado normalmente");
     return EXIT_SUCCESS;    
 }
 
@@ -94,7 +110,7 @@ void Client::createEntity(Id id, const string &source, int sizeX, int sizeY, int
 
 void Client::updateEntity(Id id, int posX, int posY, orientation_t orientation){
     if(this->screenManager_){
-        this->screenManager_->updateEntity(id,posX,posY,orientation);
+        this->screenManager_->updateEntity(id, posX, posY, orientation);
     }
     else{
          Logger::getInstance()->log(DEBUG, "No se ha podido actualizar entidad,falta crear el objeto ScreenManager");
@@ -175,10 +191,7 @@ void Client::reconnect(){
 }
 
 void Client::endGame(){
-    this->disconnect(); 
-    Logger::getInstance()->log(DEBUG, "El juego ha finalizado");
-    this->screenManager_->viewEndGameScreen();
-
+    this->disconnect();
 }
 
 int Client::waitForPlayers(){

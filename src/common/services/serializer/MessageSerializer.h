@@ -39,11 +39,13 @@ class MessageSerializer {
         response_t sendMessageResponseLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageUserMovement(Socket *socket, Message *message);
 
-        response_t sendInteger(Socket *socket, void *value, size_t size);
         response_t sendResponseType(Socket *socket, responseStatus_t value);
 
         response_t sendString(Socket *socket, char (path)[100]);
         response_t sendMessageType(Socket *socket, message_t type);
+        response_t sendInteger(Socket *socket, int &value);
+        response_t sendOrientation(Socket *socket, orientation_t &orientation);
+        response_t sendLongInteger(Socket *socket, size_t &value);
         response_t sendUInt(Socket *socket, unsigned int size);
 
     public:

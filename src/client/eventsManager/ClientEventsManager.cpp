@@ -45,7 +45,7 @@ static void * detectPlayerEvents(void* arg){
             GameProvider::setLastEvent(e);
             
             if (e.type == SDL_QUIT){
-                Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
+                Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego de forma voluntaria");
                 client->disconnect();
             }
         }

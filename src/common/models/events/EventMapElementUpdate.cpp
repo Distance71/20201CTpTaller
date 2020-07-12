@@ -11,7 +11,7 @@ void EventMapElementUpdate::update() {
   }
   else{
     Client* client = (Client*) Event::context_;
-    client -> updateEntity(this->id_, this->position_.axis_x,this->position_.axis_y,this->position_.orientation);
+    client -> updateEntity(this->id_, this->position_.axis_x, this->position_.axis_y, this->position_.orientation);
     Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventMapElementUpdate");
   }
 }

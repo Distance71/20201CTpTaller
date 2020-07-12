@@ -94,7 +94,7 @@ response_t MessageDeserializer::getEventLog(Socket *socket, Event* &event){
     size_t level;
     char messageLog[100];
 
-    this->getInteger(socket, &level, sizeof(size_t));
+    this->getLongInteger(socket, level);
     this->getString(socket, messageLog);
 
     MessageLog *message = new MessageLog(level, messageLog);
@@ -116,11 +116,11 @@ response_t MessageDeserializer::getEventMapElementCreate(Socket *socket, Event* 
     position_t position;
     spriteSize_t spriteSize;
 
-    this->getInteger(socket, &id_, sizeof(size_t));
+    this->getLongInteger(socket, id_);
     this->getString(socket, imagePath);
     this->getPosition(socket, position);
-    this->getInteger(socket, &spriteSize.width, sizeof(unsigned int));
-    this->getInteger(socket, &spriteSize.height, sizeof(unsigned int));
+    this->getUInteger(socket, spriteSize.width);
+    this->getUInteger(socket, spriteSize.height);
 
     MessageMapElementCreate *message = new MessageMapElementCreate(id_, imagePath, position, spriteSize);
     event = message->deSerialize();
@@ -138,7 +138,7 @@ response_t MessageDeserializer::getEventMapElementDelete(Socket *socket, Event* 
 
     size_t id_;
 
-    this->getInteger(socket, &id_, sizeof(size_t));
+    this->getLongInteger(socket, id_);
 
     MessageMapElementDelete *message = new MessageMapElementDelete(id_);
     event = message->deSerialize();
@@ -157,7 +157,7 @@ response_t MessageDeserializer::getEventMapElementUpdate(Socket *socket, Event* 
     size_t id_;
     position_t position;
 
-    this->getInteger(socket, &id_, sizeof(size_t));
+    this->getLongInteger(socket, id_);
     this->getPosition(socket, position);
 
     MessageMapElementUpdate *message = new MessageMapElementUpdate(id_, position);
@@ -176,7 +176,7 @@ response_t MessageDeserializer::getEventPlayerDisconnect(Socket *socket, Event* 
 
     size_t id_;
 
-    this->getInteger(socket, &id_, sizeof(size_t));
+    this->getLongInteger(socket, id_);
 
     MessagePlayerDisconnect *message = new MessagePlayerDisconnect(id_);
     event = message->deSerialize();
@@ -194,7 +194,7 @@ response_t MessageDeserializer::getEventPlayerReconnect(Socket *socket, Event* &
 
     size_t id_;
 
-    this->getInteger(socket, &id_, sizeof(size_t));
+    this->getLongInteger(socket, id_);
 
     MessagePlayerReconnect *message = new MessagePlayerReconnect(id_);
     event = message->deSerialize();
@@ -283,19 +283,18 @@ response_t MessageDeserializer::getEventUserMovement(Socket *socket, Event* &eve
     return this->_handleSuccess();
 };
 
-response_t MessageDeserializer::getInteger(Socket *socket, void *value, size_t size){
-
+response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     stringstream s;
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje entero.");
 
-    if (socket->receiveMessage(s, sizeof(size)) <= 0){
+    if (socket->receiveMessage(s, sizeof(size_t)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
         return this->_handleErrorStatus();
     }
 
     string msg = s.str();
-    *((int *)value) = (int) atoi(msg.c_str());
+    value = atoi(msg.c_str());
 }
 
 response_t MessageDeserializer::getUInteger(Socket *socket, unsigned int &value){
@@ -305,6 +304,21 @@ response_t MessageDeserializer::getUInteger(Socket *socket, unsigned int &value)
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje entero.");
 
     if (socket->receiveMessage(s, sizeof(unsigned int)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
+        return this->_handleErrorStatus();
+    }
+
+    string msg = s.str();
+    value = atoi(msg.c_str());
+}
+
+response_t MessageDeserializer::getInteger(Socket *socket, int &value){
+
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje entero.");
+
+    if (socket->receiveMessage(s, sizeof(int)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
         return this->_handleErrorStatus();
     }
@@ -367,8 +381,8 @@ response_t MessageDeserializer::getPosition(Socket *socket, position_t &position
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje position.");
     
-    this->getInteger(socket, &position.axis_x, sizeof(int));
-    this->getInteger(socket, &position.axis_y, sizeof(int));
+    this->getInteger(socket, position.axis_x);
+    this->getInteger(socket, position.axis_y);
     this->getOrientation(socket, position.orientation);
 }
 

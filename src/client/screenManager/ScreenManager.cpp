@@ -280,16 +280,6 @@ void ScreenManager::stopWaiting(){
 
 void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage("assets/GameOver/gameOver.png");
-    bool quit = false;
-    SDL_Event e;
-    while (!quit){
-        this->gameGraphics_->update();
-        while (SDL_PollEvent(&e)){
-            if (e.type == SDL_QUIT){
-                Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego correctamente");
-                quit = true;
-            }
-        }
-        this->gameGraphics_->update();
-    }
+    this->gameGraphics_->update();
+    SDL_Delay(3000);
 }

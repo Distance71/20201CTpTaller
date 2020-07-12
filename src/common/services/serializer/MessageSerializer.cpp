@@ -70,7 +70,7 @@ response_t MessageSerializer::sendMessageInitStage(Socket *socket, Message *mess
 
 response_t MessageSerializer::sendMessageLog(Socket *socket, Message *message){
     size_t level = ((MessageLog *) message)->getLevel();
-    response_t responseLevel = this->sendInteger(socket, &level, sizeof(size_t));
+    response_t responseLevel = this->sendLongInteger(socket, level);
     response_t responseMessage = this->sendString(socket, ((MessageLog *) message)->getMessage());
 
     if(!responseLevel.ok || !responseMessage.ok) {
@@ -83,12 +83,15 @@ response_t MessageSerializer::sendMessageLog(Socket *socket, Message *message){
 response_t MessageSerializer::sendMessageMapElementCreate(Socket *socket, Message *message){
     size_t id = ((MessageMapElementCreate *) message)->getId();
     position_t position = ((MessageMapElementCreate *) message)->getPosition();
-    
-    response_t responseId = this->sendInteger(socket, &id, sizeof(size_t));
+    spriteSize_t spriteSize = ((MessageMapElementCreate *) message)->getSpriteSize();
+
+    response_t responseId = this->sendLongInteger(socket, id);
     response_t responsePath = this->sendString(socket, ((MessageMapElementCreate *) message)->getPath());
-    response_t responsePosAxisX = this->sendInteger(socket, &position.axis_x, sizeof(int));
-    response_t responsePosAxisY = this->sendInteger(socket, &position.axis_y, sizeof(int));
-    response_t responseOrientation = this->sendInteger(socket, &position.orientation, sizeof(orientation_t));
+    response_t responsePosAxisX = this->sendInteger(socket, position.axis_x);
+    response_t responsePosAxisY = this->sendInteger(socket, position.axis_y);
+    response_t responseOrientation = this->sendOrientation(socket, position.orientation);
+    response_t responseSizeX = this->sendUInt(socket, spriteSize.width);
+    response_t responseSizeY = this->sendUInt(socket, spriteSize.height);
 
     if(!responseId.ok || !responsePath.ok || !responsePosAxisX.ok || !responsePosAxisY.ok || !responseOrientation.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementCreate.");
@@ -101,7 +104,7 @@ response_t MessageSerializer::sendMessageMapElementCreate(Socket *socket, Messag
 response_t MessageSerializer::sendMessageMapElementDelete(Socket *socket, Message *message){
     size_t id = ((MessageMapElementDelete *) message)->getId();
 
-    response_t responseId = this->sendInteger(socket, &id, sizeof(size_t));
+    response_t responseId = this->sendLongInteger(socket, id);
 
     if(!responseId.ok){
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementDelete.");
@@ -115,10 +118,10 @@ response_t MessageSerializer::sendMessageMapElementUpdate(Socket *socket, Messag
     size_t id = ((MessageMapElementUpdate *) message)->getId();
     position_t position = ((MessageMapElementUpdate *) message)->getPosition();
 
-    response_t responseId = this->sendInteger(socket, &id, sizeof(size_t));
-    response_t responsePosAxisX = this->sendInteger(socket, &position.axis_x, sizeof(int));
-    response_t responsePosAxisY = this->sendInteger(socket, &position.axis_y, sizeof(int));
-    response_t responseOrientation = this->sendInteger(socket, &position.orientation, sizeof(orientation_t));
+    response_t responseId = this->sendLongInteger(socket, id);
+    response_t responsePosAxisX = this->sendInteger(socket, position.axis_x);
+    response_t responsePosAxisY = this->sendInteger(socket, position.axis_y);
+    response_t responseOrientation = this->sendOrientation(socket, position.orientation);
 
     if(!responseId.ok || !responsePosAxisX.ok || !responsePosAxisY.ok || !responseOrientation.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementUpdate.");
@@ -131,7 +134,7 @@ response_t MessageSerializer::sendMessageMapElementUpdate(Socket *socket, Messag
 response_t MessageSerializer::sendMessagePlayerDisconnect(Socket *socket, Message *message){
     size_t id = ((MessagePlayerDisconnect *) message)->getId();
 
-    response_t responseId = this->sendInteger(socket, &id, sizeof(size_t));
+    response_t responseId = this->sendLongInteger(socket, id);
 
     if(!responseId.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en PlayerDisconnect.");
@@ -144,7 +147,7 @@ response_t MessageSerializer::sendMessagePlayerDisconnect(Socket *socket, Messag
 response_t MessageSerializer::sendMessagePlayerReconnect(Socket *socket, Message *message){
     size_t id = ((MessagePlayerReconnect *) message)->getId();
 
-    response_t responseId = this->sendInteger(socket, &id, sizeof(size_t));
+    response_t responseId = this->sendLongInteger(socket, id);
 
     if(!responseId.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en PlayerDisconnect.");
@@ -185,7 +188,7 @@ response_t MessageSerializer::sendMessageResponseLoginPlayer(Socket *socket, Mes
 response_t MessageSerializer::sendMessageUserMovement(Socket *socket, Message *message){
     orientation_t orientation = ((MessageUserMovement *) message)->getOrientation();
 
-    response_t responseOrientation = this->sendInteger(socket, &orientation, sizeof(orientation_t));
+    response_t responseOrientation = this->sendOrientation(socket, orientation);
 
     if(!responseOrientation.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en UserMovement.");
@@ -210,15 +213,47 @@ response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t 
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendInteger(Socket *socket, void *value, size_t size){
+response_t MessageSerializer::sendOrientation(Socket *socket, orientation_t &orientation){
 
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero.");
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero long.");
 
-    s << *((int *)value) << endl;
+    s << orientation << endl;
 
-    if (socket->sendMessage(s, sizeof(size)) <= 0){
+    if (socket->sendMessage(s, sizeof(orientation)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de integer.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
+response_t MessageSerializer::sendInteger(Socket *socket, int &value){
+
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero long.");
+
+    s << value << endl;
+
+    if (socket->sendMessage(s, sizeof(int)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de integer.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
+response_t MessageSerializer::sendLongInteger(Socket *socket, size_t &value){
+
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero long.");
+
+    s << value << endl;
+
+    if (socket->sendMessage(s, sizeof(size_t)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de integer.");
         return this->_handleErrorStatus();
     }
