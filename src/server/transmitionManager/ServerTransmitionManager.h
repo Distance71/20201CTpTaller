@@ -19,6 +19,7 @@
 //Borrar
 #include "../../common/models/events/EventResponseLoginPlayer.h"
 #include "../../common/models/events/EventEndStage.h"
+#include <stdlib.h>
 
 using namespace std;
 
