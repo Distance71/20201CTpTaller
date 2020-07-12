@@ -2,7 +2,8 @@
 
 #include "Game.h"
 
-Game::Game(){
+Game::Game(Server *server){
+    this->serverOwn_ = server;
 }
 
 Game::~Game(){
@@ -113,9 +114,11 @@ void Game::sendStartStage(level_t oneLevel){
             break;
     }
 
-    //Event* event = new EventAnimationInitStage(pathScreen.c_str());
-    //TODO Mandar a todos los usuarios esta pantalla
-    //response_t response = user->sendMessage(event);
+    char path[pathScreen.size() + 1];
+    strcpy(path, pathScreen.c_str());
+
+    Event* event = new EventAnimationInitStage(path);
+    this->serverOwn_->sendToAllUsers(event);
     usleep(50000);
 }
 
@@ -141,8 +144,15 @@ void Game::viewStageCleared(level_t oneLevel){
             break;
     }
 
-    //Event* event = new EventEndStage(pathScreen.c_str());
-    //TODO Mandar a todos los usuarios esta pantalla
-    //response_t response = user->sendMessage(event);
-     usleep(50000);
+    char path[pathScreen.size() + 1];
+    strcpy(path, pathScreen.c_str());
+
+    Event* event = new EventEndStage(path);
+    this->serverOwn_->sendToAllUsers(event);
+    
+    usleep(50000);
+}
+
+void Game::movePlayer(string nameUser, orientation_t orientation){
+    this->map_->movePlayer(nameUser, orientation);
 }

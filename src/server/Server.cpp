@@ -132,7 +132,11 @@ void Server::runGame(){
 
     Logger::getInstance()->log(INFO, "Juego iniciado");
 
-    Game *game = new Game();
+    Game *game = new Game(this);
 
     game->run();
+}
+
+void Server::sendToAllUsers(Event* event){
+    this->transmitionManager_->sendToAllUsers(event);
 }

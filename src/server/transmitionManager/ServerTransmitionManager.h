@@ -7,6 +7,7 @@
 #include "../../common/types.h"
 #include "../../common/models/messages/Message.h"
 #include "../../common/models/BlockingQueue.h"
+//#include "../../common/models/BlockingMap.h"
 #include "../../common/services/ThreadsHandler.h"
 
 #include "../../common/models/events/EventResponseLoginPlayer.h" //Borrar
@@ -22,8 +23,8 @@ class ServerTransmitionManager {
     private:
         Server *serverOwn_;
         std::mutex mtxErrno;
-        //BlockingQueue <Message*>* receivedMessagesQueue_;
-        //unordered_map<Id, BlockingQueue<Message *> *> messagesQueues_;
+        BlockingQueue <Event*>* receivedEventQueue_;
+        //BlockingMap<Id, BlockingQueue<Message *> *> messagesQueues_;
 
         void createReceivingCycle(User* user);
         void* receivingCycle(User* user);
@@ -35,6 +36,8 @@ class ServerTransmitionManager {
         ~ServerTransmitionManager();
 
         void addUser(User* user);
+        void sendToUser(Id idUser);
+        void sendToAllUsers(Event *event);
         BlockingQueue<Message *>* getMessagesToProcess();
 };
 

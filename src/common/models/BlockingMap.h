@@ -19,7 +19,7 @@ private:
 
 public:
     void put(Id const& id, T* value) {
-        std::lock_guard lock(this->d_mutex);
+        std::lock_guard<std::mutex> lock(this->d_mutex);
         d_map.emplace(id, value);
         d_vector.push_back(id);
     }
@@ -38,7 +38,7 @@ public:
 
 
     void deleteElement(Id const& id) {
-        std::lock_guard lock(this->d_mutex);
+        std::lock_guard<std::mutex> lock(this->d_mutex);
         auto it = d_map.find(id);
         if (it != d_map.end()) {
             d_map.erase(id);

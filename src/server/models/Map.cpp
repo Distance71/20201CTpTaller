@@ -225,7 +225,7 @@ void Map::initializePositionPlayers(gameParams_t &gameSettings){
 
         position_t positionPlayer;
         positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
-        positionPlayer.axis_y = ((GameProvider::getHeight() / 4) * i) / 2;
+        positionPlayer.axis_y = ((GameProvider::getHeight() / cantPlayers) * i) / 2;
 
         State *playerPosition = this->players[playerName]->getState<Position>(string("Position"));
         playerPosition->setX(positionPlayer.axis_x);
