@@ -108,30 +108,30 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
         // response_t response12 = user->sendMessage(new EventResponseLoginPlayer(ERROR_FULL_GAME));
         // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
-        // user->sendMessage(new EventResponseLoginPlayer(OK));
-        // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+        user->sendMessage(new EventResponseLoginPlayer(OK));
+        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
-        // screen_t screenSize;
-        // screenSize.height = 800;
-        // screenSize.width = 1280;
-        // response_t response2 = user->sendMessage(new EventGameInit(screenSize));
-        // std::this_thread::sleep_for(std::chrono::milliseconds(1412));
+        screen_t screenSize;
+        screenSize.height = 800;
+        screenSize.width = 1280;
+        response_t response2 = user->sendMessage(new EventGameInit(screenSize));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1412));
 
-        // char path1[100];
-        // strcpy(path1, "assets/TransitionScreens/Stage1.JPG");
-        // user->sendMessage(new EventAnimationInitStage(path1));
-        // std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+        char path1[100];
+        strcpy(path1, "assets/TransitionScreens/Stage1.JPG");
+        user->sendMessage(new EventAnimationInitStage(path1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2500));
 
-        // char layerPaths[7][100];
-        // strcpy(layerPaths[0], "assets/Stage/Level1/layer_1.png");
-        // strcpy(layerPaths[1], "assets/Stage/Level1/layer_2.png");
-        // strcpy(layerPaths[2], "assets/Stage/Level1/layer_3.png");
-        // strcpy(layerPaths[3], "assets/Stage/Level1/layer_4.png");
-        // strcpy(layerPaths[4], "assets/Stage/Level1/layer_5.png");
-        // strcpy(layerPaths[5], "");
-        // strcpy(layerPaths[6], "");
-        // user->sendMessage(new EventInitStage(layerPaths));        
-        // std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        char layerPaths[7][100];
+        strcpy(layerPaths[0], "assets/Stage/Level1/layer_1.png");
+        strcpy(layerPaths[1], "assets/Stage/Level1/layer_2.png");
+        strcpy(layerPaths[2], "assets/Stage/Level1/layer_3.png");
+        strcpy(layerPaths[3], "assets/Stage/Level1/layer_4.png");
+        strcpy(layerPaths[4], "assets/Stage/Level1/layer_5.png");
+        strcpy(layerPaths[5], "");
+        strcpy(layerPaths[6], "");
+        user->sendMessage(new EventInitStage(layerPaths));        
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         char pathElement1[100];
         strcpy(pathElement1, "assets/Enemies/enemigo1.png");
@@ -140,15 +140,15 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
         spriteSize1.width = 200;
         spriteSize1.height = 200;
 
-        //for(size_t i = 0; i < 1; i++){
+        for(size_t i = 0; i < 5; i++){
             size_t id1 = 0;
             position1.axis_x = rand() % 1200;
             position1.axis_y = rand() % 800;    
             position1.orientation = FRONT;
             user->sendMessage(new EventMapElementCreate(id1, pathElement1, position1, spriteSize1)); 
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-            user->sendMessage(new EventMapElementDelete(id1));
-        //}
+            //user->sendMessage(new EventMapElementDelete(id1));
+        }
         
         std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 

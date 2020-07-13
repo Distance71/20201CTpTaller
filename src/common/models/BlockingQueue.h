@@ -14,10 +14,8 @@ private:
     std::deque<T>           d_queue;
 public:
     void push(T value) {
-        {
-            std::unique_lock<std::mutex> lock(this->d_mutex);
-            d_queue.push_front(value);
-        }
+        std::unique_lock<std::mutex> lock(this->d_mutex);
+        d_queue.push_front(value);
         this->d_condition.notify_one();
     }
     T pop() {

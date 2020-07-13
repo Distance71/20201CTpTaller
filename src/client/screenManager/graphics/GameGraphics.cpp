@@ -4,7 +4,7 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->scenario_ = nullptr;
     this->image_ = nullptr;
     this->renderer_ = renderer;
-    this->elements_ = new BlockingMap<GraphicsMapElement*>();
+    this->elements_ = new BlockingMapGraphicsMapElement();
 }
 
 
@@ -41,6 +41,7 @@ void GameGraphics::update(){
     for(auto key : keys) {
         GraphicsMapElement *element = this->elements_->get(key);
         element->update();
+        //delete element;
     }
     
     SDL_RenderPresent(this->renderer_);
@@ -60,20 +61,14 @@ void GameGraphics::updateEntity(Id id, int posX, int posY, orientation_t orienta
         Logger::getInstance()->log(ERROR, "No se pudo acutualizar el estado del elemento debido a que el id es inexistente");
     }
     else{
-        GraphicsMapElement *oneElement = this->elements_->get(id);
         oneElement->setNewPosition(posX, posY, orientation);
+        this->elements_->put(id, oneElement);
     }
 }
 
 
 void GameGraphics::deadEntity(Id id){
-    GraphicsMapElement *oneElement = this->elements_->get(id);
-    if (!oneElement){
-        Logger::getInstance()->log(ERROR, "No se pudo eliminar el elemento debido a que el id es inexistente");
-    }
-    else {
         this->elements_->deleteElement(id);
-    }
 }
 
 

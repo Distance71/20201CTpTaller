@@ -20,6 +20,7 @@ class GraphicsMapElement {
         std::mutex mutex_setNewPos;
     
     public:
+        GraphicsMapElement(const GraphicsMapElement &cpy);
         GraphicsMapElement(const string &source, int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation);
         ~GraphicsMapElement();
         void update();
