@@ -10,13 +10,14 @@
 #include "SDL2/SDL_image.h"
 #include "../../../common/providers/GameProvider.h"
 #include "../../../common/services/Logger.h"
+#include "../../../common/models/BlockingMap.h"
 
 
 class GameGraphics {
     
     private:
         SDL_Renderer* renderer_;
-        unordered_map <Id, GraphicsMapElement*> elements_;
+        BlockingMap <GraphicsMapElement*>* elements_;
         GraphicsScenario * scenario_;
         GraphicsMapElement* image_;
         

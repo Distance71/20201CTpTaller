@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <mutex>
 #include "../../../common/models/Sprite.h"
 #include "../../../common/models/Position.h"
 #include "../../../common/types.h"
@@ -15,6 +16,8 @@ class GraphicsMapElement {
         int pos_x_;
         int pos_y_;
         orientation_t orientation_;
+        std::mutex mutex_update;
+        std::mutex mutex_setNewPos;
     
     public:
         GraphicsMapElement(const string &source, int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation);
