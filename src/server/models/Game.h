@@ -44,7 +44,7 @@ class Game {
     ~Game();
 
     void run();
-    void movePlayer(string nameUser, orientation_t orientation);
+    void movePlayer(Id idUser, orientation_t orientation);
     void sendEvent(Event *event);
 };
 

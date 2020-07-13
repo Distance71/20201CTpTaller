@@ -98,4 +98,25 @@ namespace GameProvider {
 
         return layersSpeeds;
     }
+
+    bool isValidCredential(string userName, string password){
+        auto gameSettings = GameProvider::getConfig()->getGameParams();
+
+        for (auto oneUser : gameSettings.playersParams){
+            if (oneUser.username == userName)
+                if (oneUser.password == password)
+                    return true;
+        }
+
+        return false;
+    }
+
+    void setIdUser(string userName, Id idUser){
+        auto gameSettings = GameProvider::getConfig()->getGameParams();
+
+        for (auto oneUser : gameSettings.playersParams){
+            if (oneUser.username == userName)
+                oneUser.id = idUser;
+        }
+    }
 }

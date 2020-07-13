@@ -55,7 +55,7 @@ class Server {
         Socket* getSocket();
         void sendToAllUsers(Event* event);
 
-        void moveUser(string userName, orientation_t orientation);
+        void moveUser(Id idUser, orientation_t orientation);
 };
 
 #endif

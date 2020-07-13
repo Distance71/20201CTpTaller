@@ -138,6 +138,6 @@ void Server::sendToAllUsers(Event* event){
     this->transmitionManager_->sendToAllUsers(event);
 }
 
-void Server::moveUser(string userName, orientation_t orientation){
-    this->game->movePlayer(userName, orientation);
+void Server::moveUser(Id idUser, orientation_t orientation){
+    this->game->movePlayer(idUser, orientation);
 }
