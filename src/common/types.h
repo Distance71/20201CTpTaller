@@ -153,6 +153,7 @@ typedef struct {
 
 //Exported to a class -> se deja por el momento
 typedef struct {
+    Id id;
     string username;
     string password;
     player_t playerParams;

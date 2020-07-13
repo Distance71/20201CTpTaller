@@ -154,8 +154,8 @@ void Game::sendStageCleared(level_t oneLevel){
     usleep(5000000);//5 seg
 }
 
-void Game::movePlayer(string nameUser, orientation_t orientation){
-    this->map_->movePlayer(nameUser, orientation);
+void Game::movePlayer(Id idUser, orientation_t orientation){
+    this->map_->movePlayer(idUser, orientation);
 }
 
 void Game::sendBackground(size_t numberLevel, size_t numberStage){

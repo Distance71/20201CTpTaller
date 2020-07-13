@@ -30,7 +30,7 @@ class Map {
     vector <Level *> levels_;
     //void clearMap();
     //MapElement *player;
-    unordered_map<string, MapElement*> players;
+    unordered_map<Id, MapElement*> players;
 
     public:    
     Map();
@@ -41,7 +41,7 @@ class Map {
     bool endStep(currentStep_t currentStep);
     void createPlayers(gameParams_t &gameSettings);
     void initializePositionPlayers(gameParams_t &gameSettings);
-    void movePlayer(string namePlayer, orientation_t orientation);
+    void movePlayer(Id idUser, orientation_t orientation);
 
     void initializeStep(currentStep_t currentStep, Game *game);
 };
