@@ -2,6 +2,7 @@
 #define BLOCKING_MAP_H
 
 #include <mutex>
+#include <shared_mutex>
 #include <condition_variable>
 #include <deque>
 #include <unordered_map>
@@ -13,19 +14,19 @@ class BlockingMap
 private:
     std::mutex              d_mutex;
     std::condition_variable d_condition;
-    unordered_map <Id, T *> d_map;
+    unordered_map <Id, T> d_map;
     vector<Id>             d_vector;
     
 
 public:
-    void put(Id const& id, T* value) {
-        std::lock_guard<std::mutex> lock(this->d_mutex);
+    void put(Id const& id, T value) {
+        std::unique_lock<std::mutex> lock(this->d_mutex);
         d_map.emplace(id, value);
         d_vector.push_back(id);
     }
 
-    T* get(Id const& id) {
-        std::shared_lock lock(this->d_mutex);
+    T get(Id const& id) {
+        std::unique_lock<std::mutex> lock(this->d_mutex);
         auto it = d_map.find(id);
         if (it != d_map.end())
             return it->second;

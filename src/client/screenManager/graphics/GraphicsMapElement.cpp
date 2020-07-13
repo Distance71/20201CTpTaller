@@ -21,12 +21,11 @@ GraphicsMapElement::~GraphicsMapElement(){
 }
 
 void GraphicsMapElement::update(){
-
     SDL_Renderer* renderer = GameProvider::getRenderer();   
     
     //rectangulo de la pantalla donde quiero dibujar el sprite.
     SDL_Rect aux_graphics_sprite = {this->pos_x_, this->pos_y_, this->size_x_, this->size_y_};
-    
+
     //Obtengo la textura
     SDL_Texture* spriteTexture = sprite_-> getTexture();
     
@@ -43,11 +42,9 @@ void GraphicsMapElement::update(){
 }
  
 void GraphicsMapElement::setNewPosition(int pos_x, int pos_y, orientation_t orientation){
+    std::unique_lock<std::mutex> lock(this->mutex_setNewPos);
     this->pos_x_ = pos_x;
     this->pos_y_ = pos_y;
     this->orientation_ = orientation;
-
-    cout << "La nueva pos x " << pos_x << endl;
-    cout << "La nueva pos y " << pos_y << endl;
 };
 

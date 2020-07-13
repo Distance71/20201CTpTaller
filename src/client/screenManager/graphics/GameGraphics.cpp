@@ -4,6 +4,7 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->scenario_ = nullptr;
     this->image_ = nullptr;
     this->renderer_ = renderer;
+    this->elements_ = new BlockingMap<GraphicsMapElement*>();
 }
 
 
@@ -14,9 +15,10 @@ GameGraphics::~GameGraphics(){
     if(this->image_)
         delete this->image_;
     
+    vector<Id> keys = this->elements_->getAllKeys();
     
-    for(auto element:this->elements_)
-        delete element.second;
+    for(auto key : keys)
+        this->elements_->deleteElement(key);
     
     Logger::getInstance()->log(INFO, "Se liberan los recursos utilizados para los gŕaficos del juego");
 
@@ -33,10 +35,14 @@ void GameGraphics::update(){
     if (this->image_){
         image_->update();
     }
-    
-    for(auto element : this->elements_)
-        element.second->update();
 
+    vector<Id> keys = this->elements_->getAllKeys();
+    
+    for(auto key : keys) {
+        GraphicsMapElement *element = this->elements_->get(key);
+        element->update();
+    }
+    
     SDL_RenderPresent(this->renderer_);
 
 }
@@ -44,29 +50,29 @@ void GameGraphics::update(){
 
 void GameGraphics::createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
     GraphicsMapElement *newElement = new GraphicsMapElement(source, sizeX, sizeY, posX, posY, orientation);
-    this->elements_[id] = newElement;    
+    this->elements_->put(id, newElement);
 }
 
 
 void GameGraphics::updateEntity(Id id, int posX, int posY, orientation_t orientation){
-    GraphicsMapElement *oneElement = this->elements_.at(id);
+    GraphicsMapElement *oneElement = this->elements_->get(id);
     if (!oneElement){
         Logger::getInstance()->log(ERROR, "No se pudo acutualizar el estado del elemento debido a que el id es inexistente");
     }
     else{
-        this->elements_[id]->setNewPosition(posX, posY, orientation);
+        GraphicsMapElement *oneElement = this->elements_->get(id);
+        oneElement->setNewPosition(posX, posY, orientation);
     }
 }
 
 
 void GameGraphics::deadEntity(Id id){
-    GraphicsMapElement *oneElement = this->elements_.at(id);
+    GraphicsMapElement *oneElement = this->elements_->get(id);
     if (!oneElement){
         Logger::getInstance()->log(ERROR, "No se pudo eliminar el elemento debido a que el id es inexistente");
     }
     else {
-        this->elements_.erase(id);
-        delete oneElement;
+        this->elements_->deleteElement(id);
     }
 }
 
