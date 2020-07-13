@@ -129,11 +129,15 @@ void Server::runGame(){
 
     Logger::getInstance()->log(INFO, "Juego iniciado");
 
-    Game *game = new Game(this);
+    this->game = new Game(this);
 
-    game->run();
+    this->game->run();
 }
 
 void Server::sendToAllUsers(Event* event){
     this->transmitionManager_->sendToAllUsers(event);
+}
+
+void Server::moveUser(string userName, orientation_t orientation){
+    this->game->movePlayer(userName, orientation);
 }
