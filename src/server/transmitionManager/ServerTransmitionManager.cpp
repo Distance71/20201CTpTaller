@@ -64,6 +64,7 @@ void* ServerTransmitionManager::receivingCycle(User* user){
         }
         Logger::getInstance()->log(DEBUG, "Se recibio un evento");
         cout << "se recibio un mensaje" << endl;
+        event->setOwn(user->getUserName());
         this->serverOwn_->processEvent(event);        
     }
     

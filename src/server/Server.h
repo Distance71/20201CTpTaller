@@ -23,11 +23,13 @@
 class ServerTransmitionManager;
 class ServerEventsManager;
 class UsersManager;
+class Game;
 
 class Server {
     private:
         size_t port_;
         Socket *socket_;
+        Game *game;
         UsersManager* usersManager_;
         ServerTransmitionManager* transmitionManager_;
         ServerEventsManager* eventsManager_;
@@ -52,6 +54,8 @@ class Server {
         void processEvent(Event *event);
         Socket* getSocket();
         void sendToAllUsers(Event* event);
+
+        void moveUser(string userName, orientation_t orientation);
 };
 
 #endif

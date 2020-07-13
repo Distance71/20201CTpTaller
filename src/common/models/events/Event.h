@@ -13,9 +13,10 @@ class Event {
 
 	protected:
         void* context_ = nullptr;
+        string own_ = "";
     public:
         void setContext(void* context) {this->context_ = context;};
-
+        void setOwn(string eventOwn) { this->own_ = eventOwn;}
         virtual Message* serialize() = 0;
         virtual void update() = 0;
 };
