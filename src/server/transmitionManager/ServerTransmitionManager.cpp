@@ -132,24 +132,24 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
         strcpy(layerPaths[5], "");
         strcpy(layerPaths[6], "");
         user->sendMessage(new EventInitStage(layerPaths));        
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-        char pathElement1[100];
-        strcpy(pathElement1, "assets/Enemies/enemigo1.png");
-        position_t position1;
-        spriteSize_t spriteSize1;
-        spriteSize1.width = 200;
-        spriteSize1.height = 200;
+        // char pathElement1[100];
+        // strcpy(pathElement1, "assets/Enemies/enemigo1.png");
+        // position_t position1;
+        // spriteSize_t spriteSize1;
+        // spriteSize1.width = 200;
+        // spriteSize1.height = 200;
 
-        for(size_t i = 0; i < 100; i++){
-            size_t id1 = i;
-            position1.axis_x = rand() % 1200;
-            position1.axis_y = rand() % 800;    
-            position1.orientation = FRONT;
-            user->sendMessage(new EventMapElementCreate(id1, pathElement1, position1, spriteSize1)); 
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-            //user->sendMessage(new EventMapElementDelete(id1));
-        }
+        // for(size_t i = 0; i < 100; i++){
+        //     size_t id1 = i;
+        //     position1.axis_x = rand() % 1200;
+        //     position1.axis_y = rand() % 800;    
+        //     position1.orientation = FRONT;
+        //     user->sendMessage(new EventMapElementCreate(id1, pathElement1, position1, spriteSize1)); 
+        //     std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        //     //user->sendMessage(new EventMapElementDelete(id1));
+        // }
         
         std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 

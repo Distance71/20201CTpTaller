@@ -5,6 +5,8 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->image_ = nullptr;
     this->renderer_ = renderer;
     //this->elements_ = new BlockingMapGraphicsMapElement();
+    for(size_t i = 0; i <100; i++)
+        this->elements_[i] = new GraphicsMapElement("assets/Enemies/enemigo1.png", 100, 100, 100, 100, FRONT);
 }
 
 
@@ -44,8 +46,8 @@ void GameGraphics::update(){
 
 
 void GameGraphics::createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
-    GraphicsMapElement *newElement = new GraphicsMapElement(source, sizeX, sizeY, posX, posY, orientation);
-    this->elements_[id] = newElement;
+    //GraphicsMapElement *newElement = new GraphicsMapElement(source, sizeX, sizeY, posX, posY, orientation);
+    //this->elements_[id] = newElement;
 }
 
 
