@@ -5,8 +5,11 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->image_ = nullptr;
     this->renderer_ = renderer;
     //this->elements_ = new BlockingMapGraphicsMapElement();
-    for(size_t i = 0; i <100; i++)
-        this->elements_[i] = new GraphicsMapElement("assets/Enemies/enemigo1.png", 100, 100, 100, 100, FRONT);
+    for(size_t i = 20; i <800; i++) {
+        auto *falopa = new GraphicsMapElement("assets/Enemies/enemigo1.png", i, i, i, i, FRONT);
+        this->elements_.emplace(i, falopa);
+    }
+        
 }
 
 

@@ -54,13 +54,13 @@ int Client::run(){
 
     Logger::getInstance()->log(INFO, "Se inicializaron los graficos");
 
-    bool logged = this->screenManager_-> viewLogin();
+    // bool logged = this->screenManager_-> viewLogin();
 
-    if (!logged){
-        Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
-        disconnect();
-        return EXIT_FAILURE;
-    }
+    // if (!logged){
+    //     Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
+    //     disconnect();
+    //     return EXIT_FAILURE;
+    // }
 
     int res = this->waitForPlayers();
 
