@@ -16,13 +16,6 @@ GraphicsMapElement::GraphicsMapElement(const string &source,  int size_x, int si
     this->pos_x_ = pos_x;
     this->pos_y_ = pos_y;
     this->orientation_ = orientation;
-
-    cout << "la source " << source << endl;
-    cout << "el size x " << size_x << endl;
-    cout << "el size y " << size_y << endl;
-    cout << "el pos x " << pos_x << endl;
-    cout << "el pos y " << pos_y << endl;
-    cout << "la orientation " << orientation << endl;
 }
 
 GraphicsMapElement::~GraphicsMapElement(){
@@ -30,12 +23,17 @@ GraphicsMapElement::~GraphicsMapElement(){
 }
 
 void GraphicsMapElement::update(){
+
     SDL_Renderer* renderer = GameProvider::getRenderer();   
     
     //rectangulo de la pantalla donde quiero dibujar el sprite.
-    SDL_Rect aux_graphics_sprite = {this->pos_x_, this->pos_y_, this->size_x_, this->size_y_};
+    int posX = this->pos_x_;
+    int posY = this->pos_y_;
+    int sizeX = this->size_x_;
+    int sizeY = this->size_y_;
 
-    //Obtengo la textura
+    SDL_Rect aux_graphics_sprite = {posX, posY, sizeX, sizeY};
+
     SDL_Texture* spriteTexture = sprite_-> getTexture();
     
     //el renderer copia la textura del sprite recortando la foto con 
@@ -51,7 +49,6 @@ void GraphicsMapElement::update(){
 }
  
 void GraphicsMapElement::setNewPosition(int pos_x, int pos_y, orientation_t orientation){
-    std::unique_lock<std::mutex> lock(this->mutex_setNewPos);
     this->pos_x_ = pos_x;
     this->pos_y_ = pos_y;
     this->orientation_ = orientation;

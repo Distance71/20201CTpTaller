@@ -34,8 +34,9 @@ void GameGraphics::update(){
         image_->update();
     }
 
-    for(auto element : this->elements_)
+    for(auto element : this->elements_){
         element.second->update();
+    }
     
     SDL_RenderPresent(this->renderer_);
 

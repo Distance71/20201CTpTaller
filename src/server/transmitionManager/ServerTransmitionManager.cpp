@@ -113,8 +113,8 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
         std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
         screen_t screenSize;
-        screenSize.height = 500;
-        screenSize.width = 500;
+        screenSize.height = 800;
+        screenSize.width = 1280;
         response_t response2 = user->sendMessage(new EventGameInit(screenSize));
         std::this_thread::sleep_for(std::chrono::milliseconds(1412));
 

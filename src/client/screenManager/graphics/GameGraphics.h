@@ -19,6 +19,7 @@ class GameGraphics {
         unordered_map<Id, GraphicsMapElement*> elements_;
         GraphicsScenario * scenario_;
         GraphicsMapElement* image_;
+        std::mutex mutex_update;
         
         
     public:

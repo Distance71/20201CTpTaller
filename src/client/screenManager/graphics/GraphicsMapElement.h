@@ -11,13 +11,12 @@
 class GraphicsMapElement {
     private:
         Sprite* sprite_;
-        int size_x_;
-        int size_y_;
-        int pos_x_;
-        int pos_y_;
-        orientation_t orientation_;
+        int size_x_ = 200;
+        int size_y_ = 200;
+        int pos_x_ = 10;
+        int pos_y_ = 10;
+        orientation_t orientation_ = FRONT;
         std::mutex mutex_update;
-        std::mutex mutex_setNewPos;
     
     public:
         GraphicsMapElement(const GraphicsMapElement &cpy);
