@@ -113,8 +113,8 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
         std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
         screen_t screenSize;
-        screenSize.height = 800;
-        screenSize.width = 1280;
+        screenSize.height = 500;
+        screenSize.width = 500;
         response_t response2 = user->sendMessage(new EventGameInit(screenSize));
         std::this_thread::sleep_for(std::chrono::milliseconds(1412));
 
@@ -141,13 +141,13 @@ void* ServerTransmitionManager::sendingCycle(User* user) {
         spriteSize1.width = 200;
         spriteSize1.height = 200;
 
-        for(size_t i = 0; i < 5; i++){
-            size_t id1 = 0;
+        for(size_t i = 0; i < 100; i++){
+            size_t id1 = i;
             position1.axis_x = rand() % 1200;
             position1.axis_y = rand() % 800;    
             position1.orientation = FRONT;
             user->sendMessage(new EventMapElementCreate(id1, pathElement1, position1, spriteSize1)); 
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
             //user->sendMessage(new EventMapElementDelete(id1));
         }
         

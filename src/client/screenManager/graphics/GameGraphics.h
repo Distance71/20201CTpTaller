@@ -16,7 +16,7 @@ class GameGraphics {
     
     private:
         SDL_Renderer* renderer_;
-        BlockingMapGraphicsMapElement* elements_;
+        unordered_map<Id, GraphicsMapElement*> elements_;
         GraphicsScenario * scenario_;
         GraphicsMapElement* image_;
         
