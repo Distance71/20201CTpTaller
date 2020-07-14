@@ -4,6 +4,7 @@ UsersManager::UsersManager(Server *serverOwn){
     this->serverOwn_ = serverOwn;
     size_t maxUsers = GameProvider::getQuantityPlayers();
     this->maxUsers_ = maxUsers;
+    this->users_ = new BlockingMap<User>();
     pthread_mutex_init(&this->mutex_lastId_, NULL);
 
     // int pthreadCreateStatus =  pthread_create(&thread, nullptr, [](void *args)->void * {
@@ -72,7 +73,8 @@ Id UsersManager::acceptUnloggedUser(){
     lastId_++;
     pthread_mutex_unlock(&this->mutex_lastId_);
 
-    this->users_[this->lastId_] = newUser;
+    this->users_->put(this->lastId_, newUser);
+    //this->users_[this->lastId_] = newUser;
 
     this->serverOwn_->addPlayer(newUser);
 

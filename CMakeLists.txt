@@ -91,6 +91,7 @@ add_executable(tp1taller
         src/common/models/State.cpp
 		src/common/models/State.h
 		src/common/models/BlockingQueue.h
+        src/common/models/BlockingMap.h
         src/common/models/BlockingMapGraphicsMapElement.h
         
         src/common/models/events/Event.h
