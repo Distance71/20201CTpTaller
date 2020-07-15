@@ -32,6 +32,7 @@ class Game {
     void runStep(currentStep_t actualStep);
 
     void processEvent();
+    void initializeStep(currentStep_t actualStep);
     void updateState(currentStep_t actualStep);
     void updateGraphics();
     void clearScene();

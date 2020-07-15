@@ -141,8 +141,10 @@ void Stage::update(currentStep_t currentStep, Game *game){
 
 void Step::update(Game *game){
     vector<Id> mapElementDead;
+    // cout << "ENTRO AL UPDATE STEP " << this->mapElements_.size() << endl;
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
+        // cout << mapElement.first << endl;
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
             Event *eventDead = new EventMapElementDelete(mapElement.first);
@@ -221,6 +223,7 @@ void Stage::initializeStep(currentStep_t currentStep, Game *game){
 }
 
 void Step::initializeStep(Game *game){
+    // cout << "INITIALIZE STEP " << this->mapElements_.size() << endl;
     for(auto mapElement : this->mapElements_) {
         position_t actualPosition = mapElement.second->getActualPosition();
         string sourceSprite = mapElement.second->getImageSource();
@@ -230,4 +233,5 @@ void Step::initializeStep(Game *game){
         Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
         game->sendEvent(event);
     }
+    // cout << "END INITIALIZE STEP" << endl;
 }

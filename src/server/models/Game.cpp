@@ -75,6 +75,8 @@ void Game::runStep(currentStep_t actualStep){
 
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     
+    initializeStep(actualStep);
+    
     while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
         auto begin = chrono::high_resolution_clock::now();
         auto end = chrono::high_resolution_clock::now();   
@@ -88,6 +90,10 @@ void Game::runStep(currentStep_t actualStep){
         }
         updateState(actualStep);
     }
+}
+
+void Game::initializeStep(currentStep_t actualStep){
+    map_->initializeStep(actualStep, this);
 }
 
 void Game::updateState(currentStep_t actualStep) {
