@@ -146,8 +146,6 @@ int Socket::sendMessage(stringstream &s, size_t sizeData){
         }
     }
 
-    cout << "Lo que se manda " << buffer << endl;
-
     Logger::getInstance()->log(DEBUG, "Se mando mensaje ok en Socket de tamaño " + std::to_string((int)sizeData));
 
     return totalBytesWritten;

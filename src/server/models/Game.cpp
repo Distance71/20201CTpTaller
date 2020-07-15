@@ -46,8 +46,11 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
         this->sendBackground(actualStep.level,actualStep.stage);
-        runStage(actualStep, stages[i]);
-    }    
+        runStage(actualStep, stages[i]);  
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    
+
     if (GameProvider::getStatus().normalStatus){
         this->sendStageCleared(actualStep.level);
         this->map_->initializePositionPlayers(gameSettings);

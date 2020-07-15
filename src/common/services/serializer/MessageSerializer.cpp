@@ -269,7 +269,6 @@ response_t MessageSerializer::sendMessageType(Socket *socket, message_t type){
 
     s << type;
 
-    cout << "El tipo " << type << endl;
 
     if (socket->sendMessage(s, sizeof(message_t)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje.");

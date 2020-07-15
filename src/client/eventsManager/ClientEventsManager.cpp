@@ -1,5 +1,7 @@
 #include "ClientEventsManager.h"
 #include <stdio.h>
+#include <errno.h>
+#include <thread>
 
 ClientEventsManager::ClientEventsManager(Client* client){
     this->clientOwn_ = client;
@@ -129,6 +131,7 @@ static void* processEvents(void * arg){
             event->update();
             delete event;
         }
+        client-> updateScreen();
     }
     return nullptr;
 }

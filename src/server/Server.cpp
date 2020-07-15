@@ -77,8 +77,16 @@ int Server::run(){
             cout <<"Se conectaron todos los jugadores, iniciará la partida"<< endl;
             break;
         }
-    }       
+    }     
 
+      char pathElement1[100];
+        strcpy(pathElement1, "assets/Enemies/enemigo1.png");
+        position_t position1;
+        spriteSize_t spriteSize1;
+        spriteSize1.width = 100;
+        spriteSize1.height = 100;
+
+  
     this->runGame();
 
     Logger::getInstance()->log(INFO, "El Juego ha terminado");

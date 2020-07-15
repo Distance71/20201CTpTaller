@@ -408,7 +408,6 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
     this->getTypeMessage(socket, messageType);
 
-    cout << "El tipo " << messageType << endl;
 
     switch (messageType){
         case ANIMATION_INIT_STAGE:

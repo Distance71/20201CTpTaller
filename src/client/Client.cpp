@@ -37,6 +37,7 @@ bool Client::connectWithServer(){
 
 int Client::run(){
     setScreenSizes(1280,800);
+    
     if (!this->screenManager_->initializeGraphics()){
         Logger::getInstance()->log(ERROR, "No se pudieron inicializar los gráficos, juego finalizado");
         return EXIT_FAILURE;
@@ -77,14 +78,18 @@ int Client::run(){
     }*/
 
 
-
     this->eventsManager_->RunDetectPlayerEventsThread();
 
-    this->screenManager_->initGameGraphicsThread();
+    while (this->isConnected()){
+        continue;
+    }
+
+    //this->screenManager_->initGameGraphicsThread();
 
     this->screenManager_->viewEndGameScreen();
 
     Logger::getInstance()->log(INFO, "El juego ha finalizado normalmente");
+    
     return EXIT_SUCCESS;    
 }
 
@@ -196,4 +201,8 @@ void Client::initGame(int Xsize, int Ysize){
 
 void Client::processEvent(Event* event){
     this->eventsManager_->pushBackEvent(event);
+}
+
+void Client::updateScreen(){
+    this->screenManager_->initGameGraphicsThread();
 }

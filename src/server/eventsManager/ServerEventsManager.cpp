@@ -26,6 +26,7 @@ Event* ServerEventsManager::getEvent(){
     return nullptr;
 }
 
+
 static void* processEvents(void * arg){
     ServerEventsManager* eventsManager = (ServerEventsManager*) arg;
     Server * server = eventsManager->getServer();

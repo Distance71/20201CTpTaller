@@ -45,6 +45,7 @@ class Client {
         int waitForPlayers();
         void initGame(int Xsize, int Ysize);
         void endGame();
+        void updateScreen();
         
         //menu methods
         void setLoginResponse(responseStatus_t response);

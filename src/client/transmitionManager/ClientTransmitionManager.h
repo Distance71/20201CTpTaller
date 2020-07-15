@@ -16,6 +16,7 @@
 #include "../../common/models/BlockingQueue.h"
 #include "../../common/models/messages/MessageEndGame.h"
 
+
 class Client;
 class MessageDeserializer;
 class MessageSerializer;

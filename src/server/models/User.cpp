@@ -71,14 +71,11 @@ static void* sendMessages(void* arg){
 	User* user = (User*) arg;
 	MessageSerializer serializer = MessageSerializer();
 	Socket* socket = user->getSocket();
-	std::mutex mtxEnvio;
 	while (user->isConnected()){
 		Message* message = user->getMessage();
-		if (message){
-			mtxEnvio.lock();
+		if (message){;
 			serializer.sendSerializedEvent(socket, message);
 			delete message;
-			mtxEnvio.unlock();
 		}
 	}
 }

@@ -145,14 +145,15 @@ bool ScreenManager::initGameGraphics(){
 
 void ScreenManager::initGameGraphicsThread(){
 
-    Logger::getInstance()->log(DEBUG, "Se inicia el hilo graficador");
+    /*Logger::getInstance()->log(DEBUG, "Se inicia el hilo graficador");
     
     while(this->clientOwn_->isConnected()){
         this->gameGraphics_->update();
     }
 
-    Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");
+    Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");*/
 
+    this->gameGraphics_->update();
 }
 
 
