@@ -21,6 +21,7 @@ class UsersManager {
         vector<Id> *idsLoggedUsers_;
         
         pthread_mutex_t mutex_lastId_;
+        pthread_mutex_t mutex_loggedUser_;
         
 
     public:
@@ -31,7 +32,8 @@ class UsersManager {
         // void setIdUser(Id idUser);
         // Id getIdUser();
         bool isFullGame();
-        Id acceptUnloggedUser();       
+        Id acceptUnloggedUser();      
+        bool loginUser(Id userId); 
 
         void setSocket(Socket *socket);
 };

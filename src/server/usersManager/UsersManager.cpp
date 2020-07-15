@@ -7,11 +7,13 @@ UsersManager::UsersManager(Server *serverOwn){
     this->users_ = new BlockingMap<User>();
     this->idsLoggedUsers_ = new vector<Id>();
     pthread_mutex_init(&this->mutex_lastId_, NULL);
+    pthread_mutex_init(&this->mutex_loggedUser_, NULL);
 }
 
 UsersManager::~UsersManager(){
     this->serverOwn_ = nullptr;
     pthread_mutex_destroy(&this->mutex_lastId_);
+    pthread_mutex_destroy(&this->mutex_loggedUser_);
 }
 
 bool UsersManager::isFullGame(){
@@ -37,9 +39,22 @@ Id UsersManager::acceptUnloggedUser(){
 
     this->users_->put(idUser, newUser);
 
-    this->serverOwn_->addPlayer(idUser, newUser);
+    // this->serverOwn_->addPlayer(idUser, newUser);
+    this->serverOwn_->addPlayer(newUser);
 
     return idUser;
+}
+
+bool UsersManager::loginUser(Id userId){
+
+    pthread_mutex_lock(&this->mutex_loggedUser_);
+    bool estaLleno = this->isFullGame();
+
+    if (!estaLleno)
+        this->idsLoggedUsers_->push_back(userId);
+    pthread_mutex_unlock(&this->mutex_loggedUser_);
+
+    return estaLleno;
 }
 
 // void UserManager::logInUser(User* User){
