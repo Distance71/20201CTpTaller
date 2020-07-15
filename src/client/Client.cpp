@@ -36,7 +36,14 @@ bool Client::connectWithServer(){
 
 
 int Client::run(){
-    
+    setScreenSizes(1280,800);
+    if (!this->screenManager_->initializeGraphics()){
+        Logger::getInstance()->log(ERROR, "No se pudieron inicializar los gráficos, juego finalizado");
+        return EXIT_FAILURE;
+    };
+
+    Logger::getInstance()->log(INFO, "Se inicializaron los graficos");
+
     if (!this->connectWithServer()){
         Logger::getInstance()->log(ERROR, "No se pudo conectar con el servidor, juego finalizado");
         return EXIT_FAILURE;
@@ -45,22 +52,17 @@ int Client::run(){
     Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
     cout << "Se estableció conexión con el servidor " << endl;
     
-    setScreenSizes(1280,800);
     
-    if (!this->screenManager_->initializeGraphics()){
-        Logger::getInstance()->log(ERROR, "No se pudieron inicializar los gráficos, juego finalizado");
-        return EXIT_FAILURE;
-    };
+    
+    
 
-    Logger::getInstance()->log(INFO, "Se inicializaron los graficos");
+    /*bool logged = this->screenManager_-> viewLogin();
 
-    // bool logged = this->screenManager_-> viewLogin();
-
-    // if (!logged){
-    //     Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
-    //     disconnect();
-    //     return EXIT_FAILURE;
-    // }
+     if (!logged){
+         Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
+        disconnect();
+         return EXIT_FAILURE;
+    }
 
     int res = this->waitForPlayers();
 
@@ -72,20 +74,9 @@ int Client::run(){
     else if (res<0){
         Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
         return EXIT_FAILURE;
-    }
+    }*/
 
-    // size_t id1 = 0;
-    // char pathElement1[100];
-    // strcpy(pathElement1, "assets/Enemies/enemigo1.png");
-    // position_t position1;
-    // position1.axis_x = 50;
-    // position1.axis_y = 50;
-    // position1.orientation = FRONT;
-    // spriteSize_t spriteSize1;
-    // spriteSize1.width = 200;
-    // spriteSize1.height = 200;
 
-    // this->createEntity(id1, pathElement1,spriteSize1.width,spriteSize1.height, position1.axis_x, position1.axis_y, position1.orientation);
 
     this->eventsManager_->RunDetectPlayerEventsThread();
 

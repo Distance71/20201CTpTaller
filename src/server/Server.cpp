@@ -3,18 +3,15 @@
 
 Server::Server(size_t port){
     this->port_ = port;
-    
     this->socket_ = new Socket();
     this->socket_->setPort(port);
     this->_initializeServer();
-    this->transmitionManager_ = new ServerTransmitionManager(this);
     this->usersManager_ = new UsersManager(this);
     this->eventsManager_ = new ServerEventsManager(this);
 }
 
 Server::~Server(){
     delete this->usersManager_;
-    delete this->transmitionManager_;
     delete this->eventsManager_;
     Logger::getInstance()->log(DEBUG, "Se han eliminado todos los recursos utilizados");
 }
@@ -60,52 +57,11 @@ bool Server::isConnected(){
     return this->connected_;
 }
 
-void Server::waitPlayers(){
-    cout << "Esperando jugadores..." << endl;
-
-    while (!this->usersManager_->isFullGame() && this->isConnected()){
-        
-        size_t newUserId = this->usersManager_->acceptUnloggedUser();
-        
-        if (newUserId == 0){            
-            // error ya informado
-        }
-        else{
-            if(this->usersManager_->isFullGame()) {
-                Logger::getInstance()->log(DEBUG, "Se ha querido conectar usuario con el juego lleno");
-            }
-            cout << "Se agrega un cliente. " << endl;
-            Logger::getInstance()->log(INFO, "Se ha conectado un usuario nuevo");
-        }
-    }
-
-    Logger::getInstance()->log(DEBUG, "Se ha terminado de esperar jugadores");    
-}
-
 Socket* Server::getSocket(){
     return this->socket_;
 }
 
-void Server::addPlayer(User *newUser){
-    if(!newUser || usersManager_->isFullGame()) {
-        Logger::getInstance()->log(ERROR, "Se ha querido iniciar un usuario en el servidor sin contenido");
-        return;
-    }
 
-    this->transmitionManager_->addUser(newUser);
-
-    // pthread_mutex_lock(&this->mutex_players_);
-
-    // if (this->isFull()){
-    //     pthread_mutex_unlock(&this->mutex_players_);
-    //     return false;
-    // }   
-    
-    // cout << "El cliente " + to_string(idPlayer) + " se agrega a la partida" << endl;
-    // this->players_[idPlayer] = onePlayer;
-    // pthread_mutex_unlock(&this->mutex_players_);
-    // return true;
-}
 
 int Server::run(){
 
@@ -113,16 +69,26 @@ int Server::run(){
         Logger::getInstance()->log(ERROR, "El servidor no se pudo iniciar");
         return EXIT_FAILURE;
     }
-    this->waitPlayers();
+
+    this->usersManager_-> runAcceptUsersThread();
+    
+    while (this->isConnected()){
+        if(this->usersManager_->isFullGame()){
+            cout <<"Se conectaron todos los jugadores, iniciará la partida"<< endl;
+            break;
+        }
+    }       
 
     this->runGame();
 
     Logger::getInstance()->log(INFO, "El Juego ha terminado");
+    
     return EXIT_SUCCESS;
 }
 
+
 void Server::processEvent(Event *event){
-    this->eventsManager_->process(event);
+    this->eventsManager_->processEvent(event);
 }
 
 void Server::runGame(){
@@ -135,7 +101,7 @@ void Server::runGame(){
 }
 
 void Server::sendToAllUsers(Event* event){
-    this->transmitionManager_->sendToAllUsers(event);
+    this->usersManager_->sendToAll(event);
 }
 
 void Server::moveUser(Id idUser, orientation_t orientation){

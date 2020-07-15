@@ -1,11 +1,8 @@
 #include "Map.h"
-Map::Map(){
-    //Necesitaba crearlo para compilar   
-}
+Map::Map(){}
 
 Map::Map(gameParams_t &gameSettings){
     size_t nLevels = gameSettings.levelParams.size();
-
     Logger::getInstance()->log(DEBUG, "Se crea entidad Map.");
     Logger::getInstance()->log(DEBUG, "Se procesa el Game Setting.");
 
@@ -20,14 +17,10 @@ bool Map::endStep(currentStep_t currentStep){
     return this->levels_[currentStep.level]->endStep(currentStep.stage, currentStep.step);
 }
 
-Level::Level(){
-    //Necesitaba crearlo para compilar
-}
+Level::Level(){}
 
 Level::Level(levelParams_t &params){
-    
     size_t nStages = params.stagesParams.size();
-
     for(size_t i = 0; i < nStages; i++){
         Stage *newStage = new Stage(params.stagesParams[i]);
         this->addStage(newStage);
@@ -38,13 +31,10 @@ bool Level::endStep(size_t numberStage, size_t numberStep){
     return this->stages_[numberStage]->endStep(numberStep);
 }
 
-Stage::Stage(){
-    //Necesitaba crearlo para compilar
-}
+Stage::Stage(){}
 
 Stage::Stage(stageParams_t &params){
     size_t quantitySteps = params.stepsParams.size();
-    
     for(size_t i = 0; i < quantitySteps; i++) {
         Step *step = new Step(params.stepsParams[i]);
         this->addStep(step);
@@ -55,9 +45,7 @@ bool Stage::endStep(size_t numberStep){
     return this->steps_[numberStep]->endStep();
 }
 
-Step::Step(){
-    //Necesitaba crearlo para compilar
-}
+Step::Step(){}
 
 Step::Step(stepParams_t params) {
     size_t nEnemies = params.enemies.size();
@@ -108,26 +96,17 @@ position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
 }
 
 void Map::addLevel(Level *level){
-    if(!level){
-        //Validate
-    }
-    
+    if(!level){}
     this->levels_.push_back(level);
 }
 
 void Level::addStage(Stage *stage){
-    if(!stage) {
-        //Validate
-    }
-
+    if(!stage) {}
     this->stages_.push_back(stage);
 }
 
 void Stage::addStep(Step *step){
-    if(!step) {
-        //Validate
-    }
-
+    if(!step) {}
     this->steps_.push_back(step);
 }
 
@@ -152,23 +131,18 @@ void Map::update(currentStep_t currentStep, Game *game){
 
 void Level::update(currentStep_t currentStep, Game *game){
     size_t actualStage = currentStep.stage;
-        
     stages_[actualStage]->update(currentStep, game);
 }
 
 void Stage::update(currentStep_t currentStep, Game *game){
     size_t actualStep = currentStep.step;
-
     steps_[actualStep]->update(game);
 }
 
 void Step::update(Game *game){
-
     vector<Id> mapElementDead;
-
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
-
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
             Event *eventDead = new EventMapElementDelete(mapElement.first);
@@ -185,98 +159,74 @@ void Step::update(Game *game){
         this->mapElements_.erase(oneIdDead);
         delete enemyDead;        
     }
-
 }
 
 void Map::createPlayers(gameParams_t &gameSettings){
-    
     size_t cantPlayers = gameSettings.playersParams.size();
     Logger::getInstance()->log(DEBUG, "Se comienza a crear el MapElement para cada jugador.");
-
     for (size_t i = 0; i < cantPlayers; i++){
-
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
         int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
         string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
         Id idPlayer = gameSettings.playersParams[i].id;
-
         position_t positionPlayer;
         positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
         positionPlayer.axis_y = ((GameProvider::getHeight() / 4) * i) / 2;
         positionPlayer.orientation = FRONT;
-
         this->players[idPlayer] = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY);
-
     }
 }
 
 void Map::initializePositionPlayers(gameParams_t &gameSettings){
-
     size_t cantPlayers = gameSettings.playersParams.size();
     Logger::getInstance()->log(DEBUG, "Se inicializa la posicion del MapElement para cada jugador.");
-
     for (size_t i = 0; i < cantPlayers; i++){
-
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
         int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
         Id idPlayer = gameSettings.playersParams[i].id;
-
         position_t positionPlayer;
         positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
         positionPlayer.axis_y = ((GameProvider::getHeight() / cantPlayers) * i) / 2;
-
         State *playerPosition = this->players[idPlayer]->getState<Position>(string("Position"));
         playerPosition->setX(positionPlayer.axis_x);
         playerPosition->setY(positionPlayer.axis_y);
-
         State *playerOrientation = this->players[idPlayer]->getState<Orientation>(string("Orientation"));
         playerOrientation->setX(FRONT);
-
     }    
 }
 
 void Map::movePlayer(Id idUser, orientation_t orientation){
-
     MapElement *onePlayer = this->players[idUser];
-
     if (!onePlayer){
         Logger::getInstance()->log(ERROR, "No se encontro el jugador para mover.");
         return;
     }
-
     onePlayer->moveTo(orientation);
     Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
 }
 
 void Map::initializeStep(currentStep_t currentStep, Game *game){
-    size_t actualLevel = currentStep.level;
-        
+    size_t actualLevel = currentStep.level;   
     levels_[actualLevel]->initializeStep(currentStep, game);
 }
 
 void Level::initializeStep(currentStep_t currentStep, Game *game){
-    size_t actualStage = currentStep.stage;
-        
+    size_t actualStage = currentStep.stage;   
     stages_[actualStage]->initializeStep(currentStep, game);
 }
 
 void Stage::initializeStep(currentStep_t currentStep, Game *game){
     size_t actualStep = currentStep.step;
-
     steps_[actualStep]->initializeStep(game);
 }
 
 void Step::initializeStep(Game *game){
-    
     for(auto mapElement : this->mapElements_) {
-
         position_t actualPosition = mapElement.second->getActualPosition();
         string sourceSprite = mapElement.second->getImageSource();
         spriteSize_t spriteSize = mapElement.second->getSpriteSize();
-
         char imagePath[100];
         strcpy(imagePath, sourceSprite.c_str());
-
         Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
         game->sendEvent(event);
     }

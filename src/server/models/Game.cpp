@@ -9,8 +9,6 @@ Game::Game(Server *server){
 Game::~Game(){
 }
 
-/* EL metodo run tendrá el ciclo principal
-    del juego.*/
 void Game::run() {
     if (!GameProvider::getStatus().normalStatus)
         return;
@@ -173,8 +171,6 @@ void Game::sendBackground(size_t numberLevel, size_t numberStage){
     
     Event* event = new EventInitStage(layerPaths);
     this->sendEvent(event);
-    
-    usleep(2000000);//tiempo para garantizar q le llego a todos
 }
 
 void Game::sendEvent(Event *event){

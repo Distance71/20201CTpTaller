@@ -1,20 +1,20 @@
 #include "User.h"
 
-User::User(Socket *socket){
+User::User(Socket *socket,UsersManager* userManager){
+	string userName_ = "";
+    string password_ = "";
 	this->socket_ = socket;
 	this->connected_ = true;
-	deserializer_ = new MessageDeserializer();
-	serializer_ = new MessageSerializer();
+    bool connected_ = false;
+    bool logged_ = false;
+	this->sendingQueue_ = new BlockingQueue <Message*>();
+	this->usersManager_ = userManager;
 }
 
 User::~User() {
-	this->socket_ = nullptr;
-	this->logged_ = false;
-	this->connected_ = false;
-	delete socket_;
-	delete deserializer_;
-	delete serializer_;
+	delete this->sendingQueue_;
 }
+
 
 string User::getUserName(){
 	return this->userName_;
@@ -24,63 +24,103 @@ string User::getPassword(){
 	return this->password_;
 }
 
-void User::setLoggedIn(){
-	this->logged_ = true;
-}
-
 void User::setCredentials(string userName, string password){
 	this->userName_ = userName;
 	this->password_ = password;
 }
 
-void User::setCharacter(character_t character){
-	this->character_ = character; 
+
+void User::setLoggedIn(){
+	this->logged_ = true;
 }
 
-character_t User::getCharacter(){
-	return this->character_;
+
+void User::setConnection(){
+	this->connected_= true;
 }
 
-void User::setSocket(Socket *socket){
-	this->socket_ = socket;
-}
-
-Socket* User::getSocket(){
-	return this->socket_;
+void User::setDisconnection(){
+	this->connected_ = false;
 }
 
 bool User::isConnected(){
 	return this->connected_;
 }
 
-Id User::getId(){
-	return this->userId_;
+Socket* User::getSocket(){
+	return this->socket_;
 }
 
-void User::setId(Id id){
-	userId_ = id;
+UsersManager* User::getUsersManager(){
+	return this->usersManager_;
 }
 
-void User::setDisconnection(){
-	this->socket_ = nullptr;
-	this->connected_ = false;
+void User::sendEvent(Event* event){
+	this->sendingQueue_->push(event->serialize());
 }
 
-Event* User::receiveMessage(){
-	Event* event;
-	Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje en User");
-	response_t response = deserializer_->getReceivedMessage(socket_, event);
-	if(response.ok){
-		Logger::getInstance()->log(DEBUG, "Se recibio del deserializer un evento con exito en User");
-		return event;
+Message* User::getMessage(){
+	if (!this->sendingQueue_->empty()){
+		return this->sendingQueue_->pop();
 	}
-	else {
-		Logger::getInstance()->log(ERROR, "No se pudo recibir un evento con exito en User");
-		return nullptr;
-	}	
+	return NULL;
 }
 
-response_t User::sendMessage(Event* event){
-	Message* message = event->serialize();
-	return serializer_->sendSerializedEvent(this->socket_, message);
+
+static void* sendMessages(void* arg){
+	User* user = (User*) arg;
+	MessageSerializer serializer = MessageSerializer();
+	Socket* socket = user->getSocket();
+	std::mutex mtxEnvio;
+	while (user->isConnected()){
+		Message* message = user->getMessage();
+		if (message){
+			mtxEnvio.lock();
+			serializer.sendSerializedEvent(socket, message);
+			delete message;
+			mtxEnvio.unlock();
+		}
+	}
+}
+
+
+void User::runSendingMessagesThread(){
+	pthread_t sending_thread;
+    pthread_create(&sending_thread,NULL,sendMessages,this);
+}
+
+
+static void* receivingMessages(void * arg){
+	Logger::getInstance()->log(DEBUG, "Se inicia  hilo del receptor del ususario ");
+	User* user = (User*) arg;
+	Socket* socket = user->getSocket();
+	UsersManager* userManager = user->getUsersManager();
+	MessageDeserializer deserealizer = MessageDeserializer();
+	std::mutex mtxErrno;
+	while(user->isConnected()){
+		Event* event;
+		deserealizer.getReceivedMessage(socket,event);
+		if(!event){
+            mtxErrno.lock();
+            if (errno == ECONNREFUSED || errno == ENOTCONN || errno == ENOTSOCK) {
+                Logger::getInstance()->log(DEBUG, "Se detecta desconexión del cliente.");
+                user->setDisconnection();
+                return nullptr;
+            }
+            mtxErrno.unlock();
+            Logger::getInstance()->log(ERROR, "Se ha recibido un evento invalido. Se cerrará la conexión con el cliente");
+            return nullptr;
+        }
+		else{
+			userManager->processEvent(event);
+		}		
+	}
+	Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del ususario ");
+    return nullptr;
+}
+
+
+void User::runReceivingMessagesThread(){
+	pthread_t sending_thread;
+    pthread_create(&sending_thread,NULL,receivingMessages,this);
 }

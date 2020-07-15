@@ -10,32 +10,34 @@
 #include "../Server.h"
 
 class Server;
+class User;
 
 class UsersManager {
     private:
         Server *serverOwn_;
-        //unordered_map<Id, User *> users_;
-        BlockingMap<User> *users_;
+        Socket* socket_;
         size_t maxUsers_;
-        Id lastId_ = 0;
-        vector<Id> *idsLoggedUsers_;
-        
-        pthread_mutex_t mutex_lastId_;
-        pthread_mutex_t mutex_loggedUser_;
+        Id lastId_ ;
+        unordered_map<Id, User *> users_;
+        int loggedUsers_;
         
 
     public:
         UsersManager(Server *serverOwn);
         ~UsersManager();
-
-        unordered_map<Id, User *> getUsers();
-        // void setIdUser(Id idUser);
-        // Id getIdUser();
+        Server* getServer();
         bool isFullGame();
-        Id acceptUnloggedUser();      
-        bool loginUser(Id userId); 
-
-        void setSocket(Socket *socket);
+        void sendEventToUser(Id id, Event* event);
+        void sendToAll(Event* event);
+        void runAcceptUsersThread();
+        void acceptUser();
+        void loginUser(Id userId);
+        void disconnectUser(Id id);
+        bool isConnectedUser(Id id);
+        void setConnection(Id id);
+        void processEvent(Event* event);
+        
 };
 
-#endif // _USERS_MANAGER_H_
+
+#endif 

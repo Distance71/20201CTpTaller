@@ -1,4 +1,4 @@
-#include "ServerTransmitionManager.h"
+/*#include "ServerTransmitionManager.h"
 
 ServerTransmitionManager::ServerTransmitionManager(Server *server){
     this->serverOwn_ = server;
@@ -240,3 +240,4 @@ void ServerTransmitionManager::sendToUser(User* user, Event* event){
 void ServerTransmitionManager::sendToAllUsers(Event *event){
 
 }
+*/

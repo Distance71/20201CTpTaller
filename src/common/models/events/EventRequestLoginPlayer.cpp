@@ -9,7 +9,6 @@ void EventRequestLoginPlayer::update() {
 		  Logger::getInstance()->log(DEBUG, "No hay conexto para el evento EventRequestLoginPlayer");
     }
     else{
-      //completar
       Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventRequestLoginPlayer");
     }
 }

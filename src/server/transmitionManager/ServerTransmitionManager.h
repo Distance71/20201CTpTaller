@@ -1,4 +1,4 @@
-#ifndef _SERVER_TRANSMITION_MANAGER_H_
+/*#ifndef _SERVER_TRANSMITION_MANAGER_H_
 #define _SERVER_TRANSMITION_MANAGER_H_
 
 #include <errno.h>
@@ -46,3 +46,4 @@ class ServerTransmitionManager {
 };
 
 #endif // _SERVER_TRANSMITION_MANAGER_H_
+*/

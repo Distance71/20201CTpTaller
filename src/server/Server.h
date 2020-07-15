@@ -8,9 +8,7 @@
 #include <unordered_map>
 #include <boost/algorithm/string.hpp>
 
-#include "transmitionManager/ServerTransmitionManager.h"
 #include "usersManager/UsersManager.h"
-
 #include "../common/types.h"
 #include "../common/models/Socket.h"
 #include "../common/services/Logger.h"
@@ -18,9 +16,9 @@
 #include "eventsManager/ServerEventsManager.h"
 #include "../common/models/events/Event.h"
 
+#include "../common/models/events/EventInitStage.h"
 #include "models/Game.h"
 
-class ServerTransmitionManager;
 class ServerEventsManager;
 class UsersManager;
 class Game;
@@ -31,7 +29,6 @@ class Server {
         Socket *socket_;
         Game *game;
         UsersManager* usersManager_;
-        ServerTransmitionManager* transmitionManager_;
         ServerEventsManager* eventsManager_;
         bool connected_ = false;
         bool gameRunning_ = false;
@@ -43,15 +40,16 @@ class Server {
     public:
         Server(size_t port);
         ~Server();
-
-        bool isConnected();
-        void waitPlayers();
-        void addPlayer(User *newUser);
-        bool isFull();
         int run();
-        void runGame();
+
         
         void processEvent(Event *event);
+        
+        bool isConnected();
+       
+        void runGame();
+        
+        
         Socket* getSocket();
         void sendToAllUsers(Event* event);
 

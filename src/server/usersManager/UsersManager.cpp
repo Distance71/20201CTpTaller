@@ -1,116 +1,113 @@
 #include "UsersManager.h"
-
+#include <stdio.h>
 UsersManager::UsersManager(Server *serverOwn){
     this->serverOwn_ = serverOwn;
-    size_t maxUsers = GameProvider::getQuantityPlayers();
-    this->maxUsers_ = maxUsers;
-    this->users_ = new BlockingMap<User>();
-    this->idsLoggedUsers_ = new vector<Id>();
-    pthread_mutex_init(&this->mutex_lastId_, NULL);
-    pthread_mutex_init(&this->mutex_loggedUser_, NULL);
+    this->maxUsers_ = GameProvider::getQuantityPlayers();
+    this->socket_ = this->serverOwn_->getSocket();
+    this->lastId_ = 0;
+    this->loggedUsers_ = 0;
 }
 
 UsersManager::~UsersManager(){
-    this->serverOwn_ = nullptr;
-    pthread_mutex_destroy(&this->mutex_lastId_);
-    pthread_mutex_destroy(&this->mutex_loggedUser_);
 }
+
 
 bool UsersManager::isFullGame(){
-    return this->idsLoggedUsers_->size() >= this->maxUsers_;
+    return this->loggedUsers_ == 2;
 }
 
-Id UsersManager::acceptUnloggedUser(){
 
-    int newClientDescriptor = this->serverOwn_->getSocket()->acceptClient();
+void UsersManager::acceptUser(){
+
+    Id idUser = this-> lastId_;
+
+    int newClientDescriptor = this->socket_->acceptClient();
+    
     if (newClientDescriptor < 0){
         Logger::getInstance()->log(ERROR, "Error al aceptar al cliente.");
-        return 0;
+        return;
     }
 
     Socket *socketNewUser = new Socket(newClientDescriptor);
-    User* newUser = new User(socketNewUser);
+    
+    User* newUser = new User(socketNewUser,this);
 
-    pthread_mutex_lock(&this->mutex_lastId_);
-    Id idUser = lastId_++;
-    pthread_mutex_unlock(&this->mutex_lastId_);
+    newUser->setConnection();
 
-    newUser->setId(idUser);
+    newUser->runSendingMessagesThread();
+    newUser->runReceivingMessagesThread();
 
-    this->users_->put(idUser, newUser);
+    this->users_.emplace(idUser,newUser);
+    
+    this->lastId_ ++;
 
-    // this->serverOwn_->addPlayer(idUser, newUser);
-    this->serverOwn_->addPlayer(newUser);
+    this->loggedUsers_ ++;
 
-    return idUser;
+    Logger::getInstance()->log(INFO, "Se ha conectado un usuario nuevo");
+
 }
 
-bool UsersManager::loginUser(Id userId){
-
-    pthread_mutex_lock(&this->mutex_loggedUser_);
-    bool estaLleno = this->isFullGame();
-
-    if (!estaLleno)
-        this->idsLoggedUsers_->push_back(userId);
-    pthread_mutex_unlock(&this->mutex_loggedUser_);
-
-    return estaLleno;
+Server* UsersManager::getServer(){
+    return this-> serverOwn_;
 }
 
-// void UserManager::logInUser(User* User){
 
-// }
-
-    // unsigned int width = GameProvider::getWidth();
-    // unsigned int height = GameProvider::getHeight();
-    // MessageInitScreen initScreen = MessageInitScreen(width, height);
-    // string dataString;
-    // dataString = initScreen.getStringData();
-
-    //newSocketClient->enviarMensaje(dataString.c_str(), sizeof(char) *dataString.size());
+static void * acceptUsers (void* arg){
     
+    UsersManager* manager = (UsersManager* ) arg;
     
-    // pthread_t newHilo;
+    Server* server = manager->getServer();
+    
+    cout << "Esperando jugadores..." << endl;
+    
+    while (server->isConnected()){
+       
+        manager->acceptUser();
+        
+    }
 
-    // argpthread argumentos;
-    // argumentos.server = this;
-    // argumentos.nroClient = this->clients.size();
-    // argumentos.des = this->deserializer;
+    Logger::getInstance()->log(DEBUG, "Se ha detenido el hilo de detección");
 
-    // pthread_create(&newHilo, NULL, recibirInformacion, &argumentos);
+}
 
 
-// unordered_map<Id, User *> UsersManager::getUsers(){
-//     return this->users_;
-// }
+void UsersManager::runAcceptUsersThread(){
+    pthread_t acceptUsersThread;
+    pthread_create(&acceptUsersThread,NULL,acceptUsers,this);
+ }
 
-// //Checks remains players
-// bool UsersManager::playersConnected(IdPlayer id) {
-	
-// 	if(users_.size())
-// 		return true;
 
-// 	return false;
+bool UsersManager::isConnectedUser(Id id){
+    return this->users_[id]->isConnected();
+}
 
-// 	for ( auto User = users_.begin(); it != users_.end(); ++it )
-// 		if()
-// 		User->first
-// 		it->second;
-// }
 
-// void UsersManager::setPlayer(IdPlayer idPlayer, User* user){
-//     users_[idPlayer] = user;
-// }
+void UsersManager::disconnectUser(Id id){
+     this->users_[id]->setDisconnection();
+ }
 
-// bool UsersManager::isGameFull(){
-// 	size_t maxPlayers = GameProvider::getQuantityPlayers();
+void UsersManager::setConnection(Id id){
+     this->users_[id]->setConnection();
+ }
 
-// 	return users_.size() == maxPlayers
-// }
 
-// User* UsersManager::getPlayer(IdPlayer idPlayer){
-// 	if (users_.find(idPlayer) == users_.end())
-// 		return NULL;
+void UsersManager::loginUser(Id id){
+    this->users_[id]->setLoggedIn();
+    this->loggedUsers_ ++;
+}
 
-// 	return users_[idPlayer];
-// }
+
+void UsersManager::sendEventToUser(Id id, Event* event){
+    this->users_[id]->sendEvent(event);
+}
+
+
+void UsersManager::processEvent(Event* event){
+    this->serverOwn_->processEvent(event);
+}
+
+void UsersManager::sendToAll(Event* event){
+    for (auto user : this->users_){
+        sendEventToUser(user.first,event);
+    }
+}

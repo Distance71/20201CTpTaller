@@ -8,9 +8,13 @@
 #include "../../common/models/events/Event.h"
 #include "../../common/services/serializer/MessageDeserializer.h"
 #include "../../common/services/serializer/MessageSerializer.h"
+#include "../../common/models/BlockingQueue.h"
+#include "../usersManager/UsersManager.h"
+#include <errno.h>
+#include <thread>
 
 using namespace std;
-
+class UsersManager;
 class Message;
 
 class User {
@@ -18,42 +22,40 @@ class User {
 private:
     string userName_ = "";
     string password_ = "";
-    Socket *socket_;
-    character_t character_;
-    Id userId_;
-    MessageDeserializer *deserializer_;
-    MessageSerializer *serializer_;
-
     bool connected_ = false;
     bool logged_ = false;
-
+    Socket *socket_;
+    BlockingQueue <Message*> * sendingQueue_;
+    UsersManager* usersManager_;
+    
 public:
-    //User() = default;
-    ~User();
-    User(Socket *socket);
 
+    //Constructor
+    User(Socket *socket,UsersManager* usersManager);
+    ~User();
+    
+    //general
+    UsersManager* getUsersManager();
+
+    //logueo
     string getUserName();
     string getPassword();
-
     void setCredentials(string userName, string password);
-
     void setLoggedIn();
 
-    void setCharacter(character_t character);
-    character_t getCharacter();
-
-    void setSocket(Socket *socket);
-    Socket *getSocket();
-
-    Id getId();
-    void setId(Id id);
-
+    // connection
     bool isConnected();
     void setDisconnection();
+    void setConnection();
 
-    response_t sendMessage(Event* event);
-    Event* receiveMessage();
+    //tranismition
+    void sendEvent(Event* event);
+    Message* getMessage();
+    void runSendingMessagesThread();
+    void runReceivingMessagesThread();
+    Socket* getSocket();
+
+    
 };
 
-
-#endif //FINAL_FIGHT_USUARIO_H
+#endif 
