@@ -20,6 +20,7 @@ Sprite::Sprite(const string &source){
             SDL_Surface *surfaceColor = SDL_CreateRGBSurface(0, 106, 83, 32, 0, 0, 0, 0);
             SDL_FillRect(surfaceColor, nullptr, SDL_MapRGB(surfaceColor->format, 47, 106, 144));
             texture_ = SDL_CreateTextureFromSurface(GameProvider::getRenderer(), surfaceColor); 
+            SDL_FreeSurface(surfaceColor);
         } else {
             SDL_Color black = {0, 0, 0};
             SDL_Surface *surfaceMessage = TTF_RenderText_Solid(Sans, "  ?", black);
@@ -27,6 +28,8 @@ Sprite::Sprite(const string &source){
             SDL_FillRect(surfaceColor, nullptr, SDL_MapRGB(surfaceColor->format, 47, 106, 144));
             SDL_BlitSurface(surfaceMessage, nullptr, surfaceColor, nullptr);
             texture_ = SDL_CreateTextureFromSurface(GameProvider::getRenderer(), surfaceColor);
+            SDL_FreeSurface(surfaceColor);
+            SDL_FreeSurface(surfaceMessage);
         }
     }
 }

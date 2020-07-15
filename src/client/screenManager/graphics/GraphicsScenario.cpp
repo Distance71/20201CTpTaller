@@ -79,5 +79,12 @@ void GraphicsScenario::update(){
 }
 
 GraphicsScenario::~GraphicsScenario(){
+    for(auto sprite: this->sprites_)
+        delete sprite;
     
+    for(auto layerSpeed: this->layersSpeeds_)
+        delete layerSpeed;
+    
+    for(auto layersPosition: this->layersPositions_)
+        delete layersPosition;
 }

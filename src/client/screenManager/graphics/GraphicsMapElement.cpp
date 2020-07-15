@@ -22,8 +22,15 @@ GraphicsMapElement::~GraphicsMapElement(){
     delete this->sprite_;
 }
 
-void GraphicsMapElement::update(){
+void GraphicsMapElement::set(){
+    this->setted_ = true;
+}
 
+bool GraphicsMapElement::isSet(){
+    return this->setted_;
+}
+
+void GraphicsMapElement::update(){
     SDL_Renderer* renderer = GameProvider::getRenderer();   
     
     //rectangulo de la pantalla donde quiero dibujar el sprite.

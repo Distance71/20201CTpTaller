@@ -33,9 +33,11 @@ public:
 
     GraphicsMapElement* get(Id const& id) {
         std::unique_lock<std::mutex> lock(this->d_mutex);
+        auto itAux = d_map.find(id);
+        this->d_condition.wait(lock, [=]{ return itAux->second->isSet(); });
         auto it = d_map.find(id);
         if (it != d_map.end())
-            return new GraphicsMapElement(*(it->second));
+            return it->second;
 
         return NULL;
     }

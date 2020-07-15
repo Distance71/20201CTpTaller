@@ -15,6 +15,7 @@ class GraphicsMapElement {
         int size_y_;
         int pos_x_;
         int pos_y_;
+        bool setted_ = false;
         orientation_t orientation_ = FRONT;
         std::mutex mutex_update;
     
@@ -23,6 +24,8 @@ class GraphicsMapElement {
         GraphicsMapElement(const string &source, int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation);
         ~GraphicsMapElement();
         void update();
+        void set();
+        bool isSet();
 
         void setNewPosition(int pos_x, int pos_y, orientation_t orientation);
         

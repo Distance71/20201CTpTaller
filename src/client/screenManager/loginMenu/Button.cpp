@@ -2,13 +2,13 @@
 
 Button::Button(int _xpos, int _ypos ,int _button_width, int _button_height,const char* not_selected_img_path,const char* selected_img_path){
     gRenderer=GameProvider::getRenderer();
-    not_selected_sprite=new Sprite(not_selected_img_path);
-    selected_sprite=new Sprite(selected_img_path);
+    not_selected_sprite = new Sprite(not_selected_img_path);
+    selected_sprite = new Sprite(selected_img_path);
     button_width = _button_width;
     button_height = _button_height;
     x_pos=_xpos;
     y_pos=_ypos;
-    state=NOT_SELECTED;
+    state = NOT_SELECTED;
 }
 
 
