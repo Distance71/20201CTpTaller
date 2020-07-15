@@ -101,7 +101,7 @@ vector<user_t> ConfigurationHandler::getUsersParams(){
     }
 
     GameProvider::setQuantityPlayers(quantityPlayers);
-
+    
     vector<user_t> users (quantityPlayers);
 
     for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
@@ -212,7 +212,32 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
 void ConfigurationHandler::initializeData(){
 
     this->setSizeScreen();
-    this->gameData.playersParams = getUsersParams();
+    // this->gameData.playersParams = getUsersParams();
+
+    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
+
+    if (quantityPlayers > MAX_QUANTITY_PLAYERS){
+        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
+        quantityPlayers = MAX_QUANTITY_PLAYERS;
+    }
+
+    GameProvider::setQuantityPlayers(quantityPlayers);
+    
+    vector<user_t> users (quantityPlayers);
+
+    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
+        user_t newUser;
+
+        string pathUsername = this->getPathUser(oneUser, "username");
+        string pathPassword = this->getPathUser(oneUser, "password");
+
+        newUser.username = this->parserJson->getString(pathUsername);
+        newUser.password = this->parserJson->getString(pathPassword);
+
+        newUser.playerParams = this->getPlayerParams(oneUser);
+
+        this->gameData.playersParams.push_back(newUser);
+    }   
 
     int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
 

@@ -6,11 +6,12 @@ Map::Map(gameParams_t &gameSettings){
     Logger::getInstance()->log(DEBUG, "Se crea entidad Map.");
     Logger::getInstance()->log(DEBUG, "Se procesa el Game Setting.");
 
+    createPlayers(gameSettings);
+
     for(size_t i = 0; i < nLevels; i++){
         Level *newLevel = new Level(gameSettings.levelParams[i]);
         this->addLevel(newLevel);
     }
-    createPlayers(gameSettings);
 }
 
 bool Map::endStep(currentStep_t currentStep){
@@ -49,7 +50,7 @@ Step::Step(){}
 
 Step::Step(stepParams_t params) {
     size_t nEnemies = params.enemies.size();
-
+    
     for(size_t i = 0; i < nEnemies; i++){
         unsigned int nEnemiesIguales = params.enemies[i].quantity;
         string sprite = params.enemies[i].sprite;
@@ -60,14 +61,14 @@ Step::Step(stepParams_t params) {
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
             MapElement *newEnemy = new MapElement(ENEMY, positionEnemy,2,2,sprite, size_x, size_y);
-            this->mapElements_[this->lastId_] = newEnemy;
+            this->mapElements_.emplace(this->lastId_, newEnemy);
             this->lastId_++;
         }
     }
 }
 
 bool Step::endStep(){
-    return (this->mapElements_.empty());
+    return (this->mapElements_.size() <= GameProvider::getQuantityPlayers());
 }
 
 position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
@@ -142,6 +143,7 @@ void Stage::update(currentStep_t currentStep, Game *game){
 void Step::update(Game *game){
     vector<Id> mapElementDead;
     // cout << "ENTRO AL UPDATE STEP " << this->mapElements_.size() << endl;
+
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
         // cout << mapElement.first << endl;
@@ -157,14 +159,19 @@ void Step::update(Game *game){
     }
 
     for(auto oneIdDead : mapElementDead){
-        MapElement *enemyDead = this->mapElements_.at(oneIdDead);
-        this->mapElements_.erase(oneIdDead);
-        delete enemyDead;        
+        auto it = this->mapElements_.find(oneIdDead);
+        if (it !=  this->mapElements_.end()){
+            MapElement *enemyDead = this->mapElements_.at(oneIdDead);
+            this->mapElements_.erase(oneIdDead);
+            delete enemyDead;
+        }
+               
     }
 }
 
 void Map::createPlayers(gameParams_t &gameSettings){
-    size_t cantPlayers = gameSettings.playersParams.size();
+    size_t cantPlayers =GameProvider::getQuantityPlayers();
+    
     Logger::getInstance()->log(DEBUG, "Se comienza a crear el MapElement para cada jugador.");
     for (size_t i = 0; i < cantPlayers; i++){
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
@@ -172,10 +179,11 @@ void Map::createPlayers(gameParams_t &gameSettings){
         string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
         Id idPlayer = gameSettings.playersParams[i].id;
         position_t positionPlayer;
-        positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
-        positionPlayer.axis_y = ((GameProvider::getHeight() / 4) * i) / 2;
+        positionPlayer.axis_x = 100 * i; // (GameProvider::getWidth() / 3) -  playerSizeX / 2
+        positionPlayer.axis_y =  ((GameProvider::getHeight() / 2)); //((GameProvider::getHeight() / cantPlayers)) / (2 * (i+1)) ;
         positionPlayer.orientation = FRONT;
-        this->players[idPlayer] = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY);
+        MapElement *newPlayer = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
+        this->players.emplace(idPlayer, newPlayer);
     }
 }
 
@@ -209,6 +217,17 @@ void Map::movePlayer(Id idUser, orientation_t orientation){
 
 void Map::initializeStep(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;   
+
+    for(auto mapElement : this->players) {
+        position_t actualPosition = mapElement.second->getActualPosition();
+        string sourceSprite = mapElement.second->getImageSource();
+        spriteSize_t spriteSize = mapElement.second->getSpriteSize();
+        char imagePath[100];
+        strcpy(imagePath, sourceSprite.c_str());
+        Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
+        game->sendEvent(event);
+    }
+
     levels_[actualLevel]->initializeStep(currentStep, game);
 }
 

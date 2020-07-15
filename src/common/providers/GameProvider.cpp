@@ -12,7 +12,7 @@ namespace GameProvider {
     size_t quantityPlayers_;
 
     size_t getQuantityPlayers(){
-        return 1;
+        return quantityPlayers_;
     }
 
     void setQuantityPlayers(size_t quantityPlayers){

@@ -76,6 +76,7 @@ static void* sendMessages(void* arg){
 		if (message){;
 			serializer.sendSerializedEvent(socket, message);
 			delete message;
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 		}
 	}
 }
