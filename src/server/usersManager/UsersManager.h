@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "../../common/types.h"
 #include "../../common/models/Socket.h"
+#include "../../common/models/BlockingMap.h"
 #include "../models/User.h"
 #include "../../common/providers/GameProvider.h"
 #include "../Server.h"
@@ -13,12 +14,14 @@ class Server;
 class UsersManager {
     private:
         Server *serverOwn_;
-        unordered_map<Id, User *> users_;
+        //unordered_map<Id, User *> users_;
+        BlockingMap<User> *users_;
         size_t maxUsers_;
-        size_t loggedUsers_ = 0;
         Id lastId_ = 0;
+        vector<Id> *idsLoggedUsers_;
         
         pthread_mutex_t mutex_lastId_;
+        pthread_mutex_t mutex_loggedUser_;
         
 
     public:
@@ -29,7 +32,8 @@ class UsersManager {
         // void setIdUser(Id idUser);
         // Id getIdUser();
         bool isFullGame();
-        Id acceptUnloggedUser();       
+        Id acceptUnloggedUser();      
+        bool loginUser(Id userId); 
 
         void setSocket(Socket *socket);
 };

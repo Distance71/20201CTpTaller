@@ -4,57 +4,20 @@ UsersManager::UsersManager(Server *serverOwn){
     this->serverOwn_ = serverOwn;
     size_t maxUsers = GameProvider::getQuantityPlayers();
     this->maxUsers_ = maxUsers;
+    this->users_ = new BlockingMap<User>();
+    this->idsLoggedUsers_ = new vector<Id>();
     pthread_mutex_init(&this->mutex_lastId_, NULL);
-
-    // int pthreadCreateStatus =  pthread_create(&thread, nullptr, [](void *args)->void * {
-    //     auto arguments = (argsThread_t *) args;
-    //     auto *handler = (ServerTransmitionManager *) arguments->handler;
-    //     auto *user = (User *) arguments->params;
-
-    //     Logger::getInstance()->log(DEBUG, "Se va iniciar el ciclo del receptor transmitionManager");
-    
-    //     while (user->isConnected() && this->serverOwn_->isConnected()) {
-    //         Logger::getInstance()->log(DEBUG, "Se va a recibir un evento en transmitionManager");
-    //         Event *event = user->receiveMessage();
-    //         if(!event){
-    //             mtxErrno.lock();
-    //             if (errno == ECONNREFUSED || errno == ENOTCONN || errno == ENOTSOCK) {
-    //                 Logger::getInstance()->log(DEBUG, "Se detecta desconexión del cliente."+ to_string(user->getId()));
-    //                 user->setDisconnection();
-    //                 return nullptr;
-    //             }
-    //             mtxErrno.unlock();
-    //             Logger::getInstance()->log(ERROR, "Se ha recibido un evento invalido. Se cerrará la conexión con el cliente");
-    //             return nullptr;
-    //         }
-    //         Logger::getInstance()->log(DEBUG, "Se recibio un evento");
-    //         cout << "se recibio un mensaje" << endl;
-    //         //receivedMessagesQueue_->push(message);        
-    //     }
-        
-    //     Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del cliente " + to_string(user->getId()));
-    //     return nullptr;
-    // }, (void *) &args);
-
-
-    // //Not handled
-    // if(pthreadCreateStatus != 0) {
-    //     string errorMessage = "No se pudo crear el hilo para manejar a los usuarios");
-    //     Logger::getInstance()->log(ERROR, errorMessage);
-    //     GameProvider::setErrorStatus(errorMessage);
-    //     return;
-    // }
-
-    // Logger::getInstance()->log(DEBUG, "Se creó el hilo para manejar usuarios.");
+    pthread_mutex_init(&this->mutex_loggedUser_, NULL);
 }
 
 UsersManager::~UsersManager(){
     this->serverOwn_ = nullptr;
     pthread_mutex_destroy(&this->mutex_lastId_);
+    pthread_mutex_destroy(&this->mutex_loggedUser_);
 }
 
 bool UsersManager::isFullGame(){
-    return loggedUsers_ >= this->maxUsers_;
+    return this->idsLoggedUsers_->size() >= this->maxUsers_;
 }
 
 Id UsersManager::acceptUnloggedUser(){
@@ -69,14 +32,29 @@ Id UsersManager::acceptUnloggedUser(){
     User* newUser = new User(socketNewUser);
 
     pthread_mutex_lock(&this->mutex_lastId_);
-    lastId_++;
+    Id idUser = lastId_++;
     pthread_mutex_unlock(&this->mutex_lastId_);
 
-    this->users_[this->lastId_] = newUser;
+    newUser->setId(idUser);
 
+    this->users_->put(idUser, newUser);
+
+    // this->serverOwn_->addPlayer(idUser, newUser);
     this->serverOwn_->addPlayer(newUser);
 
-    return this->lastId_;
+    return idUser;
+}
+
+bool UsersManager::loginUser(Id userId){
+
+    pthread_mutex_lock(&this->mutex_loggedUser_);
+    bool estaLleno = this->isFullGame();
+
+    if (!estaLleno)
+        this->idsLoggedUsers_->push_back(userId);
+    pthread_mutex_unlock(&this->mutex_loggedUser_);
+
+    return estaLleno;
 }
 
 // void UserManager::logInUser(User* User){
