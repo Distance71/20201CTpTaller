@@ -17,8 +17,8 @@ class UsersManager {
         //unordered_map<Id, User *> users_;
         BlockingMap<User> *users_;
         size_t maxUsers_;
-        size_t loggedUsers_ = 0;
         Id lastId_ = 0;
+        vector<Id> *idsLoggedUsers_;
         
         pthread_mutex_t mutex_lastId_;
         
