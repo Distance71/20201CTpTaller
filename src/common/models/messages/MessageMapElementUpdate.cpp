@@ -15,3 +15,7 @@ elementType_t MessageMapElementUpdate::getElementType(){
 position_t MessageMapElementUpdate::getPosition(){
     return this->position_;
 }
+
+responseStatus_t MessageMapElementUpdate::serialize(){
+    return OK;
+}

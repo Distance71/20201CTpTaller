@@ -24,6 +24,7 @@ class MessageMapElementUpdate: public Message {
 
         elementType_t getElementType();
         position_t getPosition();
+        responseStatus_t serialize();
 };
 
 #endif
