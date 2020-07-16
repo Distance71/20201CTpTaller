@@ -19,7 +19,7 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     if (type == PLAYER){
         // PlayerController* playercontroller= new PlayerController(sprite);
         // addAction("PlayerController", playercontroller);
-    } else if(type == ENEMY){
+    } else if((type == ENEMY_1) || (type == ENEMY_2)){
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
     }

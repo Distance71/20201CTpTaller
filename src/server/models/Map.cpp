@@ -56,11 +56,12 @@ Step::Step(stepParams_t params) {
         string sprite = params.enemies[i].sprite;
         int size_x = params.enemies[i].size_x;
         int size_y = params.enemies[i].size_y;
+        elementType_t typeEnemy = (elementType_t) params.enemies[i].type;
         
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
-            MapElement *newEnemy = new MapElement(ENEMY, positionEnemy,2,2,sprite, size_x, size_y);
+            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy,2,2,sprite, size_x, size_y);
             this->mapElements_.emplace(this->lastId_, newEnemy);
             this->lastId_++;
         }

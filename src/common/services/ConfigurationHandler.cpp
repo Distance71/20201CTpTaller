@@ -1,7 +1,7 @@
 #include "ConfigurationHandler.h"
 
 ConfigurationHandler::ConfigurationHandler(bool isServer){
-
+    this->isServer_ = isServer;
     this->parserJson = new ParserJson(isServer);
 }
 
@@ -48,7 +48,7 @@ string ConfigurationHandler::getPathStageEnemy(string pathStage, int numberEnemy
 }
 
 string ConfigurationHandler::getPathPlayer(int numberPlayer, string paramPlayer){
-    string pathPlayer = PATH_PLAYERS + to_string(numberPlayer) + "/" + paramPlayer;
+    string pathPlayer = PATH_BASE_PLAYERS + to_string(numberPlayer) + "/" + paramPlayer;
 
     return pathPlayer;
 }
@@ -85,8 +85,10 @@ player_t ConfigurationHandler::getPlayerParams(int numberPlayer){
         playerParam.size_y = sizeScreenY;
     }    
 
-    string pathSprite = getPathPlayer(numberPlayer, "sprite");
-    playerParam.sprite = this->parserJson->getString(pathSprite);
+    if (!this->isServer_){
+        string pathSprite = getPathPlayer(numberPlayer, "sprite");
+        playerParam.sprite = this->parserJson->getString(pathSprite);
+    }
 
     return playerParam;
 }
@@ -212,141 +214,13 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
 void ConfigurationHandler::initializeData(){
 
     this->setSizeScreen();
-    // this->gameData.playersParams = getUsersParams();
 
-    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
-
-    if (quantityPlayers > MAX_QUANTITY_PLAYERS){
-        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
-        quantityPlayers = MAX_QUANTITY_PLAYERS;
+    if (this->isServer_){
+        this->initializeDataServer();
+    } else {
+        this->initializeDataClient();
     }
 
-    GameProvider::setQuantityPlayers(quantityPlayers);
-    
-    vector<user_t> users (quantityPlayers);
-
-    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
-        user_t newUser;
-
-        string pathUsername = this->getPathUser(oneUser, "username");
-        string pathPassword = this->getPathUser(oneUser, "password");
-
-        newUser.username = this->parserJson->getString(pathUsername);
-        newUser.password = this->parserJson->getString(pathPassword);
-
-        newUser.playerParams = this->getPlayerParams(oneUser);
-
-        this->gameData.playersParams.push_back(newUser);
-    }   
-
-    int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
-
-    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
-    
-    for(int numberLevel = 0; numberLevel < sizeLevel; numberLevel++){
-        Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del nivel " + to_string(numberLevel));
-        string pathLevel = getPathLevel(numberLevel);
-        int sizeStage = this->parserJson->getSizeArray(pathLevel);
-        levelParams_t oneLevelParams;
-
-        for(int numberStage = 0; numberStage < sizeStage; numberStage++){
-            Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
-            stageParams_t oneStageParams;
-
-            string pathStage = getPathStage(numberLevel, numberStage);
-
-            string pathLayer1 = getPathStageLayer(pathStage, 1);
-            oneStageParams.backgroundSources.layer1 = this->parserJson->getString(pathLayer1);
-
-            string pathLayer2 = getPathStageLayer(pathStage, 2);
-            oneStageParams.backgroundSources.layer2 = this->parserJson->getString(pathLayer2);
-
-            string pathLayer3 = getPathStageLayer(pathStage, 3);
-            oneStageParams.backgroundSources.layer3 = this->parserJson->getString(pathLayer3);
-
-            string pathLayer4 = getPathStageLayer(pathStage, 4);
-            oneStageParams.backgroundSources.layer4 = this->parserJson->getString(pathLayer4);
-            
-            string pathLayer5 = getPathStageLayer(pathStage, 5);
-            oneStageParams.backgroundSources.layer5 = this->parserJson->getString(pathLayer5);
-
-            string pathLayer6 = getPathStageLayer(pathStage, 6);
-            oneStageParams.backgroundSources.layer6 = this->parserJson->getString(pathLayer6);
-
-            string pathLayer7 = getPathStageLayer(pathStage, 7);
-            oneStageParams.backgroundSources.layer7 = this->parserJson->getString(pathLayer7);            
-            
-            string pathEnemiesBase = getPathStageEnemy(pathStage, -1, "");
-            int sizeEnemies = this->parserJson->getSizeArray(pathEnemiesBase);
-            
-            unsigned int cantTotalType1 = 0;
-            unsigned int cantTotalType2 = 0;
-
-            unsigned int sizeScreenX = GameProvider::getWidth();
-            unsigned int sizeScreenY = GameProvider::getHeight();
-
-            for(int numberEnemy = 0; numberEnemy < sizeEnemies; numberEnemy++){
-                Logger::getInstance()->log(DEBUG, "Se comienza a analizar el enemigo " + to_string(numberEnemy) + " del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
-            
-                enemy_t oneEnemy;
-
-                string pathEnemyType = getPathStageEnemy(pathStage, numberEnemy, "type");
-
-                int typeEnemy = this->parserJson->getUnsignedInt(pathEnemyType);
-                if (typeEnemy >= 0){
-                    oneEnemy.type = typeEnemy;
-                } else {
-                    oneEnemy.type = DEFAULT_ENEMY_TYPE;
-                }
-
-                string pathEnemyQuantity = getPathStageEnemy(pathStage, numberEnemy, "quantity");
-
-                int cantEnemy = this->parserJson->getUnsignedInt(pathEnemyQuantity); 
-
-                if (cantEnemy >= 0){
-                    oneEnemy.quantity = cantEnemy;
-                } else {
-                    oneEnemy.quantity = DEFAULT_ENEMY_QUANTITY;
-                }
-
-                string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
-                int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
-                if (sizeX >= 0){
-                    oneEnemy.size_x = sizeX;
-                } else {
-                    oneEnemy.size_x = DEFAULT_SIZE_X;
-                }
-
-                if (sizeX > sizeScreenX){
-                    Logger::getInstance()->log(ERROR, "El largo del enemigo " + to_string(numberEnemy) + " supera el largo de la pantalla. Se settea este ultimo como su largo");
-                    oneEnemy.size_x = sizeScreenX;
-                }
-
-                if (sizeX > sizeScreenY){
-                    Logger::getInstance()->log(ERROR, "El ancho del enemigo " + to_string(numberEnemy) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
-                    oneEnemy.size_y = sizeScreenY;
-                }
-
-                string pathEnemySizeY = getPathStageEnemy(pathStage, numberEnemy, "sizeY");
-                int sizeY = this->parserJson->getUnsignedInt(pathEnemySizeY);
-                if (sizeY >= 0){
-                    oneEnemy.size_y = sizeY;
-                } else {
-                    oneEnemy.size_y = DEFAULT_SIZE_Y;
-                }
-                
-                string pathEnemySprite = getPathStageEnemy(pathStage, numberEnemy, "sprite");
-                oneEnemy.sprite = this->parserJson->getString(pathEnemySprite);
-
-                oneStageParams.totalEnemies.push_back(oneEnemy);
-            }
-
-            oneStageParams.stepsParams = getStep(oneStageParams.totalEnemies);
-            oneLevelParams.stagesParams.push_back(oneStageParams);
-        }
-
-        this->gameData.levelParams.push_back(oneLevelParams);
-    }
 }
 
 string ConfigurationHandler::getPathScreen(string paramScreen){
@@ -410,3 +284,218 @@ gameParams_t ConfigurationHandler::getGameParams(){
 void ConfigurationHandler::setConfigDefault(){
     this->parserJson->setConfigDefault();
 };
+
+void ConfigurationHandler::initializeDataServer(){
+
+    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
+
+    if (quantityPlayers > MAX_QUANTITY_PLAYERS){
+        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
+        quantityPlayers = MAX_QUANTITY_PLAYERS;
+    }
+
+    GameProvider::setQuantityPlayers(quantityPlayers);
+    
+    vector<user_t> users (quantityPlayers);
+
+    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
+        user_t newUser;
+
+        string pathUsername = this->getPathUser(oneUser, "username");
+        string pathPassword = this->getPathUser(oneUser, "password");
+
+        newUser.username = this->parserJson->getString(pathUsername);
+        newUser.password = this->parserJson->getString(pathPassword);
+
+        newUser.playerParams = this->getPlayerParams(oneUser);
+
+        this->gameData.playersParams.push_back(newUser);
+    }   
+
+    int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
+
+    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
+    
+    for(int numberLevel = 0; numberLevel < sizeLevel; numberLevel++){
+        Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del nivel " + to_string(numberLevel));
+        string pathLevel = getPathLevel(numberLevel);
+        int sizeStage = this->parserJson->getSizeArray(pathLevel);
+        levelParams_t oneLevelParams;
+
+        for(int numberStage = 0; numberStage < sizeStage; numberStage++){
+            Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
+            stageParams_t oneStageParams;
+
+            string pathStage = getPathStage(numberLevel, numberStage);        
+            
+            string pathEnemiesBase = getPathStageEnemy(pathStage, -1, "");
+            int sizeEnemies = this->parserJson->getSizeArray(pathEnemiesBase);
+            
+            unsigned int cantTotalType1 = 0;
+            unsigned int cantTotalType2 = 0;
+
+            unsigned int sizeScreenX = GameProvider::getWidth();
+            unsigned int sizeScreenY = GameProvider::getHeight();
+
+            for(int numberEnemy = 0; numberEnemy < sizeEnemies; numberEnemy++){
+                Logger::getInstance()->log(DEBUG, "Se comienza a analizar el enemigo " + to_string(numberEnemy) + " del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
+            
+                enemy_t oneEnemy;
+
+                string pathEnemyType = getPathStageEnemy(pathStage, numberEnemy, "type");
+
+                int typeEnemy = ENEMY_1;
+
+                if (numberEnemy > 0)
+                    typeEnemy = ENEMY_2;
+
+                string pathEnemyQuantity = getPathStageEnemy(pathStage, numberEnemy, "quantity");
+
+                int cantEnemy = this->parserJson->getUnsignedInt(pathEnemyQuantity); 
+
+                if (cantEnemy >= 0){
+                    oneEnemy.quantity = cantEnemy;
+                } else {
+                    oneEnemy.quantity = DEFAULT_ENEMY_QUANTITY;
+                }
+
+                string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
+                int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
+                if (sizeX >= 0){
+                    oneEnemy.size_x = sizeX;
+                } else {
+                    oneEnemy.size_x = DEFAULT_SIZE_X;
+                }
+
+                if (sizeX > sizeScreenX){
+                    Logger::getInstance()->log(ERROR, "El largo del enemigo " + to_string(numberEnemy) + " supera el largo de la pantalla. Se settea este ultimo como su largo");
+                    oneEnemy.size_x = sizeScreenX;
+                }
+
+                string pathEnemySizeY = getPathStageEnemy(pathStage, numberEnemy, "sizeY");
+                int sizeY = this->parserJson->getUnsignedInt(pathEnemySizeY);
+                if (sizeY >= 0){
+                    oneEnemy.size_y = sizeY;
+                } else {
+                    oneEnemy.size_y = DEFAULT_SIZE_Y;
+                }
+
+                if (sizeY > sizeScreenY){
+                    Logger::getInstance()->log(ERROR, "El ancho del enemigo " + to_string(numberEnemy) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+                    oneEnemy.size_y = sizeScreenY;
+                }
+
+                oneStageParams.totalEnemies.push_back(oneEnemy);
+            }
+
+            oneStageParams.stepsParams = getStep(oneStageParams.totalEnemies);
+            oneLevelParams.stagesParams.push_back(oneStageParams);
+        }
+
+        this->gameData.levelParams.push_back(oneLevelParams);
+    }    
+}
+
+void ConfigurationHandler::initializeDataClient(){
+
+    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_PLAYERS);
+
+    GameProvider::setQuantityPlayers(quantityPlayers);
+    
+    vector<user_t> users (quantityPlayers);
+
+    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
+        user_t newUser;
+
+        newUser.playerParams = this->getPlayerParams(oneUser);
+
+        this->gameData.playersParams.push_back(newUser);
+    }   
+
+    int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
+
+    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
+    
+    for(int numberLevel = 0; numberLevel < sizeLevel; numberLevel++){
+        Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del nivel " + to_string(numberLevel));
+        string pathLevel = getPathLevel(numberLevel);
+        int sizeStage = this->parserJson->getSizeArray(pathLevel);
+        levelParams_t oneLevelParams;
+
+        for(int numberStage = 0; numberStage < sizeStage; numberStage++){
+            Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
+            stageParams_t oneStageParams;
+
+            string pathStage = getPathStage(numberLevel, numberStage);
+
+            string pathLayer1 = getPathStageLayer(pathStage, 1);
+            oneStageParams.backgroundSources.layer1 = this->parserJson->getString(pathLayer1);
+
+            string pathLayer2 = getPathStageLayer(pathStage, 2);
+            oneStageParams.backgroundSources.layer2 = this->parserJson->getString(pathLayer2);
+
+            string pathLayer3 = getPathStageLayer(pathStage, 3);
+            oneStageParams.backgroundSources.layer3 = this->parserJson->getString(pathLayer3);
+
+            string pathLayer4 = getPathStageLayer(pathStage, 4);
+            oneStageParams.backgroundSources.layer4 = this->parserJson->getString(pathLayer4);
+            
+            string pathLayer5 = getPathStageLayer(pathStage, 5);
+            oneStageParams.backgroundSources.layer5 = this->parserJson->getString(pathLayer5);
+
+            string pathLayer6 = getPathStageLayer(pathStage, 6);
+            oneStageParams.backgroundSources.layer6 = this->parserJson->getString(pathLayer6);
+
+            string pathLayer7 = getPathStageLayer(pathStage, 7);
+            oneStageParams.backgroundSources.layer7 = this->parserJson->getString(pathLayer7);            
+            
+            string pathEnemiesBase = getPathStageEnemy(pathStage, -1, "");
+            int sizeEnemies = this->parserJson->getSizeArray(pathEnemiesBase);
+
+            unsigned int sizeScreenX = GameProvider::getWidth();
+            unsigned int sizeScreenY = GameProvider::getHeight();
+
+            for(int numberEnemy = 0; numberEnemy < sizeEnemies; numberEnemy++){
+                Logger::getInstance()->log(DEBUG, "Se comienza a analizar el enemigo " + to_string(numberEnemy) + " del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
+            
+                enemy_t oneEnemy;
+
+                string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
+                int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
+                if (sizeX >= 0){
+                    oneEnemy.size_x = sizeX;
+                } else {
+                    oneEnemy.size_x = DEFAULT_SIZE_X;
+                }
+
+                if (sizeX > sizeScreenX){
+                    Logger::getInstance()->log(ERROR, "El largo del enemigo " + to_string(numberEnemy) + " supera el largo de la pantalla. Se settea este ultimo como su largo");
+                    oneEnemy.size_x = sizeScreenX;
+                }
+
+                if (sizeX > sizeScreenY){
+                    Logger::getInstance()->log(ERROR, "El ancho del enemigo " + to_string(numberEnemy) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+                    oneEnemy.size_y = sizeScreenY;
+                }
+
+                string pathEnemySizeY = getPathStageEnemy(pathStage, numberEnemy, "sizeY");
+                int sizeY = this->parserJson->getUnsignedInt(pathEnemySizeY);
+                if (sizeY >= 0){
+                    oneEnemy.size_y = sizeY;
+                } else {
+                    oneEnemy.size_y = DEFAULT_SIZE_Y;
+                }
+                
+                string pathEnemySprite = getPathStageEnemy(pathStage, numberEnemy, "sprite");
+                oneEnemy.sprite = this->parserJson->getString(pathEnemySprite);
+
+                oneStageParams.totalEnemies.push_back(oneEnemy);
+            }
+
+            oneStageParams.stepsParams = getStep(oneStageParams.totalEnemies);
+            oneLevelParams.stagesParams.push_back(oneStageParams);
+        }
+
+        this->gameData.levelParams.push_back(oneLevelParams);
+    }
+}

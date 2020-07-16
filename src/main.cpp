@@ -111,7 +111,9 @@ int mainClient(int port, string ipAddress, string levelLog, string pathConfigura
     } else {
         Logger::getInstance()->setLevel(levelLog);
     }
-    delete configurationHandler;
+    
+    configurationHandler->initializeData();
+    GameProvider::setConfig(configurationHandler);
 
     int codExitClient;
     if (modeTest){
