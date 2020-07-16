@@ -59,8 +59,6 @@ Id MapElement::getIdElement(){
 }
 
 void MapElement::update(){
-   //GraphicsMapElement *graficador = dynamic_cast<GraphicsMapElement*>(actions_.at("Graphics")); 
-    //graficador->update(states_);
     for(auto action : actions_){
         action.second->update(states_); 
     }

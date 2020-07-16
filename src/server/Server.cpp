@@ -61,8 +61,6 @@ Socket* Server::getSocket(){
     return this->socket_;
 }
 
-
-
 int Server::run(){
 
     if(!this->isConnected()) {
@@ -73,8 +71,9 @@ int Server::run(){
     this->usersManager_-> runAcceptUsersThread();
     
     while (this->isConnected()){
+        usleep(100000); //retardo para el while
         if(this->usersManager_->isFullGame()){
-            cout <<"Se conectaron todos los jugadores, iniciará la partida"<< endl;
+            cout << "Se conectaron todos los jugadores, iniciará la partida"<< endl;
             break;
         }
     }     
