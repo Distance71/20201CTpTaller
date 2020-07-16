@@ -50,7 +50,7 @@ public:
 
     //tranismition
     void sendEvent(Event* event);
-    Message* getMessage();
+    Message* getMessage(); // es(deberia ser) privado en realidad
     void runSendingMessagesThread();
     void runReceivingMessagesThread();
     Socket* getSocket();

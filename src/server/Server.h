@@ -15,8 +15,6 @@
 #include "../common/providers/GameProvider.h"
 #include "eventsManager/ServerEventsManager.h"
 #include "../common/models/events/Event.h"
-
-#include "../common/models/events/EventInitStage.h"
 #include "models/Game.h"
 
 class ServerEventsManager;
@@ -32,23 +30,19 @@ class Server {
         ServerEventsManager* eventsManager_;
         bool connected_ = false;
         bool gameRunning_ = false;
-        
-        pthread_mutex_t mutex_players_;
-        
+                
         void _initializeServer();
         
     public:
         Server(size_t port);
         ~Server();
         int run();
-
         
         void processEvent(Event *event);
         
         bool isConnected();
        
-        void runGame();
-        
+        void runGame();        
         
         Socket* getSocket();
         void sendToAllUsers(Event* event);

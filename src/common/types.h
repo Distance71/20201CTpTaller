@@ -68,6 +68,17 @@ typedef enum {
     NOT_MOVEMENT = 8,
 } orientation_t;
 
+typedef enum {
+    INIT_LEVEL_ONE = 0,
+    END_LEVEL_ONE = 1,
+    INIT_LEVEL_TWO = 2,
+    END_LEVEL_TWO = 3,
+    INIT_LEVEL_THREE = 4,
+    END_LEVEL_THREE = 5,
+    INIT_LEVEL_FOUR = 6,
+    END_LEVEL_FOUR = 7,
+} transition_t;
+
 typedef struct {
     unsigned int type;
     unsigned int quantity;
@@ -149,9 +160,12 @@ typedef struct {
 } currentStep_t;
 
 typedef struct {
+    string initPath;
+    string endPath;
+} transitionScreen_t;
+
+typedef struct {
     vector<enemy_t> enemies;
-    //size_t quantEnemiesType1; //Refactor this later
-    //size_t quantEnemiesType2;
 } stepParams_t;
 
 typedef struct {
@@ -162,6 +176,7 @@ typedef struct {
 
 typedef struct {
     vector<stageParams_t> stagesParams;
+    vector<string> pathTransitionScreen;
 } levelParams_t;
 
 //Exported to a class -> se deja por el momento

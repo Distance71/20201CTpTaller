@@ -19,7 +19,7 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     if (type == PLAYER){
         // PlayerController* playercontroller= new PlayerController(sprite);
         // addAction("PlayerController", playercontroller);
-    } else if(type == ENEMY){
+    } else if((type == ENEMY_1) || (type == ENEMY_2)){
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
     }
@@ -59,8 +59,6 @@ Id MapElement::getIdElement(){
 }
 
 void MapElement::update(){
-   //GraphicsMapElement *graficador = dynamic_cast<GraphicsMapElement*>(actions_.at("Graphics")); 
-    //graficador->update(states_);
     for(auto action : actions_){
         action.second->update(states_); 
     }

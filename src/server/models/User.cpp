@@ -89,7 +89,7 @@ void User::runSendingMessagesThread(){
 
 
 static void* receivingMessages(void * arg){
-	Logger::getInstance()->log(DEBUG, "Se inicia  hilo del receptor del ususario ");
+	Logger::getInstance()->log(DEBUG, "Se inicia hilo del receptor del ususario ");
 	User* user = (User*) arg;
 	Socket* socket = user->getSocket();
 	UsersManager* userManager = user->getUsersManager();

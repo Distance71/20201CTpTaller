@@ -61,13 +61,11 @@ static void * acceptUsers (void* arg){
     cout << "Esperando jugadores..." << endl;
     
     while (server->isConnected()){
-       
-        manager->acceptUser();
-        
+        usleep(100000); //retardo para el while
+        manager->acceptUser();        
     }
 
     Logger::getInstance()->log(DEBUG, "Se ha detenido el hilo de detección");
-
 }
 
 
@@ -96,11 +94,9 @@ void UsersManager::loginUser(Id id){
     this->loggedUsers_ ++;
 }
 
-
 void UsersManager::sendEventToUser(Id id, Event* event){
     this->users_[id]->sendEvent(event);
 }
-
 
 void UsersManager::processEvent(Event* event){
     this->serverOwn_->processEvent(event);

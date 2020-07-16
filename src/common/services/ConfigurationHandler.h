@@ -10,7 +10,8 @@
 #define PATH_LOG_LEVEL "/configuracion/log/level"
 #define PATH_LEVEL "/configuracion/level"
 #define PATH_BASE_STAGE "/configuracion/level/"
-#define PATH_PLAYERS "/configuracion/players/"
+#define PATH_PLAYERS "/configuracion/players"
+#define PATH_BASE_PLAYERS "/configuracion/players/"
 #define PATH_SCREEN "/configuracion/screen/"
 #define PATH_USER "/configuracion/users"
 #define PATH_BASE_USER "/configuracion/users/"
@@ -40,6 +41,7 @@ class ConfigurationHandler {
 
     private: 
         gameParams_t gameData;
+        bool isServer_;
         ParserJson *parserJson;
 
         string getPathUser(int numberUser, string paramUser);
@@ -57,6 +59,9 @@ class ConfigurationHandler {
 
         string getPathScreen(string paramScreen);
         void setSizeScreen();
+
+        void initializeDataServer();
+        void initializeDataClient();
 
     public:
         ConfigurationHandler(bool isServer);
