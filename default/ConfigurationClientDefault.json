@@ -30,8 +30,10 @@
             }
         ],
         "level": [
-            [
+            [                
                 {
+                    "transitionInit": "assets/TransitionScreens/Stage1.JPG",
+                    "transitionEnd": "assets/TransitionScreens/Stage1Cleared.JPG",
                     "layer1": "assets/Stage/Level1/layer_1.png",
                     "layer2": "assets/Stage/Level1/layer_2.png",
                     "layer3": "assets/Stage/Level1/layer_3.png",
@@ -55,6 +57,8 @@
             ],
             [
                 {
+                    "transitionInit": "assets/TransitionScreens/Stage2.JPG",
+                    "transitionEnd": "assets/TransitionScreens/Stage2Cleared.JPG",
                     "layer1": "assets/Stage/Level2/layer_1.png",
                     "layer2": "assets/Stage/Level2/layer_2.png",
                     "layer3": "assets/Stage/Level2/layer_3.png",
@@ -78,6 +82,8 @@
             ],
             [
                 {
+                    "transitionInit": "assets/TransitionScreens/Stage3.JPG",
+                    "transitionEnd": "assets/TransitionScreens/Stage3Cleared.JPG",
                     "layer1": "assets/Stage/Level3/layer_1.png",
                     "layer2": "assets/Stage/Level3/layer_2.png",
                     "layer3": "assets/Stage/Level3/layer_3.png",
@@ -101,6 +107,8 @@
             ],
             [
                 {
+                    "transitionInit": "assets/TransitionScreens/Stage4.JPG",
+                    "transitionEnd": "assets/TransitionScreens/Stage4Cleared.JPG",
                     "layer1": "assets/Stage/Level4/layer_a.png",
                     "layer2": "assets/Stage/Level4/placebo.png",
                     "layer3": "assets/Stage/Level4/layer_b.png",
