@@ -35,6 +35,10 @@ namespace GameProvider {
         screenHeight_ = height;
     }
 
+    int getElementsSize(){
+        return ELEMENT_SIZE;
+    }
+
     SDL_Event getLastEvent() {
         return lastEvent_;
     }

@@ -1,7 +1,7 @@
 #include "EventAnimationInitStage.h"
 
 Message* EventAnimationInitStage::serialize() {
-    return (Message *) new MessageAnimationInitStage(this->path_);
+    return (Message *) new MessageAnimationInitStage(this->scene_);
 }
 
 void EventAnimationInitStage::update(){
@@ -10,7 +10,7 @@ void EventAnimationInitStage::update(){
     }
     else{
       Client * client = (Client*) Event::context_;
-      client ->setImage(this->path_);
+      client ->setImage(this->scene_);
       Logger::getInstance()->log(DEBUG, "Se ejecutó el evento AnimationInitStage");
     }
 }

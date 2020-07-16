@@ -23,7 +23,7 @@ class GraphicsMapElement {
         GraphicsMapElement(const GraphicsMapElement &cpy);
         GraphicsMapElement(const string &source, int size_x, int size_y, int pos_x, int pos_y, orientation_t orientation);
         ~GraphicsMapElement();
-        void update();
+        void update(position_t position);
         void set();
         bool isSet();
 

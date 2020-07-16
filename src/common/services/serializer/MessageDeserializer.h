@@ -13,11 +13,7 @@
 #include "../../models/messages/MessageGameInit.h"
 #include "../../models/messages/MessageInitStage.h"
 #include "../../models/messages/MessageLog.h"
-#include "../../models/messages/MessageMapElementCreate.h"
-#include "../../models/messages/MessageMapElementDelete.h"
 #include "../../models/messages/MessageMapElementUpdate.h"
-#include "../../models/messages/MessagePlayerDisconnect.h"
-#include "../../models/messages/MessagePlayerReconnect.h"
 #include "../../models/messages/MessageRequestLoginPlayer.h"
 #include "../../models/messages/MessageResponseLoginPlayer.h"
 #include "../../models/messages/MessageAnimationInitStage.h"
@@ -43,8 +39,6 @@ class MessageDeserializer {
         response_t getEventMapElementCreate(Socket *socket, Event* &event);
         response_t getEventMapElementDelete(Socket *socket, Event* &event);
         response_t getEventMapElementUpdate(Socket *socket, Event* &event);
-        response_t getEventPlayerDisconnect(Socket *socket, Event* &event);
-        response_t getEventPlayerReconnect(Socket *socket, Event* &event);
         response_t getEventRequestLoginPlayer(Socket *socket, Event* &event);
         response_t getEventResponseLoginPlayer(Socket *socket, Event* &event);
         response_t getEventUserMovement(Socket *socket, Event* &event);

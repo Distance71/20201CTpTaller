@@ -30,12 +30,12 @@ bool GraphicsMapElement::isSet(){
     return this->setted_;
 }
 
-void GraphicsMapElement::update(){
+void GraphicsMapElement::update(position_t position){
     SDL_Renderer* renderer = GameProvider::getRenderer();   
     
     //rectangulo de la pantalla donde quiero dibujar el sprite.
-    int posX = this->pos_x_;
-    int posY = this->pos_y_;
+    int posX = position.axis_x;
+    int posY = position.axis_y;
     int sizeX = this->size_x_;
     int sizeY = this->size_y_;
 
@@ -43,12 +43,7 @@ void GraphicsMapElement::update(){
 
     SDL_Texture* spriteTexture = sprite_-> getTexture();
     
-    //el renderer copia la textura del sprite recortando la foto con 
-    //sprite y pegandola en el rectangulo de la pantalla
-    //donde lo quiero ubicar, es decir en aux_graphics_sprite
-    //SDL_RenderCopy(renderer, spriteTexture, &sprite, &aux_graphics_sprite);
-    
-    if (this->orientation_ == FRONT){
+    if (position.orientation == FRONT){
         SDL_RenderCopy(renderer, spriteTexture, NULL, &aux_graphics_sprite);
     } else if (this->orientation_ == BACK){
         SDL_RenderCopyEx(renderer, spriteTexture, NULL, &aux_graphics_sprite, 180, nullptr, SDL_FLIP_VERTICAL);

@@ -13,17 +13,16 @@ using namespace std;
 class MessageMapElementUpdate: public Message {
 
 	private:
-		size_t id_;
+		elementType_t elementType_;
         position_t position_;
         const message_t type_ = MAP_ELEMENT_UPDATE;
 
     public:
-    	explicit MessageMapElementUpdate(size_t id, position_t position): id_(id), position_(position) {}
+    	explicit MessageMapElementUpdate(elementType_t elementType, position_t position): elementType_(elementType), position_(position) {}
     	message_t getType();
         Event* deSerialize();
-        responseStatus_t serialize();
 
-        size_t getId();
+        elementType_t getElementType();
         position_t getPosition();
 };
 

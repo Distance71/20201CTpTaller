@@ -117,7 +117,7 @@ void ClientEventsManager::RunDetectPlayerEventsThread(){
     this->stop_=false;
     Logger::getInstance()->log(DEBUG, "Se inicializa hilo de detección de eventos del jugador");
     pthread_t detect_player_events_thread;
-    pthread_create(&detect_player_events_thread,NULL,detectPlayerEvents,this);
+    pthread_create(&detect_player_events_thread, NULL, detectPlayerEvents, this);
 }
 
 

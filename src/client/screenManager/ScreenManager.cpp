@@ -6,8 +6,10 @@ ScreenManager::ScreenManager(Client *client){
     this->screenHeight_ = -1;
     this->window_ = nullptr;
     this->renderer_ = nullptr;
-    this->gameGraphics_=nullptr;
+    this->gameGraphics_ = nullptr;
     this->waiting_ = false;
+
+
 }
 
 
@@ -142,50 +144,25 @@ bool ScreenManager::initGameGraphics(){
     return true;
 }
 
+void ScreenManager::graphic(){
 
-void ScreenManager::initGameGraphicsThread(){
-
-    /*Logger::getInstance()->log(DEBUG, "Se inicia el hilo graficador");
+    Logger::getInstance()->log(DEBUG, "Se inicia el hilo graficador");
     
     while(this->clientOwn_->isConnected()){
         this->gameGraphics_->update();
     }
 
-    Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");*/
-
-    this->gameGraphics_->update();
+    Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");
 }
 
-
-void ScreenManager::createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
+void ScreenManager::updateEntity(elementType_t type, position_t position){   
     if(this->gameGraphics_){
-        this->gameGraphics_->createEntity(id,source,sizeX,sizeY,posX,posY,orientation);
-    }
-    else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido crear entidad,  no se han inicializado graficos");
-    }
-}
-
-
-void ScreenManager::updateEntity(Id id, int posX, int posY, orientation_t orientation){   
-    if(this->gameGraphics_){
-        this->gameGraphics_->updateEntity(id,posX,posY,orientation);
+        this->gameGraphics_->updateEntity(type, position);
     }
     else{
         Logger::getInstance()->log(DEBUG, "No se ha podido actualizar la entidad, no se han inicializado graficos");
     }
 }
-
-
-void ScreenManager::deadEntity(Id id){
-    if(this->gameGraphics_){
-        this->gameGraphics_->deadEntity(id);
-    }
-    else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido eliminar la entidad,  no se han inicializado graficos");
-    }
-}
-
 
 void ScreenManager::setBackground(stageSource_t background){
     if(this->gameGraphics_){
@@ -197,9 +174,9 @@ void ScreenManager::setBackground(stageSource_t background){
 }
 
 
-void ScreenManager::setImage(const string &source){
+void ScreenManager::setImage(sceneScreen_t scene){
     if(this->gameGraphics_){
-        this->gameGraphics_->setImage(source);
+        this->gameGraphics_->setImage(scene);
     }
     else{
         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,  no se han inicializado graficos");
@@ -260,7 +237,7 @@ int ScreenManager::waitForPlayers(){
         SDL_Event e;
         Logger::getInstance()->log( DEBUG ,"Se esperan jugadores");
         this->waiting_= true;
-        this->gameGraphics_->setImage("assets/Waiting/waitingForPlayers.png");
+        this->gameGraphics_->setImage(WAITING_PLAYERS);
         while(this->waiting_){
             while (SDL_PollEvent(&e)){
                 if (e.type == SDL_QUIT){
@@ -280,7 +257,7 @@ void ScreenManager::stopWaiting(){
 }
 
 void ScreenManager::viewEndGameScreen(){
-    this->gameGraphics_->setImage("assets/GameOver/gameOver.png");
+    this->gameGraphics_->setImage(END_GAME_ANIMATION);
     this->gameGraphics_->update();
     SDL_Delay(3000);
 }

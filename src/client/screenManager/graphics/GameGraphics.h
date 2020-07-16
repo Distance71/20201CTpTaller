@@ -16,21 +16,23 @@ class GameGraphics {
 
     private:
         SDL_Renderer* renderer_;
-        unordered_map <Id, GraphicsMapElement*> elements_;
+        unordered_map <elementType_t, GraphicsMapElement*> elements_;
+        unordered_map <sceneScreen_t, GraphicsMapElement*> scenes_;
         GraphicsScenario * scenario_;
         GraphicsMapElement* image_;
         std::mutex              mutex;
 
+        void createScenes();
+        void createElements();
     public:
 
         GameGraphics(SDL_Renderer* renderer);
         ~GameGraphics();
         void update();
-        void createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
-        void updateEntity(Id id, int posX, int posY, orientation_t orientation);
-        void deadEntity(Id id);
+        void updateEntity(elementType_t type, position_t position);
+        
         void setBackground(stageSource_t background);
-        void setImage(const string &source);
+        void setImage(sceneScreen_t scene);
 };
 
 #endif

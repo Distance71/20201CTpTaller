@@ -60,9 +60,9 @@ Step::Step(stepParams_t params) {
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
-            MapElement *newEnemy = new MapElement(ENEMY, positionEnemy,2,2,sprite, size_x, size_y);
-            this->mapElements_.emplace(this->lastId_, newEnemy);
-            this->lastId_++;
+            //MapElement *newEnemy = new MapElement(ENEMY, positionEnemy,2,2,sprite, size_x, size_y);
+            //this->mapElements_.emplace(this->lastId_, newEnemy);
+            //this->lastId_++;
         }
     }
 }
@@ -149,12 +149,12 @@ void Step::update(Game *game){
         // cout << mapElement.first << endl;
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
-            Event *eventDead = new EventMapElementDelete(mapElement.first);
-            game->sendEvent(eventDead);
+            //Event *eventDead = new EventMapElementDelete(mapElement.first);
+            //game->sendEvent(eventDead);
         } else {
             position_t actualPosition = mapElement.second->getActualPosition();
-            Event *eventUpdate = new EventMapElementUpdate(mapElement.first, actualPosition);
-            game->sendEvent(eventUpdate);
+            //Event *eventUpdate = new EventMapElementUpdate(mapElement.first, actualPosition);
+            //game->sendEvent(eventUpdate);
         }
     }
 
@@ -224,8 +224,8 @@ void Map::initializeStep(currentStep_t currentStep, Game *game){
         spriteSize_t spriteSize = mapElement.second->getSpriteSize();
         char imagePath[100];
         strcpy(imagePath, sourceSprite.c_str());
-        Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
-        game->sendEvent(event);
+        //Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
+        //game->sendEvent(event);
     }
 
     levels_[actualLevel]->initializeStep(currentStep, game);
@@ -249,8 +249,8 @@ void Step::initializeStep(Game *game){
         spriteSize_t spriteSize = mapElement.second->getSpriteSize();
         char imagePath[100];
         strcpy(imagePath, sourceSprite.c_str());
-        Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
-        game->sendEvent(event);
+        //Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
+        //game->sendEvent(event);
     }
     // cout << "END INITIALIZE STEP" << endl;
 }

@@ -9,10 +9,7 @@
 #include "../../models/messages/MessageAnimationInitStage.h"
 #include "../../models/messages/MessageEndStage.h"
 #include "../../models/messages/MessageGameInit.h"
-#include "../../models/messages/MessageMapElementCreate.h"
-#include "../../models/messages/MessagePlayerDisconnect.h"
 #include "../../models/messages/MessageMapElementUpdate.h"
-#include "../../models/messages/MessagePlayerReconnect.h"
 #include "../../models/messages/MessageUserMovement.h"
 
 
@@ -30,11 +27,7 @@ class MessageSerializer {
         response_t sendMessageGameInit(Socket *socket, Message *message);
         response_t sendMessageInitStage(Socket *socket, Message *message);
         response_t sendMessageLog(Socket *socket, Message *message);
-        response_t sendMessageMapElementCreate(Socket *socket, Message *message);
-        response_t sendMessageMapElementDelete(Socket *socket, Message *message);
         response_t sendMessageMapElementUpdate(Socket *socket, Message *message);
-        response_t sendMessagePlayerDisconnect(Socket *socket, Message *message);
-        response_t sendMessagePlayerReconnect(Socket *socket, Message *message);
         response_t sendMessageRequestLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageResponseLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageUserMovement(Socket *socket, Message *message);

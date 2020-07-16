@@ -5,6 +5,7 @@
 #include <strings.h>
 #include <stdbool.h>
 #include <sys/types.h>
+#include <atomic>
 #include "../common/services/Logger.h"
 #include "transmitionManager/ClientTransmitionManager.h"
 #include "eventsManager/ClientEventsManager.h"
@@ -20,7 +21,7 @@ class Client {
     
     private:
 
-        bool connected_;
+        std::atomic<bool> connected_;
         string ipHost_;
         size_t port_;
 
@@ -55,11 +56,9 @@ class Client {
 
         //EventsMethods
         void processEvent(Event* event);
-        void createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation);
-        void updateEntity(Id id, int posX, int posY, orientation_t orientation);
-        void deadEntity(Id id);
+        void updateEntity(elementType_t type, position_t position);
         void setBackground(stageSource_t background);
-        void setImage(const string &source);
+        void setImage(sceneScreen_t scene);
         void setScreenSizes(int Xsize, int Ysize);
     };
 

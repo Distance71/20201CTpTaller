@@ -8,22 +8,15 @@
 #include "../../services/Logger.h"
 #include "../../../client/Client.h"
 
-#ifndef MAX_SIZE_MESSAGE
-#define MAX_SIZE_MESSAGE 100
-#endif
-
 using namespace std;
 
 class EventAnimationInitStage: public Event {
 
 	private:
-        char path_[MAX_SIZE_MESSAGE];
+        sceneScreen_t scene_;
 
     public:
-        EventAnimationInitStage(char path[MAX_SIZE_MESSAGE]) {
-            for(size_t i = 0; i < MAX_SIZE_MESSAGE; i++)
-                path_[i] = path[i];
-        }
+        EventAnimationInitStage(sceneScreen_t scene) : scene_(scene){}
         
         Message* serialize();
         void update();

@@ -14,11 +14,11 @@ using namespace std;
 class EventMapElementUpdate: public Event {
 
 	private:
-		size_t id_;
+		elementType_t type_;
         position_t position_;
 
     public:
-    	explicit EventMapElementUpdate(size_t id, position_t position): id_(id), position_(position) {}
+    	EventMapElementUpdate(elementType_t type, position_t position): type_(type), position_(position) {}
 
         Message* serialize();
         void update();

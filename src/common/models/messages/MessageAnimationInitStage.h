@@ -13,18 +13,15 @@
 class MessageAnimationInitStage: public Message {
 
 	private:
-        char path_[MAX_SIZE_MESSAGE];
+        sceneScreen_t scene_;
         const message_t type_ = ANIMATION_INIT_STAGE;
 
     public:
-    	explicit MessageAnimationInitStage(char path[MAX_SIZE_MESSAGE]) {
-            for(size_t i = 0; i < MAX_SIZE_MESSAGE; i++)
-                path_[i] = path[i];
-        }
+    	explicit MessageAnimationInitStage(sceneScreen_t scene) :scene_(scene){}
         message_t getType();
         Event* deSerialize();
         responseStatus_t serialize();
-        char* getPath();
+        sceneScreen_t getScene();
 };
 
 #endif

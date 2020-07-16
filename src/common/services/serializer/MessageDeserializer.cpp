@@ -35,19 +35,19 @@ response_t MessageDeserializer::getEventEndGame(Socket *socket, Event* &event){
 };
 
 response_t MessageDeserializer::getEventEndStage(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje EndStage en Deserializer");
+    // Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje EndStage en Deserializer");
 
-    char path[100];
+    // char path[100];
     
-    this->getString(socket, path);
+    // this->getString(socket, path);
 
-    MessageEndStage *message = new MessageEndStage(path);
-    event = message->deSerialize();
+    // MessageEndStage *message = new MessageEndStage(path);
+    // event = message->deSerialize();
     
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndStage");
-        return this->_handleErrorStatus();
-    }
+    // if(!event){
+    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndStage");
+    //     return this->_handleErrorStatus();
+    // }
 
     return this->_handleSuccess();
 };
@@ -108,103 +108,22 @@ response_t MessageDeserializer::getEventLog(Socket *socket, Event* &event){
     return this->_handleSuccess();
 };
 
-response_t MessageDeserializer::getEventMapElementCreate(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje MapElementCreate en Deserializer");
-
-    size_t id_;
-    char imagePath[100];
-    position_t position;
-    spriteSize_t spriteSize;
-
-    this->getLongInteger(socket, id_);
-    this->getString(socket, imagePath);
-    this->getPosition(socket, position);
-    this->getUInteger(socket, spriteSize.width);
-    this->getUInteger(socket, spriteSize.height);
-
-    MessageMapElementCreate *message = new MessageMapElementCreate(id_, imagePath, position, spriteSize);
-    event = message->deSerialize();
-    
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementCreate");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-};
-
-response_t MessageDeserializer::getEventMapElementDelete(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje MapElementDelete en Deserializer");
-
-    size_t id_;
-
-    this->getLongInteger(socket, id_);
-
-    MessageMapElementDelete *message = new MessageMapElementDelete(id_);
-    event = message->deSerialize();
-    
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementDelete");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-};
-
 response_t MessageDeserializer::getEventMapElementUpdate(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje MapElementUpdate en Deserializer");
+    // Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje MapElementUpdate en Deserializer");
     
-    size_t id_;
-    position_t position;
+    // size_t id_;
+    // position_t position;
 
-    this->getLongInteger(socket, id_);
-    this->getPosition(socket, position);
+    // this->getLongInteger(socket, id_);
+    // this->getPosition(socket, position);
 
-    MessageMapElementUpdate *message = new MessageMapElementUpdate(id_, position);
-    event = message->deSerialize();
+    // MessageMapElementUpdate *message = new MessageMapElementUpdate(id_, position);
+    // event = message->deSerialize();
     
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementUpdate");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-};
-
-response_t MessageDeserializer::getEventPlayerDisconnect(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje PlayerDisconnect en Deserializer");
-
-    size_t id_;
-
-    this->getLongInteger(socket, id_);
-
-    MessagePlayerDisconnect *message = new MessagePlayerDisconnect(id_);
-    event = message->deSerialize();
-    
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento PlayerDisconnect");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-};
-
-response_t MessageDeserializer::getEventPlayerReconnect(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje PlayerReconnect en Deserializer");
-
-    size_t id_;
-
-    this->getLongInteger(socket, id_);
-
-    MessagePlayerReconnect *message = new MessagePlayerReconnect(id_);
-    event = message->deSerialize();
-    
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento PlayerReconnect");
-        return this->_handleErrorStatus();
-    }
-
-    Logger::getInstance()->log(DEBUG, "Se ha podido recibir un mensaje EventPlayerReconnect");
+    // if(!event){
+    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementUpdate");
+    //     return this->_handleErrorStatus();
+    // }
 
     return this->_handleSuccess();
 };
@@ -249,18 +168,18 @@ response_t MessageDeserializer::getEventResponseLoginPlayer(Socket *socket, Even
 };
 
 response_t MessageDeserializer::getEventAnimationInitStage(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje AnimationInitStage en Deserializer");
-    char path[100];
+    // Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje AnimationInitStage en Deserializer");
+    // char path[100];
 
-    this->getString(socket, path);
+    // this->getString(socket, path);
 
-    MessageAnimationInitStage *message = new MessageAnimationInitStage(path);
-    event = message->deSerialize();
+    // MessageAnimationInitStage *message = new MessageAnimationInitStage(path);
+    // event = message->deSerialize();
     
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento RequestLoginPlayer");
-        return this->_handleErrorStatus();
-    }
+    // if(!event){
+    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento RequestLoginPlayer");
+    //     return this->_handleErrorStatus();
+    // }
 
     return this->_handleSuccess();
 }
@@ -428,21 +347,9 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
         case LOG:
             return this->getEventLog(socket, event);
 
-        case MAP_ELEMENT_CREATE:
-            return this->getEventMapElementCreate(socket, event);
-
-        case MAP_ELEMENT_DELETE:
-            return this->getEventMapElementDelete(socket, event);
-
         case MAP_ELEMENT_UPDATE:
             return this->getEventMapElementUpdate(socket, event);
     
-        case PLAYER_DISCONNECT:
-            return this->getEventPlayerDisconnect(socket, event);
-
-        case PLAYER_RECONNECT:
-            return this->getEventPlayerReconnect(socket, event);
-
         case REQUEST_LOGIN_PLAYER:
             return this->getEventRequestLoginPlayer(socket, event);
 

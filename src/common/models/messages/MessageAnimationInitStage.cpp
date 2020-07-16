@@ -1,7 +1,7 @@
 #include "MessageAnimationInitStage.h"
 
 Event* MessageAnimationInitStage::deSerialize(){
-    return (Event *) new EventAnimationInitStage(this->path_);
+    return (Event *) new EventAnimationInitStage(this->scene_);
 }
 
 message_t MessageAnimationInitStage::getType(){
@@ -18,6 +18,6 @@ responseStatus_t MessageAnimationInitStage::serialize(){
 	return OK;
 }
 
-char* MessageAnimationInitStage::getPath(){
-	return this->path_;
+sceneScreen_t MessageAnimationInitStage::getScene(){
+	return this->scene_;
 }

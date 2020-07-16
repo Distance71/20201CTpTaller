@@ -1,9 +1,5 @@
 #include "EventPlayerDisconnect.h"
 
-Message* EventPlayerDisconnect::serialize() {
-    return (Message *) new MessagePlayerDisconnect(this->id_);
-}
-
 void EventPlayerDisconnect::update() {
     if (!this->context_){
 		  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventPlayerDisconnect");

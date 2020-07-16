@@ -1,7 +1,7 @@
 #include "MessageEndStage.h"
 
 Event* MessageEndStage::deSerialize(){
-    return (Event *) new EventEndStage(this->path_);
+    return (Event *) new EventEndStage(this->scene_);
 }
 
 message_t MessageEndStage::getType(){
@@ -12,6 +12,6 @@ responseStatus_t MessageEndStage::serialize(){
     return OK;
 }
 
-char* MessageEndStage::getPath(){
-	return this->path_;
+sceneScreen_t MessageEndStage::getScene(){
+	return this->scene_;
 }

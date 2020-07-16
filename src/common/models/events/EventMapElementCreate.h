@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string.h>
 #include "../messages/Message.h"
-#include "../messages/MessageMapElementCreate.h"
 #include "../events/Event.h"
 #include "../../types.h"
 #include "../../../client/Client.h"
@@ -33,7 +32,6 @@ class EventMapElementCreate: public Event {
             spriteSize_ = spriteSize;
         }
 
-        Message* serialize();
         void update();
 };
 

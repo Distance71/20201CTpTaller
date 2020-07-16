@@ -51,11 +51,9 @@ typedef enum message {
     MAP_ELEMENT_CREATE = 6,
     MAP_ELEMENT_DELETE = 7,
     MAP_ELEMENT_UPDATE = 8,
-    PLAYER_DISCONNECT = 9,
-    PLAYER_RECONNECT = 10,
-    REQUEST_LOGIN_PLAYER = 11,
-    RESPONSE_LOGIN_PLAYER = 12,
-    USER_MOVEMENT = 13,
+    REQUEST_LOGIN_PLAYER = 9,
+    RESPONSE_LOGIN_PLAYER = 10,
+    USER_MOVEMENT = 11,
 } message_t;
 
 typedef enum {
@@ -121,11 +119,26 @@ typedef struct {
 } stepContent_t;
 
 typedef enum {
+    PLAYER_1,
+    PLAYER_2,
+    PLAYER_3,
+    PLAYER_4,
+    ENEMY_1,
+    ENEMY_2,
     PLAYER,
     ENEMY,
-//    ENEMY_2,
-    BACKGROUND
 } elementType_t;
+
+typedef enum {
+    INIT_STAGE_1,
+    END_STAGE_1,
+    INIT_STAGE_2,
+    END_STAGE_2,
+    INIT_STAGE_3,
+    END_STAGE_3,
+    END_GAME_ANIMATION,
+    WAITING_PLAYERS,
+} sceneScreen_t;
 
 typedef size_t Id;
 
@@ -172,7 +185,7 @@ typedef struct argsThreadUser {
 typedef enum {
     SELECTED,
     NOT_SELECTED,
-}buttonstate_t;
+} buttonstate_t;
 
 typedef enum responseStatus {
     OK,

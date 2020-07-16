@@ -63,16 +63,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageAnimationInitStage.h
         src/common/models/messages/MessageInitStage.cpp
         src/common/models/messages/MessageInitStage.h
-        src/common/models/messages/MessageMapElementCreate.cpp
-        src/common/models/messages/MessageMapElementCreate.h
         src/common/models/messages/MessageMapElementUpdate.cpp
         src/common/models/messages/MessageMapElementUpdate.h
-        src/common/models/messages/MessageMapElementDelete.cpp
-        src/common/models/messages/MessageMapElementDelete.h
-        src/common/models/messages/MessagePlayerDisconnect.cpp
-        src/common/models/messages/MessagePlayerDisconnect.h
-        src/common/models/messages/MessagePlayerReconnect.cpp
-        src/common/models/messages/MessagePlayerReconnect.h
         src/common/models/messages/MessageEndStage.cpp
         src/common/models/messages/MessageEndStage.h
         src/common/models/messages/MessageEndGame.cpp
@@ -118,8 +110,6 @@ add_executable(tp1taller
         src/common/models/events/EventMapElementDelete.h
         src/common/models/events/EventPlayerDisconnect.cpp
         src/common/models/events/EventPlayerDisconnect.h
-        src/common/models/events/EventPlayerReconnect.cpp
-        src/common/models/events/EventPlayerReconnect.h
         src/common/models/events/EventEndStage.cpp
         src/common/models/events/EventEndStage.h
         src/common/models/events/EventEndGame.cpp

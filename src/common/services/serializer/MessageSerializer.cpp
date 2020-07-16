@@ -17,10 +17,10 @@ response_t MessageSerializer::_handleSuccess()
 
 response_t MessageSerializer::sendMessageAnimationInitStage(Socket *socket, Message *message){
 
-    response_t response = this->sendString(socket, ((MessageAnimationInitStage *) message)->getPath());
+    // response_t response = this->sendString(socket, ((MessageAnimationInitStage *) message)->getPath());
     
-    if(!response.ok)
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en AnimationInitStage.");
+    // if(!response.ok)
+    //     Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en AnimationInitStage.");
 
     return this->_handleSuccess();
 }
@@ -31,12 +31,12 @@ response_t MessageSerializer::sendMessageEndGame(Socket *socket, Message *messag
 
 response_t MessageSerializer::sendMessageEndStage(Socket *socket, Message *message){
 
-    response_t response = this->sendString(socket, ((MessageEndStage *) message)->getPath());
+    // response_t response = this->sendString(socket, ((MessageEndStage *) message)->getPath());
     
-    if(!response.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en EndStage.");
-        return this->_handleErrorStatus();
-    }
+    // if(!response.ok) {
+    //     Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en EndStage.");
+    //     return this->_handleErrorStatus();
+    // }
     
     return this->_handleSuccess();
 }
@@ -80,79 +80,19 @@ response_t MessageSerializer::sendMessageLog(Socket *socket, Message *message){
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendMessageMapElementCreate(Socket *socket, Message *message){
-    size_t id = ((MessageMapElementCreate *) message)->getId();
-    position_t position = ((MessageMapElementCreate *) message)->getPosition();
-    spriteSize_t spriteSize = ((MessageMapElementCreate *) message)->getSpriteSize();
-
-    response_t responseId = this->sendLongInteger(socket, id);
-    response_t responsePath = this->sendString(socket, ((MessageMapElementCreate *) message)->getPath());
-    response_t responsePosAxisX = this->sendInteger(socket, position.axis_x);
-    response_t responsePosAxisY = this->sendInteger(socket, position.axis_y);
-    response_t responseOrientation = this->sendOrientation(socket, position.orientation);
-    response_t responseSizeX = this->sendUInt(socket, spriteSize.width);
-    response_t responseSizeY = this->sendUInt(socket, spriteSize.height);
-
-    if(!responseId.ok || !responsePath.ok || !responsePosAxisX.ok || !responsePosAxisY.ok || !responseOrientation.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementCreate.");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-}
-
-response_t MessageSerializer::sendMessageMapElementDelete(Socket *socket, Message *message){
-    size_t id = ((MessageMapElementDelete *) message)->getId();
-
-    response_t responseId = this->sendLongInteger(socket, id);
-
-    if(!responseId.ok){
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementDelete.");
-        return this->_handleErrorStatus();
-    }
-        
-    return this->_handleSuccess();
-}
-
 response_t MessageSerializer::sendMessageMapElementUpdate(Socket *socket, Message *message){
-    size_t id = ((MessageMapElementUpdate *) message)->getId();
-    position_t position = ((MessageMapElementUpdate *) message)->getPosition();
+    // size_t id = ((MessageMapElementUpdate *) message)->getId();
+    // position_t position = ((MessageMapElementUpdate *) message)->getPosition();
 
-    response_t responseId = this->sendLongInteger(socket, id);
-    response_t responsePosAxisX = this->sendInteger(socket, position.axis_x);
-    response_t responsePosAxisY = this->sendInteger(socket, position.axis_y);
-    response_t responseOrientation = this->sendOrientation(socket, position.orientation);
+    // response_t responseId = this->sendLongInteger(socket, id);
+    // response_t responsePosAxisX = this->sendInteger(socket, position.axis_x);
+    // response_t responsePosAxisY = this->sendInteger(socket, position.axis_y);
+    // response_t responseOrientation = this->sendOrientation(socket, position.orientation);
 
-    if(!responseId.ok || !responsePosAxisX.ok || !responsePosAxisY.ok || !responseOrientation.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementUpdate.");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-}
-
-response_t MessageSerializer::sendMessagePlayerDisconnect(Socket *socket, Message *message){
-    size_t id = ((MessagePlayerDisconnect *) message)->getId();
-
-    response_t responseId = this->sendLongInteger(socket, id);
-
-    if(!responseId.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en PlayerDisconnect.");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-}
-
-response_t MessageSerializer::sendMessagePlayerReconnect(Socket *socket, Message *message){
-    size_t id = ((MessagePlayerReconnect *) message)->getId();
-
-    response_t responseId = this->sendLongInteger(socket, id);
-
-    if(!responseId.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en PlayerDisconnect.");
-        return this->_handleErrorStatus();
-    }
+    // if(!responseId.ok || !responsePosAxisX.ok || !responsePosAxisY.ok || !responseOrientation.ok) {
+    //     Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementUpdate.");
+    //     return this->_handleErrorStatus();
+    // }
 
     return this->_handleSuccess();
 }
@@ -345,21 +285,9 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
         case LOG:
             return this->sendMessageLog(socket, message);
 
-        case MAP_ELEMENT_CREATE:
-            return this->sendMessageMapElementCreate(socket, message);
-
-        case MAP_ELEMENT_DELETE:
-            return this->sendMessageMapElementDelete(socket, message);
-
         case MAP_ELEMENT_UPDATE:
             return this->sendMessageMapElementUpdate(socket, message);
     
-        case PLAYER_DISCONNECT:
-            return this->sendMessagePlayerDisconnect(socket, message);
-
-        case PLAYER_RECONNECT:
-            return this->sendMessagePlayerReconnect(socket, message);
-
         case REQUEST_LOGIN_PLAYER:
             return this->sendMessageRequestLoginPlayer(socket, message);
 

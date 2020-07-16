@@ -15,6 +15,7 @@ class ConfigurationHandler;
 //Consts: should go in a config file
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 800
+#define ELEMENT_SIZE 100
 
 #define STAGE1LAYER1SPEED 0
 #define STAGE1LAYER2SPEED 0
@@ -47,6 +48,7 @@ namespace GameProvider {
     //Could go later on gameParamsProvider
     void setWidth(size_t width);
     void setHeight(size_t height);
+    int getElementsSize();
     void setQuantityPlayers(size_t quantityPlayers);
     size_t getWidth();
     size_t getHeight();

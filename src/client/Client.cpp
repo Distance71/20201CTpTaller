@@ -52,12 +52,8 @@ int Client::run(){
 
     Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
     cout << "Se estableció conexión con el servidor " << endl;
-    
-    
-    
-    
 
-    /*bool logged = this->screenManager_-> viewLogin();
+    bool logged = this->screenManager_-> viewLogin();
 
      if (!logged){
          Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
@@ -75,7 +71,7 @@ int Client::run(){
     else if (res<0){
         Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
         return EXIT_FAILURE;
-    }*/
+    }
 
 
     this->eventsManager_->RunDetectPlayerEventsThread();
@@ -84,7 +80,7 @@ int Client::run(){
         continue;
     }
 
-    //this->screenManager_->initGameGraphicsThread();
+    this->screenManager_->graphic();
 
     this->screenManager_->viewEndGameScreen();
 
@@ -93,36 +89,14 @@ int Client::run(){
     return EXIT_SUCCESS;    
 }
 
-
-void Client::createEntity(Id id, const string &source, int sizeX, int sizeY, int posX, int posY, orientation_t orientation){
+void Client::updateEntity(elementType_t type, position_t position){
     if(this->screenManager_){
-        this->screenManager_->createEntity(id,source,sizeX,sizeY,posX,posY,orientation);
-    }
-    else{
-         Logger::getInstance()->log(DEBUG, "No se ha podido crear entidad,falta crear el objeto ScreenManager");
-    }
-}
-
-
-void Client::updateEntity(Id id, int posX, int posY, orientation_t orientation){
-    if(this->screenManager_){
-        this->screenManager_->updateEntity(id, posX, posY, orientation);
+        this->screenManager_->updateEntity(type, position);
     }
     else{
          Logger::getInstance()->log(DEBUG, "No se ha podido actualizar entidad,falta crear el objeto ScreenManager");
     }
 }
-
-
-void Client::deadEntity(Id id){
-    if(this->screenManager_){
-        this->screenManager_->deadEntity(id);
-    }
-    else{
-         Logger::getInstance()->log(DEBUG, "No se ha podido eliminar entidad,falta crear el objeto ScreenManager");
-    }
-}
-
 
 void Client::setBackground(stageSource_t background){
     if(this->screenManager_){
@@ -134,9 +108,9 @@ void Client::setBackground(stageSource_t background){
 }
 
 
-void Client::setImage(const string &source){
+void Client::setImage(sceneScreen_t scene){
     if(this->screenManager_){
-        this->screenManager_->setImage(source);
+        this->screenManager_->setImage(scene);
     }
     else{
          Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,falta crear el objeto ScreenManager");
@@ -172,7 +146,6 @@ void Client::setScreenSizes(int Xsize, int Ysize){
     this->screenManager_->setScreenSizes(Xsize,Ysize);
 }
 
-
 bool Client::isConnected(){
     return this->connected_;
 }
@@ -180,10 +153,6 @@ bool Client::isConnected(){
 void Client::disconnect(){
     this->connected_ = false;
      Logger::getInstance()->log(DEBUG, "Se desconecta el cliente");
-}
-
-void Client::reconnect(){
-
 }
 
 void Client::endGame(){
@@ -204,5 +173,5 @@ void Client::processEvent(Event* event){
 }
 
 void Client::updateScreen(){
-    this->screenManager_->initGameGraphicsThread();
+    this->screenManager_->graphic();
 }
