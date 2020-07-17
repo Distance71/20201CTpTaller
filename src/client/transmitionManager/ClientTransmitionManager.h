@@ -16,6 +16,9 @@
 #include "../../common/models/BlockingQueue.h"
 #include "../../common/models/messages/MessageEndGame.h"
 
+//Testing
+#include "../../common/models/events/EventSceneAnimation.h"
+#include <chrono>
 
 class Client;
 class MessageDeserializer;

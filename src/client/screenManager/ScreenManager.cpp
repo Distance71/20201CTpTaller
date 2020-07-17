@@ -8,8 +8,6 @@ ScreenManager::ScreenManager(Client *client){
     this->renderer_ = nullptr;
     this->gameGraphics_ = nullptr;
     this->waiting_ = false;
-
-
 }
 
 
@@ -196,10 +194,10 @@ void ScreenManager::setLoginResponse(responseStatus_t response){
 
 
 bool ScreenManager::viewLogin(){
-
+    Logger::getInstance()->log(DEBUG, "Se va a mostrar el login");
     SDL_Event e; 
     
-    while (GameProvider::getStatus().normalStatus){
+    while (true){
         
         while (SDL_PollEvent(&e)){
             
@@ -209,7 +207,7 @@ bool ScreenManager::viewLogin(){
                 Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
                 return false;
             }
-            this->menu_ -> processEvent();
+            this->menu_->processEvent();
         }
         
         if (this->menu_->getLoggedInStatus()){

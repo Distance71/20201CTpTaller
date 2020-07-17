@@ -26,8 +26,8 @@ bool Client::connectWithServer(){
     }
     this->connected_ = true;
 
-    this->transmitionManager_->run();
-    this-> eventsManager_ -> RunProcessEventsThread();
+    //this->transmitionManager_->run();
+    //this-> eventsManager_ -> RunProcessEventsThread();
 
     Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
 
@@ -53,21 +53,19 @@ int Client::run(){
     Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
     cout << "Se estableció conexión con el servidor " << endl;
 
-    MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer("dario","dario");
-    this->sendMessage(message);
+    //MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer("dario","dario");
+    //this->sendMessage(message);
 
-/*
+
     SDL_Event e;
-    while(true){
-        while (SDL_PollEvent(&e)){
-            if (e.type == SDL_QUIT){
-                Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
-                return EXIT_SUCCESS;
-            }
+    while (SDL_PollEvent(&e)){
+        if (e.type == SDL_QUIT){
+            Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
+            return EXIT_SUCCESS;
         }
-   }
+    }
 
-    /*bool logged = this->screenManager_-> viewLogin();
+    bool logged = this->screenManager_-> viewLogin();
 
      if (!logged){
          Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
@@ -75,28 +73,24 @@ int Client::run(){
          return EXIT_FAILURE;
     }
 
-    int res = this->waitForPlayers();
+    // int res = this->waitForPlayers();
 
-    if(res==0){
-        Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
-        return EXIT_SUCCESS;
-    }
+    // if(res==0){
+    //     Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
+    //     return EXIT_SUCCESS;
+    // }
     
-    else if (res<0){
-        Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
-        return EXIT_FAILURE;
-    }*/
+    // else if (res<0){
+    //     Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
+    //     return EXIT_FAILURE;
+    // }
 
 
-    this->eventsManager_->RunDetectPlayerEventsThread();
+    // this->eventsManager_->RunDetectPlayerEventsThread();
 
-    while (this->isConnected()){
-        continue;
-    }
+    // this->screenManager_->graphic();
 
-    /*this->screenManager_->graphic();
-
-    this->screenManager_->viewEndGameScreen();*/
+    //this->screenManager_->viewEndGameScreen();
 
     Logger::getInstance()->log(INFO, "El juego ha finalizado normalmente");
     

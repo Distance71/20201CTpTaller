@@ -83,27 +83,47 @@ void ClientTransmitionManager::sendSerializedMessage(Message* message){
 
 
 static void* receiveMessages(void *arg){
-    /*Logger::getInstance()->log(DEBUG, "Se creo el hilo de recepcion de mensajes");
+    Logger::getInstance()->log(DEBUG, "Se creo el hilo de recepcion de mensajes");
     ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
     MessageDeserializer deserealizer = MessageDeserializer();
 
-    while (client->isConnected()){
-        Event* event;
-        response_t response = deserealizer.getReceivedMessage(socket,event); 
-        if (response.ok){
-            Logger::getInstance()->log(DEBUG, "Se recibio ok un evento en transmitionManager");
-            client->processEvent(event);
-            cout << "Se recibio" << endl;
-        }
-        else{
-            Logger::getInstance()->log(ERROR, "Error al recibir el mensaje");
-        }
-    }
+    // while (client->isConnected()){
+    //     Event* event;
+    //     response_t response = deserealizer.getReceivedMessage(socket,event); 
+    //     if (response.ok){
+    //         Logger::getInstance()->log(DEBUG, "Se recibio ok un evento en transmitionManager");
+    //         client->processEvent(event);
+    //         cout << "Se recibio" << endl;
+    //     }
+    //     else{
+    //         Logger::getInstance()->log(ERROR, "Error al recibir el mensaje");
+    //     }
+    // }
+    
+    while (client->isConnected()) {
 
+    }
+    // client->processEvent(new EventSceneAnimation(WAITING_PLAYERS));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // client->processEvent(new EventSceneAnimation(INIT_STAGE_1));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // client->processEvent(new EventSceneAnimation(END_STAGE_1));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // client->processEvent(new EventSceneAnimation(INIT_STAGE_2));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // client->processEvent(new EventSceneAnimation(END_STAGE_2));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // client->processEvent(new EventSceneAnimation(INIT_STAGE_3));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // client->processEvent(new EventSceneAnimation(END_STAGE_3));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    // client->processEvent(new EventSceneAnimation(END_GAME_ANIMATION));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    
     Logger::getInstance()->log(DEBUG, "Se cerro el hilo de recepcion");
-    return nullptr;*/
+    return nullptr;
  }
 
 

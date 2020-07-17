@@ -129,6 +129,7 @@ void Menu::processEvent(){
 
 
 void Menu::show(){
+    Logger::getInstance()->log(DEBUG, "Se va a graficar el menu");
     update(-1,-1,false);
     SDL_RenderPresent(this->gRenderer);  
 }
