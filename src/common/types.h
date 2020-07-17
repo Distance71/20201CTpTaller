@@ -176,7 +176,7 @@ typedef struct {
 
 typedef struct {
     vector<stageParams_t> stagesParams;
-    vector<string> pathTransitionScreen;
+    transitionScreen_t pathTransitionScreen;
 } levelParams_t;
 
 //Exported to a class -> se deja por el momento

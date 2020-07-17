@@ -277,6 +277,20 @@ stageSource_t ConfigurationHandler::getSourcesForStage(int oneLevel, int oneStag
     return this->gameData.levelParams[oneLevel].stagesParams[oneStage].backgroundSources;
 }
 
+transitionScreen_t ConfigurationHandler::getTransitionScreenForLevel(int oneLevel){
+
+    transitionScreen_t transitionScreen;
+
+    if (oneLevel >= this->gameData.levelParams.size()){
+        Logger::getInstance()->log(ERROR, "Se quiere acceder al transitionScreen de un nivel invalido. Level: " + to_string(oneLevel));
+        return transitionScreen;
+    }
+
+    Logger::getInstance()->log(DEBUG, "Se devuelve el transitionScreen del nivel " + to_string(oneLevel));
+
+    return this->gameData.levelParams[oneLevel].pathTransitionScreen; 
+}
+
 gameParams_t ConfigurationHandler::getGameParams(){
     return this->gameData;
 }
@@ -427,6 +441,12 @@ void ConfigurationHandler::initializeDataClient(){
             stageParams_t oneStageParams;
 
             string pathStage = getPathStage(numberLevel, numberStage);
+
+            string pathTransitionInit = pathStage + "/transitionInit";
+            oneLevelParams.pathTransitionScreen.initPath = this->parserJson->getString(pathTransitionInit);
+
+            string pathTransitionEnd = pathStage + "/transitionEnd";
+            oneLevelParams.pathTransitionScreen.endPath = this->parserJson->getString(pathTransitionEnd);
 
             string pathLayer1 = getPathStageLayer(pathStage, 1);
             oneStageParams.backgroundSources.layer1 = this->parserJson->getString(pathLayer1);

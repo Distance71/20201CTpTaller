@@ -73,6 +73,7 @@ class ConfigurationHandler {
         void setConfigDefault();
 
         stageSource_t getSourcesForStage(int oneLevel, int oneStage);
+        transitionScreen_t getTransitionScreenForLevel(int oneLevel);
         gameParams_t getGameParams();
 
 };
