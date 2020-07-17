@@ -86,17 +86,16 @@ int Socket::receiveMessage(stringstream &s, size_t sizeData){
     for(size_t i = 0; i < sizeData; i++)
         buffer[i] = 0;
     buffer[sizeData] = '\0';
-
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje de tamaño " + std::to_string((int)sizeData));
-
+    
     while ((totalBytesReceive < sizeData) && isOpen){
         bytesReceive = read(this->fileDescriptor_, (void *) buffer + totalBytesReceive, (sizeData - totalBytesReceive));
+        cout << bytesReceive << endl;
         if (bytesReceive < 0){
             Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje en socket");
             return -1;
         } else if (bytesReceive == 0){
             isOpen = false;
-            Logger::getInstance()->log(DEBUG, "Se ha cerrado el socket de origen en Socket");
+            Logger::getInstance()->log(DEBUG, "Se ha cerrado el Socket");
             return 0;
         } else {
             totalBytesReceive += bytesReceive;
@@ -104,11 +103,6 @@ int Socket::receiveMessage(stringstream &s, size_t sizeData){
     }
 
     s << buffer;
-
-    cout << "Lo que se recibe " << buffer << endl;
-    cout << "Lo que se recibe " << buffer << endl;
-    cout << "Lo que se recibe " << buffer << endl;
-    cout << "Lo que se recibe " << buffer << endl;
 
     Logger::getInstance()->log(DEBUG, "Se recibe el mensaje con exito en Socket");
 

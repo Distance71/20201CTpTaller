@@ -8,6 +8,7 @@
 #include "../../types.h"
 #include "../../../client/Client.h"
 
+
 using namespace std;
 
 class EventPlayerDisconnect: public Event {

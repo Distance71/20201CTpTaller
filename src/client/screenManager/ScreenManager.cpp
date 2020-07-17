@@ -207,7 +207,6 @@ bool ScreenManager::viewLogin(){
             
             if (e.type == SDL_QUIT){
                 Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
-                SDL_RenderClear(this->renderer_);
                 return false;
             }
             this->menu_ -> processEvent();
@@ -215,11 +214,10 @@ bool ScreenManager::viewLogin(){
         
         if (this->menu_->getLoggedInStatus()){
             Logger::getInstance()->log(DEBUG, "El usuario se ha logueado con exito en ScreenManager");
-            SDL_RenderClear(this->renderer_);
             return true;
         }
 
-        this->menu_->show();     
+        this->menu_->show();    
     }
 
     Logger::getInstance()->log(ERROR ,"Se ha cerrado el menu debido a un problema");

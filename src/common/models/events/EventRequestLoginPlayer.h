@@ -4,10 +4,15 @@
 #include "../events/Event.h"
 #include "../messages/MessageRequestLoginPlayer.h"
 #include "../messages/Message.h"
+#include "../../types.h"
+#include "EventResponseLoginPlayer.h"
+#include "../../../server/Server.h"
+
 
 #ifndef MAX_SIZE_CREDENTIALS
 #define MAX_SIZE_CREDENTIALS 30
 #endif
+
 
 using namespace std;
 

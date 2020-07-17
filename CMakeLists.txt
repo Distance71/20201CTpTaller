@@ -154,8 +154,7 @@ add_executable(tp1taller
         src/server/models/PlayerController.h
         src/server/models/Speed.cpp
         src/server/models/Speed.h
-        src/server/models/User.cpp
-        src/server/models/User.h
+  
 
         
         src/server/Server.cpp
@@ -166,6 +165,8 @@ add_executable(tp1taller
         
         src/server/usersManager/UsersManager.cpp
         src/server/usersManager/UsersManager.h
+        src/server/usersManager/User.cpp
+        src/server/usersManager/User.h
         
         src/main.cpp)
 

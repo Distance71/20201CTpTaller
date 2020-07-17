@@ -3,18 +3,12 @@
 
 #include <netinet/in.h>
 #include <strings.h>
-#include <sys/types.h>
 #include <sys/socket.h>
-#include <unordered_map>
-#include <boost/algorithm/string.hpp>
-
 #include "usersManager/UsersManager.h"
-#include "../common/types.h"
 #include "../common/models/Socket.h"
 #include "../common/services/Logger.h"
 #include "../common/providers/GameProvider.h"
 #include "eventsManager/ServerEventsManager.h"
-#include "../common/models/events/Event.h"
 #include "models/Game.h"
 
 class ServerEventsManager;
@@ -22,32 +16,31 @@ class UsersManager;
 class Game;
 
 class Server {
+    
     private:
-        size_t port_;
         Socket *socket_;
-        Game *game;
         UsersManager* usersManager_;
         ServerEventsManager* eventsManager_;
-        bool connected_ = false;
-        bool gameRunning_ = false;
+        bool connected_;
+        Game* game_;
                 
-        void _initializeServer();
+        void _initializeServer(size_t port);
         
-    public:
+    public:  
         Server(size_t port);
         ~Server();
-        int run();
-        
-        void processEvent(Event *event);
-        
         bool isConnected();
-       
-        void runGame();        
-        
         Socket* getSocket();
+        void processEvent(Event *event);
         void sendToAllUsers(Event* event);
-
+        void sendToUser(Id id,Event* event);
         void moveUser(Id idUser, orientation_t orientation);
+        void runGame();
+        void setLoginResponse(Id id,bool response,string username);
+        bool isFullGame();
+        bool isLoggedIn(string username);
+        bool wasPreviouslyLogged(string username);
+        int run();       
 };
 
 #endif
