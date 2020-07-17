@@ -207,7 +207,7 @@ typedef enum responseStatus {
     ERROR_WRONG_CREDENTIALS,
     NOT_RESPONSE,
     DISCONNECTION,
-    ALREADY_LOGGED_IN_ERROR,
+    ERROR_ALREADY_LOGGED_IN,
 } responseStatus_t;
 
 typedef struct {

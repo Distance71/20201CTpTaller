@@ -36,6 +36,7 @@ bool Client::connectWithServer(){
 
 
 int Client::run(){
+    
     setScreenSizes(1280,800);
     
     if (!this->screenManager_->initializeGraphics()){
@@ -56,16 +57,6 @@ int Client::run(){
     MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer("dario","dario");
     this->sendMessage(message);
 
-/*
-    SDL_Event e;
-    while(true){
-        while (SDL_PollEvent(&e)){
-            if (e.type == SDL_QUIT){
-                Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
-                return EXIT_SUCCESS;
-            }
-        }
-   }
 
     /*bool logged = this->screenManager_-> viewLogin();
 
@@ -73,11 +64,11 @@ int Client::run(){
          Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
         disconnect();
          return EXIT_FAILURE;
-    }
+    }*/
 
-    int res = this->waitForPlayers();
+    //int res = this->waitForPlayers();
 
-    if(res==0){
+    /*if(res==0){
         Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
         return EXIT_SUCCESS;
     }
@@ -88,7 +79,7 @@ int Client::run(){
     }*/
 
 
-    this->eventsManager_->RunDetectPlayerEventsThread();
+    //this->eventsManager_->RunDetectPlayerEventsThread();
 
     while (this->isConnected()){
         continue;

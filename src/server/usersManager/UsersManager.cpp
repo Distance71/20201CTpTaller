@@ -3,10 +3,21 @@
 UsersManager::UsersManager(Server *serverOwn){
     this->serverOwn_ = serverOwn;
     this->lastId_ = 0;
-    this->loggedUsersCount_ = 0;
 }
 
-UsersManager::~UsersManager(){}
+UsersManager::~UsersManager(){
+    for (auto user: this->notLoggedInUsers_){
+        if (user.second){
+            delete user.second;
+        }
+    }
+
+    for (auto loggedUser: this->loggedInUsers_){
+        if (loggedUser.second){
+            delete loggedUser.second;
+        }
+    }
+}
 
 
 Server* UsersManager::getServer(){
@@ -15,7 +26,7 @@ Server* UsersManager::getServer(){
 
 
 bool UsersManager::isFullGame(){
-    return this->loggedUsersCount_ == GameProvider::getQuantityPlayers();
+    return this->loggedInUsers_.size() == GameProvider::getQuantityPlayers();
 }
 
 
@@ -25,63 +36,99 @@ void UsersManager::processEvent(Event* event){
 
 
 void UsersManager::sendEventToNotLoggedUser(Id id, Event* event){
-    this->users_[id]->sendEvent(event);
+    this->notLoggedInUsers_[id]->sendEvent(event);
 }
 
 
 void UsersManager::sendEventToAllLogged(Event* event){
-    for (auto user : this->loggedUsers_){
+    for (auto user : this->loggedInUsers_){
         user.second->sendEvent(event);
     }
 }
 
+responseStatus_t UsersManager::loginRequest(Id id,string username,string password){
+    bool valid = GameProvider::isValidCredential(username,password);
 
-void UsersManager::setLoginResponse(Id id,bool response,string username){
-    if (response == true){
-        User* user = this->users_[id];
-        this->users_.erase(id);
-        user->setLoggedIn();
-        user->setUsername(username);
+    if (!valid){
+         Logger::getInstance()->log(INFO, "No se le permite el acceso a un jugador ya que las credenciales no son validas");
+        return ERROR_WRONG_CREDENTIALS;
+    }
+
+
+    User* user;
+    User* exuser;
+    
+    
+    //juego lleno
+    if(this->isFullGame()){
         
-        bool found = false;
-        for (auto loggedUser:this->loggedUsers_){
-            if (loggedUser.second->getUsername() == username){
-                loggedUsers_.erase(loggedUser.first);
-                found= true;
-                break;
+        auto iter = loggedInUsers_.find(username);
+        
+        //si no estaba participando no entra
+        if (iter ==  loggedInUsers_.end()){
+            Logger::getInstance()->log(INFO, "No se le permite el acceso a un jugador ya que la partida está completa");
+            return ERROR_FULL_GAME;
+        }        
+
+        
+        // sino me fijo si esta conectado, si lo está no entra
+        else if (iter->second->isConnected()){
+            Logger::getInstance()->log(INFO, "No se le permite el acceso a un jugador ya que hay un usuario conectado con el mismo usuario");
+            return ERROR_ALREADY_LOGGED_IN;
+        }
+        
+        //sino puede volver a jugar y hay una reconexion
+        else{     
+            user = notLoggedInUsers_.find(id)->second;
+
+            exuser = iter->second;
+            loggedInUsers_.erase(iter->first);
+            delete exuser;
+
+            loggedInUsers_.emplace(username,user);
+
+            Logger::getInstance()->log(INFO, "Se reconecta el ususario: " + username);
+
+            return OK;
+        
+        }
+    
+    }
+
+    //Si el juego no está lleno
+    
+    else{
+        auto iter = loggedInUsers_.find(username);
+        
+        // si no estaba jugando puede entrar
+        if (iter ==  loggedInUsers_.end()){
+            user = notLoggedInUsers_.find(id)->second;
+            loggedInUsers_.emplace(username,user);
+            Logger::getInstance()->log(INFO, "Se conecta el usuario:" + username);
+            return OK;
+        }
+
+        // si ya se logueo y está conectado no entra
+        else{
+            if (iter->second->isConnected()){
+                Logger::getInstance()->log(INFO, "No se le permite el acceso a un jugador ya que hay un usuario conectado con el mismo usuario");
+                return ERROR_ALREADY_LOGGED_IN;
+            }
+        
+        // si ya se logueo pero se desconectó entra
+            else{
+                exuser= iter->second;
+                loggedInUsers_.erase(username);
+                delete exuser;
+                user = notLoggedInUsers_.find(id)->second;
+                loggedInUsers_.emplace(username,user);
+                Logger::getInstance()->log(INFO, "Se reconecta el usuario: " + username);
+                return OK;
             }
         }
-        
-        if(!found){
-            this->loggedUsersCount_ ++;
-        }
-        
-        this->loggedUsers_.emplace(id,user);
     }
 }
 
-
-
-
-bool UsersManager::isLoggedIn(string username ){
-    for (auto loggedUser:this->loggedUsers_){
-        if (loggedUser.second->getUsername() == username){
-            return loggedUser.second->isLoggedIn();
-        }
-    }
-    return false;
-}
-
-
-
-bool UsersManager::wasPreviouslyLogged(string username){
-    for (auto loggedUser:this->loggedUsers_){
-        if (loggedUser.second->getUsername() == username){
-            return true;
-        }
-    }
-    return false;
-}
 
 
 void UsersManager::acceptUser(){
@@ -97,10 +144,11 @@ void UsersManager::acceptUser(){
     newUser->setId(idUser);
     newUser->runSendingMessagesThread();
     newUser->runReceivingMessagesThread();
-    this->users_.emplace(idUser,newUser);
+    this->notLoggedInUsers_.emplace(idUser,newUser);
     this->lastId_ ++;
     Logger::getInstance()->log(INFO, "Se ha conectado un usuario");
 }
+
 
 
 static void * acceptUsers (void* arg){ 

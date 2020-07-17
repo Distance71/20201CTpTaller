@@ -15,23 +15,20 @@ class UsersManager {
     private:
         Server *serverOwn_;
         Id lastId_ ;
-        int loggedUsersCount_;
-        unordered_map<Id, User *> users_;
-        unordered_map<Id, User *> loggedUsers_;
-    
+        unordered_map< Id, User *> notLoggedInUsers_;
+        unordered_map< string, User *> loggedInUsers_;
+   
     public:
         UsersManager(Server *serverOwn);
         ~UsersManager();
         Server* getServer();
         bool isFullGame();
-        bool isLoggedIn(string username);
-        bool wasPreviouslyLogged(string username);
         void processEvent(Event* event);
         void sendEventToNotLoggedUser(Id id, Event* event);
         void sendEventToAllLogged(Event* event);
-        void setLoginResponse(Id id,bool response,string username);
-        void acceptUser();
+        responseStatus_t loginRequest(Id id,string username,string password);
         void runAcceptUsersThread();  
+        void acceptUser();
 };
 
 #endif 

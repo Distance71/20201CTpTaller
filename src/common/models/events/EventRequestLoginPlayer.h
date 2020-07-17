@@ -19,17 +19,11 @@ using namespace std;
 class EventRequestLoginPlayer: public Event {
 
 	private:
-		char userName_[MAX_SIZE_CREDENTIALS];
-        char password_[MAX_SIZE_CREDENTIALS];
+		char* userName_;
+        char* password_;
 
     public:
-    	explicit EventRequestLoginPlayer(char userName[MAX_SIZE_CREDENTIALS], char password[MAX_SIZE_CREDENTIALS]) {
-            for(size_t i = 0; i < MAX_SIZE_CREDENTIALS; i++){
-                userName_[i] = userName[i];
-                password_[i] = password[i];
-            }
-        }
-
+    	EventRequestLoginPlayer(char userName[MAX_SIZE_CREDENTIALS], char password[MAX_SIZE_CREDENTIALS]);
         Message* serialize();
         void update();
 };

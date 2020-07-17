@@ -127,12 +127,6 @@ void Menu::processEvent(){
 }
 
 
-
-void Menu::show(){
-    update(-1,-1,false);
-    SDL_RenderPresent(this->gRenderer);  
-}
-
 void Menu::setLoginResponse(responseStatus_t response){
     if(response == ERROR_FULL_GAME)
         Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse, juego completo");

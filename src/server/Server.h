@@ -36,10 +36,7 @@ class Server {
         void sendToUser(Id id,Event* event);
         void moveUser(Id idUser, orientation_t orientation);
         void runGame();
-        void setLoginResponse(Id id,bool response,string username);
-        bool isFullGame();
-        bool isLoggedIn(string username);
-        bool wasPreviouslyLogged(string username);
+        responseStatus_t loginRequest(Id id, string username,string password);
         int run();       
 };
 

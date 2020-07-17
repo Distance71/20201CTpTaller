@@ -93,20 +93,8 @@ void Server::moveUser(Id idUser, orientation_t orientation){
     this->game_->movePlayer(idUser, orientation);
 }
 
-bool Server::isFullGame(){
-    return this->usersManager_->isFullGame();
-}
-
-bool Server::isLoggedIn(string username){
-    return this->usersManager_->isLoggedIn(username);
-}
-
-void Server::setLoginResponse(Id id,bool response,string username){
-    this->usersManager_->setLoginResponse(id,response,username);
-}
-
-bool Server::wasPreviouslyLogged(string username){
-    return this->usersManager_->wasPreviouslyLogged(username);
+responseStatus_t Server::loginRequest(Id id,string username,string password){
+    this->usersManager_->loginRequest(id,username,password);
 }
 
 int Server::run(){
@@ -117,6 +105,7 @@ int Server::run(){
     }
 
     this->usersManager_-> runAcceptUsersThread();
+    this->eventsManager_->RunProcessEventsThread();
     
     while (this->isConnected()){
         usleep(100000);
