@@ -92,7 +92,7 @@ static void* sendMessages(void* arg){
 	
 	while (user->isConnected()){
 		Message* message = user->getMessage();
-		if (message){;
+		if (message){
 			serializer.sendSerializedEvent(socket, message);
 			delete message;
 			usleep(10);
