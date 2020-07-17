@@ -14,7 +14,7 @@ Sprite::Sprite(const string &source){
         SDL_FreeSurface(sprite);
     }
     else {
-        Logger::getInstance()->log(ERROR, string("Error al abrir el archivo del sprite").append(source));
+        Logger::getInstance()->log(ERROR, string("Error al abrir el archivo del sprite ").append(source));
         TTF_Font *Sans = TTF_OpenFont("assets/Fonts/open-sans/OpenSans-Regular.ttf", 56);
         if (Sans == nullptr) {
             SDL_Surface *surfaceColor = SDL_CreateRGBSurface(0, 106, 83, 32, 0, 0, 0, 0);

@@ -173,7 +173,7 @@ response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje entero.");
 
     if (socket->receiveMessage(s, sizeof(size_t)) <= 0){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de LongInteger.");
         return this->_handleErrorStatus();
     }
 
@@ -188,7 +188,7 @@ response_t MessageDeserializer::getUInteger(Socket *socket, unsigned int &value)
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje entero.");
 
     if (socket->receiveMessage(s, sizeof(unsigned int)) <= 0){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de UInteger.");
         return this->_handleErrorStatus();
     }
 
@@ -203,7 +203,7 @@ response_t MessageDeserializer::getInteger(Socket *socket, int &value){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje entero.");
 
     if (socket->receiveMessage(s, sizeof(int)) <= 0){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeInteger.");
         return this->_handleErrorStatus();
     }
 
