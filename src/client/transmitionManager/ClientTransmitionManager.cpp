@@ -83,7 +83,7 @@ void ClientTransmitionManager::sendSerializedMessage(Message* message){
 
 
 static void* receiveMessages(void *arg){
-    Logger::getInstance()->log(DEBUG, "Se creo el hilo de recepcion de mensajes");
+    /*Logger::getInstance()->log(DEBUG, "Se creo el hilo de recepcion de mensajes");
     ClientTransmitionManager *transmitionManager = (ClientTransmitionManager *) arg;
     Client *client = transmitionManager->getClient();
     Socket *socket = transmitionManager->getSocket();
@@ -103,7 +103,7 @@ static void* receiveMessages(void *arg){
     }
 
     Logger::getInstance()->log(DEBUG, "Se cerro el hilo de recepcion");
-    return nullptr;
+    return nullptr;*/
  }
 
 

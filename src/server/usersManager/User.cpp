@@ -1,63 +1,81 @@
 #include "User.h"
 
-User::User(Socket *socket,UsersManager* userManager){
-	string userName_ = "";
-    string password_ = "";
-	this->socket_ = socket;
-	this->connected_ = true;
-    bool connected_ = false;
-    bool logged_ = false;
-	this->sendingQueue_ = new BlockingQueue <Message*>();
+User::User(UsersManager* userManager,Socket* socket){
 	this->usersManager_ = userManager;
+	this->socket_ = socket;
+
+	this->connected_ = true;
+	this->sendingQueue_ = new BlockingQueue <Message*>();
+	
+	string username_ = "";
+
+	this->logged_ = false;
+	this->previouslyLogged_ = false;
 }
+
 
 User::~User() {
 	delete this->sendingQueue_;
 }
 
-
-string User::getUserName(){
-	return this->userName_;
+void User::setId(Id id){
+	this->id_ = id;
 }
 
-string User::getPassword(){
-	return this->password_;
+Id User::getId(){
+	return this->id_;
 }
 
-void User::setCredentials(string userName, string password){
-	this->userName_ = userName;
-	this->password_ = password;
+
+string User::getUsername(){
+	return this->username_;
+}
+
+
+void User::setUsername(string username){
+	this->username_ = username;
 }
 
 
 void User::setLoggedIn(){
 	this->logged_ = true;
+	this->previouslyLogged_ = true;
 }
 
+bool User::isLoggedIn(){
+	return this->logged_;
+}
 
 void User::setConnection(){
 	this->connected_= true;
 }
 
+
 void User::setDisconnection(){
 	this->connected_ = false;
+	this->logged_ = false;
 }
+
 
 bool User::isConnected(){
 	return this->connected_;
 }
 
+
 Socket* User::getSocket(){
 	return this->socket_;
 }
+
 
 UsersManager* User::getUsersManager(){
 	return this->usersManager_;
 }
 
+
 void User::sendEvent(Event* event){
 	this->sendingQueue_->push(event->serialize());
 }
+
 
 Message* User::getMessage(){
 	if (!this->sendingQueue_->empty()){
@@ -66,19 +84,22 @@ Message* User::getMessage(){
 	return NULL;
 }
 
-
 static void* sendMessages(void* arg){
+	Logger::getInstance()->log(DEBUG, "Se inicia hilo envíos para un usuario");
 	User* user = (User*) arg;
 	MessageSerializer serializer = MessageSerializer();
 	Socket* socket = user->getSocket();
+	
 	while (user->isConnected()){
 		Message* message = user->getMessage();
 		if (message){;
 			serializer.sendSerializedEvent(socket, message);
 			delete message;
-			std::this_thread::sleep_for(std::chrono::milliseconds(20));
+			usleep(10);
 		}
 	}
+	Logger::getInstance()->log(DEBUG, "Se detiene hilo de envíos para un usuario");
+	return nullptr;
 }
 
 
@@ -89,31 +110,34 @@ void User::runSendingMessagesThread(){
 
 
 static void* receivingMessages(void * arg){
-	Logger::getInstance()->log(DEBUG, "Se inicia hilo del receptor del ususario ");
+	Logger::getInstance()->log(DEBUG, "Se inicia el hilo de recepción para un usuario");
+	
 	User* user = (User*) arg;
 	Socket* socket = user->getSocket();
 	UsersManager* userManager = user->getUsersManager();
 	MessageDeserializer deserealizer = MessageDeserializer();
-	std::mutex mtxErrno;
+	
+
+	
 	while(user->isConnected()){
 		Event* event;
-		deserealizer.getReceivedMessage(socket,event);
-		if(!event){
-            mtxErrno.lock();
-            if (errno == ECONNREFUSED || errno == ENOTCONN || errno == ENOTSOCK) {
-                Logger::getInstance()->log(DEBUG, "Se detecta desconexión del cliente.");
-                user->setDisconnection();
+		response_t res = deserealizer.getReceivedMessage(socket,event);
+		Id id = user->getId();
+		
+		if(!event){   
+			if (res.status == DISCONNECTION) {
+                Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente.");
+                Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
+				user->setDisconnection();
                 return nullptr;
             }
-            mtxErrno.unlock();
-            Logger::getInstance()->log(ERROR, "Se ha recibido un evento invalido. Se cerrará la conexión con el cliente");
-            return nullptr;
         }
 		else{
+			event->setOwn(id);
 			userManager->processEvent(event);
-		}		
+		}	
 	}
-	Logger::getInstance()->log(DEBUG, "Se termina correctamente el hilo del receptor del ususario ");
+	Logger::getInstance()->log(DEBUG, "Se detiene el hilo del recepción para un usuario");
     return nullptr;
 }
 

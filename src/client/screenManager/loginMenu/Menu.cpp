@@ -57,6 +57,7 @@ void Menu::addMenuElement(string element_name,MenuElement* menu_element){
 }
 
 void Menu::update(int x, int y,bool click){
+    
     SDL_RenderClear(gRenderer);
     
     this-> menu_elements["BACKGROUND"]->renderCopy();

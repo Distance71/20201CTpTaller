@@ -16,6 +16,7 @@ class EventResponseLoginPlayer: public Event{
         explicit EventResponseLoginPlayer(responseStatus_t response): response_(response) {};
         Message* serialize();
         void update();
+
 };
 
 #endif

@@ -201,10 +201,13 @@ typedef enum {
 typedef enum responseStatus {
     OK,
     ERROR_CONNECTION,
+    NOT_MESSAGE,
     ERROR_MESSAGE,
     ERROR_FULL_GAME,
     ERROR_WRONG_CREDENTIALS,
     NOT_RESPONSE,
+    DISCONNECTION,
+    ALREADY_LOGGED_IN_ERROR,
 } responseStatus_t;
 
 typedef struct {

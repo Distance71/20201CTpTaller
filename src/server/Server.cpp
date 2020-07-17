@@ -1,22 +1,29 @@
 #include "Server.h"
-#include <stdio.h>
 
 Server::Server(size_t port){
-    this->port_ = port;
+    
+    this->connected_ = false;
     this->socket_ = new Socket();
-    this->socket_->setPort(port);
-    this->_initializeServer();
+    this->socket_-> setPort(port);
+    this->_initializeServer(port);
+    
     this->usersManager_ = new UsersManager(this);
     this->eventsManager_ = new ServerEventsManager(this);
+
+    this->game_ = new Game(this);
 }
+
 
 Server::~Server(){
     delete this->usersManager_;
     delete this->eventsManager_;
+    delete this->game_;
     Logger::getInstance()->log(DEBUG, "Se han eliminado todos los recursos utilizados");
 }
 
-void Server::_initializeServer() {
+
+void Server::_initializeServer(size_t port) {
+    
     if(!this->socket_->create()){
         string errorMessage = "No se pudo crear el socket para recibir clientes en el server";
         Logger::getInstance()->log(ERROR, errorMessage);
@@ -38,9 +45,9 @@ void Server::_initializeServer() {
         return;
     }
 
-    size_t maxUsers = GameProvider::getQuantityPlayers();
+    size_t maxClients = GameProvider::getQuantityPlayers();
 
-    if(!this->socket_->listenConnections(maxUsers)) {
+    if(!this->socket_->listenConnections(maxClients)) {
         string errorMessage = "No se pudo configurar el socket para aceptar configuraciones entrantes";
         Logger::getInstance()->log(ERROR, errorMessage);
         GameProvider::setErrorStatus(errorMessage);
@@ -50,15 +57,56 @@ void Server::_initializeServer() {
     this->connected_ = true;
 
     Logger::getInstance()->log(INFO, "Se inicializa el socket correctamente. Se pueden recibir clientes");
-    cout << "Se crea servidor escuchando el puerto " + to_string(this->port_) << endl;
+    cout << "Se crea servidor escuchando el puerto " + to_string(port) << endl;
 }
+
 
 bool Server::isConnected(){
     return this->connected_;
 }
 
+void Server::sendToUser(Id id,Event* event){
+    this->usersManager_->sendEventToNotLoggedUser(id,event);
+}
+
 Socket* Server::getSocket(){
     return this->socket_;
+}
+
+void Server::processEvent(Event *event){
+    this->eventsManager_->processEvent(event);
+}
+
+
+void Server::sendToAllUsers(Event* event){
+    this->usersManager_->sendEventToAllLogged(event);
+}
+
+void Server::runGame(){
+
+    Logger::getInstance()->log(INFO, "Juego iniciado");
+
+    this->game_->run();
+}
+
+void Server::moveUser(Id idUser, orientation_t orientation){
+    this->game_->movePlayer(idUser, orientation);
+}
+
+bool Server::isFullGame(){
+    return this->usersManager_->isFullGame();
+}
+
+bool Server::isLoggedIn(string username){
+    return this->usersManager_->isLoggedIn(username);
+}
+
+void Server::setLoginResponse(Id id,bool response,string username){
+    this->usersManager_->setLoginResponse(id,response,username);
+}
+
+bool Server::wasPreviouslyLogged(string username){
+    return this->usersManager_->wasPreviouslyLogged(username);
 }
 
 int Server::run(){
@@ -71,46 +119,17 @@ int Server::run(){
     this->usersManager_-> runAcceptUsersThread();
     
     while (this->isConnected()){
-        usleep(100000); //retardo para el while
+        usleep(100000);
         if(this->usersManager_->isFullGame()){
             cout << "Se conectaron todos los jugadores, iniciará la partida"<< endl;
+            Logger::getInstance()->log(INFO, "Se conectaron todos los jugadores, iniciará la partida");
             break;
         }
-    }     
-
-    //   char pathElement1[100];
-    //     strcpy(pathElement1, "assets/Enemies/enemigo1.png");
-    //     position_t position1;
-    //     spriteSize_t spriteSize1;
-    //     spriteSize1.width = 100;
-    //     spriteSize1.height = 100;
-
+    }    
   
-    this->runGame();
+    //this->runGame();
 
     Logger::getInstance()->log(INFO, "El Juego ha terminado");
     
     return EXIT_SUCCESS;
-}
-
-
-void Server::processEvent(Event *event){
-    this->eventsManager_->processEvent(event);
-}
-
-void Server::runGame(){
-
-    Logger::getInstance()->log(INFO, "Juego iniciado");
-
-    this->game = new Game(this);
-
-    this->game->run();
-}
-
-void Server::sendToAllUsers(Event* event){
-    this->usersManager_->sendToAll(event);
-}
-
-void Server::moveUser(Id idUser, orientation_t orientation){
-    this->game->movePlayer(idUser, orientation);
 }

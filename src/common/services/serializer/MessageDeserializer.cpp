@@ -3,7 +3,6 @@
 response_t MessageDeserializer::_handleErrorStatus(){
     Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
     response_t response = {false, ERROR_CONNECTION};
-
     return response;
 }
 
@@ -216,14 +215,16 @@ response_t MessageDeserializer::getTypeMessage(Socket *socket, message_t &messag
 
     stringstream s;
 
-    if (socket->receiveMessage(s, sizeof(message_t)) <= 0){
+    int res = socket->receiveMessage(s, sizeof(message_t));
+    if (res){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
         return this->_handleErrorStatus();
     }
+    else if (res==0){
+        return {false, DISCONNECTION};
+    }
 
     string msg = s.str();
-
-    cout << "El mensaje rec " << msg.c_str() << endl;
 
     message = (message_t) atoi(msg.c_str());
     Logger::getInstance()->log(DEBUG, "Se ha recibido con exito un tipo de mensaje");
@@ -319,8 +320,11 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje en Deserializer.");
 
-    this->getTypeMessage(socket, messageType);
-
+    response_t res = this->getTypeMessage(socket, messageType);
+    
+    if (res.status == DISCONNECTION){
+        return res;
+    }
 
     switch (messageType){
         case SCENE_ANIMATION:
