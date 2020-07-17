@@ -20,8 +20,26 @@ response_t MessageDeserializer::_handleSuccess(){
     return response;
 }
 
+response_t MessageDeserializer::getEventSceneAnimatiom(Socket *socket, Event* &event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento sceneAnimation en Deserializer");
+    sceneScreen_t scene;
+
+    this->getSceneScreen(socket, scene);
+
+    MessageSceneAnimation *message = new MessageSceneAnimation(scene);
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento sceneAnimation");
+        return this->_handleErrorStatus();
+    }
+
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento sceneAnimation en Deserializer");
+    return this->_handleSuccess();
+};
+
 response_t MessageDeserializer::getEventEndGame(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje EndGame en Deserializer");
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento EndGame en Deserializer");
 
     MessageEndGame *message = new MessageEndGame();
     event = message->deSerialize();
@@ -30,30 +48,13 @@ response_t MessageDeserializer::getEventEndGame(Socket *socket, Event* &event){
         Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndGame");
         return this->_handleErrorStatus();
     }
-
-    return this->_handleSuccess();
-};
-
-response_t MessageDeserializer::getEventEndStage(Socket *socket, Event* &event){
-    // Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje EndStage en Deserializer");
-
-    // char path[100];
-    
-    // this->getString(socket, path);
-
-    // MessageEndStage *message = new MessageEndStage(path);
-    // event = message->deSerialize();
-    
-    // if(!event){
-    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndStage");
-    //     return this->_handleErrorStatus();
-    // }
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento EndGame en Deserializer");
 
     return this->_handleSuccess();
 };
 
 response_t MessageDeserializer::getEventGameInit(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje GameInit en Deserializer");
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento GameInit en Deserializer");
     screen_t screenSizes;
 
     this->getUInteger(socket, screenSizes.width);
@@ -67,30 +68,12 @@ response_t MessageDeserializer::getEventGameInit(Socket *socket, Event* &event){
         return this->_handleErrorStatus();
     }
 
-    Logger::getInstance()->log(DEBUG, "Se ha recibido un mensaje GameInit en Deserializer");
-    return this->_handleSuccess();
-};
-
-response_t MessageDeserializer::getEventInitStage(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje InitStage en Deserializer");
-    char layer[7][100];
-
-    for(size_t i = 0; i < 7; i++)
-        this->getString(socket, layer[i]);
-    
-    MessageInitStage *message = new MessageInitStage(layer);
-    event = message->deSerialize();
-    
-    if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento InitStage");
-        return this->_handleErrorStatus();
-    }
-
+    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento GameInit en Deserializer");
     return this->_handleSuccess();
 };
 
 response_t MessageDeserializer::getEventLog(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje Log en Deserializer");
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento Log en Deserializer");
     size_t level;
     char messageLog[100];
 
@@ -104,27 +87,28 @@ response_t MessageDeserializer::getEventLog(Socket *socket, Event* &event){
         Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento Log");
         return this->_handleErrorStatus();
     }
-
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento Log en Deserializer");
     return this->_handleSuccess();
 };
 
 response_t MessageDeserializer::getEventMapElementUpdate(Socket *socket, Event* &event){
-    // Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje MapElementUpdate en Deserializer");
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento MapElementUpdate en Deserializer");
     
-    // size_t id_;
-    // position_t position;
+    elementType_t elementType;
+    position_t position;
 
-    // this->getLongInteger(socket, id_);
-    // this->getPosition(socket, position);
+    this->getElementType(socket, elementType);
+    this->getPosition(socket, position);
 
-    // MessageMapElementUpdate *message = new MessageMapElementUpdate(id_, position);
-    // event = message->deSerialize();
+    MessageMapElementUpdate *message = new MessageMapElementUpdate(elementType, position);
+    event = message->deSerialize();
     
-    // if(!event){
-    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementUpdate");
-    //     return this->_handleErrorStatus();
-    // }
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MapElementUpdate");
+        return this->_handleErrorStatus();
+    }
 
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento MapElementUpdate en Deserializer");
     return this->_handleSuccess();
 };
 
@@ -166,24 +150,6 @@ response_t MessageDeserializer::getEventResponseLoginPlayer(Socket *socket, Even
 
     return this->_handleSuccess();
 };
-
-response_t MessageDeserializer::getEventAnimationInitStage(Socket *socket, Event* &event){
-    // Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje AnimationInitStage en Deserializer");
-    // char path[100];
-
-    // this->getString(socket, path);
-
-    // MessageAnimationInitStage *message = new MessageAnimationInitStage(path);
-    // event = message->deSerialize();
-    
-    // if(!event){
-    //     Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento RequestLoginPlayer");
-    //     return this->_handleErrorStatus();
-    // }
-
-    return this->_handleSuccess();
-}
-
 
 response_t MessageDeserializer::getEventUserMovement(Socket *socket, Event* &event){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un mensaje UserMovement Deserializer");
@@ -320,6 +286,34 @@ response_t MessageDeserializer::getOrientation(Socket *socket, orientation_t &or
     orientation = (orientation_t) atoi(msg.c_str());
 }
 
+response_t MessageDeserializer::getSceneScreen(Socket *socket, sceneScreen_t &scene){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje sceneScreen");
+
+    if (socket->receiveMessage(s, sizeof(sceneScreen_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de sceneScreen.");
+        return this->_handleErrorStatus();
+    }
+
+    string msg = s.str();
+    scene = (sceneScreen_t) atoi(msg.c_str());
+}
+
+response_t MessageDeserializer::getElementType(Socket *socket, elementType_t &elementType){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje elementType");
+
+    if (socket->receiveMessage(s, sizeof(elementType_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de elementType.");
+        return this->_handleErrorStatus();
+    }
+
+    string msg = s.str();
+    elementType = (elementType_t) atoi(msg.c_str());
+}
+
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
     message_t messageType;
 
@@ -329,20 +323,14 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
 
     switch (messageType){
-        case ANIMATION_INIT_STAGE:
-            return this->getEventAnimationInitStage(socket, event);
+        case SCENE_ANIMATION:
+            return this->getEventSceneAnimatiom(socket, event);
 
         case END_GAME:
             return this->getEventEndGame(socket, event);
 
-        case END_STAGE:
-            return this->getEventEndStage(socket, event);
-
         case GAME_INIT:
             return this->getEventGameInit(socket, event);
-
-        case INIT_STAGE:
-            return this->getEventInitStage(socket, event);
 
         case LOG:
             return this->getEventLog(socket, event);

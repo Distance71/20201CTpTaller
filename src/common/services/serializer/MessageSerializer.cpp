@@ -15,33 +15,27 @@ response_t MessageSerializer::_handleSuccess()
     return response;
 }
 
-response_t MessageSerializer::sendMessageAnimationInitStage(Socket *socket, Message *message){
+response_t MessageSerializer::sendMessageSceneAnimation(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje SceneAnimation.");
+    sceneScreen_t scene = ((MessageSceneAnimation *) message)->getScene();
 
-    // response_t response = this->sendString(socket, ((MessageAnimationInitStage *) message)->getPath());
-    
-    // if(!response.ok)
-    //     Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en AnimationInitStage.");
+    response_t responseScene = this->sendSceneScreen(socket, scene);
 
+    if(!responseScene.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en sceneAnimation.");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se envio sceneAnimation con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendMessageEndGame(Socket *socket, Message *message){
-    return this->_handleSuccess(); //No params
-}
-
-response_t MessageSerializer::sendMessageEndStage(Socket *socket, Message *message){
-
-    // response_t response = this->sendString(socket, ((MessageEndStage *) message)->getPath());
-    
-    // if(!response.ok) {
-    //     Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en EndStage.");
-    //     return this->_handleErrorStatus();
-    // }
-    
+    Logger::getInstance()->log(DEBUG, "Se envio EndGame con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendMessageGameInit(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje GameInit.");
     screen_t screenSizes = ((MessageGameInit *) message)->getScreenSizes();
 
     response_t responseWidth = this->sendUInt(socket, screenSizes.width);
@@ -51,54 +45,44 @@ response_t MessageSerializer::sendMessageGameInit(Socket *socket, Message *messa
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en GameInit.");
         return this->_handleErrorStatus();
     }
-    return this->_handleSuccess();
-}
-
-response_t MessageSerializer::sendMessageInitStage(Socket *socket, Message *message){
-    char layers[7][100];
-
-    for(size_t i = 0; i < 7; i++)
-        strcpy(layers[i], (*((char (*)[7][100]) (((MessageInitStage *) message))->getLayers()) )[i]);
-
-    for(size_t i = 0; i < 7; i++)
-        this->sendString(socket, layers[i]);
-
-    //Validar
-
+    Logger::getInstance()->log(DEBUG, "Se envio GameInit con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendMessageLog(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje Log.");
     size_t level = ((MessageLog *) message)->getLevel();
     response_t responseLevel = this->sendLongInteger(socket, level);
     response_t responseMessage = this->sendString(socket, ((MessageLog *) message)->getMessage());
 
     if(!responseLevel.ok || !responseMessage.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en GameInit.");
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en Log.");
         return this->_handleErrorStatus();
     }
+    Logger::getInstance()->log(DEBUG, "Se envio Log con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendMessageMapElementUpdate(Socket *socket, Message *message){
-    // size_t id = ((MessageMapElementUpdate *) message)->getId();
-    // position_t position = ((MessageMapElementUpdate *) message)->getPosition();
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje MapElementUpdate.");
+    elementType_t elementType = ((MessageMapElementUpdate *) message)->getElementType();
+    position_t position = ((MessageMapElementUpdate *) message)->getPosition();
 
-    // response_t responseId = this->sendLongInteger(socket, id);
-    // response_t responsePosAxisX = this->sendInteger(socket, position.axis_x);
-    // response_t responsePosAxisY = this->sendInteger(socket, position.axis_y);
-    // response_t responseOrientation = this->sendOrientation(socket, position.orientation);
+    response_t responseElementType = this->sendElementType(socket, elementType);
+    response_t responsePosAxisX = this->sendInteger(socket, position.axis_x);
+    response_t responsePosAxisY = this->sendInteger(socket, position.axis_y);
+    response_t responseOrientation = this->sendOrientation(socket, position.orientation);
 
-    // if(!responseId.ok || !responsePosAxisX.ok || !responsePosAxisY.ok || !responseOrientation.ok) {
-    //     Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementUpdate.");
-    //     return this->_handleErrorStatus();
-    // }
-
+    if(!responseElementType.ok || !responsePosAxisX.ok || !responsePosAxisY.ok || !responseOrientation.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en MapElementUpdate.");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se envio MapElementUpdate con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendMessageRequestLoginPlayer(Socket *socket, Message *message){
-    
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje RequestLoginPlayer.");
     response_t responseUser = this->sendString(socket, ((MessageRequestLoginPlayer *) message)->getUserName());
     response_t responsePassword = this->sendString(socket, ((MessageRequestLoginPlayer *) message)->getPassword());
 
@@ -106,12 +90,12 @@ response_t MessageSerializer::sendMessageRequestLoginPlayer(Socket *socket, Mess
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en RequestLogin.");
         return this->_handleErrorStatus();
     }
-
+    Logger::getInstance()->log(DEBUG, "Se envio RequestLoginPlayer con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendMessageResponseLoginPlayer(Socket *socket, Message *message){
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje responseLogin.");    
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje responseLogin.");
     
     responseStatus_t userResponseStatus = ((MessageResponseLoginPlayer *) message)->getResponse();
 
@@ -121,11 +105,12 @@ response_t MessageSerializer::sendMessageResponseLoginPlayer(Socket *socket, Mes
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en ResponseLogin.");
         return this->_handleErrorStatus();
     }
-    Logger::getInstance()->log(DEBUG, "Se pudo enviar un mensaje responseLogin.");
+    Logger::getInstance()->log(DEBUG, "Se envio ResponseLoginPlayer con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendMessageUserMovement(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje UserMovement.");
     orientation_t orientation = ((MessageUserMovement *) message)->getOrientation();
 
     response_t responseOrientation = this->sendOrientation(socket, orientation);
@@ -134,14 +119,14 @@ response_t MessageSerializer::sendMessageUserMovement(Socket *socket, Message *m
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en UserMovement.");
         return this->_handleErrorStatus();
     }
-
+    Logger::getInstance()->log(DEBUG, "Se envio UserMovement con exito.");
     return this->_handleSuccess();
 }
 
 response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t value){
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje response.");
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje responseType.");
 
     s << value;
 
@@ -153,11 +138,41 @@ response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t 
     return this->_handleSuccess();
 }
 
+response_t MessageSerializer::sendElementType(Socket *socket, elementType_t elementType){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje elementType.");
+
+    s << elementType;
+
+    if (socket->sendMessage(s, sizeof(elementType_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de elementType.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
+response_t MessageSerializer::sendSceneScreen(Socket *socket, sceneScreen_t scene){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje sceneScreen.");
+
+    s << scene;
+
+    if (socket->sendMessage(s, sizeof(sceneScreen_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de sceneScreen.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
 response_t MessageSerializer::sendOrientation(Socket *socket, orientation_t &orientation){
 
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero long.");
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje orientation.");
 
     s << orientation << endl;
 
@@ -173,7 +188,7 @@ response_t MessageSerializer::sendInteger(Socket *socket, int &value){
 
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero long.");
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje entero.");
 
     s << value << endl;
 
@@ -222,7 +237,7 @@ response_t MessageSerializer::sendUInt(Socket *socket, unsigned int size){
 
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje");
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje unsigned entero");
 
     cout << "El valor que se va a pasar " << size << endl;
 
@@ -267,20 +282,14 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
     }
 
     switch (type){
-        case ANIMATION_INIT_STAGE:
-            return this->sendMessageAnimationInitStage(socket, message);
+        case SCENE_ANIMATION:
+            return this->sendMessageSceneAnimation(socket, message);
 
         case END_GAME:
             return this->sendMessageEndGame(socket, message);
 
-        case END_STAGE:
-            return this->sendMessageEndStage(socket, message);
-
         case GAME_INIT:
             return this->sendMessageGameInit(socket, message);
-
-        case INIT_STAGE:
-            return this->sendMessageInitStage(socket, message);
 
         case LOG:
             return this->sendMessageLog(socket, message);

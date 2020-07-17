@@ -8,7 +8,6 @@
 #include <chrono>
 #include <string>
 
-#include "../../common/models/events/EventInitStage.h"
 #include "../../common/models/events/Event.h"
 #include "MapElement.h"
 #include "../Server.h"

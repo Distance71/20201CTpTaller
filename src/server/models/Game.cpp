@@ -166,20 +166,21 @@ void Game::movePlayer(Id idUser, orientation_t orientation){
 }
 
 void Game::sendBackground(size_t numberLevel, size_t numberStage){
-
-    stageSource_t background = GameProvider::getConfig()->getSourcesForStage(numberLevel,numberStage);
-
-    char layerPaths[7][100];
-    strcpy(layerPaths[0], background.layer1.c_str());
-    strcpy(layerPaths[1], background.layer2.c_str());
-    strcpy(layerPaths[2], background.layer3.c_str());
-    strcpy(layerPaths[3], background.layer4.c_str());
-    strcpy(layerPaths[4], background.layer5.c_str());
-    strcpy(layerPaths[5], background.layer6.c_str());
-    strcpy(layerPaths[6], background.layer7.c_str());
+    // Event* event;
+    // switch(numberStage){
+    //     case 1: 
+    //         event = new EventSceneAnimation(layerPaths);
+    //         break;
+    //     case 2:
+    //         event = new EventSceneAnimation(layerPaths);
+    //         break;
+    //     case 3:
+    //         event = new EventSceneAnimation(layerPaths);
+    //         break;
+    // }
     
-    Event* event = new EventInitStage(layerPaths);
-    this->sendEvent(event);
+    
+    // this->sendEvent(event);
 }
 
 void Game::sendEvent(Event *event){

@@ -59,14 +59,10 @@ add_executable(tp1taller
         src/common/models/messages/MessageUserMovement.h
         src/common/models/messages/MessageResponseLoginPlayer.cpp
         src/common/models/messages/MessageResponseLoginPlayer.h
-        src/common/models/messages/MessageAnimationInitStage.cpp
-        src/common/models/messages/MessageAnimationInitStage.h
-        src/common/models/messages/MessageInitStage.cpp
-        src/common/models/messages/MessageInitStage.h
+        src/common/models/messages/MessageSceneAnimation.cpp
+        src/common/models/messages/MessageSceneAnimation.h
         src/common/models/messages/MessageMapElementUpdate.cpp
         src/common/models/messages/MessageMapElementUpdate.h
-        src/common/models/messages/MessageEndStage.cpp
-        src/common/models/messages/MessageEndStage.h
         src/common/models/messages/MessageEndGame.cpp
         src/common/models/messages/MessageEndGame.h
         src/common/models/messages/MessageLog.cpp
@@ -98,20 +94,12 @@ add_executable(tp1taller
         src/common/models/events/EventResponseLoginPlayer.h
         src/common/models/events/EventResponseLoginPlayer.cpp
         src/common/models/events/EventResponseLoginPlayer.h
-        src/common/models/events/EventAnimationInitStage.cpp
-        src/common/models/events/EventAnimationInitStage.h
-        src/common/models/events/EventInitStage.cpp
-        src/common/models/events/EventInitStage.h
-        src/common/models/events/EventMapElementCreate.cpp
-        src/common/models/events/EventMapElementCreate.h
+        src/common/models/events/EventSceneAnimation.cpp
+        src/common/models/events/EventSceneAnimation.h
         src/common/models/events/EventMapElementUpdate.cpp
         src/common/models/events/EventMapElementUpdate.h
-        src/common/models/events/EventMapElementDelete.cpp
-        src/common/models/events/EventMapElementDelete.h
         src/common/models/events/EventPlayerDisconnect.cpp
         src/common/models/events/EventPlayerDisconnect.h
-        src/common/models/events/EventEndStage.cpp
-        src/common/models/events/EventEndStage.h
         src/common/models/events/EventEndGame.cpp
         src/common/models/events/EventEndGame.h
 

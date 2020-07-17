@@ -14,7 +14,6 @@
 #include "PlayerController.h"
 #include "../../common/types.h"
 
-#include "../../common/models/events/EventInitStage.h"
 #include "../../common/models/events/Event.h"
 #include "Game.h"
 
