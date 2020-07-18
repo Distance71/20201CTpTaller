@@ -48,7 +48,9 @@ string Logger::getTime(){
 
 void Logger::log(LOG_LEVEL level, const string& message){
 	if (this->level >= level) {
+		m.lock();
 		*(this->logFile) << getTime() << " - " << levelToString(level) << " - "  << message << " \n";
+		m.unlock();
 		this->logFile->flush();
 	}
 }

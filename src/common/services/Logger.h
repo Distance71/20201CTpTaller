@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <map>
 #include <string>
+#include <mutex>
 
 enum LOG_LEVEL {INVALID, ERROR, INFO, DEBUG};
 static std::map<std::string, LOG_LEVEL> string2Enum {
@@ -22,6 +23,7 @@ using namespace std;
 
 class Logger {
     private:
+        std::mutex m;
         static Logger* instance;
         LOG_LEVEL level;
         ofstream* logFile;
