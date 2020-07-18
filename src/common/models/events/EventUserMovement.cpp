@@ -10,7 +10,7 @@ void EventUserMovement::update() {
 		Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventUserMovement");
     else{
         Server* server = (Server*) Event::context_;
-        //TODO chequear q hacer
+        server->moveUser(this->nameOwn_, this->orientation_);
      //   server->moveUser(this->own_, this->orientation_);
         Logger::getInstance()->log(DEBUG, "se ejecutó el evento EventUserMovement");
     }
