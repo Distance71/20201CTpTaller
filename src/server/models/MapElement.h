@@ -46,6 +46,8 @@ class MapElement {
         string getImageSource();
         spriteSize_t getSpriteSize();
 
+        elementType_t getType();
+
         void moveTo(orientation_t oneOrientation);    
 
         void setIdElement(Id oneIdElement);

@@ -37,7 +37,7 @@ class Game {
     void clearScene();
     void sendStartStage(level_t oneLevel);
     void sendStageCleared(level_t oneLevel);
-    void sendBackground(size_t numberLevel, size_t numberStage);
+    void sendBackground(size_t numberStage);
 
     public:
     Game(Server *server);
@@ -46,6 +46,9 @@ class Game {
     void run();
     void movePlayer(Id idUser, orientation_t orientation);
     void sendEvent(Event *event);
+
+    void informDisconnection(string user); 
+    void informConnection(string user); 
 };
 
 #endif

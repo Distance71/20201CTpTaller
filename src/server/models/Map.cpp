@@ -143,19 +143,16 @@ void Stage::update(currentStep_t currentStep, Game *game){
 
 void Step::update(Game *game){
     vector<Id> mapElementDead;
-    // cout << "ENTRO AL UPDATE STEP " << this->mapElements_.size() << endl;
 
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
-        // cout << mapElement.first << endl;
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
-            //Event *eventDead = new EventMapElementDelete(mapElement.first);
-            //game->sendEvent(eventDead);
         } else {
             position_t actualPosition = mapElement.second->getActualPosition();
-            //Event *eventUpdate = new EventMapElementUpdate(mapElement.first, actualPosition);
-            //game->sendEvent(eventUpdate);
+            Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
+            game->sendEvent(eventUpdate);
+            usleep(10000); // si parpadea es por esto
         }
     }
 
@@ -178,13 +175,28 @@ void Map::createPlayers(gameParams_t &gameSettings){
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
         int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
         string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
-        Id idPlayer = gameSettings.playersParams[i].id;
+        Id player = gameSettings.playersParams[i].id;
         position_t positionPlayer;
         positionPlayer.axis_x = 100 * i; // (GameProvider::getWidth() / 3) -  playerSizeX / 2
         positionPlayer.axis_y =  ((GameProvider::getHeight() / 2)); //((GameProvider::getHeight() / cantPlayers)) / (2 * (i+1)) ;
         positionPlayer.orientation = FRONT;
-        MapElement *newPlayer = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
-        this->players.emplace(idPlayer, newPlayer);
+        elementType_t PLAYER_X;
+        switch (i){
+            case 0:
+                PLAYER_X = PLAYER_1;
+                break;
+            case 1:
+                PLAYER_X = PLAYER_2;
+                break;
+            case 2:
+                PLAYER_X = PLAYER_3;
+                break;
+            case 3:
+                PLAYER_X = PLAYER_4;
+                break;
+        }
+        MapElement *newPlayer = new MapElement(PLAYER_X, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
+        this->players.emplace(player, newPlayer);
     }
 }
 

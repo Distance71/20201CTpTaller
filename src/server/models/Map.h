@@ -27,8 +27,7 @@ class Level;
 class Map {
     private:
     vector <Level *> levels_;
-    //void clearMap();
-    //MapElement *player;
+    //TODO se debe cambiar Id x string
     unordered_map<Id, MapElement*> players;
 
     public:    

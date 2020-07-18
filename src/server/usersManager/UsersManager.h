@@ -29,6 +29,9 @@ class UsersManager {
         responseStatus_t loginRequest(Id id,string username,string password);
         void runAcceptUsersThread();  
         void acceptUser();
+        
+        void informDisconnection(string user);
+        void informConnection(string user);
 };
 
 #endif 

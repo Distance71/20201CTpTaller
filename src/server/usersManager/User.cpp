@@ -3,6 +3,7 @@
 User::User(UsersManager* userManager,Socket* socket){
 	this->usersManager_ = userManager;
 	this->socket_ = socket;
+	this->username_ = "";
 
 	this->connected_ = true;
 	this->sendingQueue_ = new BlockingQueue <Message*>();
@@ -18,6 +19,10 @@ void User::setId(Id id){
 	this->id_ = id;
 }
 
+void User::setUserName(string username){
+	this->username_ = username;
+}
+
 
 Id User::getId(){
 	return this->id_;
@@ -26,11 +31,14 @@ Id User::getId(){
 
 void User::setConnection(){
 	this->connected_= true;
+	// TODO revisar si va esto ->
+	//this->usersManager_->informConnection(this->username_);
 }
 
 
 void User::setDisconnection(){
 	this->connected_ = false;
+	this->usersManager_->informDisconnection(this->username_);
 }
 
 

@@ -129,11 +129,13 @@ typedef enum {
     PLAYER_1,
     PLAYER_2,
     PLAYER_3,
-    PLAYER_4,
+    PLAYER_4,    
+    PLAYER_1_OUT,
+    PLAYER_2_OUT,
+    PLAYER_3_OUT,
+    PLAYER_4_OUT,
     ENEMY_1,
     ENEMY_2,
-    PLAYER,
-    ENEMY,
 } elementType_t;
 
 typedef enum {
@@ -143,6 +145,10 @@ typedef enum {
     END_STAGE_2,
     INIT_STAGE_3,
     END_STAGE_3,
+    INIT_STAGE_4,
+    END_STAGE_4,
+    INIT_STAGE_DEFAULT,
+    END_STAGE_DEFAULT,
     END_GAME_ANIMATION,
     WAITING_PLAYERS,
 } sceneScreen_t;

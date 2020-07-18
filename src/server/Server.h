@@ -37,7 +37,10 @@ class Server {
         void moveUser(Id idUser, orientation_t orientation);
         void runGame();
         responseStatus_t loginRequest(Id id, string username,string password);
-        int run();       
+        int run();
+        
+        void informDisconnection(string user);   
+        void informConnection(string user);   
 };
 
 #endif

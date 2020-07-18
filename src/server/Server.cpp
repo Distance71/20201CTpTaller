@@ -122,3 +122,12 @@ int Server::run(){
     
     return EXIT_SUCCESS;
 }
+
+void Server::informDisconnection(string username){
+    this->game_->informDisconnection(username);
+}
+
+void Server::informConnection(string username){
+    this->game_->informConnection(username);
+}
+

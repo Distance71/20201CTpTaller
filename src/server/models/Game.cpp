@@ -45,7 +45,8 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
-        this->sendBackground(actualStep.level,actualStep.stage);
+        //TODO revisar sendBackground
+        this->sendBackground(actualStep.stage);
         runStage(actualStep, stages[i]);  
     }
     //usleep(3000);
@@ -101,63 +102,57 @@ void Game::updateState(currentStep_t actualStep) {
 }
 
 void Game::sendStartStage(level_t oneLevel){
-    // string pathScreen;
+    sceneScreen_t pathScreen;
 
-    // switch (oneLevel){
-    //     case LEVEL_ONE:
-    //         pathScreen = "assets/TransitionScreens/Stage1.JPG";
-    //         break;
-    //     case LEVEL_TWO:
-    //         pathScreen = "assets/TransitionScreens/Stage2.JPG";
-    //         break;
-    //     case LEVEL_THREE:
-    //         pathScreen = "assets/TransitionScreens/Stage3.JPG";
-    //         break;
-    //     case LEVEL_FOUR:
-    //         pathScreen = "assets/TransitionScreens/Stage4.JPG";
-    //         break;
-    //     default:
-    //         pathScreen = "assets/TransitionScreens/StageDefault.jpg";
-    //         break;
-    // }
+    switch (oneLevel){
+        case LEVEL_ONE:
+            pathScreen = INIT_STAGE_1;
+            break;
+        case LEVEL_TWO:
+            pathScreen = INIT_STAGE_2;
+            break;
+        case LEVEL_THREE:
+            pathScreen = INIT_STAGE_3;
+            break;
+        case LEVEL_FOUR:
+            pathScreen = INIT_STAGE_4;
+            break;
+        default:
+            pathScreen = INIT_STAGE_DEFAULT;
+            break;
+    }
 
-    // char path[pathScreen.size() + 1];
-    // strcpy(path, pathScreen.c_str());
-
-    // Event* event = new EventAnimationInitStage(path);
-    // this->sendEvent(event);
+    Event* event = new EventSceneAnimation(pathScreen);
+    this->sendEvent(event);
     
-    // usleep(5000000);//5 seg
+    usleep(5000000);//5 seg
 }
 
 void Game::sendStageCleared(level_t oneLevel){
 
-    // string pathScreen;
+    sceneScreen_t pathScreen;
 
-    // switch (oneLevel){
-    //     case LEVEL_ONE:
-    //         pathScreen = "assets/TransitionScreens/Stage1Cleared.JPG";
-    //         break;
-    //     case LEVEL_TWO:
-    //         pathScreen = "assets/TransitionScreens/Stage2Cleared.JPG";
-    //         break;
-    //     case LEVEL_THREE:
-    //         pathScreen = "assets/TransitionScreens/Stage3Cleared.JPG";
-    //         break;
-    //     case LEVEL_FOUR:
-    //         pathScreen = "assets/TransitionScreens/Stage4Cleared.JPG";
-    //         break;
-    //     default:
-    //         pathScreen = "assets/TransitionScreens/StageDefaultCleared.jpg";
-    //         break;
-    // }
+    switch (oneLevel){
+        case LEVEL_ONE:
+            pathScreen = END_STAGE_1;
+            break;
+        case LEVEL_TWO:
+            pathScreen = END_STAGE_2;
+            break;
+        case LEVEL_THREE:
+            pathScreen = END_STAGE_3;
+            break;
+        case LEVEL_FOUR:
+            pathScreen = END_STAGE_4;
+            break;
+        default:
+            pathScreen = END_STAGE_DEFAULT;
+            break;
+    }
 
-    // char path[pathScreen.size() + 1];
-    // strcpy(path, pathScreen.c_str());
-
-    // Event* event = new EventEndStage(path);
-    // this->sendEvent(event)
-    // usleep(5000000);//5 seg;
+    Event* event = new EventSceneAnimation(pathScreen);
+    this->sendEvent(event);
+    usleep(5000000);//5 seg;
     
 }
 
@@ -165,24 +160,36 @@ void Game::movePlayer(Id idUser, orientation_t orientation){
     this->map_->movePlayer(idUser, orientation);
 }
 
-void Game::sendBackground(size_t numberLevel, size_t numberStage){
+void Game::sendBackground(size_t numberStage){
     // Event* event;
     // switch(numberStage){
     //     case 1: 
-    //         event = new EventSceneAnimation(layerPaths);
+    //         event = new EventSceneAnimation(LEVEL_ONE);
     //         break;
     //     case 2:
-    //         event = new EventSceneAnimation(layerPaths);
+    //         event = new EventSceneAnimation(LEVEL_TWO);
     //         break;
     //     case 3:
-    //         event = new EventSceneAnimation(layerPaths);
+    //         event = new EventSceneAnimation(LEVEL_THREE);
+    //         break;
+    //     case 4:
+    //         event = new EventSceneAnimation(LEVEL_FOUR);
     //         break;
     // }
-    
     
     // this->sendEvent(event);
 }
 
 void Game::sendEvent(Event *event){
     this->serverOwn_->sendToAllUsers(event);
+}
+
+void Game::informDisconnection(string username){
+    //TODO
+   // this->game_->informDisconnection(username);
+}
+
+void Game::informConnection(string username){
+    //TODO
+   // this->game_->informDisconnection(username);
 }

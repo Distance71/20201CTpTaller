@@ -84,8 +84,10 @@ responseStatus_t UsersManager::loginRequest(Id id,string username,string passwor
             exuser = iter->second;
             loggedInUsers_.erase(iter->first);
             delete exuser;
-
+            
+            user->setUserName(username);           
             loggedInUsers_.emplace(username,user);
+            this->informConnection(username);
 
             Logger::getInstance()->log(INFO, "Se reconecta el ususario: " + username);
 
@@ -103,7 +105,9 @@ responseStatus_t UsersManager::loginRequest(Id id,string username,string passwor
         // si no estaba jugando puede entrar
         if (iter ==  loggedInUsers_.end()){
             user = notLoggedInUsers_.find(id)->second;
+            user->setUserName(username);
             loggedInUsers_.emplace(username,user);
+            this->informConnection(username);
             Logger::getInstance()->log(INFO, "Se conecta el usuario:" + username);
             return OK;
         }
@@ -121,7 +125,9 @@ responseStatus_t UsersManager::loginRequest(Id id,string username,string passwor
                 loggedInUsers_.erase(username);
                 delete exuser;
                 user = notLoggedInUsers_.find(id)->second;
+                user->setUserName(username);
                 loggedInUsers_.emplace(username,user);
+                this->informConnection(username);
                 Logger::getInstance()->log(INFO, "Se reconecta el usuario: " + username);
                 return OK;
             }
@@ -168,5 +174,14 @@ static void * acceptUsers (void* arg){
 void UsersManager::runAcceptUsersThread(){
     pthread_t acceptUsersThread;
     pthread_create(&acceptUsersThread,NULL,acceptUsers,this);
+}
+
+
+void UsersManager::informDisconnection(string username){
+    this->serverOwn_->informDisconnection(username);
+}
+
+void UsersManager::informConnection(string username){
+    this->serverOwn_->informConnection(username);
 }
 

@@ -23,6 +23,7 @@ class User {
 private:
 
     Id id_;
+    string username_;
 
     UsersManager* usersManager_;
     Socket* socket_;
@@ -40,6 +41,7 @@ public:
     
     void setId(Id id);
     Id getId();
+    void setUserName(string username);
 
     void setConnection();
     void setDisconnection();
