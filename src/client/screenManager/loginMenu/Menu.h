@@ -26,6 +26,7 @@ class Menu {
         void processEvent();
         void setLoginResponse(responseStatus_t response);
         bool getLoggedInStatus();
+        void show();
         
         
     private:
@@ -41,6 +42,7 @@ class Menu {
         void addMenuElement(string element_name,MenuElement* menu_element);
         void update(int x,int y, bool update);
         void sendCredentialsMessage();
+        
 };
 
 #endif

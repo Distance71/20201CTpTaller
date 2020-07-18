@@ -44,7 +44,6 @@ class MessageSerializer {
         response_t sendUInt(Socket *socket, unsigned int size);
         response_t sendElementType(Socket *socket, elementType_t elementType);
         response_t sendSceneScreen(Socket *socket, sceneScreen_t scene);
-        response_t sendLevel(Socket *socket, level_t level);
 
     public:
         response_t sendSerializedEvent(Socket *socket, Message *message);

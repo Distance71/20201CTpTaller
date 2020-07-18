@@ -58,7 +58,6 @@ int Client::run(){
     //this->sendMessage(message);
 
 
-<<<<<<< HEAD
     SDL_Event e;
     while (SDL_PollEvent(&e)){
         if (e.type == SDL_QUIT){
@@ -66,8 +65,6 @@ int Client::run(){
             return EXIT_SUCCESS;
         }
     }
-=======
->>>>>>> 1cb840c8da85926298ccfad199b6cc68a75c1eca
 
     bool logged = this->screenManager_-> viewLogin();
 
@@ -75,11 +72,11 @@ int Client::run(){
          Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
         disconnect();
          return EXIT_FAILURE;
-    }*/
+    }
 
-    //int res = this->waitForPlayers();
+    int res = this->waitForPlayers();
 
-    /*if(res==0){
+    if(res==0){
         Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
         return EXIT_SUCCESS;
     }
@@ -90,7 +87,7 @@ int Client::run(){
     }
 
 
-    //this->eventsManager_->RunDetectPlayerEventsThread();
+    this->eventsManager_->RunDetectPlayerEventsThread();
 
     this->screenManager_->graphic();
 

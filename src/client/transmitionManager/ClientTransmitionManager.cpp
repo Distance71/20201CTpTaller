@@ -107,7 +107,7 @@ static void* receiveMessages(void *arg){
     // }
     //client->processEvent(new EventSceneAnimation(WAITING_PLAYERS));
     //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
     client->processEvent(new EventResponseLoginPlayer(OK));
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     client->processEvent(new EventSceneAnimation(INIT_STAGE_1));

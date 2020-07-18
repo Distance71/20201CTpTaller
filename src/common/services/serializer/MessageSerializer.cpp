@@ -280,23 +280,6 @@ response_t MessageSerializer::sendUInt(Socket *socket, unsigned int size){
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendLevel(Socket *socket, level_t level){
-    stringstream s;
-
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje level");
-
-    cout << "El valor que se va a pasar " << level << endl;
-
-    s << level;
-
-    if (socket->sendMessage(s, sizeof(level_t)) <= 0){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje level.");
-        return this->_handleErrorStatus();
-    }
-
-    return this->_handleSuccess();
-}
-
 response_t MessageSerializer::sendString(Socket *socket, char (path)[100]){
 
     stringstream s;

@@ -187,13 +187,9 @@ void ScreenManager::graphic(){
     Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");
 }
 
-<<<<<<< HEAD
 void ScreenManager::updateEntity(elementType_t type, position_t position){
     Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en ScreenManager");
-=======
 
-void ScreenManager::updateEntity(elementType_t type, position_t position){   
->>>>>>> 1cb840c8da85926298ccfad199b6cc68a75c1eca
     if(this->gameGraphics_){
         this->gameGraphics_->updateEntity(type, position);
     }
@@ -202,13 +198,8 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
     }
 }
 
-<<<<<<< HEAD
 void ScreenManager::setBackground(level_t level){
     Logger::getInstance()->log(DEBUG, "Se va a setear un background en ScreenManager");
-=======
-
-void ScreenManager::setBackground(stageSource_t background){
->>>>>>> 1cb840c8da85926298ccfad199b6cc68a75c1eca
     if(this->gameGraphics_){
         this->gameGraphics_->setBackground(level);
     }
@@ -259,7 +250,7 @@ bool ScreenManager::viewLogin(){
             Logger::getInstance()->log(DEBUG, "El usuario se ha logueado con exito en ScreenManager");
             return true;
         }  
-    
+        this->menu_->show();
     }
 
     Logger::getInstance()->log(ERROR ,"Se ha cerrado el menu debido a un problema");

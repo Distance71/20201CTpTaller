@@ -126,17 +126,12 @@ void Menu::processEvent(){
     sendCredentialsMessage();
 }
 
-
-<<<<<<< HEAD
-
 void Menu::show(){
     Logger::getInstance()->log(DEBUG, "Se va a graficar el menu");
     update(-1,-1,false);
     SDL_RenderPresent(this->gRenderer);  
 }
 
-=======
->>>>>>> 1cb840c8da85926298ccfad199b6cc68a75c1eca
 void Menu::setLoginResponse(responseStatus_t response){
     if(response == ERROR_FULL_GAME)
         Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse, juego completo");
