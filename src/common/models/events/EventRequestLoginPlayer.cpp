@@ -20,8 +20,10 @@ void EventRequestLoginPlayer::update() {
     else{
       Server* server = (Server*) Event::context_;
       responseStatus_t res = server->loginRequest(this->own_,this->userName_,this->password_);
+      cout << res << endl;
       EventResponseLoginPlayer* event = new EventResponseLoginPlayer(res);
       server->sendToUser(this->own_,event);
+      cout << res << endl;
       Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventRequestLoginPlayer");
     }
 

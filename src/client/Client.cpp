@@ -54,10 +54,6 @@ int Client::run(){
     Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
     cout << "Se estableció conexión con el servidor " << endl;
 
-    //MessageRequestLoginPlayer* message = new MessageRequestLoginPlayer("dario","dario");
-    //this->sendMessage(message);
-
-
     SDL_Event e;
     while (SDL_PollEvent(&e)){
         if (e.type == SDL_QUIT){

@@ -34,12 +34,13 @@ string User::getUserName(){
 
 void User::setConnection(){
 	this->connected_= true;
-	// TODO revisar si va esto ->
-	//this->usersManager_->informConnection(this->username_);
+	this->usersManager_->informConnection(this->username_);
 }
 
 
 void User::setDisconnection(){
+    Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente " + this->username_);
+	
 	this->connected_ = false;
 	this->usersManager_->informDisconnection(this->username_);
 }
@@ -112,7 +113,6 @@ static void* receivingMessages(void * arg){
 		Id id = user->getId();
 		string userName = user->getUserName();
 		if (res.status == DISCONNECTION || res.status==ERROR_CONNECTION) {
-            Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente.");
             Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
 			user->setDisconnection();
             return nullptr;

@@ -30,12 +30,21 @@ void GameGraphics::createElements(){
     string sourcePlayer4 = "assets/Players/player4.png";
     string sourceEnemy1 = "assets/Enemies/enemigo1.png";
     string sourceEnemy2 = "assets/Enemies/enemigo2.png";
+    string sourcePlayer1Disconnected = "assets/Players/player1Reducido_Out.png";
+    string sourcePlayer2Disconnected = "assets/Players/player2Reducido_Out.png";
+    string sourcePlayer3Disconnected = "assets/Players/player3Reducido_Out.png";
+    string sourcePlayer4Disconnected = "assets/Players/player4Reducido_Out.png";
     this->elements_[PLAYER_1] = new GraphicsMapElement(sourcePlayer1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[PLAYER_2] = new GraphicsMapElement(sourcePlayer2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[PLAYER_3] = new GraphicsMapElement(sourcePlayer3, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[PLAYER_4] = new GraphicsMapElement(sourcePlayer4, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[PLAYER_1_OUT] = new GraphicsMapElement(sourcePlayer1Disconnected, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[PLAYER_2_OUT] = new GraphicsMapElement(sourcePlayer2Disconnected, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[PLAYER_3_OUT] = new GraphicsMapElement(sourcePlayer3Disconnected, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(sourcePlayer4Disconnected, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_1] = new GraphicsMapElement(sourceEnemy1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_2] = new GraphicsMapElement(sourceEnemy2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+
 }
 
 void GameGraphics::createScenes(){
@@ -91,7 +100,6 @@ void GameGraphics::createScenarios(){
 }
 
 void GameGraphics::update(){
-    this->scenario_ = this->scenaries_[LEVEL_ONE];
     SDL_RenderClear(this->renderer_);
     position_t positionImage;
     positionImage.axis_x = 0;

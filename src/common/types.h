@@ -221,16 +221,16 @@ typedef enum {
     NOT_SELECTED,
 } buttonstate_t;
 
-typedef enum responseStatus {
-    OK,
-    ERROR_CONNECTION,
-    NOT_MESSAGE,
-    ERROR_MESSAGE,
-    ERROR_FULL_GAME,
-    ERROR_WRONG_CREDENTIALS,
-    NOT_RESPONSE,
-    DISCONNECTION,
-    ERROR_ALREADY_LOGGED_IN,
+typedef enum {
+    OK = 0,
+    ERROR_CONNECTION = 1,
+    NOT_MESSAGE = 2,
+    ERROR_MESSAGE = 3,
+    ERROR_FULL_GAME = 4,
+    ERROR_WRONG_CREDENTIALS = 5,
+    NOT_RESPONSE = 6,
+    DISCONNECTION = 7,
+    ERROR_ALREADY_LOGGED_IN = 8,
 } responseStatus_t;
 
 typedef struct {

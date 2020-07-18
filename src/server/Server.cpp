@@ -94,7 +94,7 @@ void Server::moveUser(string user, orientation_t orientation){
 }
 
 responseStatus_t Server::loginRequest(Id id,string username,string password){
-    this->usersManager_->loginRequest(id,username,password);
+    return this->usersManager_->loginRequest(id,username,password);
 }
 
 int Server::run(){
@@ -116,7 +116,7 @@ int Server::run(){
         }
     }    
   
-    this->runGame();
+    //this->runGame();
 
     Logger::getInstance()->log(INFO, "El Juego ha terminado");
     
@@ -124,10 +124,10 @@ int Server::run(){
 }
 
 void Server::informDisconnection(string username){
-    this->game_->informDisconnection(username);
+    //this->game_->informDisconnection(username);
 }
 
 void Server::informConnection(string username){
-    this->game_->informConnection(username);
+    //this->game_->informConnection(username);
 }
 

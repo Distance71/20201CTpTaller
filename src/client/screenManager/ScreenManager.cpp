@@ -268,18 +268,18 @@ int ScreenManager::waitForPlayers(){
     else{
         SDL_Event e;
         Logger::getInstance()->log( DEBUG ,"Se esperan jugadores");
-        this->waiting_= false;
+        this->waiting_= true;
         this->gameGraphics_->setImage(WAITING_PLAYERS);
-        // while(this->waiting_){
-        //     while (SDL_PollEvent(&e)){
-        //         if (e.type == SDL_QUIT){
-        //             Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego mientras se esperaban jugadores");
-        //             SDL_RenderClear(this->renderer_);
-        //             return 0;
-        //         }
-        //     }
-        //     this->gameGraphics_->update();
-        // }
+        while(this->waiting_){
+            while (SDL_PollEvent(&e)){
+                if (e.type == SDL_QUIT){
+                    Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego mientras se esperaban jugadores");
+                    SDL_RenderClear(this->renderer_);
+                    return 0;
+                }
+            }
+            this->gameGraphics_->update();
+        }
         return 1;
     }
 }
