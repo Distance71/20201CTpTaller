@@ -43,10 +43,10 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
 
     auto stages = level->getStages();
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
+    this->sendBackground(actualStep.level);
+
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
-        //TODO revisar sendBackground
-        this->sendBackground(actualStep.stage);
         runStage(actualStep, stages[i]);  
     }
     //usleep(3000);
@@ -160,24 +160,10 @@ void Game::movePlayer(string user, orientation_t orientation){
     this->map_->movePlayer(user, orientation);
 }
 
-void Game::sendBackground(size_t numberStage){
-    // Event* event;
-    // switch(numberStage){
-    //     case 1: 
-    //         event = new EventSceneAnimation(LEVEL_ONE);
-    //         break;
-    //     case 2:
-    //         event = new EventSceneAnimation(LEVEL_TWO);
-    //         break;
-    //     case 3:
-    //         event = new EventSceneAnimation(LEVEL_THREE);
-    //         break;
-    //     case 4:
-    //         event = new EventSceneAnimation(LEVEL_FOUR);
-    //         break;
-    // }
-    
-    // this->sendEvent(event);
+void Game::sendBackground(level_t oneLevel){
+    Event* event = new EventSetLevel(oneLevel);
+    this->sendEvent(event);
+    usleep(10000);
 }
 
 void Game::sendEvent(Event *event){
