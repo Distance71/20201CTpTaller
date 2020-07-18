@@ -175,7 +175,7 @@ void Map::createPlayers(gameParams_t &gameSettings){
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
         int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
         string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
-        Id player = gameSettings.playersParams[i].id;
+        string player = gameSettings.playersParams[i].username;
         position_t positionPlayer;
         positionPlayer.axis_x = 100 * i; // (GameProvider::getWidth() / 3) -  playerSizeX / 2
         positionPlayer.axis_y =  ((GameProvider::getHeight() / 2)); //((GameProvider::getHeight() / cantPlayers)) / (2 * (i+1)) ;
@@ -206,26 +206,66 @@ void Map::initializePositionPlayers(gameParams_t &gameSettings){
     for (size_t i = 0; i < cantPlayers; i++){
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
         int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
-        Id idPlayer = gameSettings.playersParams[i].id;
+        string player = gameSettings.playersParams[i].username;
         position_t positionPlayer;
         positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
         positionPlayer.axis_y = ((GameProvider::getHeight() / cantPlayers) * i) / 2;
-        State *playerPosition = this->players[idPlayer]->getState<Position>(string("Position"));
+        State *playerPosition = this->players[player]->getState<Position>(string("Position"));
         playerPosition->setX(positionPlayer.axis_x);
         playerPosition->setY(positionPlayer.axis_y);
-        State *playerOrientation = this->players[idPlayer]->getState<Orientation>(string("Orientation"));
+        State *playerOrientation = this->players[player]->getState<Orientation>(string("Orientation"));
         playerOrientation->setX(FRONT);
     }    
 }
 
-void Map::movePlayer(Id idUser, orientation_t orientation){
-    MapElement *onePlayer = this->players[idUser];
+void Map::movePlayer(string user, orientation_t orientation){
+    MapElement *onePlayer = this->players[user];
     if (!onePlayer){
         Logger::getInstance()->log(ERROR, "No se encontro el jugador para mover.");
         return;
     }
     onePlayer->moveTo(orientation);
     Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+}
+
+void Map::informDisconnection(string username){   
+    elementType_t PLAYER_X = this->players[username]->getType();
+    elementType_t NEW_TYPE;
+    switch (PLAYER_X){
+        case PLAYER_1:
+            NEW_TYPE = PLAYER_1_OUT;
+            break;
+        case PLAYER_2:
+            NEW_TYPE = PLAYER_2_OUT;
+            break;
+        case PLAYER_3:
+            NEW_TYPE = PLAYER_3_OUT;
+            break;
+        case PLAYER_4:
+            NEW_TYPE = PLAYER_4_OUT;
+            break;
+    }
+    this->players[username]->setType(NEW_TYPE);
+}
+
+void Map::informConnection(string username){
+    elementType_t PLAYER_X = this->players[username]->getType();
+    elementType_t NEW_TYPE;
+    switch (PLAYER_X){
+        case PLAYER_1_OUT:
+            NEW_TYPE = PLAYER_1;
+            break;
+        case PLAYER_2_OUT:
+            NEW_TYPE = PLAYER_2;
+            break;
+        case PLAYER_3_OUT:
+            NEW_TYPE = PLAYER_3;
+            break;
+        case PLAYER_4_OUT:
+            NEW_TYPE = PLAYER_4;
+            break;
+    }
+    this->players[username]->setType(NEW_TYPE);
 }
 
 void Map::initializeStep(currentStep_t currentStep, Game *game){

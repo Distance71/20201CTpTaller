@@ -22,7 +22,7 @@ class Step;
 class Game {
 
     private:
-        Server *serverOwn_;
+    Server *serverOwn_;
     Map *map_;
 
     void initializeGameParams();
@@ -44,7 +44,7 @@ class Game {
     ~Game();
 
     void run();
-    void movePlayer(Id idUser, orientation_t orientation);
+    void movePlayer(string user, orientation_t orientation);
     void sendEvent(Event *event);
 
     void informDisconnection(string user); 

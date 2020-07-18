@@ -41,6 +41,10 @@ elementType_t MapElement::getType() {
     return this->type;
 }
 
+void MapElement::setType(elementType_t type) {
+    this->type = type;
+}
+
 vector<State *> MapElement::getStates() {
     vector<State *> states(states_.size());
     auto state_selector = [](auto pair) { return pair.second; };

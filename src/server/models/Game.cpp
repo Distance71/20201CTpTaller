@@ -156,8 +156,8 @@ void Game::sendStageCleared(level_t oneLevel){
     
 }
 
-void Game::movePlayer(Id idUser, orientation_t orientation){
-    this->map_->movePlayer(idUser, orientation);
+void Game::movePlayer(string user, orientation_t orientation){
+    this->map_->movePlayer(user, orientation);
 }
 
 void Game::sendBackground(size_t numberStage){
@@ -185,11 +185,9 @@ void Game::sendEvent(Event *event){
 }
 
 void Game::informDisconnection(string username){
-    //TODO
-   // this->game_->informDisconnection(username);
+    this->map_->informDisconnection(username);
 }
 
 void Game::informConnection(string username){
-    //TODO
-   // this->game_->informDisconnection(username);
+    this->map_->informDisconnection(username);
 }

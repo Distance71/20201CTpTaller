@@ -27,8 +27,7 @@ class Level;
 class Map {
     private:
     vector <Level *> levels_;
-    //TODO se debe cambiar Id x string
-    unordered_map<Id, MapElement*> players;
+    unordered_map<string, MapElement*> players;
 
     public:    
     Map();
@@ -39,9 +38,12 @@ class Map {
     bool endStep(currentStep_t currentStep);
     void createPlayers(gameParams_t &gameSettings);
     void initializePositionPlayers(gameParams_t &gameSettings);
-    void movePlayer(Id idUser, orientation_t orientation);
+    void movePlayer(string user, orientation_t orientation);
 
     void initializeStep(currentStep_t currentStep, Game *game);
+
+    void informDisconnection(string user); 
+    void informConnection(string user); 
 };
 
 class Level: public Map {

@@ -89,8 +89,8 @@ void Server::runGame(){
     this->game_->run();
 }
 
-void Server::moveUser(Id idUser, orientation_t orientation){
-    this->game_->movePlayer(idUser, orientation);
+void Server::moveUser(string user, orientation_t orientation){
+    this->game_->movePlayer(user, orientation);
 }
 
 responseStatus_t Server::loginRequest(Id id,string username,string password){
