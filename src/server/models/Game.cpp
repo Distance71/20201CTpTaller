@@ -185,9 +185,9 @@ void Game::sendEvent(Event *event){
 }
 
 void Game::informDisconnection(string username){
-    this->map_->informDisconnection(username);
+    if (this->map_ != NULL) this->map_->informDisconnection(username);
 }
 
 void Game::informConnection(string username){
-    this->map_->informDisconnection(username);
+    if (this->map_ != NULL) this->map_->informDisconnection(username);
 }
