@@ -157,7 +157,7 @@ void GameGraphics::updateEntity(elementType_t type, position_t position){
     elementToGraphic_t elementToGraphic;
     elementToGraphic.position = position;
     elementToGraphic.type = type;
-    cout << type << endl;
+    //cout << type << endl;
     this->graphicsQueue_->push(elementToGraphic);
 }
 
