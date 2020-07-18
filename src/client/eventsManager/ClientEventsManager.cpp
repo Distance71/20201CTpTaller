@@ -29,6 +29,7 @@ Event* ClientEventsManager::getEvent(){
 
 
 static void * detectPlayerEvents(void* arg){
+    Logger::getInstance()->log(DEBUG, "Se inicializa hilo de detección de eventos del jugador internamente");
     ClientEventsManager* eventsManager = (ClientEventsManager*) arg;
     Client* client = eventsManager->getClient();
     Uint8 up;
@@ -39,7 +40,6 @@ static void * detectPlayerEvents(void* arg){
     const Uint8 *keystate;
     
     while (client->isConnected()){
-
         SDL_Event e;
 
         while (SDL_PollEvent(&e)){
@@ -61,52 +61,55 @@ static void * detectPlayerEvents(void* arg){
 
         orientation_t movementOrientation = NOT_MOVEMENT;
 
+        Logger::getInstance()->log(DEBUG, "Se va a procesar un movimiento del jugador");
+
+
         if (up && !down && !right && !left){ 
             movementOrientation = UP;
-            printf("arriba\n");
+            cout << "ARRIBA" << endl;
         }
         
         else if(!up && down && !right && !left){
             movementOrientation = DOWN;
-            printf("abajo\n");
+            cout << "ABAJO" << endl;
         }
         
         else if(!up && !down && right && !left){
             movementOrientation = FRONT;
-            printf("derecha\n");
+            cout << "DERECHA" << endl;
         }
         
         else if(!up && !down && !right && left){
-            printf("izquierda\n");
             movementOrientation = BACK;
+            cout << "IZQUIERDA" << endl;
         }
 
         else if(up && !down && right && !left){
-            printf("DERECHA ARRIBA\n");
+            cout << "DERECHA ARRIBA" << endl;
             movementOrientation = FRONT_UP;
         }
         
-        else if(up && !down && !right && left){ 
-            printf("IZQUIERDA ARRIBA\n");
+        else if(up && !down && !right && left){
+            cout << "IZQUIERDA ARRIBA" << endl; 
             movementOrientation = BACK_UP;
         }
         
         else if(!up && down && right && !left){ 
-            printf("DERECHA ABAJO\n");
+            cout << "DERECHA ABAJO" << endl;
             movementOrientation = FRONT_DOWN;
         }
         
         else if(!up && down && !right && left){
+            cout << "IZQUIERDA ABAJO" << endl;
             movementOrientation = BACK_DOWN;
-            printf("IZQUIERDA ABAJO\n");
         }
 
-        if (movementOrientation!=NOT_MOVEMENT){
+        if (movementOrientation != NOT_MOVEMENT){
             MessageUserMovement* message = new MessageUserMovement(movementOrientation);  
             client->sendMessage(message);
         }
 
-        SDL_Delay(100);
+        SDL_Delay(16);
     }
 
     return nullptr;
@@ -114,7 +117,7 @@ static void * detectPlayerEvents(void* arg){
 
 
 void ClientEventsManager::RunDetectPlayerEventsThread(){
-    this->stop_=false;
+    //this->stop_ = false;
     Logger::getInstance()->log(DEBUG, "Se inicializa hilo de detección de eventos del jugador");
     pthread_t detect_player_events_thread;
     pthread_create(&detect_player_events_thread, NULL, detectPlayerEvents, this);

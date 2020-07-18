@@ -430,7 +430,7 @@ void ConfigurationHandler::initializeDataClient(){
 
     size_t quantityPlayers = this->parserJson->getSizeArray(PATH_PLAYERS);
 
-    cout << "quant " << quantityPlayers << endl;
+    //cout << "quant " << quantityPlayers << endl;
     GameProvider::setQuantityPlayers(quantityPlayers);
     
     vector<user_t> users (quantityPlayers);
@@ -455,8 +455,8 @@ void ConfigurationHandler::initializeDataClient(){
         int sizeStage = this->parserJson->getSizeArray(PATH_LEVEL);
         levelParams_t oneLevelParams;
 
-        cout << "pathLevel " << pathLevel << endl;
-        cout << "quantStages " << sizeStage << endl;
+        //cout << "pathLevel " << pathLevel << endl;
+        //cout << "quantStages " << sizeStage << endl;
 
         for(int numberStage = 0; numberStage < sizeStage; numberStage++){
             Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
@@ -464,7 +464,7 @@ void ConfigurationHandler::initializeDataClient(){
 
             string pathStage = getPathStage(numberLevel, numberStage);
 
-            cout << "pathStage " << pathStage << endl;
+            //cout << "pathStage " << pathStage << endl;
 
             string pathTransitionInit = pathStage + "/transitionInit";
             //cout << "pathTransitionInit " << pathTransitionInit << endl;

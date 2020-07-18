@@ -54,6 +54,8 @@ void GameGraphics::createScenes(){
     string sourceEndStage2 = "assets/TransitionScreens/Stage2Cleared.JPG";
     string sourceInitStage3 = "assets/TransitionScreens/Stage3.JPG";
     string sourceEndStage3 = "assets/TransitionScreens/Stage3Cleared.JPG";
+    string sourceInitStage4 = "assets/TransitionScreens/Stage4.JPG";
+    string sourceEndStage4 = "assets/TransitionScreens/Stage4Cleared.JPG";    
     string sourceEndGame = "assets/TransitionScreens/gameOver.png";
     string sourceWaitingPlayers = "assets/TransitionScreens/waitingForPlayers.png";
     this->scenes_[INIT_STAGE_1] = new GraphicsMapElement(sourceInitStage1, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
@@ -62,8 +64,11 @@ void GameGraphics::createScenes(){
     this->scenes_[END_STAGE_2] = new GraphicsMapElement(sourceEndStage2, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[INIT_STAGE_3] = new GraphicsMapElement(sourceInitStage3, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[END_STAGE_3] = new GraphicsMapElement(sourceEndStage3, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
+    this->scenes_[INIT_STAGE_4] = new GraphicsMapElement(sourceInitStage4, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
+    this->scenes_[END_STAGE_4] = new GraphicsMapElement(sourceEndStage4, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[END_GAME_ANIMATION] = new GraphicsMapElement(sourceEndGame, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[WAITING_PLAYERS] = new GraphicsMapElement(sourceWaitingPlayers, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
+
 }
 
 void GameGraphics::createScenarios(){
@@ -152,7 +157,7 @@ void GameGraphics::updateEntity(elementType_t type, position_t position){
     elementToGraphic_t elementToGraphic;
     elementToGraphic.position = position;
     elementToGraphic.type = type;
-    cout << type << endl;
+    //cout << type << endl;
     this->graphicsQueue_->push(elementToGraphic);
 }
 

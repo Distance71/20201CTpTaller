@@ -82,7 +82,7 @@ int Client::run(){
         return EXIT_FAILURE;
     }
 
-
+    //this->connected_ = true;
     this->eventsManager_->RunDetectPlayerEventsThread();
 
     this->screenManager_->graphic();
