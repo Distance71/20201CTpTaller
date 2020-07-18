@@ -50,6 +50,7 @@ typedef enum message {
     REQUEST_LOGIN_PLAYER = 5,
     RESPONSE_LOGIN_PLAYER = 6,
     USER_MOVEMENT = 7,
+    SET_LEVEL = 8,
 } message_t;
 
 typedef enum {

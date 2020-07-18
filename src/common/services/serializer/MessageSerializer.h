@@ -14,6 +14,7 @@
 #include "../../models/messages/MessageRequestLoginPlayer.h"
 #include "../../models/messages/MessageResponseLoginPlayer.h"
 #include "../../models/messages/MessageUserMovement.h"
+#include "../../models/messages/MessageSetLevel.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ class MessageSerializer {
         response_t sendMessageRequestLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageResponseLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageUserMovement(Socket *socket, Message *message);
+        response_t sendMessageSetLevel(Socket *socket, Message *message);
 
         response_t sendResponseType(Socket *socket, responseStatus_t value);
 
@@ -37,6 +39,7 @@ class MessageSerializer {
         response_t sendMessageType(Socket *socket, message_t type);
         response_t sendInteger(Socket *socket, int &value);
         response_t sendOrientation(Socket *socket, orientation_t &orientation);
+        response_t sendLevel(Socket *socket, level_t &level);
         response_t sendLongInteger(Socket *socket, size_t &value);
         response_t sendUInt(Socket *socket, unsigned int size);
         response_t sendElementType(Socket *socket, elementType_t elementType);

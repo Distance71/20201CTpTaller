@@ -123,6 +123,20 @@ response_t MessageSerializer::sendMessageUserMovement(Socket *socket, Message *m
     return this->_handleSuccess();
 }
 
+response_t MessageSerializer::sendMessageSetLevel(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje SetLevel.");
+    level_t level = ((MessageSetLevel *) message)->getLevel();
+
+    response_t responseLevel = this->sendLevel(socket, level);
+
+    if(!responseLevel.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en SetLevel.");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se envio SetLevel con exito.");
+    return this->_handleSuccess();    
+};
+
 response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t value){
     stringstream s;
 
@@ -183,6 +197,22 @@ response_t MessageSerializer::sendOrientation(Socket *socket, orientation_t &ori
 
     return this->_handleSuccess();
 }
+
+response_t MessageSerializer::sendLevel(Socket *socket, level_t &level){
+
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje level.");
+
+    s << level << endl;
+
+    if (socket->sendMessage(s, sizeof(level_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de level.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();    
+};
 
 response_t MessageSerializer::sendInteger(Socket *socket, int &value){
 

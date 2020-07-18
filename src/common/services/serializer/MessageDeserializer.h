@@ -17,6 +17,7 @@
 #include "../../models/messages/MessageRequestLoginPlayer.h"
 #include "../../models/messages/MessageResponseLoginPlayer.h"
 #include "../../models/messages/MessageUserMovement.h"
+#include "../../models/messages/MessageSetLevel.h"
 
 class Event;
 using namespace std;
@@ -39,6 +40,7 @@ class MessageDeserializer {
         response_t getEventRequestLoginPlayer(Socket *socket, Event* &event);
         response_t getEventResponseLoginPlayer(Socket *socket, Event* &event);
         response_t getEventUserMovement(Socket *socket, Event* &event);
+        response_t getEventSetLevel(Socket *socket, Event* &event);
         
         response_t getInteger(Socket *socket, int &value);
         response_t getUInteger(Socket *socket, unsigned int &value);
@@ -49,6 +51,7 @@ class MessageDeserializer {
         response_t getOrientation(Socket *socket, orientation_t &orientation);
         response_t getSceneScreen(Socket *socket, sceneScreen_t &scene);
         response_t getElementType(Socket *socket, elementType_t &elementType);
+        response_t getLevel(Socket *socket, level_t &level);
     public:
         response_t getReceivedMessage(Socket *socket, Event* &event);
 };
