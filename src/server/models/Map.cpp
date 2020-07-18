@@ -127,8 +127,18 @@ vector<Step *> Stage::getSteps(){
 void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
         
-    //this->player->update();
+    this->updatePlayers(game);
     levels_[actualLevel]->update(currentStep, game);
+}
+
+void Map::updatePlayers(Game *game){
+
+    for(auto mapElementPlayer : this->players){
+        position_t actualPosition = mapElementPlayer.second->getActualPosition();
+        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+        game->sendEvent(eventUpdate);
+        usleep(10000); // si parpadea es por esto        
+    }
 }
 
 void Level::update(currentStep_t currentStep, Game *game){

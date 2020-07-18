@@ -28,6 +28,7 @@ class Map {
     private:
     vector <Level *> levels_;
     unordered_map<string, MapElement*> players;
+    void updatePlayers(Game *game);
 
     public:    
     Map();
