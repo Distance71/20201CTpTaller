@@ -29,6 +29,10 @@ class Map {
     vector <Level *> levels_;
     unordered_map<string, MapElement*> players;
     void updatePlayers(Game *game);
+    size_t loggedPlayers_ = 0;
+
+    elementType_t getPlayerType();
+    position_t getInitialPosition();
 
     public:    
     Map();
@@ -72,7 +76,6 @@ class Stage: public Level {
     
     Stage();
     Stage(stageParams_t &params);
-    // MapElement* createMapElement();
     void addStep(Step *step);
     vector<Step *> getSteps();
     void update(currentStep_t currentStep, Game *game);
@@ -89,15 +92,11 @@ class Step: public Stage {
     public:
     Step();
     Step(stepParams_t params);
-    //~Step();
 
 
     void update(Game *game);
     void initializeStep(Game *game);
     bool endStep();
-    // int move_in_direction(string movement_instruction,int id);
-    // void createEnemy();    
-    // void killMapElement(IdElement id);
 };
 
 #endif

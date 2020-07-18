@@ -61,7 +61,7 @@ Step::Step(stepParams_t params) {
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
-            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy,2,2,sprite, size_x, size_y);
+            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy,2,2, size_x, size_y);
             this->mapElements_.emplace(this->lastId_, newEnemy);
             this->lastId_++;
         }
@@ -176,42 +176,42 @@ void Step::update(Game *game){
 }
 
 void Map::createPlayers(gameParams_t &gameSettings){
-    size_t cantPlayers =GameProvider::getQuantityPlayers();
+    // size_t cantPlayers =GameProvider::getQuantityPlayers();
     
-    Logger::getInstance()->log(DEBUG, "Se comienza a crear el MapElement para cada jugador.");
-    for (size_t i = 0; i < cantPlayers; i++){
-        int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
-        int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
-        string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
-        string player = gameSettings.playersParams[i].username;
-        position_t positionPlayer;
-        positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
-        positionPlayer.axis_y =  ((GameProvider::getHeight() / 2)); //((GameProvider::getHeight() / cantPlayers)) / (2 * (i+1)) ;
-        positionPlayer.orientation = FRONT;
-        elementType_t PLAYER_X;
-        switch (i){
-            case 0:
-                PLAYER_X = PLAYER_1;
-                break;
-            case 1:
-                PLAYER_X = PLAYER_2;
-                break;
-            case 2:
-                PLAYER_X = PLAYER_3;
-                break;
-            case 3:
-                PLAYER_X = PLAYER_4;
-                break;
-        }
-        if (this->players.find(player) == this->players.end()) {        
-            MapElement *newPlayer = new MapElement(PLAYER_X, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
-            this->players.emplace(player, newPlayer);
-        }
-        else
-        {
-            Logger::getInstance()->log(ERROR, "Se intento agregar un jugador que ya existe.");
-        }        
-    }
+    // Logger::getInstance()->log(DEBUG, "Se comienza a crear el MapElement para cada jugador.");
+    // for (size_t i = 0; i < cantPlayers; i++){
+    //     int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
+    //     int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
+    //     string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
+    //     string player = gameSettings.playersParams[i].username;
+    //     position_t positionPlayer;
+    //     positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
+    //     positionPlayer.axis_y =  ((GameProvider::getHeight() / 2)); //((GameProvider::getHeight() / cantPlayers)) / (2 * (i+1)) ;
+    //     positionPlayer.orientation = FRONT;
+    //     elementType_t PLAYER_X;
+    //     switch (i){
+    //         case 0:
+    //             PLAYER_X = PLAYER_1;
+    //             break;
+    //         case 1:
+    //             PLAYER_X = PLAYER_2;
+    //             break;
+    //         case 2:
+    //             PLAYER_X = PLAYER_3;
+    //             break;
+    //         case 3:
+    //             PLAYER_X = PLAYER_4;
+    //             break;
+    //     }
+    //     if (this->players.find(player) == this->players.end()) {        
+    //         MapElement *newPlayer = new MapElement(PLAYER_X, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
+    //         this->players.emplace(player, newPlayer);
+    //     }
+    //     else
+    //     {
+    //         Logger::getInstance()->log(ERROR, "Se intento agregar un jugador que ya existe.");
+    //     }        
+    // }
 }
 
 void Map::initializePositionPlayers(gameParams_t &gameSettings){
@@ -262,7 +262,32 @@ void Map::informDisconnection(string username){
     this->players[username]->setType(NEW_TYPE);
 }
 
+position_t Map::getInitialPosition(){
+    position_t position;
+    position.orientation = FRONT;
+    position.axis_y = this->loggedPlayers_ * 100 + 50;
+    position.axis_x = 50;
+
+    return position;
+}
+
+elementType_t Map::getPlayerType(){
+    vector<elementType_t> keys;
+    keys.push_back(PLAYER_1);
+    keys.push_back(PLAYER_2);
+    keys.push_back(PLAYER_3);
+    keys.push_back(PLAYER_4);
+    return keys[this->loggedPlayers_];
+}
+
 void Map::informConnection(string username){
+    if (this->players.find(username) == this->players.end()) { 
+        MapElement *newPlayer = new MapElement(this->getPlayerType(), this->getInitialPosition(), 4, 4, 100, 100); 
+        this->players.emplace(username, newPlayer);
+        this->loggedPlayers_++;
+        return;
+    }
+    
     elementType_t PLAYER_X = this->players[username]->getType();
     elementType_t NEW_TYPE;
     switch (PLAYER_X){
@@ -287,10 +312,7 @@ void Map::initializeStep(currentStep_t currentStep, Game *game){
 
     for(auto mapElement : this->players) {
         position_t actualPosition = mapElement.second->getActualPosition();
-        string sourceSprite = mapElement.second->getImageSource();
-        spriteSize_t spriteSize = mapElement.second->getSpriteSize();
         char imagePath[100];
-        strcpy(imagePath, sourceSprite.c_str());
         //Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
         //game->sendEvent(event);
     }
@@ -312,10 +334,7 @@ void Step::initializeStep(Game *game){
     // cout << "INITIALIZE STEP " << this->mapElements_.size() << endl;
     for(auto mapElement : this->mapElements_) {
         position_t actualPosition = mapElement.second->getActualPosition();
-        string sourceSprite = mapElement.second->getImageSource();
-        spriteSize_t spriteSize = mapElement.second->getSpriteSize();
         char imagePath[100];
-        strcpy(imagePath, sourceSprite.c_str());
         //Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
         //game->sendEvent(event);
     }

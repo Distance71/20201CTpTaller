@@ -34,7 +34,6 @@ string User::getUserName(){
 
 void User::setConnection(){
 	this->connected_= true;
-	this->usersManager_->informConnection(this->username_);
 }
 
 

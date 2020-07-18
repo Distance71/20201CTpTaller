@@ -173,9 +173,12 @@ void Game::sendEvent(Event *event){
 }
 
 void Game::informDisconnection(string username){
+    cout << username << endl;
+    Logger::getInstance()->log(DEBUG, "Se informa desconexion en Game");
     this->map_->informDisconnection(username);
 }
 
 void Game::informConnection(string username){
+    Logger::getInstance()->log(DEBUG, "Se informa conexion en Game");
     this->map_->informConnection(username);
 }

@@ -25,14 +25,13 @@ class MapElement {
         unordered_map<string, Action *> actions_;
         int size_x_;
         int size_y_;
-        string imageSource_;
 
         vector<Action *> getActions();
         vector<State *> getStates();
         
 
     public:
-        MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, const string &sprite, int size_x, int size_y);
+        MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y);
         ~MapElement();
        
        
@@ -44,7 +43,6 @@ class MapElement {
         void update();
         position_t getActualPosition();
         string getImageSource();
-        spriteSize_t getSpriteSize();
 
         elementType_t getType();
         void setType(elementType_t type);

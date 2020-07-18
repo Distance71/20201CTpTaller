@@ -128,6 +128,6 @@ void Server::informDisconnection(string username){
 }
 
 void Server::informConnection(string username){
-    //this->game_->informConnection(username);
+    this->game_->informConnection(username);
 }
 

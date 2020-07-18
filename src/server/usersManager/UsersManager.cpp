@@ -89,7 +89,7 @@ responseStatus_t UsersManager::loginRequest(Id id,string username,string passwor
             loggedInUsers_.emplace(username,user);
             this->informConnection(username);
 
-            Logger::getInstance()->log(INFO, "Se reconecta el ususario: " + username);
+            Logger::getInstance()->log(INFO, "Se reconecta el usuario: " + username);
 
             return OK;
         
