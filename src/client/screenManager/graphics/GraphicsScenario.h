@@ -14,8 +14,6 @@ class Sprite;
 
 class GraphicsScenario {
     private:
-    //size_t level_;
-    //Asumo que respetan el orden
     vector<Sprite *> sprites_; //refactor if add more levels
     vector<Speed *> layersSpeeds_;
     vector<Position *> layersPositions_;
@@ -23,7 +21,7 @@ class GraphicsScenario {
     public:
     GraphicsScenario(stageSource_t stageSource);
     ~GraphicsScenario();
-    void update(); //Add override later
+    void update();
     
 };
 

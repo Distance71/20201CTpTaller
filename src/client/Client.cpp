@@ -26,8 +26,8 @@ bool Client::connectWithServer(){
     }
     this->connected_ = true;
 
-    //this->transmitionManager_->run();
-    //this-> eventsManager_ -> RunProcessEventsThread();
+    this->transmitionManager_->run();
+    this-> eventsManager_ -> RunProcessEventsThread();
 
     Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
 
@@ -73,24 +73,24 @@ int Client::run(){
          return EXIT_FAILURE;
     }
 
-    // int res = this->waitForPlayers();
+    int res = this->waitForPlayers();
 
-    // if(res==0){
-    //     Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
-    //     return EXIT_SUCCESS;
-    // }
+    if(res==0){
+        Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
+        return EXIT_SUCCESS;
+    }
     
-    // else if (res<0){
-    //     Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
-    //     return EXIT_FAILURE;
-    // }
+    else if (res<0){
+        Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
+        return EXIT_FAILURE;
+    }
 
 
-    // this->eventsManager_->RunDetectPlayerEventsThread();
+    this->eventsManager_->RunDetectPlayerEventsThread();
 
-    // this->screenManager_->graphic();
+    this->screenManager_->graphic();
 
-    //this->screenManager_->viewEndGameScreen();
+    this->screenManager_->viewEndGameScreen();
 
     Logger::getInstance()->log(INFO, "El juego ha finalizado normalmente");
     
@@ -98,6 +98,7 @@ int Client::run(){
 }
 
 void Client::updateEntity(elementType_t type, position_t position){
+    Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en Client");
     if(this->screenManager_){
         this->screenManager_->updateEntity(type, position);
     }
@@ -106,9 +107,10 @@ void Client::updateEntity(elementType_t type, position_t position){
     }
 }
 
-void Client::setBackground(stageSource_t background){
+void Client::setBackground(level_t level){
+    Logger::getInstance()->log(DEBUG, "Se va a actualizar un background en Client");
     if(this->screenManager_){
-        this->screenManager_->setBackground(background);
+        this->screenManager_->setBackground(level);
     }
     else{
          Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,falta crear el objeto ScreenManager");
@@ -117,6 +119,7 @@ void Client::setBackground(stageSource_t background){
 
 
 void Client::setImage(sceneScreen_t scene){
+    Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en Client");
     if(this->screenManager_){
         this->screenManager_->setImage(scene);
     }
@@ -168,6 +171,7 @@ void Client::endGame(){
 }
 
 int Client::waitForPlayers(){
+    Logger::getInstance()->log(DEBUG, "Se esperaran jugadores en Client");
     return this->screenManager_->waitForPlayers();
 }
 

@@ -3,6 +3,8 @@
 
 
 #include <unordered_map>
+#include <chrono>
+#include <thread>
 #include "GraphicsMapElement.h"
 #include "GraphicsScenario.h"
 #include "../../../common/types.h"
@@ -10,6 +12,7 @@
 #include "SDL2/SDL_image.h"
 #include "../../../common/providers/GameProvider.h"
 #include "../../../common/services/Logger.h"
+#include "../../../common/models/BlockingQueue.h"
 
 
 class GameGraphics {
@@ -18,12 +21,15 @@ class GameGraphics {
         SDL_Renderer* renderer_;
         unordered_map <elementType_t, GraphicsMapElement*> elements_;
         unordered_map <sceneScreen_t, GraphicsMapElement*> scenes_;
-        GraphicsScenario * scenario_;
+        unordered_map <level_t, GraphicsScenario*> scenaries_;
+        GraphicsScenario *scenario_;
         GraphicsMapElement* image_;
-        std::mutex              mutex;
+        std::mutex mutex;
+        BlockingQueue<elementToGraphic_t>* graphicsQueue_;
 
         void createScenes();
         void createElements();
+        void createScenarios();
     public:
 
         GameGraphics(SDL_Renderer* renderer);
@@ -31,7 +37,7 @@ class GameGraphics {
         void update();
         void updateEntity(elementType_t type, position_t position);
         
-        void setBackground(stageSource_t background);
+        void setBackground(level_t level);
         void setImage(sceneScreen_t scene);
 };
 

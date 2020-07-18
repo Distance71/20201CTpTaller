@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "SDL2/SDL.h"
 
 
 using namespace std;
@@ -50,6 +51,7 @@ typedef enum message {
     REQUEST_LOGIN_PLAYER = 5,
     RESPONSE_LOGIN_PLAYER = 6,
     USER_MOVEMENT = 7,
+    SET_LEVEL = 8,
 } message_t;
 
 typedef enum {
@@ -63,6 +65,14 @@ typedef enum {
     BACK_UP = 7,
     NOT_MOVEMENT = 8,
 } orientation_t;
+
+typedef struct {
+    SDL_Texture *spriteTexture;
+    SDL_Rect srcRect;
+    SDL_Rect dstRect;
+    orientation_t orientation;
+    bool isMap;
+} renderElement_t;
 
 typedef enum {
     INIT_LEVEL_ONE = 0,
@@ -126,25 +136,30 @@ typedef struct {
 } stepContent_t;
 
 typedef enum {
-    PLAYER_1,
-    PLAYER_2,
-    PLAYER_3,
-    PLAYER_4,
-    ENEMY_1,
-    ENEMY_2,
-    PLAYER,
-    ENEMY,
+    PLAYER_1 = 0,
+    PLAYER_2 = 1,
+    PLAYER_3 = 2,
+    PLAYER_4 = 3,
+    ENEMY_1 = 4,
+    ENEMY_2 = 5,
+    PLAYER = 6,
+    ENEMY = 7,
 } elementType_t;
 
+typedef struct {
+    elementType_t type;
+    position_t position;
+} elementToGraphic_t;
+
 typedef enum {
-    INIT_STAGE_1,
-    END_STAGE_1,
-    INIT_STAGE_2,
-    END_STAGE_2,
-    INIT_STAGE_3,
-    END_STAGE_3,
-    END_GAME_ANIMATION,
-    WAITING_PLAYERS,
+    INIT_STAGE_1 = 0,
+    END_STAGE_1 = 1,
+    INIT_STAGE_2 = 2,
+    END_STAGE_2 = 3,
+    INIT_STAGE_3 = 4,
+    END_STAGE_3 = 5,
+    END_GAME_ANIMATION = 6,
+    WAITING_PLAYERS = 7,
 } sceneScreen_t;
 
 typedef size_t Id;

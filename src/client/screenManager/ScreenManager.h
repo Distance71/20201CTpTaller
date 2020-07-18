@@ -44,7 +44,7 @@ class ScreenManager{
         bool viewLogin();
         void graphic();
         void updateEntity(elementType_t type, position_t position);
-        void setBackground(stageSource_t background);
+        void setBackground(level_t level);
         void setImage(sceneScreen_t scene);
         void setLoginResponse(responseStatus_t response);
         int waitForPlayers();

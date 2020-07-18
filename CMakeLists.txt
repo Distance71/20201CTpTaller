@@ -67,6 +67,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageEndGame.h
         src/common/models/messages/MessageLog.cpp
         src/common/models/messages/MessageLog.h
+        src/common/models/messages/MessageSetLevel.cpp
+        src/common/models/messages/MessageSetLevel.h
 
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
@@ -100,6 +102,8 @@ add_executable(tp1taller
         src/common/models/events/EventMapElementUpdate.h
         src/common/models/events/EventPlayerDisconnect.cpp
         src/common/models/events/EventPlayerDisconnect.h
+        src/common/models/events/EventSetLevel.cpp
+        src/common/models/events/EventSetLevel.h
         src/common/models/events/EventEndGame.cpp
         src/common/models/events/EventEndGame.h
 

@@ -26,6 +26,12 @@ public:
         return rc;
     }
 
+    void clear() {
+        d_queue.clear();
+    }
+
+
+
     bool empty() {
         std::unique_lock<std::mutex> lock(d_mutex);
         return d_queue.empty();

@@ -131,7 +131,6 @@ static void* processEvents(void * arg){
             event->update();
             delete event;
         }
-        client-> updateScreen();
     }
     return nullptr;
 }

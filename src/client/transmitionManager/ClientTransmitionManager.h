@@ -18,6 +18,8 @@
 
 //Testing
 #include "../../common/models/events/EventSceneAnimation.h"
+#include "../../common/models/events/EventResponseLoginPlayer.h"
+#include "../../common/models/events/EventSetLevel.h"
 #include <chrono>
 
 class Client;

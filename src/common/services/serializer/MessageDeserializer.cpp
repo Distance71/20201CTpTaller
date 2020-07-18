@@ -167,6 +167,24 @@ response_t MessageDeserializer::getEventUserMovement(Socket *socket, Event* &eve
     return this->_handleSuccess();
 };
 
+response_t MessageDeserializer::getEventSetLevel(Socket *socket, Event* &event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento SetLevel en Deserializer");
+    level_t level;
+
+    this->getLevel(socket, level);
+
+    Message *message = new MessageSetLevel(level);
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento SetLevel");
+        return this->_handleErrorStatus();
+    }
+
+    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento SetLevel en Deserializer");
+    return this->_handleSuccess();
+};
+
 response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     stringstream s;
 
@@ -315,6 +333,20 @@ response_t MessageDeserializer::getElementType(Socket *socket, elementType_t &el
     elementType = (elementType_t) atoi(msg.c_str());
 }
 
+response_t MessageDeserializer::getLevel(Socket *socket, level_t &level){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje level");
+
+    if (socket->receiveMessage(s, sizeof(level_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de level.");
+        return this->_handleErrorStatus();
+    }
+
+    string msg = s.str();
+    level = (level_t) atoi(msg.c_str());
+}
+
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
     message_t messageType;
 
@@ -350,6 +382,9 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case USER_MOVEMENT:
             return this->getEventUserMovement(socket, event);
+            
+        case SET_LEVEL:
+            return this->getEventSetLevel(socket, event);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

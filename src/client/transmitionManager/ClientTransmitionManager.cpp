@@ -65,12 +65,12 @@ static void* sendMessages(void *arg){
     BlockingQueue<Message*> *messagesQueue = transmitionManager->getSendMessagesQueue();
 
     while (client->isConnected()){
-        if (!(messagesQueue->empty())){
-            Message *message = messagesQueue->pop(); 
-            transmitionManager->sendSerializedMessage(message);
-            cout << "Se va a mandar un mensaje" << endl;
-            Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje en TransmitionManager");
-        }
+        // if (!(messagesQueue->empty())){
+        //     Message *message = messagesQueue->pop(); 
+        //     transmitionManager->sendSerializedMessage(message);
+        //     cout << "Se va a mandar un mensaje" << endl;
+        //     Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje en TransmitionManager");
+        // }
     }
     
     Logger::getInstance()->log(DEBUG, "Se cerró el hilo de envío de mensajes");
@@ -102,13 +102,51 @@ static void* receiveMessages(void *arg){
     //     }
     // }
     
-    while (client->isConnected()) {
+    // while (client->isConnected()) {
 
+    // }
+    //client->processEvent(new EventSceneAnimation(WAITING_PLAYERS));
+    //std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    client->processEvent(new EventResponseLoginPlayer(OK));
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    client->processEvent(new EventSceneAnimation(INIT_STAGE_1));
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    client->processEvent(new EventSetLevel(LEVEL_ONE));
+
+    position_t positionP1, positionP2, positionP3, positionP4, positionE1, positionE2;
+    for(size_t i = 0; i < 1000; i++){
+        positionP1.axis_x = 50;
+        positionP1.axis_y = 50;
+        positionP1.orientation = FRONT;
+        positionP2.axis_x = 800;
+        positionP2.axis_y = 500;
+        positionP2.orientation = BACK;
+        positionP3.axis_x = 500;
+        positionP3.axis_y = 100;
+        positionP3.orientation = FRONT;
+        positionP4.axis_x = 300;
+        positionP4.axis_y = 550;
+        positionP4.orientation = BACK;
+        positionE1.axis_x = 800;
+        positionE1.axis_y = 800;
+        positionE1.orientation = BACK;
+        positionE2.axis_x = 1000;
+        positionE2.axis_y = 90;
+        positionE2.orientation = BACK;
+        
+        client->processEvent(new EventMapElementUpdate(PLAYER_1, positionP1));
+        client->processEvent(new EventMapElementUpdate(PLAYER_2, positionP2));
+        client->processEvent(new EventMapElementUpdate(PLAYER_3, positionP3));
+        client->processEvent(new EventMapElementUpdate(PLAYER_4, positionP4));
+        client->processEvent(new EventMapElementUpdate(PLAYER_4, positionP4));
+        client->processEvent(new EventMapElementUpdate(ENEMY_1, positionE1));
+        client->processEvent(new EventMapElementUpdate(ENEMY_2, positionE2));
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));    
     }
-    // client->processEvent(new EventSceneAnimation(WAITING_PLAYERS));
-    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    // client->processEvent(new EventSceneAnimation(INIT_STAGE_1));
-    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     // client->processEvent(new EventSceneAnimation(END_STAGE_1));
     // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     // client->processEvent(new EventSceneAnimation(INIT_STAGE_2));
@@ -120,7 +158,7 @@ static void* receiveMessages(void *arg){
     // client->processEvent(new EventSceneAnimation(END_STAGE_3));
     // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     // client->processEvent(new EventSceneAnimation(END_GAME_ANIMATION));
-    // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     
     Logger::getInstance()->log(DEBUG, "Se cerro el hilo de recepcion");
     return nullptr;

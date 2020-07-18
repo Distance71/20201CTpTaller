@@ -7,6 +7,8 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->renderer_ = renderer;
     this->createElements();
     this->createScenes();
+    this->createScenarios();
+    this->graphicsQueue_ = new BlockingQueue<elementToGraphic_t>();
 }
 
 
@@ -55,55 +57,108 @@ void GameGraphics::createScenes(){
     this->scenes_[WAITING_PLAYERS] = new GraphicsMapElement(sourceWaitingPlayers, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
 }
 
+void GameGraphics::createScenarios(){
+    stageSource_t stage1;
+    stage1.layer1 = "assets/Stage/Level1/layer_1.png";
+    stage1.layer2 = "assets/Stage/Level1/layer_2.png";
+    stage1.layer3 = "assets/Stage/Level1/layer_3.png";
+    stage1.layer4 = "assets/Stage/Level1/layer_4.png";
+    stage1.layer5 = "assets/Stage/Level1/layer_5.png";
+    stage1.layer6 = "";
+    stage1.layer7 = "";
+
+    stageSource_t stage2;
+    stage2.layer1 = "assets/Stage/Level2/layer_1.png";
+    stage2.layer2 = "assets/Stage/Level2/layer_2.png";
+    stage2.layer3 = "assets/Stage/Level2/layer_3.png";
+    stage2.layer4 = "assets/Stage/Level2/layer_4.png";
+    stage2.layer5 = "assets/Stage/Level2/layer_5.png";
+    stage2.layer6 = "assets/Stage/Level2/layer_6.png";
+    stage2.layer7 = "assets/Stage/Level2/layer_7.png";
+
+    stageSource_t stage3;
+    stage3.layer1 = "assets/Stage/Level3/layer_1.png";
+    stage3.layer2 = "assets/Stage/Level3/layer_2.png";
+    stage3.layer3 = "assets/Stage/Level3/layer_3.png";
+    stage3.layer4 = "assets/Stage/Level3/layer_4.png";
+    stage3.layer5 = "assets/Stage/Level3/layer_5.png";
+    stage3.layer6 = "assets/Stage/Level3/layer_6.png";
+    stage3.layer7 = "assets/Stage/Level3/layer_7.png";
+
+    this->scenaries_[LEVEL_ONE] = new GraphicsScenario(stage1);
+    this->scenaries_[LEVEL_TWO] = new GraphicsScenario(stage2);
+    this->scenaries_[LEVEL_THREE] = new GraphicsScenario(stage3);
+}
+
 void GameGraphics::update(){
-
+    this->scenario_ = this->scenaries_[LEVEL_ONE];
     SDL_RenderClear(this->renderer_);
-    position_t position;
-    position.axis_x = 0;
-    position.axis_y = 0;
-    position.orientation = FRONT;
-
-    if (this->scenario_)
-        scenario_->update();
+    position_t positionImage;
+    positionImage.axis_x = 0;
+    positionImage.axis_y = 0;
+    positionImage.orientation = FRONT;
+    vector <elementToGraphic_t> renderElementsBackground;
 
     if (this->image_){
-        image_->update(position);
+        this->graphicsQueue_->clear();
+        this->image_->update(positionImage);
+    }
+
+    if (this->scenario_) {
+        this->scenario_->update();
+    }
+        
+
+    double elaptedTimeMS = GameProvider::getElaptedTimeFPS();
+    auto begin = chrono::high_resolution_clock::now();
+    auto end = chrono::high_resolution_clock::now();   
+    auto dur = end - begin;
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+
+    while(0 >= (ms - elaptedTimeMS)) { 
+        end = chrono::high_resolution_clock::now();
+        dur = end - begin;
+        ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+        if (!graphicsQueue_->empty()){
+            elementToGraphic_t elementToGraphic = graphicsQueue_->pop();
+            this->elements_[elementToGraphic.type]->update(elementToGraphic.position);
+        }
     }
 
     SDL_RenderPresent(this->renderer_);
-
 }
 
 void GameGraphics::updateEntity(elementType_t type, position_t position){
-    this->elements_[type]->update(position);
+    Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en GameGraphics");
+    
+    elementToGraphic_t elementToGraphic;
+    elementToGraphic.position = position;
+    elementToGraphic.type = type;
+    this->graphicsQueue_->push(elementToGraphic);
 }
 
-void GameGraphics::setBackground(stageSource_t background){
+void GameGraphics::setBackground(level_t level){
 
-    // if (this->scenario_){
-    //     delete this->scenario_;
-    //     this->scenario_=nullptr;
-    // }
+    if (this->scenario_){
+        this->scenario_=nullptr;
+    }
 
-    // if (this->image_){
-    //     delete this->image_;
-    //     this->image_=nullptr;
-    // }
-    // std::mutex mtx;
-    
-    // mtx.lock();
-    // this->scenario_ = new GraphicsScenario(background);
-    // mtx.unlock();
+    if (this->image_){
+        this->image_=nullptr;
+    }
+    this->scenario_ = this->scenaries_[level];
 
     Logger::getInstance()->log(DEBUG, "Se actualiza el background");
-
 }
 
-
 void GameGraphics::setImage(sceneScreen_t scene){
+    Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en GameGraphics");
+    cout << scene << endl;
     if (this->scenario_){
-        delete this->scenario_;
         this->scenario_= nullptr;
+    }
+    if (this->image_){
+        this->image_=nullptr;
     }
     this->image_ = this->scenes_[scene];
 }

@@ -53,12 +53,11 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
 }
 
 void GraphicsScenario::update(){
-    SDL_Renderer* renderer = GameProvider::getRenderer();
     size_t screenWidht = GameProvider::getWidth();
     size_t screenHeight = GameProvider::getHeight();
 
+    SDL_Renderer *renderer = GameProvider::getRenderer();
 
-    SDL_RenderClear(renderer);
     SDL_Rect layer = { 0,0,(int)screenWidht, (int)screenHeight};
 
     for(size_t i = 0; i < sprites_.size(); i++) {
@@ -73,9 +72,15 @@ void GraphicsScenario::update(){
             
         SDL_Rect auxParallax = { step, 0, (int)screenWidht, (int)screenHeight};
     
-        SDL_RenderCopy(renderer, layerTexture, &auxParallax, &layer );
-    }
+        renderElement_t renderElement;
+        renderElement.spriteTexture = layerTexture;
+        renderElement.srcRect = auxParallax;
+        renderElement.dstRect = layer;
+        renderElement.orientation = FRONT;
+        renderElement.isMap = true;
 
+        SDL_RenderCopy(renderer, layerTexture, &auxParallax, NULL);
+    }
 }
 
 GraphicsScenario::~GraphicsScenario(){

@@ -145,15 +145,18 @@ bool ScreenManager::initGameGraphics(){
 void ScreenManager::graphic(){
 
     Logger::getInstance()->log(DEBUG, "Se inicia el hilo graficador");
-    
-    while(this->clientOwn_->isConnected()){
+
+    while(this->clientOwn_->isConnected()) {
+
         this->gameGraphics_->update();
     }
+        
 
     Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");
 }
 
-void ScreenManager::updateEntity(elementType_t type, position_t position){   
+void ScreenManager::updateEntity(elementType_t type, position_t position){
+    Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en ScreenManager");
     if(this->gameGraphics_){
         this->gameGraphics_->updateEntity(type, position);
     }
@@ -162,9 +165,10 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
     }
 }
 
-void ScreenManager::setBackground(stageSource_t background){
+void ScreenManager::setBackground(level_t level){
+    Logger::getInstance()->log(DEBUG, "Se va a setear un background en ScreenManager");
     if(this->gameGraphics_){
-        this->gameGraphics_->setBackground(background);
+        this->gameGraphics_->setBackground(level);
     }
     else{
         Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,  no se han inicializado graficos");
@@ -173,6 +177,7 @@ void ScreenManager::setBackground(stageSource_t background){
 
 
 void ScreenManager::setImage(sceneScreen_t scene){
+    Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en ScreenManager");
     if(this->gameGraphics_){
         this->gameGraphics_->setImage(scene);
     }
@@ -190,8 +195,6 @@ void ScreenManager::setLoginResponse(responseStatus_t response){
         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la respuesta en el menu, no se han inicializado graficos");
     } 
 }
-
-
 
 bool ScreenManager::viewLogin(){
     Logger::getInstance()->log(DEBUG, "Se va a mostrar el login");
@@ -225,6 +228,7 @@ bool ScreenManager::viewLogin(){
 
 
 int ScreenManager::waitForPlayers(){
+    Logger::getInstance()->log(DEBUG, "Se esperaran jugadores en ScreenManager");
     if(!this->gameGraphics_){
         Logger::getInstance()->log(DEBUG,"No se puede presentar la pantalla de espera, no se han inicializado gráficos");
         return -1;
@@ -232,18 +236,18 @@ int ScreenManager::waitForPlayers(){
     else{
         SDL_Event e;
         Logger::getInstance()->log( DEBUG ,"Se esperan jugadores");
-        this->waiting_= true;
+        this->waiting_= false;
         this->gameGraphics_->setImage(WAITING_PLAYERS);
-        while(this->waiting_){
-            while (SDL_PollEvent(&e)){
-                if (e.type == SDL_QUIT){
-                    Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego mientras se esperaban jugadores");
-                    SDL_RenderClear(this->renderer_);
-                    return 0;
-                }
-            }
-            this->gameGraphics_->update();
-        }
+        // while(this->waiting_){
+        //     while (SDL_PollEvent(&e)){
+        //         if (e.type == SDL_QUIT){
+        //             Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego mientras se esperaban jugadores");
+        //             SDL_RenderClear(this->renderer_);
+        //             return 0;
+        //         }
+        //     }
+        //     this->gameGraphics_->update();
+        // }
         return 1;
     }
 }
