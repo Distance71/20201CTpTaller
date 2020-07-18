@@ -4,6 +4,7 @@
 
 Game::Game(Server *server){
     this->serverOwn_ = server;
+    initializeGameParams();
 }
 
 Game::~Game(){
@@ -13,7 +14,6 @@ void Game::run() {
     if (!GameProvider::getStatus().normalStatus)
         return;
 
-    initializeGameParams();
     currentStep_t current = {};   
 
     auto gameSettings = GameProvider::getConfig()->getGameParams();
