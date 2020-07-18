@@ -55,7 +55,8 @@ namespace GameProvider {
     size_t getQuantityPlayers();
     float getElaptedTimeFPS();
     unordered_map<layer_t, size_t> getLayersSpeeds(); //Possible refactor if add more levels
-
+    loginScreen_t getLoginScreen();
+    
     bool isValidCredential(string userName, string password);
     void setIdUser(string userName, Id idUser);
 };

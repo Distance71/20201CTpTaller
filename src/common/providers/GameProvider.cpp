@@ -103,6 +103,12 @@ namespace GameProvider {
         return layersSpeeds;
     }
 
+    loginScreen_t getLoginScreen(){
+        auto gameSettings = GameProvider::getConfig()->getGameParams();
+
+        return gameSettings.loginScreen;
+    }
+
     bool isValidCredential(string userName, string password){
         auto gameSettings = GameProvider::getConfig()->getGameParams();
 

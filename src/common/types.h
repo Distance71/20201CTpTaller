@@ -209,8 +209,22 @@ typedef struct {
 } user_t;
 
 typedef struct {
+    string background;
+    string normalBox;
+    string invalidCredentialsBox;
+    string fullGameBox;
+    string alreadyLoggedIn;
+    string username1;
+    string username2;
+    string password1;
+    string password2;
+    string login;
+} loginScreen_t;
+
+typedef struct {
     vector<levelParams_t> levelParams;
     vector<user_t> playersParams;
+    loginScreen_t loginScreen;
 } gameParams_t;
 
 typedef struct argsThreadUser {

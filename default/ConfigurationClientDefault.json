@@ -29,6 +29,18 @@
                 "sprite": "assets/player4Reducido.png"
             }
         ],
+        "loginScreen": {
+            "background": "assets/LoginScreen/background.png",
+            "normalBox": "assets/LoginScreen/normalBox.png",
+            "invalidCredentialsBox": "assets/LoginScreen/invalidCredentialsBox.png",
+            "fullGameBox": "assets/LoginScreen/fullGameBox.png",
+            "alreadyLoggedIn": "assets/LoginScreen/alreadyLoggedIn.png",
+            "username1": "assets/LoginScreen/username1.png",
+            "username2": "assets/LoginScreen/username2.png",
+            "password1": "assets/LoginScreen/password1.png",
+            "password2": "assets/LoginScreen/password2.png",
+            "login": "assets/LoginScreen/login.png"
+        },
         "level": [
             {
                 "transitionInit": "assets/TransitionScreens/Stage1.JPG",

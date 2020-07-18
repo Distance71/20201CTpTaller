@@ -6,31 +6,34 @@ Menu::Menu(Client* clientOwn){
     gRenderer = GameProvider::getRenderer();
     this->response_ = NOT_RESPONSE;
     
-    MenuElement* background = new MenuElement(0,0,-1,-1,"assets/LoginScreen/background.png");
+    loginScreen_t loginScreen = GameProvider::getLoginScreen();
+    
+    MenuElement* background = new MenuElement(0,0,-1,-1,loginScreen.background.c_str());
     addMenuElement("BACKGROUND",background);
     
-    MenuElement* normal_box = new MenuElement(20,50,525,325,"assets/LoginScreen/normalBox.png");
+    MenuElement* normal_box = new MenuElement(20,50,525,325,loginScreen.normalBox.c_str());
     addMenuElement("NORMAL BOX",normal_box);
    
-    MenuElement* invalid_credentials_box = new MenuElement(20,50,525,325,"assets/LoginScreen/invalidCredentialsBox.png");
+    MenuElement* invalid_credentials_box = new MenuElement(20,50,525,325,loginScreen.invalidCredentialsBox.c_str());
     addMenuElement("INVALID CREDENTIALS BOX",invalid_credentials_box);
 
-    MenuElement* full_game_box = new MenuElement(20,50,525,325,"assets/LoginScreen/fullGameBox.png");
+    MenuElement* full_game_box = new MenuElement(20,50,525,325,loginScreen.fullGameBox.c_str());
     addMenuElement("FULL GAME BOX",full_game_box);
 
-    MenuElement* already_login_box = new MenuElement(20,50,525,325,"assets/LoginScreen/alreadyLoggedIn.png");
+    MenuElement* already_login_box = new MenuElement(20,50,525,325,loginScreen.alreadyLoggedIn.c_str());
     addMenuElement("ALREADY LOGIN BOX", already_login_box);
     
-    TextBox* username = new TextBox(80,110,375,60,"assets/LoginScreen/username1.png","assets/LoginScreen/username2.png");
+    TextBox* username = new TextBox(80,110,375,60,loginScreen.username1.c_str(),loginScreen.username2.c_str());
     username->setCenteringParameters(50,10,15,10);
     addTextBox("USERNAME",username);
     
-    TextBox* password = new TextBox(80,180,375,60,"assets/LoginScreen/password1.png","assets/LoginScreen/password2.png");
+    TextBox* password = new TextBox(80,180,375,60,loginScreen.password1.c_str(),loginScreen.password2.c_str());
     password->hideText(true);
     password->setCenteringParameters(50,10,15,10);
     addTextBox("PASSWORD",password);
     
-    Button* login = new Button(300,260,200,50,"assets/LoginScreen/login.png","assets/LoginScreen/login.png");
+    string cpyLogin = loginScreen.login;
+    Button* login = new Button(300,260,200,50,loginScreen.login.c_str(),cpyLogin.c_str());
     addButton("LOGIN",login);
 }
 

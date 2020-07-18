@@ -15,6 +15,7 @@
 #define PATH_SCREEN "/configuracion/screen/"
 #define PATH_USER "/configuracion/users"
 #define PATH_BASE_USER "/configuracion/users/"
+#define PATH_BASE_LOGIN_SCREEN "/configuracion/loginScreen/"
 
 #define DEFAULT_SIZE_X 110
 #define DEFAULT_SIZE_Y 90
@@ -59,6 +60,9 @@ class ConfigurationHandler {
 
         string getPathScreen(string paramScreen);
         void setSizeScreen();
+
+        string getPathLoginScreen(string paramLogin);
+        loginScreen_t readLoginScreen();
 
         void initializeDataServer();
         void initializeDataClient();

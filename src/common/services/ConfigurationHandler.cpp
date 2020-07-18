@@ -443,6 +443,8 @@ void ConfigurationHandler::initializeDataClient(){
         this->gameData.playersParams.push_back(newUser);
     }   
 
+    this->gameData.loginScreen = this->readLoginScreen();
+
     int sizeLevel = 1;
 
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
@@ -543,4 +545,49 @@ void ConfigurationHandler::initializeDataClient(){
 
         this->gameData.levelParams.push_back(oneLevelParams);
     }
+}
+
+string ConfigurationHandler::getPathLoginScreen(string paramLogin){
+    string pathLoginScreenParam = PATH_BASE_LOGIN_SCREEN + paramLogin;
+
+    return pathLoginScreenParam;
+}
+
+loginScreen_t ConfigurationHandler::readLoginScreen(){
+
+    loginScreen_t loginScreen;
+
+    Logger::getInstance()->log(DEBUG, "Se comienzan a analizar los fondos para la pantalla de login.");
+
+    string pathBackground = getPathLoginScreen("background");
+    loginScreen.background = this->parserJson->getString(pathBackground);
+    
+    string pathNormalBox = getPathLoginScreen("normalBox");
+    loginScreen.normalBox = this->parserJson->getString(pathNormalBox);
+
+    string pathInvalidCredentialsBox = getPathLoginScreen("invalidCredentialsBox");
+    loginScreen.invalidCredentialsBox = this->parserJson->getString(pathInvalidCredentialsBox);
+
+    string pathFullGameBox = getPathLoginScreen("fullGameBox");
+    loginScreen.fullGameBox = this->parserJson->getString(pathFullGameBox);
+
+    string pathAlreadyLoggedIn = getPathLoginScreen("alreadyLoggedIn");
+    loginScreen.alreadyLoggedIn = this->parserJson->getString(pathAlreadyLoggedIn);
+
+    string pathUsername1 = getPathLoginScreen("username1");
+    loginScreen.username1 = this->parserJson->getString(pathUsername1);
+
+    string pathUsername2 = getPathLoginScreen("username2");
+    loginScreen.username2 = this->parserJson->getString(pathUsername2);
+
+    string pathPassword1 = getPathLoginScreen("password1");
+    loginScreen.password1 = this->parserJson->getString(pathPassword1);
+
+    string pathPassword2 = getPathLoginScreen("password2");
+    loginScreen.password2 = this->parserJson->getString(pathPassword2);
+
+    string pathLogin = getPathLoginScreen("login");
+    loginScreen.login = this->parserJson->getString(pathLogin);
+
+    return loginScreen;
 }
