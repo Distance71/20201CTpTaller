@@ -25,7 +25,7 @@ class ConfigurationHandler;
 #define STAGE1LAYER6SPEED 9
 #define STAGE1LAYER7SPEED 10
 
-#define QUANTITY_PLAYERS 1
+#define QUANTITY_PLAYERS 4
 
 #define MS_PER_UPDATE 16.67
 
