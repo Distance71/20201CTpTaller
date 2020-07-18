@@ -28,6 +28,9 @@ Id User::getId(){
 	return this->id_;
 }
 
+string User::getUserName(){
+	return this->username_;
+}
 
 void User::setConnection(){
 	this->connected_= true;
@@ -106,7 +109,8 @@ static void* receivingMessages(void * arg){
 	while(user->isConnected()){
 		Event* event;
 		response_t res = deserealizer.getReceivedMessage(socket,event);
-		Id id = user->getId();	 
+		Id id = user->getId();
+		string userName = user->getUserName();
 		if (res.status == DISCONNECTION || res.status==ERROR_CONNECTION) {
             Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente.");
             Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
@@ -115,6 +119,7 @@ static void* receivingMessages(void * arg){
         }
 		else{
 			event->setOwn(id);
+			event->setNameOwn(userName);
 			userManager->processEvent(event);
 		}
 		usleep(100000);

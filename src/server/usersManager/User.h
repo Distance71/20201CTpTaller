@@ -42,6 +42,7 @@ public:
     void setId(Id id);
     Id getId();
     void setUserName(string username);
+    string getUserName();
 
     void setConnection();
     void setDisconnection();
