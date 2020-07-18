@@ -24,7 +24,6 @@ class Menu {
         Menu(Client* clientOwn);
         ~Menu();
         void processEvent();
-        void show();
         void setLoginResponse(responseStatus_t response);
         bool getLoggedInStatus();
         

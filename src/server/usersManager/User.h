@@ -41,11 +41,8 @@ public:
     
     void setId(Id id);
     Id getId();
-    
-    string getUsername();
-    void setUsername(string userName);
-    void setLoggedIn();
-    bool isLoggedIn();
+    void setUserName(string username);
+    string getUserName();
 
     void setConnection();
     void setDisconnection();

@@ -234,10 +234,12 @@ response_t MessageDeserializer::getTypeMessage(Socket *socket, message_t &messag
     stringstream s;
 
     int res = socket->receiveMessage(s, sizeof(message_t));
-    if (res){
+ 
+    if (res < 0 ){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
         return this->_handleErrorStatus();
     }
+
     else if (res==0){
         return {false, DISCONNECTION};
     }
@@ -345,7 +347,7 @@ response_t MessageDeserializer::getLevel(Socket *socket, level_t &level){
 
     string msg = s.str();
     level = (level_t) atoi(msg.c_str());
-}
+};
 
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
     message_t messageType;
@@ -354,7 +356,7 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
     response_t res = this->getTypeMessage(socket, messageType);
     
-    if (res.status == DISCONNECTION){
+    if (res.status == DISCONNECTION || res.status == ERROR_CONNECTION){
         return res;
     }
 
@@ -382,7 +384,6 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case USER_MOVEMENT:
             return this->getEventUserMovement(socket, event);
-            
         case SET_LEVEL:
             return this->getEventSetLevel(socket, event);
     }

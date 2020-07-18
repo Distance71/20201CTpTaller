@@ -89,7 +89,6 @@ int Socket::receiveMessage(stringstream &s, size_t sizeData){
     
     while ((totalBytesReceive < sizeData) && isOpen){
         bytesReceive = read(this->fileDescriptor_, (void *) buffer + totalBytesReceive, (sizeData - totalBytesReceive));
-        cout << bytesReceive << endl;
         if (bytesReceive < 0){
             Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje en socket");
             return -1;

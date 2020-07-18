@@ -50,6 +50,9 @@ class ScreenManager{
         int waitForPlayers();
         void stopWaiting();
         void viewEndGameScreen();
+        Client* getClient();
+        SDL_Renderer* getRenderer();
+        void runScreenGraphicsThread();
 };
 
 #endif

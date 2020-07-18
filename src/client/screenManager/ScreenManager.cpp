@@ -55,14 +55,43 @@ bool ScreenManager::initializeGraphics(){
     bool r1 = initSDL();
     bool r2 = initMenu();
     bool r3 = initGameGraphics();
+    
     if(r1 && r2 && r3){
         Logger::getInstance()->log(DEBUG, "Se inicializarán los graficos del juego correctamente");
+        runScreenGraphicsThread();
         return true;
     }
-    Logger::getInstance()->log(ERROR, "No se pudieron inicializar graficos");
-    return false;
+    else{
+        Logger::getInstance()->log(ERROR, "No se pudieron inicializar graficos");
+        return false;
+    }
 }
 
+
+static void* screenGraphicsThread(void* arg){
+    
+    Logger::getInstance()->log(DEBUG, "Se inicializa hilo de presentación en pantalla");
+    
+    ScreenManager* screenManager = (ScreenManager*) arg;
+    SDL_Renderer* renderer = screenManager->getRenderer();
+    Client* client = screenManager->getClient();
+
+    while (client->isConnected()){
+        SDL_RenderPresent(renderer);
+        usleep(10000);
+    } 
+
+    Logger::getInstance()->log(DEBUG, "Finaliza el hilo de presentación en pantalla");
+
+    return nullptr;
+}
+
+
+void ScreenManager::runScreenGraphicsThread(){
+    pthread_t screenGraphics;
+    pthread_create(&screenGraphics,NULL,screenGraphicsThread,this);
+
+}
 
 bool ScreenManager::initSDL(){
     if (this->screenWidth_<0 || this->screenHeight_<0){
@@ -133,12 +162,15 @@ bool ScreenManager::initMenu(){
 
 bool ScreenManager::initGameGraphics(){
     Logger::getInstance()->log(DEBUG, "Se crea el la estructura gameGraphics");
+    
     this->gameGraphics_ = new GameGraphics(this->renderer_);
+    
     if (!gameGraphics_){
         Logger::getInstance()->log(ERROR," No se pudo crear la estructura gameGraphics");
         return false;
     }
-    Logger::getInstance()->log(DEBUG, "Se crea el la estructura gameGraphics se creó correctamente");
+   
+    Logger::getInstance()->log(DEBUG, "la estructura gameGraphics se creó correctamente");
     return true;
 }
 
@@ -155,8 +187,13 @@ void ScreenManager::graphic(){
     Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");
 }
 
+<<<<<<< HEAD
 void ScreenManager::updateEntity(elementType_t type, position_t position){
     Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en ScreenManager");
+=======
+
+void ScreenManager::updateEntity(elementType_t type, position_t position){   
+>>>>>>> 1cb840c8da85926298ccfad199b6cc68a75c1eca
     if(this->gameGraphics_){
         this->gameGraphics_->updateEntity(type, position);
     }
@@ -165,8 +202,13 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
     }
 }
 
+<<<<<<< HEAD
 void ScreenManager::setBackground(level_t level){
     Logger::getInstance()->log(DEBUG, "Se va a setear un background en ScreenManager");
+=======
+
+void ScreenManager::setBackground(stageSource_t background){
+>>>>>>> 1cb840c8da85926298ccfad199b6cc68a75c1eca
     if(this->gameGraphics_){
         this->gameGraphics_->setBackground(level);
     }
@@ -216,9 +258,8 @@ bool ScreenManager::viewLogin(){
         if (this->menu_->getLoggedInStatus()){
             Logger::getInstance()->log(DEBUG, "El usuario se ha logueado con exito en ScreenManager");
             return true;
-        }
-
-        this->menu_->show();    
+        }  
+    
     }
 
     Logger::getInstance()->log(ERROR ,"Se ha cerrado el menu debido a un problema");
@@ -260,4 +301,13 @@ void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage(END_GAME_ANIMATION);
     this->gameGraphics_->update();
     SDL_Delay(3000);
+}
+
+Client* ScreenManager::getClient(){
+    return this->clientOwn_;
+}
+
+
+SDL_Renderer* ScreenManager::getRenderer(){
+    return this->renderer_;
 }

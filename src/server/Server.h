@@ -34,13 +34,13 @@ class Server {
         void processEvent(Event *event);
         void sendToAllUsers(Event* event);
         void sendToUser(Id id,Event* event);
-        void moveUser(Id idUser, orientation_t orientation);
+        void moveUser(string user, orientation_t orientation);
         void runGame();
-        void setLoginResponse(Id id,bool response,string username);
-        bool isFullGame();
-        bool isLoggedIn(string username);
-        bool wasPreviouslyLogged(string username);
-        int run();       
+        responseStatus_t loginRequest(Id id, string username,string password);
+        int run();
+        
+        void informDisconnection(string user);   
+        void informConnection(string user);   
 };
 
 #endif

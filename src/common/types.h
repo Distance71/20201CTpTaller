@@ -144,6 +144,10 @@ typedef enum {
     ENEMY_2 = 5,
     PLAYER = 6,
     ENEMY = 7,
+    PLAYER_1_OUT = 8,
+    PLAYER_2_OUT = 9,
+    PLAYER_3_OUT = 10,
+    PLAYER_4_OUT = 11,
 } elementType_t;
 
 typedef struct {
@@ -158,8 +162,12 @@ typedef enum {
     END_STAGE_2 = 3,
     INIT_STAGE_3 = 4,
     END_STAGE_3 = 5,
-    END_GAME_ANIMATION = 6,
-    WAITING_PLAYERS = 7,
+    INIT_STAGE_4 = 6,
+    END_STAGE_4 = 7,
+    INIT_STAGE_DEFAULT = 8,
+    END_STAGE_DEFAULT = 9,
+    END_GAME_ANIMATION = 10,
+    WAITING_PLAYERS = 11,
 } sceneScreen_t;
 
 typedef size_t Id;
@@ -222,7 +230,7 @@ typedef enum responseStatus {
     ERROR_WRONG_CREDENTIALS,
     NOT_RESPONSE,
     DISCONNECTION,
-    ALREADY_LOGGED_IN_ERROR,
+    ERROR_ALREADY_LOGGED_IN,
 } responseStatus_t;
 
 typedef struct {

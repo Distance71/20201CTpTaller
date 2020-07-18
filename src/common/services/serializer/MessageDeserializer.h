@@ -51,7 +51,7 @@ class MessageDeserializer {
         response_t getOrientation(Socket *socket, orientation_t &orientation);
         response_t getSceneScreen(Socket *socket, sceneScreen_t &scene);
         response_t getElementType(Socket *socket, elementType_t &elementType);
-        response_t getLevel(Socket *socket, level &level);
+        response_t getLevel(Socket *socket, level_t &level);
     public:
         response_t getReceivedMessage(Socket *socket, Event* &event);
 };

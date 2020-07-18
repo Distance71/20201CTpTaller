@@ -61,6 +61,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageResponseLoginPlayer.h
         src/common/models/messages/MessageSceneAnimation.cpp
         src/common/models/messages/MessageSceneAnimation.h
+        src/common/models/messages/MessageSetLevel.cpp
+        src/common/models/messages/MessageSetLevel.h
         src/common/models/messages/MessageMapElementUpdate.cpp
         src/common/models/messages/MessageMapElementUpdate.h
         src/common/models/messages/MessageEndGame.cpp
@@ -98,6 +100,8 @@ add_executable(tp1taller
         src/common/models/events/EventResponseLoginPlayer.h
         src/common/models/events/EventSceneAnimation.cpp
         src/common/models/events/EventSceneAnimation.h
+        src/common/models/events/EventSetLevel.cpp
+        src/common/models/events/EventSetLevel.h
         src/common/models/events/EventMapElementUpdate.cpp
         src/common/models/events/EventMapElementUpdate.h
         src/common/models/events/EventPlayerDisconnect.cpp

@@ -11,22 +11,22 @@
             {
                 "sizeX": 95,
                 "sizeY": 74,
-                "sprite": "assets/playerReducido.png"
+                "sprite": "assets/Players/playerReducido.png"
             },
             {
                 "sizeX": 95,
                 "sizeY": 36,
-                "sprite": "assets/player2Reducido.png"
+                "sprite": "assets/Players/player2Reducido.png"
             },
             {
                 "sizeX": 95,
                 "sizeY": 68,
-                "sprite": "assets/player3Reducido.png"
+                "sprite": "assets/Players/player3Reducido.png"
             },
             {
                 "sizeX": 95,
                 "sizeY": 53,
-                "sprite": "assets/player4Reducido.png"
+                "sprite": "assets/Players/player4Reducido.png"
             }
         ],
         "level": [

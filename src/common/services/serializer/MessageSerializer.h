@@ -39,6 +39,7 @@ class MessageSerializer {
         response_t sendMessageType(Socket *socket, message_t type);
         response_t sendInteger(Socket *socket, int &value);
         response_t sendOrientation(Socket *socket, orientation_t &orientation);
+        response_t sendLevel(Socket *socket, level_t &level);
         response_t sendLongInteger(Socket *socket, size_t &value);
         response_t sendUInt(Socket *socket, unsigned int size);
         response_t sendElementType(Socket *socket, elementType_t elementType);

@@ -61,9 +61,9 @@ Step::Step(stepParams_t params) {
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
-            //MapElement *newEnemy = new MapElement(ENEMY, positionEnemy,2,2,sprite, size_x, size_y);
-            //this->mapElements_.emplace(this->lastId_, newEnemy);
-            //this->lastId_++;
+            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy,2,2,sprite, size_x, size_y);
+            this->mapElements_.emplace(this->lastId_, newEnemy);
+            this->lastId_++;
         }
     }
 }
@@ -127,8 +127,18 @@ vector<Step *> Stage::getSteps(){
 void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
         
-    //this->player->update();
+    this->updatePlayers(game);
     levels_[actualLevel]->update(currentStep, game);
+}
+
+void Map::updatePlayers(Game *game){
+
+    for(auto mapElementPlayer : this->players){
+        position_t actualPosition = mapElementPlayer.second->getActualPosition();
+        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+        game->sendEvent(eventUpdate);
+        usleep(10000); // si parpadea es por esto        
+    }
 }
 
 void Level::update(currentStep_t currentStep, Game *game){
@@ -143,19 +153,16 @@ void Stage::update(currentStep_t currentStep, Game *game){
 
 void Step::update(Game *game){
     vector<Id> mapElementDead;
-    // cout << "ENTRO AL UPDATE STEP " << this->mapElements_.size() << endl;
 
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
-        // cout << mapElement.first << endl;
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
-            //Event *eventDead = new EventMapElementDelete(mapElement.first);
-            //game->sendEvent(eventDead);
         } else {
             position_t actualPosition = mapElement.second->getActualPosition();
-            //Event *eventUpdate = new EventMapElementUpdate(mapElement.first, actualPosition);
-            //game->sendEvent(eventUpdate);
+            Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
+            game->sendEvent(eventUpdate);
+            usleep(10000); // si parpadea es por esto
         }
     }
 
@@ -178,13 +185,34 @@ void Map::createPlayers(gameParams_t &gameSettings){
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
         int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
         string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
-        Id idPlayer = gameSettings.playersParams[i].id;
+        string player = gameSettings.playersParams[i].username;
         position_t positionPlayer;
-        positionPlayer.axis_x = 100 * i; // (GameProvider::getWidth() / 3) -  playerSizeX / 2
+        positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
         positionPlayer.axis_y =  ((GameProvider::getHeight() / 2)); //((GameProvider::getHeight() / cantPlayers)) / (2 * (i+1)) ;
         positionPlayer.orientation = FRONT;
-        MapElement *newPlayer = new MapElement(PLAYER, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
-        this->players.emplace(idPlayer, newPlayer);
+        elementType_t PLAYER_X;
+        switch (i){
+            case 0:
+                PLAYER_X = PLAYER_1;
+                break;
+            case 1:
+                PLAYER_X = PLAYER_2;
+                break;
+            case 2:
+                PLAYER_X = PLAYER_3;
+                break;
+            case 3:
+                PLAYER_X = PLAYER_4;
+                break;
+        }
+        if (this->players.find(player) == this->players.end()) {        
+            MapElement *newPlayer = new MapElement(PLAYER_X, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
+            this->players.emplace(player, newPlayer);
+        }
+        else
+        {
+            Logger::getInstance()->log(ERROR, "Se intento agregar un jugador que ya existe.");
+        }        
     }
 }
 
@@ -194,26 +222,66 @@ void Map::initializePositionPlayers(gameParams_t &gameSettings){
     for (size_t i = 0; i < cantPlayers; i++){
         int playerSizeX = gameSettings.playersParams[i].playerParams.size_x;
         int playerSizeY = gameSettings.playersParams[i].playerParams.size_y;
-        Id idPlayer = gameSettings.playersParams[i].id;
+        string player = gameSettings.playersParams[i].username;
         position_t positionPlayer;
         positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
         positionPlayer.axis_y = ((GameProvider::getHeight() / cantPlayers) * i) / 2;
-        State *playerPosition = this->players[idPlayer]->getState<Position>(string("Position"));
+        State *playerPosition = this->players[player]->getState<Position>(string("Position"));
         playerPosition->setX(positionPlayer.axis_x);
         playerPosition->setY(positionPlayer.axis_y);
-        State *playerOrientation = this->players[idPlayer]->getState<Orientation>(string("Orientation"));
+        State *playerOrientation = this->players[player]->getState<Orientation>(string("Orientation"));
         playerOrientation->setX(FRONT);
     }    
 }
 
-void Map::movePlayer(Id idUser, orientation_t orientation){
-    MapElement *onePlayer = this->players[idUser];
+void Map::movePlayer(string user, orientation_t orientation){
+    MapElement *onePlayer = this->players[user];
     if (!onePlayer){
         Logger::getInstance()->log(ERROR, "No se encontro el jugador para mover.");
         return;
     }
     onePlayer->moveTo(orientation);
     Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+}
+
+void Map::informDisconnection(string username){   
+    elementType_t PLAYER_X = this->players[username]->getType();
+    elementType_t NEW_TYPE;
+    switch (PLAYER_X){
+        case PLAYER_1:
+            NEW_TYPE = PLAYER_1_OUT;
+            break;
+        case PLAYER_2:
+            NEW_TYPE = PLAYER_2_OUT;
+            break;
+        case PLAYER_3:
+            NEW_TYPE = PLAYER_3_OUT;
+            break;
+        case PLAYER_4:
+            NEW_TYPE = PLAYER_4_OUT;
+            break;
+    }
+    this->players[username]->setType(NEW_TYPE);
+}
+
+void Map::informConnection(string username){
+    elementType_t PLAYER_X = this->players[username]->getType();
+    elementType_t NEW_TYPE;
+    switch (PLAYER_X){
+        case PLAYER_1_OUT:
+            NEW_TYPE = PLAYER_1;
+            break;
+        case PLAYER_2_OUT:
+            NEW_TYPE = PLAYER_2;
+            break;
+        case PLAYER_3_OUT:
+            NEW_TYPE = PLAYER_3;
+            break;
+        case PLAYER_4_OUT:
+            NEW_TYPE = PLAYER_4;
+            break;
+    }
+    this->players[username]->setType(NEW_TYPE);
 }
 
 void Map::initializeStep(currentStep_t currentStep, Game *game){

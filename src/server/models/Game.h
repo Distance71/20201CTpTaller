@@ -22,7 +22,7 @@ class Step;
 class Game {
 
     private:
-        Server *serverOwn_;
+    Server *serverOwn_;
     Map *map_;
 
     void initializeGameParams();
@@ -37,15 +37,18 @@ class Game {
     void clearScene();
     void sendStartStage(level_t oneLevel);
     void sendStageCleared(level_t oneLevel);
-    void sendBackground(size_t numberLevel, size_t numberStage);
+    void sendBackground(level_t oneLevel);
 
     public:
     Game(Server *server);
     ~Game();
 
     void run();
-    void movePlayer(Id idUser, orientation_t orientation);
+    void movePlayer(string user, orientation_t orientation);
     void sendEvent(Event *event);
+
+    void informDisconnection(string user); 
+    void informConnection(string user); 
 };
 
 #endif

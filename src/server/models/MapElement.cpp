@@ -11,15 +11,9 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->size_x_ = size_x;
     this->size_y_ = size_y;
     this->imageSource_ = sourceSprite; 
+    this->type = type; 
 
-    //Sprite* sprite = new Sprite(sourceSprite);
-    //GraphicsMapElement* graficador = new GraphicsMapElement(sprite, this->size_x_, this->size_y_);
-    //addAction("Graphics", graficador);
-
-    if (type == PLAYER){
-        // PlayerController* playercontroller= new PlayerController(sprite);
-        // addAction("PlayerController", playercontroller);
-    } else if((type == ENEMY_1) || (type == ENEMY_2)){
+    if((type == ENEMY_1) || (type == ENEMY_2)){
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
     }
@@ -41,6 +35,14 @@ vector<Action *> MapElement::getActions() {
     auto action_selector = [](auto pair) { return pair.second; };
     transform(actions_.begin(), actions_.end(), actions.begin(), action_selector);
     return actions;
+}
+
+elementType_t MapElement::getType() {
+    return this->type;
+}
+
+void MapElement::setType(elementType_t type) {
+    this->type = type;
 }
 
 vector<State *> MapElement::getStates() {
