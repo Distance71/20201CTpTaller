@@ -189,5 +189,5 @@ void Game::informDisconnection(string username){
 }
 
 void Game::informConnection(string username){
-    if (this->map_ != NULL) this->map_->informDisconnection(username);
+    if (this->map_ != NULL) this->map_->informConnection(username);
 }
