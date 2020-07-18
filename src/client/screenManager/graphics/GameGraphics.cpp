@@ -94,9 +94,19 @@ void GameGraphics::createScenarios(){
     stage3.layer6 = "assets/Stage/Level3/layer_6.png";
     stage3.layer7 = "assets/Stage/Level3/layer_7.png";
 
-    this->scenaries_[LEVEL_ONE] = new GraphicsScenario(stage1);
-    this->scenaries_[LEVEL_TWO] = new GraphicsScenario(stage2);
-    this->scenaries_[LEVEL_THREE] = new GraphicsScenario(stage3);
+    stageSource_t stage4;
+    stage4.layer1 = "assets/Stage/Level4/layer_1.png";
+    stage4.layer2 = "assets/Stage/Level4/layer_2.png";
+    stage4.layer3 = "assets/Stage/Level4/layer_3.png";
+    stage4.layer4 = "assets/Stage/Level4/layer_4.png";
+    stage4.layer5 = "";
+    stage4.layer6 = "";
+    stage4.layer7 = "";
+
+    this->scenaries_[STAGE_ONE] = new GraphicsScenario(stage1);
+    this->scenaries_[STAGE_TWO] = new GraphicsScenario(stage2);
+    this->scenaries_[STAGE_THREE] = new GraphicsScenario(stage3);
+    this->scenaries_[STAGE_FOUR] = new GraphicsScenario(stage4);
 }
 
 void GameGraphics::update(){
@@ -146,7 +156,7 @@ void GameGraphics::updateEntity(elementType_t type, position_t position){
     this->graphicsQueue_->push(elementToGraphic);
 }
 
-void GameGraphics::setBackground(level_t level){
+void GameGraphics::setBackground(stage_t stage){
 
     if (this->scenario_){
         this->scenario_=nullptr;
@@ -155,7 +165,7 @@ void GameGraphics::setBackground(level_t level){
     if (this->image_){
         this->image_=nullptr;
     }
-    this->scenario_ = this->scenaries_[level];
+    this->scenario_ = this->scenaries_[stage];
 
     Logger::getInstance()->log(DEBUG, "Se actualiza el background");
 }

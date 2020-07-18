@@ -57,7 +57,7 @@ class Client {
         //EventsMethods
         void processEvent(Event* event);
         void updateEntity(elementType_t type, position_t position);
-        void setBackground(level_t level);
+        void setBackground(stage_t stage);
         void setImage(sceneScreen_t scene);
         void setScreenSizes(int Xsize, int Ysize);
     };

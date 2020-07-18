@@ -85,7 +85,6 @@ static void* sendMessages(void* arg){
 		if (message){
 			serializer.sendSerializedEvent(socket, message);
 			delete message;
-			usleep(15);
 		}
 	}
 	Logger::getInstance()->log(DEBUG, "Se detiene hilo de envíos para un usuario");

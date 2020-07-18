@@ -1,8 +1,8 @@
-#ifndef EVENT_SET_LEVEL
-#define EVENT_SET_LEVEL
+#ifndef EVENT_SET_STAGE
+#define EVENT_SET_STAGE
 
 #include "Event.h"
-#include "../messages/MessageSetLevel.h"
+#include "../messages/MessageSetStage.h"
 #include "../messages/Message.h"
 #include "../../providers/GameProvider.h"
 #include "../../services/Logger.h"
@@ -10,16 +10,16 @@
 
 using namespace std;
 
-class EventSetLevel: public Event {
+class EventSetStage: public Event {
 
 	private:
-        level_t level_;
+        stage_t stage_;
 
     public:
-        EventSetLevel(level_t level) : level_(level){}
+        EventSetStage(stage_t stage) : stage_(stage){}
         
         Message* serialize();
-        level_t getLevel();
+        stage_t getStage();
         void update();
 };
 

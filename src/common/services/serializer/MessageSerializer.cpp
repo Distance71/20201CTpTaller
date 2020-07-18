@@ -123,17 +123,17 @@ response_t MessageSerializer::sendMessageUserMovement(Socket *socket, Message *m
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendMessageSetLevel(Socket *socket, Message *message){
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje SetLevel.");
-    level_t level = ((MessageSetLevel *) message)->getLevel();
+response_t MessageSerializer::sendMessageSetStage(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje SetStage.");
+    stage_t stage = ((MessageSetStage *) message)->getStage();
 
-    response_t responseLevel = this->sendLevel(socket, level);
+    response_t responseStage = this->sendStage(socket, stage);
 
-    if(!responseLevel.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en SetLevel.");
+    if(!responseStage.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en SetStage.");
         return this->_handleErrorStatus();
     }
-    Logger::getInstance()->log(DEBUG, "Se envio SetLevel con exito.");
+    Logger::getInstance()->log(DEBUG, "Se envio SetStage con exito.");
     return this->_handleSuccess();    
 };
 
@@ -198,16 +198,16 @@ response_t MessageSerializer::sendOrientation(Socket *socket, orientation_t &ori
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendLevel(Socket *socket, level_t &level){
+response_t MessageSerializer::sendStage(Socket *socket, stage_t &stage){
 
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje level.");
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje Stage.");
 
-    s << level << endl;
+    s << stage << endl;
 
-    if (socket->sendMessage(s, sizeof(level_t)) <= 0){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de level.");
+    if (socket->sendMessage(s, sizeof(stage_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de stage.");
         return this->_handleErrorStatus();
     }
 
@@ -335,8 +335,8 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
         case USER_MOVEMENT:
             return this->sendMessageUserMovement(socket, message);
         
-        case SET_LEVEL:
-            return this->sendMessageSetLevel(socket, message);
+        case SET_STAGE:
+            return this->sendMessageSetStage(socket, message);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

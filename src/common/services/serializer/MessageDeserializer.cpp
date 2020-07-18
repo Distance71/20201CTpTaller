@@ -167,21 +167,21 @@ response_t MessageDeserializer::getEventUserMovement(Socket *socket, Event* &eve
     return this->_handleSuccess();
 };
 
-response_t MessageDeserializer::getEventSetLevel(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento SetLevel en Deserializer");
-    level_t level;
+response_t MessageDeserializer::getEventSetStage(Socket *socket, Event* &event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento SetStage en Deserializer");
+    stage_t stage;
 
-    this->getLevel(socket, level);
+    this->getStage(socket, stage);
 
-    Message *message = new MessageSetLevel(level);
+    Message *message = new MessageSetStage(stage);
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento SetLevel");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento SetStage");
         return this->_handleErrorStatus();
     }
 
-    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento SetLevel en Deserializer");
+    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento SetStage en Deserializer");
     return this->_handleSuccess();
 };
 
@@ -335,18 +335,18 @@ response_t MessageDeserializer::getElementType(Socket *socket, elementType_t &el
     elementType = (elementType_t) atoi(msg.c_str());
 }
 
-response_t MessageDeserializer::getLevel(Socket *socket, level_t &level){
+response_t MessageDeserializer::getStage(Socket *socket, stage_t &stage){
     stringstream s;
 
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje level");
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje stage");
 
-    if (socket->receiveMessage(s, sizeof(level_t)) <= 0){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de level.");
+    if (socket->receiveMessage(s, sizeof(stage_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de stage.");
         return this->_handleErrorStatus();
     }
 
     string msg = s.str();
-    level = (level_t) atoi(msg.c_str());
+    stage = (stage_t) atoi(msg.c_str());
 };
 
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
@@ -384,8 +384,8 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case USER_MOVEMENT:
             return this->getEventUserMovement(socket, event);
-        case SET_LEVEL:
-            return this->getEventSetLevel(socket, event);
+        case SET_STAGE:
+            return this->getEventSetStage(socket, event);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

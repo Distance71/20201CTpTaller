@@ -40,6 +40,8 @@ typedef enum level {
 typedef enum stage {
     STAGE_ONE = 0,
     STAGE_TWO = 1,
+    STAGE_THREE = 2,
+    STAGE_FOUR = 3,
 } stage_t;
 
 typedef enum message {
@@ -51,7 +53,7 @@ typedef enum message {
     REQUEST_LOGIN_PLAYER = 5,
     RESPONSE_LOGIN_PLAYER = 6,
     USER_MOVEMENT = 7,
-    SET_LEVEL = 8,
+    SET_STAGE = 8,
 } message_t;
 
 typedef enum {

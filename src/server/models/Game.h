@@ -35,9 +35,9 @@ class Game {
     void updateState(currentStep_t actualStep);
     void updateGraphics();
     void clearScene();
-    void sendStartStage(level_t oneLevel);
-    void sendStageCleared(level_t oneLevel);
-    void sendBackground(level_t oneLevel);
+    void sendStartStage(stage_t stage);
+    void sendStageCleared(stage_t stage);
+    void sendBackground(stage_t stage);
 
     public:
     Game(Server *server);

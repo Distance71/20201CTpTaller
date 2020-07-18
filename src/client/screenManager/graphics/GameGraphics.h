@@ -21,7 +21,7 @@ class GameGraphics {
         SDL_Renderer* renderer_;
         unordered_map <elementType_t, GraphicsMapElement*> elements_;
         unordered_map <sceneScreen_t, GraphicsMapElement*> scenes_;
-        unordered_map <level_t, GraphicsScenario*> scenaries_;
+        unordered_map <stage_t, GraphicsScenario*> scenaries_;
         GraphicsScenario *scenario_;
         GraphicsMapElement* image_;
         std::mutex mutex;
@@ -37,7 +37,7 @@ class GameGraphics {
         void update();
         void updateEntity(elementType_t type, position_t position);
         
-        void setBackground(level_t level);
+        void setBackground(stage_t level);
         void setImage(sceneScreen_t scene);
 };
 

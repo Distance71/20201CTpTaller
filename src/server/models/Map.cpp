@@ -137,7 +137,6 @@ void Map::updatePlayers(Game *game){
         position_t actualPosition = mapElementPlayer.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
-        usleep(10000); // si parpadea es por esto        
     }
 }
 

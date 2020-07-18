@@ -26,71 +26,63 @@
             }
         ],
         "level": [
-            [
-                {
-                    "enemies": [
-                        {
-                            "quantity": 10,
-                            "sizeX": 85,
-                            "sizeY": 45			  
-                        },
-                        {
-                            "quantity": 15,
-                            "sizeX": 90,
-                            "sizeY": 56
-                        }
-                    ]
-                }
-            ],
-            [
-                {
-                    "enemies": [
-                        {
-                            "quantity": 15,
-                            "sizeX": 85,
-                            "sizeY": 45			  
-                        },
-                        {
-                            "quantity": 15,
-                            "sizeX": 95,
-                            "sizeY": 62
-                        }
-                    ]
-                }
-            ],
-            [
-                {
-                    "enemies": [
-                        {
-                            "quantity": 17,
-                            "sizeX": 90,
-                            "sizeY": 56			  
-                        },
-                        {
-                            "quantity": 18,
-                            "sizeX": 95,
-                            "sizeY": 62
-                        }
-                    ]
-                }
-            ],
-            [
-                {
-                    "enemies": [
-                        {
-                            "type": 0,
-                            "quantity": 20,
-                            "sizeX": 90,
-                            "sizeY": 56			  
-                        },
-                        {
-                            "quantity": 19,
-                            "sizeX": 95,
-                            "sizeY": 62
-                        }
-                    ]
-                }
-            ]
+            {
+                "enemies": [
+                    {
+                        "quantity": 10,
+                        "sizeX": 85,
+                        "sizeY": 45			  
+                    },
+                    {
+                        "quantity": 15,
+                        "sizeX": 90,
+                        "sizeY": 56
+                    }
+                ]
+            },
+            {
+                "enemies": [
+                    {
+                        "quantity": 15,
+                        "sizeX": 85,
+                        "sizeY": 45			  
+                    },
+                    {
+                        "quantity": 15,
+                        "sizeX": 95,
+                        "sizeY": 62
+                    }
+                ]
+            },
+            {
+                "enemies": [
+                    {
+                        "quantity": 17,
+                        "sizeX": 90,
+                        "sizeY": 56			  
+                    },
+                    {
+                        "quantity": 18,
+                        "sizeX": 95,
+                        "sizeY": 62
+                    }
+                ]
+            },
+            {
+                "enemies": [
+                    {
+                        "type": 0,
+                        "quantity": 20,
+                        "sizeX": 90,
+                        "sizeY": 56			  
+                    },
+                    {
+                        "quantity": 19,
+                        "sizeX": 95,
+                        "sizeY": 62
+                    }
+                ]
+            }
         ],    
         "users": [
             {

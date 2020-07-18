@@ -61,16 +61,14 @@ add_executable(tp1taller
         src/common/models/messages/MessageResponseLoginPlayer.h
         src/common/models/messages/MessageSceneAnimation.cpp
         src/common/models/messages/MessageSceneAnimation.h
-        src/common/models/messages/MessageSetLevel.cpp
-        src/common/models/messages/MessageSetLevel.h
         src/common/models/messages/MessageMapElementUpdate.cpp
         src/common/models/messages/MessageMapElementUpdate.h
         src/common/models/messages/MessageEndGame.cpp
         src/common/models/messages/MessageEndGame.h
         src/common/models/messages/MessageLog.cpp
         src/common/models/messages/MessageLog.h
-        src/common/models/messages/MessageSetLevel.cpp
-        src/common/models/messages/MessageSetLevel.h
+        src/common/models/messages/MessageSetStage.cpp
+        src/common/models/messages/MessageSetStage.h
 
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
@@ -100,14 +98,12 @@ add_executable(tp1taller
         src/common/models/events/EventResponseLoginPlayer.h
         src/common/models/events/EventSceneAnimation.cpp
         src/common/models/events/EventSceneAnimation.h
-        src/common/models/events/EventSetLevel.cpp
-        src/common/models/events/EventSetLevel.h
+        src/common/models/events/EventSetStage.cpp
+        src/common/models/events/EventSetStage.h
         src/common/models/events/EventMapElementUpdate.cpp
         src/common/models/events/EventMapElementUpdate.h
         src/common/models/events/EventPlayerDisconnect.cpp
         src/common/models/events/EventPlayerDisconnect.h
-        src/common/models/events/EventSetLevel.cpp
-        src/common/models/events/EventSetLevel.h
         src/common/models/events/EventEndGame.cpp
         src/common/models/events/EventEndGame.h
 

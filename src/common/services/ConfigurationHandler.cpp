@@ -18,13 +18,13 @@ string ConfigurationHandler::getPathUser(int numberUser, string paramUser){
 }
 
 string ConfigurationHandler::getPathLevel(int numberLevel){
-    string pathLevel = PATH_BASE_STAGE + to_string(numberLevel);
+    string pathLevel = PATH_BASE_STAGE;
 
     return pathLevel;
 }
 
 string ConfigurationHandler::getPathStage(int numberLevel, int numberStage){
-    string pathStage = PATH_BASE_STAGE + to_string(numberLevel) + "/" + to_string(numberStage);
+    string pathStage = PATH_BASE_STAGE + to_string(numberStage);
 
     return pathStage;
 }
@@ -327,17 +327,18 @@ void ConfigurationHandler::initializeDataServer(){
         this->gameData.playersParams.push_back(newUser);
     }   
 
-    int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
+    int sizeLevel = 1;
+
 
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
     
     for(int numberLevel = 0; numberLevel < sizeLevel; numberLevel++){
         Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del nivel " + to_string(numberLevel));
         string pathLevel = getPathLevel(numberLevel);
-        int sizeStage = this->parserJson->getSizeArray(pathLevel);
+        int sizeStages = this->parserJson->getSizeArray(PATH_LEVEL);
         levelParams_t oneLevelParams;
 
-        for(int numberStage = 0; numberStage < sizeStage; numberStage++){
+        for(int numberStage = 0; numberStage < sizeStages; numberStage++){
             Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
             stageParams_t oneStageParams;
 
@@ -345,6 +346,10 @@ void ConfigurationHandler::initializeDataServer(){
             
             string pathEnemiesBase = getPathStageEnemy(pathStage, -1, "");
             int sizeEnemies = this->parserJson->getSizeArray(pathEnemiesBase);
+
+            //cout << "params " << pathStage << endl;
+            //cout << "params " << pathEnemiesBase << endl;
+            //cout << "params " << sizeEnemies << endl;
             
             unsigned int cantTotalType1 = 0;
             unsigned int cantTotalType2 = 0;
@@ -368,7 +373,10 @@ void ConfigurationHandler::initializeDataServer(){
 
                 string pathEnemyQuantity = getPathStageEnemy(pathStage, numberEnemy, "quantity");
 
+                //cout << pathEnemyQuantity << endl;
                 int cantEnemy = this->parserJson->getUnsignedInt(pathEnemyQuantity); 
+
+                //cout << cantEnemy << endl;
 
                 if (cantEnemy >= 0){
                     oneEnemy.quantity = cantEnemy;
@@ -378,6 +386,8 @@ void ConfigurationHandler::initializeDataServer(){
 
                 string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
                 int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
+                
+                //cout << "El size x " << sizeX << endl;
                 if (sizeX >= 0){
                     oneEnemy.size_x = sizeX;
                 } else {
@@ -396,6 +406,9 @@ void ConfigurationHandler::initializeDataServer(){
                 } else {
                     oneEnemy.size_y = DEFAULT_SIZE_Y;
                 }
+
+                //cout << "El size y " << sizeY << endl;
+                //cout << "le bg " << sizeScreenX << endl;
 
                 if (sizeY > sizeScreenY){
                     Logger::getInstance()->log(ERROR, "El ancho del enemigo " + to_string(numberEnemy) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
@@ -417,6 +430,7 @@ void ConfigurationHandler::initializeDataClient(){
 
     size_t quantityPlayers = this->parserJson->getSizeArray(PATH_PLAYERS);
 
+    cout << "quant " << quantityPlayers << endl;
     GameProvider::setQuantityPlayers(quantityPlayers);
     
     vector<user_t> users (quantityPlayers);
@@ -429,15 +443,18 @@ void ConfigurationHandler::initializeDataClient(){
         this->gameData.playersParams.push_back(newUser);
     }   
 
-    int sizeLevel = this->parserJson->getSizeArray(PATH_LEVEL);
+    int sizeLevel = 1;
 
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
     
     for(int numberLevel = 0; numberLevel < sizeLevel; numberLevel++){
         Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del nivel " + to_string(numberLevel));
         string pathLevel = getPathLevel(numberLevel);
-        int sizeStage = this->parserJson->getSizeArray(pathLevel);
+        int sizeStage = this->parserJson->getSizeArray(PATH_LEVEL);
         levelParams_t oneLevelParams;
+
+        cout << "pathLevel " << pathLevel << endl;
+        cout << "quantStages " << sizeStage << endl;
 
         for(int numberStage = 0; numberStage < sizeStage; numberStage++){
             Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
@@ -445,9 +462,14 @@ void ConfigurationHandler::initializeDataClient(){
 
             string pathStage = getPathStage(numberLevel, numberStage);
 
-            string pathTransitionInit = pathStage + "/transitionInit";
-            oneLevelParams.pathTransitionScreen.initPath = this->parserJson->getString(pathTransitionInit);
+            cout << "pathStage " << pathStage << endl;
 
+            string pathTransitionInit = pathStage + "/transitionInit";
+            //cout << "pathTransitionInit " << pathTransitionInit << endl;
+            oneLevelParams.pathTransitionScreen.initPath = this->parserJson->getString(pathTransitionInit);
+            //cout << "Esto " << this->parserJson->getString("/configuracion/level/0/transitionInit") << endl;
+
+            //cout << "pathTransitionInit " << pathTransitionInit << endl;
             string pathTransitionEnd = pathStage + "/transitionEnd";
             oneLevelParams.pathTransitionScreen.endPath = this->parserJson->getString(pathTransitionEnd);
 

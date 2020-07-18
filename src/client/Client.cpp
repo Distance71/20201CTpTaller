@@ -104,10 +104,10 @@ void Client::updateEntity(elementType_t type, position_t position){
     }
 }
 
-void Client::setBackground(level_t level){
+void Client::setBackground(stage_t stage){
     Logger::getInstance()->log(DEBUG, "Se va a actualizar un background en Client");
     if(this->screenManager_){
-        this->screenManager_->setBackground(level);
+        this->screenManager_->setBackground(stage);
     }
     else{
          Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,falta crear el objeto ScreenManager");

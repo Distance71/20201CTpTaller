@@ -39,28 +39,28 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantityStages = gameSettings.levelParams[actualStep.level].stagesParams.size();
 
-    this->sendStartStage(actualStep.level);
+    
 
     auto stages = level->getStages();
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
-    this->sendBackground(actualStep.level);
 
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
         runStage(actualStep, stages[i]);  
     }
-    //usleep(3000);
-    
 
-    if (GameProvider::getStatus().normalStatus){
-        this->sendStageCleared(actualStep.level);
-        this->map_->initializePositionPlayers(gameSettings);
-    }
+    // if (GameProvider::getStatus().normalStatus){
+    //     
+    // }
 }
 
 void Game::runStage(currentStep_t actualStep, Stage *stage){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
+
+    this->sendStartStage(actualStep.stage);
+
+    this->sendBackground(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
 
@@ -69,6 +69,9 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
         actualStep.step = i;
         runStep(actualStep);
     }
+
+    this->sendStageCleared(actualStep.stage);
+    //this->map_->initializePositionPlayers(gameSettings);
 }
 
 void Game::runStep(currentStep_t actualStep){
@@ -101,58 +104,58 @@ void Game::updateState(currentStep_t actualStep) {
     map_->update(actualStep, this);
 }
 
-void Game::sendStartStage(level_t oneLevel){
-    sceneScreen_t pathScreen;
+void Game::sendStartStage(stage_t stage){
+    sceneScreen_t sceneScreen;
 
-    switch (oneLevel){
-        case LEVEL_ONE:
-            pathScreen = INIT_STAGE_1;
+    switch (stage){
+        case STAGE_ONE:
+            sceneScreen = INIT_STAGE_1;
             break;
-        case LEVEL_TWO:
-            pathScreen = INIT_STAGE_2;
+        case STAGE_TWO:
+            sceneScreen = INIT_STAGE_2;
             break;
-        case LEVEL_THREE:
-            pathScreen = INIT_STAGE_3;
+        case STAGE_THREE:
+            sceneScreen = INIT_STAGE_3;
             break;
-        case LEVEL_FOUR:
-            pathScreen = INIT_STAGE_4;
+        case STAGE_FOUR:
+            sceneScreen = INIT_STAGE_4;
             break;
         default:
-            pathScreen = INIT_STAGE_DEFAULT;
+            sceneScreen = INIT_STAGE_DEFAULT;
             break;
     }
 
-    Event* event = new EventSceneAnimation(pathScreen);
+    Event* event = new EventSceneAnimation(sceneScreen);
     this->sendEvent(event);
     
     usleep(5000000);//5 seg
 }
 
-void Game::sendStageCleared(level_t oneLevel){
+void Game::sendStageCleared(stage_t stage){
 
-    sceneScreen_t pathScreen;
+    sceneScreen_t sceneScreen;
 
-    switch (oneLevel){
+    switch (stage){
         case LEVEL_ONE:
-            pathScreen = END_STAGE_1;
+            sceneScreen = END_STAGE_1;
             break;
         case LEVEL_TWO:
-            pathScreen = END_STAGE_2;
+            sceneScreen = END_STAGE_2;
             break;
         case LEVEL_THREE:
-            pathScreen = END_STAGE_3;
+            sceneScreen = END_STAGE_3;
             break;
         case LEVEL_FOUR:
-            pathScreen = END_STAGE_4;
+            sceneScreen = END_STAGE_4;
             break;
         default:
-            pathScreen = END_STAGE_DEFAULT;
+            sceneScreen = END_STAGE_DEFAULT;
             break;
     }
 
-    Event* event = new EventSceneAnimation(pathScreen);
+    Event* event = new EventSceneAnimation(sceneScreen);
     this->sendEvent(event);
-    usleep(5000000);//5 seg;
+    usleep(3000000);//5 seg;
     
 }
 
@@ -160,10 +163,9 @@ void Game::movePlayer(string user, orientation_t orientation){
     this->map_->movePlayer(user, orientation);
 }
 
-void Game::sendBackground(level_t oneLevel){
-    Event* event = new EventSetLevel(oneLevel);
+void Game::sendBackground(stage_t stage){
+    Event* event = new EventSetStage(stage);
     this->sendEvent(event);
-    usleep(10000);
 }
 
 void Game::sendEvent(Event *event){
