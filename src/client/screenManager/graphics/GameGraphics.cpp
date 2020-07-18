@@ -142,6 +142,7 @@ void GameGraphics::updateEntity(elementType_t type, position_t position){
     elementToGraphic_t elementToGraphic;
     elementToGraphic.position = position;
     elementToGraphic.type = type;
+    cout << type << endl;
     this->graphicsQueue_->push(elementToGraphic);
 }
 
@@ -161,7 +162,6 @@ void GameGraphics::setBackground(level_t level){
 
 void GameGraphics::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en GameGraphics");
-    cout << scene << endl;
     if (this->scenario_){
         this->scenario_= nullptr;
     }

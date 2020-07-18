@@ -86,14 +86,6 @@ typedef enum {
 } transition_t;
 
 typedef struct {
-    unsigned int type;
-    unsigned int quantity;
-    int size_x;
-    int size_y;
-    string sprite;
-} enemy_t;
-
-typedef struct {
     int size_x;
     int size_y;
     string sprite;
@@ -130,11 +122,6 @@ typedef struct {
     string layer7;
 } stageSource_t;
 
-typedef struct {
-    stage_t stage;
-    vector<enemy_t> enemies;
-} stepContent_t;
-
 typedef enum {
     PLAYER_1 = 0,
     PLAYER_2 = 1,
@@ -149,6 +136,19 @@ typedef enum {
     PLAYER_3_OUT = 10,
     PLAYER_4_OUT = 11,
 } elementType_t;
+
+typedef struct {
+    elementType_t type;
+    unsigned int quantity;
+    int size_x;
+    int size_y;
+    string sprite;
+} enemy_t;
+
+typedef struct {
+    stage_t stage;
+    vector<enemy_t> enemies;
+} stepContent_t;
 
 typedef struct {
     elementType_t type;

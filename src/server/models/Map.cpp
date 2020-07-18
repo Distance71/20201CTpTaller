@@ -162,7 +162,6 @@ void Step::update(Game *game){
             position_t actualPosition = mapElement.second->getActualPosition();
             Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
             game->sendEvent(eventUpdate);
-            usleep(10000); // si parpadea es por esto
         }
     }
 

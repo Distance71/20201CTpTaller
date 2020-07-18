@@ -292,6 +292,7 @@ transitionScreen_t ConfigurationHandler::getTransitionScreenForLevel(int oneLeve
 }
 
 gameParams_t ConfigurationHandler::getGameParams(){
+
     return this->gameData;
 }
 
@@ -358,10 +359,12 @@ void ConfigurationHandler::initializeDataServer(){
 
                 string pathEnemyType = getPathStageEnemy(pathStage, numberEnemy, "type");
 
-                int typeEnemy = ENEMY_1;
+                elementType_t typeEnemy = ENEMY_1;
 
                 if (numberEnemy > 0)
                     typeEnemy = ENEMY_2;
+
+                oneEnemy.type = typeEnemy;
 
                 string pathEnemyQuantity = getPathStageEnemy(pathStage, numberEnemy, "quantity");
 

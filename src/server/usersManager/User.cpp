@@ -85,7 +85,7 @@ static void* sendMessages(void* arg){
 		if (message){
 			serializer.sendSerializedEvent(socket, message);
 			delete message;
-			usleep(10);
+			usleep(15);
 		}
 	}
 	Logger::getInstance()->log(DEBUG, "Se detiene hilo de envíos para un usuario");
@@ -122,7 +122,6 @@ static void* receivingMessages(void * arg){
 			event->setNameOwn(userName);
 			userManager->processEvent(event);
 		}
-		usleep(100000);
 	}
 	Logger::getInstance()->log(DEBUG, "Se detiene el hilo del recepción para un usuario");
     return nullptr;

@@ -116,7 +116,7 @@ int Server::run(){
         }
     }    
   
-    //this->runGame();
+    this->runGame();
 
     Logger::getInstance()->log(INFO, "El Juego ha terminado");
     
