@@ -37,7 +37,7 @@ class Game {
     void clearScene();
     void sendStartStage(level_t oneLevel);
     void sendStageCleared(level_t oneLevel);
-    void sendBackground(size_t numberStage);
+    void sendBackground(level_t oneLevel);
 
     public:
     Game(Server *server);

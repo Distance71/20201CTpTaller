@@ -61,9 +61,9 @@ Step::Step(stepParams_t params) {
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
-            //MapElement *newEnemy = new MapElement(ENEMY, positionEnemy,2,2,sprite, size_x, size_y);
-            //this->mapElements_.emplace(this->lastId_, newEnemy);
-            //this->lastId_++;
+            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy,2,2,sprite, size_x, size_y);
+            this->mapElements_.emplace(this->lastId_, newEnemy);
+            this->lastId_++;
         }
     }
 }
@@ -127,8 +127,18 @@ vector<Step *> Stage::getSteps(){
 void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
         
-    //this->player->update();
+    this->updatePlayers(game);
     levels_[actualLevel]->update(currentStep, game);
+}
+
+void Map::updatePlayers(Game *game){
+
+    for(auto mapElementPlayer : this->players){
+        position_t actualPosition = mapElementPlayer.second->getActualPosition();
+        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+        game->sendEvent(eventUpdate);
+        usleep(10000); // si parpadea es por esto        
+    }
 }
 
 void Level::update(currentStep_t currentStep, Game *game){
@@ -177,7 +187,7 @@ void Map::createPlayers(gameParams_t &gameSettings){
         string playerSprite = gameSettings.playersParams[i].playerParams.sprite;
         string player = gameSettings.playersParams[i].username;
         position_t positionPlayer;
-        positionPlayer.axis_x = 100 * i; // (GameProvider::getWidth() / 3) -  playerSizeX / 2
+        positionPlayer.axis_x = (GameProvider::getWidth() / 3) -  playerSizeX / 2;
         positionPlayer.axis_y =  ((GameProvider::getHeight() / 2)); //((GameProvider::getHeight() / cantPlayers)) / (2 * (i+1)) ;
         positionPlayer.orientation = FRONT;
         elementType_t PLAYER_X;
