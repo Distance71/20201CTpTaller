@@ -195,8 +195,14 @@ void Map::createPlayers(gameParams_t &gameSettings){
                 PLAYER_X = PLAYER_4;
                 break;
         }
-        MapElement *newPlayer = new MapElement(PLAYER_X, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
-        this->players.emplace(player, newPlayer);
+        if (this->players.find(player) == this->players.end()) {        
+            MapElement *newPlayer = new MapElement(PLAYER_X, positionPlayer, 4, 4, playerSprite, playerSizeX, playerSizeY); 
+            this->players.emplace(player, newPlayer);
+        }
+        else
+        {
+            Logger::getInstance()->log(ERROR, "Se intento agregar un jugador que ya existe.");
+        }        
     }
 }
 
