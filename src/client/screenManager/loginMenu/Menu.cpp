@@ -17,6 +17,9 @@ Menu::Menu(Client* clientOwn){
 
     MenuElement* full_game_box = new MenuElement(20,50,525,325,"assets/LoginScreen/fullGameBox.png");
     addMenuElement("FULL GAME BOX",full_game_box);
+
+    MenuElement* already_login_box = new MenuElement(20,50,525,325,"assets/LoginScreen/alreadyLoggedIn.png");
+    addMenuElement("ALREADY LOGIN BOX", already_login_box);
     
     TextBox* username = new TextBox(80,110,375,60,"assets/LoginScreen/username1.png","assets/LoginScreen/username2.png");
     username->setCenteringParameters(50,10,15,10);
@@ -71,6 +74,8 @@ void Menu::update(int x, int y,bool click){
     else if(this->response_ == ERROR_FULL_GAME){
         menu_elements["FULL GAME BOX"]->renderCopy();
     }
+    else if (this->response_ == ERROR_ALREADY_LOGGED_IN)
+        menu_elements["ALREADY LOGIN BOX"]->renderCopy();
 
     for(auto button : buttons){
         button.second->update(x,y,click,false);
