@@ -88,6 +88,9 @@ player_t ConfigurationHandler::getPlayerParams(int numberPlayer){
     if (!this->isServer_){
         string pathSprite = getPathPlayer(numberPlayer, "sprite");
         playerParam.sprite = this->parserJson->getString(pathSprite);
+
+        string pathSpriteDisconnected = getPathPlayer(numberPlayer, "spriteDisconnected");
+        playerParam.spriteDisconnected = this->parserJson->getString(pathSpriteDisconnected);
     }
 
     return playerParam;
@@ -258,23 +261,18 @@ void ConfigurationHandler::setLogLevel(){
     Logger::getInstance()->log(INFO, "Se settea nivel del Logger desde el archivo de configuracion.");
 }
 
-stageSource_t ConfigurationHandler::getSourcesForStage(int oneLevel, int oneStage){
+stageSource_t ConfigurationHandler::getSourcesForStage(int oneStage){
 
     stageSource_t stageSource;
 
-    if (oneLevel >= this->gameData.levelParams.size()){
-        Logger::getInstance()->log(ERROR, "Se quiere acceder al stageSource de un nivel invalido. Level: " + to_string(oneLevel));
-        return stageSource;
-    }
-    
-    if (oneStage >= this->gameData.levelParams[oneLevel].stagesParams.size()){
-        Logger::getInstance()->log(ERROR, "Se quiere acceder al stageSource de un stage invalido. Level: " + to_string(oneLevel) + " - Stage: " + to_string(oneStage));
+    if (oneStage >= this->gameData.levelParams[0].stagesParams.size()){
+        Logger::getInstance()->log(ERROR, "Se quiere acceder al stageSource de un stage invalido. Stage: " + to_string(oneStage));
         return stageSource;
     }
 
-    Logger::getInstance()->log(DEBUG, "Se devuelve el stageSource del stage "  + to_string(oneStage) + " del nivel " + to_string(oneLevel));
+    Logger::getInstance()->log(DEBUG, "Se devuelve el stageSource del stage "  + to_string(oneStage));
 
-    return this->gameData.levelParams[oneLevel].stagesParams[oneStage].backgroundSources;
+    return this->gameData.levelParams[0].stagesParams[oneStage].backgroundSources;
 }
 
 transitionScreen_t ConfigurationHandler::getTransitionScreenForLevel(int oneLevel){
@@ -443,6 +441,7 @@ void ConfigurationHandler::initializeDataClient(){
         this->gameData.playersParams.push_back(newUser);
     }   
 
+    this->setInformationScreen();
     this->gameData.loginScreen = this->readLoginScreen();
 
     int sizeLevel = 1;
@@ -590,4 +589,61 @@ loginScreen_t ConfigurationHandler::readLoginScreen(){
     loginScreen.login = this->parserJson->getString(pathLogin);
 
     return loginScreen;
+}
+
+string ConfigurationHandler::getPathInformationScreen(string paramScreen){
+    string pathInformationScreenParam = PATH_INFORMATION_SCREEN + paramScreen;
+
+    return pathInformationScreenParam;
+}
+
+void ConfigurationHandler::setInformationScreen(){
+
+    informationScreen_t newInformation;
+
+    Logger::getInstance()->log(DEBUG, "Se comienzan a analizar las pantallas de informacion.");
+
+    string pathEndGame = getPathInformationScreen("endGame");
+    newInformation.endGame = this->parserJson->getString(pathEndGame);
+
+    string pathWaitingPlayers = getPathInformationScreen("waitingPlayers");
+    newInformation.waitingPlayers = this->parserJson->getString(pathWaitingPlayers);
+
+    string pathDisconnection = getPathInformationScreen("disconnection");
+    newInformation.disconnection = this->parserJson->getString(pathDisconnection);
+
+    string pathGameOver = getPathInformationScreen("gameOver");
+    newInformation.gameOver = this->parserJson->getString(pathGameOver);
+
+    this->informationScreen_ = newInformation;
+}
+
+informationScreen_t ConfigurationHandler::getinformationScreen(){
+    return this->informationScreen_;
+}
+
+player_t ConfigurationHandler::getPlayerParam(int numberPlayer){
+
+    player_t onePlayer;
+    onePlayer.size_x = GameProvider::getElementsSize();
+    onePlayer.size_y = GameProvider::getElementsSize();
+    onePlayer.sprite = "";
+    onePlayer.spriteDisconnected = "";
+
+    if (this->gameData.playersParams.size() > numberPlayer)
+        onePlayer = this->gameData.playersParams[numberPlayer].playerParams;
+
+    return onePlayer;
+}
+
+string ConfigurationHandler::getPathEnemy(int numberTypeEnemy){
+
+    string pathEnemy = "";
+
+    if (this->gameData.levelParams[0].stagesParams[0].totalEnemies.size() > numberTypeEnemy){
+        pathEnemy = this->gameData.levelParams[0].stagesParams[0].totalEnemies[numberTypeEnemy].sprite;
+    }
+
+    return pathEnemy;
+
 }
