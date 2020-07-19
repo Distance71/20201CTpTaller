@@ -101,7 +101,7 @@ static void* receiveMessages(void *arg){
         else if (response.ok){
             Logger::getInstance()->log(DEBUG, "Se recibio ok un evento en transmitionManager");
             client->processEvent(event);
-            //cout << "Se recibio" << endl;
+            cout << "Se recibio" << endl;
         }
         else{
             Logger::getInstance()->log(ERROR, "Error al recibir el mensaje");

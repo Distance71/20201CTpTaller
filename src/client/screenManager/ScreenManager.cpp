@@ -280,7 +280,7 @@ void ScreenManager::stopWaiting(){
 void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage(END_GAME_ANIMATION);
     this->gameGraphics_->update();
-    SDL_Delay(3000);
+    SDL_Delay(1000);
 }
 
 Client* ScreenManager::getClient(){

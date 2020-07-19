@@ -41,7 +41,6 @@ class Map {
     void addLevel(Level *level);
     vector<Level *> getLevels();
     bool endStep(currentStep_t currentStep);
-    void createPlayers(gameParams_t &gameSettings);
     void initializePositionPlayers(gameParams_t &gameSettings);
     void movePlayer(string user, orientation_t orientation);
 

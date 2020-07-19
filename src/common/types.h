@@ -137,6 +137,7 @@ typedef enum {
     PLAYER_2_OUT = 9,
     PLAYER_3_OUT = 10,
     PLAYER_4_OUT = 11,
+    END_GRAPHIC = 12,
 } elementType_t;
 
 typedef struct {

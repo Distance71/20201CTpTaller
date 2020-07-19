@@ -25,9 +25,9 @@ class ConfigurationHandler;
 #define STAGE1LAYER6SPEED 9
 #define STAGE1LAYER7SPEED 10
 
-#define QUANTITY_PLAYERS 3
+#define QUANTITY_PLAYERS 1
 
-#define MS_PER_UPDATE 16.67
+#define MS_PER_UPDATE 5
 
 // Contiene todas las variables que pueden ser comunes a todo el programa
 // y su manejo.

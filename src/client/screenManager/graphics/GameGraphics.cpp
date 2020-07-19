@@ -130,22 +130,15 @@ void GameGraphics::update(){
     if (this->scenario_) {
         this->scenario_->update();
     }
-        
 
-    double elaptedTimeMS = GameProvider::getElaptedTimeFPS();
-    auto begin = chrono::high_resolution_clock::now();
-    auto end = chrono::high_resolution_clock::now();   
-    auto dur = end - begin;
-    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+    bool graphic = true;
 
-    while(0 >= (ms - elaptedTimeMS)) { 
-        end = chrono::high_resolution_clock::now();
-        dur = end - begin;
-        ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-        if (!graphicsQueue_->empty()){
-            elementToGraphic_t elementToGraphic = graphicsQueue_->pop();
+    while(graphic && !graphicsQueue_->empty()) {
+        elementToGraphic_t elementToGraphic = graphicsQueue_->pop();
+        if(elementToGraphic.type != END_GRAPHIC)
             this->elements_[elementToGraphic.type]->update(elementToGraphic.position);
-        }
+        else
+            graphic = false;
     }
 
     SDL_RenderPresent(this->renderer_);
@@ -157,7 +150,6 @@ void GameGraphics::updateEntity(elementType_t type, position_t position){
     elementToGraphic_t elementToGraphic;
     elementToGraphic.position = position;
     elementToGraphic.type = type;
-    //cout << type << endl;
     this->graphicsQueue_->push(elementToGraphic);
 }
 
