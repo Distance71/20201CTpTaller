@@ -33,11 +33,66 @@ bool Level::endStep(size_t numberStage, size_t numberStep){
 Stage::Stage(){}
 
 Stage::Stage(stageParams_t &params){
+
+    this->createBackground();
+
     size_t quantitySteps = params.stepsParams.size();
     for(size_t i = 0; i < quantitySteps; i++) {
         Step *step = new Step(params.stepsParams[i]);
         this->addStep(step);
     }
+}
+
+void Stage::createBackground(){
+    unordered_map<layer_t, size_t> layersSpeeds = GameProvider::getLayersSpeeds();
+    
+    unordered_map<layer_t, MapElementBackground*> layersStageOne;
+    layersStageOne[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_ONE, layersSpeeds[LAYER_1]);
+    layersStageOne[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_ONE, layersSpeeds[LAYER_2]);
+    layersStageOne[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_ONE, layersSpeeds[LAYER_3]);
+    layersStageOne[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_ONE, layersSpeeds[LAYER_4]);
+    layersStageOne[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_ONE, layersSpeeds[LAYER_5]);
+    layersStageOne[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_ONE, layersSpeeds[LAYER_6]);
+    layersStageOne[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_ONE, layersSpeeds[LAYER_7]);
+
+    stagesBackground_.push_back(layersStageOne);
+
+    unordered_map<layer_t, MapElementBackground*> layersStageTwo;
+    layersStageTwo[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_TWO, layersSpeeds[LAYER_1]);
+    layersStageTwo[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_TWO, layersSpeeds[LAYER_2]);
+    layersStageTwo[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_TWO, layersSpeeds[LAYER_3]);
+    layersStageTwo[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_TWO, layersSpeeds[LAYER_4]);
+    layersStageTwo[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_TWO, layersSpeeds[LAYER_5]);
+    layersStageTwo[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_TWO, layersSpeeds[LAYER_6]);
+    layersStageTwo[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_TWO, layersSpeeds[LAYER_7]);
+
+    stagesBackground_.push_back(layersStageTwo);
+
+    unordered_map<layer_t, MapElementBackground*> layersStageThree;
+    layersStageThree[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_THREE, layersSpeeds[LAYER_1]);
+    layersStageThree[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_THREE, layersSpeeds[LAYER_2]);
+    layersStageThree[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_THREE, layersSpeeds[LAYER_3]);
+    layersStageThree[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_THREE, layersSpeeds[LAYER_4]);
+    layersStageThree[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_THREE, layersSpeeds[LAYER_5]);
+    layersStageThree[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_THREE, layersSpeeds[LAYER_6]);
+    layersStageThree[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_THREE, layersSpeeds[LAYER_7]);
+
+    stagesBackground_.push_back(layersStageThree);
+
+    unordered_map<layer_t, MapElementBackground*> layersStageFour;
+    layersStageFour[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_FOUR, layersSpeeds[LAYER_1]);
+    layersStageFour[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_FOUR, layersSpeeds[LAYER_2]);
+    layersStageFour[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_FOUR, layersSpeeds[LAYER_3]);
+    layersStageFour[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_FOUR, layersSpeeds[LAYER_4]);
+    layersStageFour[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_FOUR, layersSpeeds[LAYER_5]);
+    layersStageFour[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_FOUR, layersSpeeds[LAYER_6]);
+    layersStageFour[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_FOUR, layersSpeeds[LAYER_7]);
+
+    stagesBackground_.push_back(layersStageFour);
+}
+
+MapElementBackground* Stage::buildStageBackgroundLayer(layer_t layer, stage_t stage, int speedX){
+    return new MapElementBackground(layer, stage, new Speed(speedX, 0), new Position(0, 0));
 }
 
 bool Stage::endStep(size_t numberStep){
@@ -57,7 +112,6 @@ Step::Step(stepParams_t params) {
         elementType_t typeEnemy = (elementType_t) params.enemies[i].type;
         
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
-            //Las posiciones y demas son de prueba
             position_t positionEnemy = getPosition(size_x, size_y);
             MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy, 2, 2, size_x, size_y);
             this->mapElements_.emplace(this->lastId_, newEnemy);
@@ -124,7 +178,7 @@ vector<Step *> Stage::getSteps(){
 
 void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
-        
+    
     this->updatePlayers(game);
     levels_[actualLevel]->update(currentStep, game);
     position_t aux;
@@ -145,8 +199,22 @@ void Level::update(currentStep_t currentStep, Game *game){
     stages_[actualStage]->update(currentStep, game);
 }
 
+void Stage::updateBackground(Game *game, stage_t stage){
+    
+    for(auto stageBackground : this->stagesBackground_[stage]){
+        int step = stageBackground.second->getStep();
+        layer_t layer = stageBackground.second->getLayer();
+        stage_t stage = stageBackground.second->getStage();
+        Event *eventUpdate = new EventBackgroundUpdate(layer, stage, step);
+        game->sendEvent(eventUpdate);
+        stageBackground.second->update();
+    }
+
+}
+
 void Stage::update(currentStep_t currentStep, Game *game){
     size_t actualStep = currentStep.step;
+    updateBackground(game, currentStep.stage);
     steps_[actualStep]->update(game);
 }
 
@@ -266,13 +334,4 @@ void Stage::initializeStep(currentStep_t currentStep, Game *game){
     steps_[actualStep]->initializeStep(game);
 }
 
-void Step::initializeStep(Game *game){
-    // cout << "INITIALIZE STEP " << this->mapElements_.size() << endl;
-    for(auto mapElement : this->mapElements_) {
-        position_t actualPosition = mapElement.second->getActualPosition();
-        char imagePath[100];
-        //Event *event = new EventMapElementCreate(mapElement.first, imagePath, actualPosition, spriteSize);
-        //game->sendEvent(event);
-    }
-    // cout << "END INITIALIZE STEP" << endl;
-}
+void Step::initializeStep(Game *game){}

@@ -110,7 +110,7 @@ void Menu::sendCredentialsMessage(){
 
 
 bool Menu::getLoggedInStatus(){
-    cout << this->response_ << endl;
+    //cout << this->response_ << endl;
     if (this->response_ == OK){
         return true;
     }
@@ -148,6 +148,6 @@ void Menu::setLoginResponse(responseStatus_t response){
         Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse, ha ingresado mal sus credenciales");
     else
         Logger::getInstance()->log(INFO, "El usuario se ha logueado con exito en Menu");
-    cout << response << endl;
+    //cout << response << endl;
     this->response_ = response;
 }

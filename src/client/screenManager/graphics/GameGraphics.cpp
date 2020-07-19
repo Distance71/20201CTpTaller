@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 GameGraphics::GameGraphics(SDL_Renderer* renderer){
-    this->scenario_ = nullptr;
+    //this->scenario_ = nullptr;
     this->image_ = nullptr;
     this->renderer_ = renderer;
     this->createElements();
@@ -13,8 +13,8 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
 
 
 GameGraphics::~GameGraphics(){
-    if (this->scenario_)
-        delete this->scenario_;
+    for(auto scenario:this->scenaries_)
+        delete scenario.second;
     if(this->image_)
         delete this->image_;
     for(auto element:this->elements_)
@@ -44,7 +44,6 @@ void GameGraphics::createElements(){
     this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(sourcePlayer4Disconnected, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_1] = new GraphicsMapElement(sourceEnemy1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_2] = new GraphicsMapElement(sourceEnemy2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-
 }
 
 void GameGraphics::createScenes(){
@@ -127,18 +126,20 @@ void GameGraphics::update(){
         this->image_->update(positionImage);
     }
 
-    if (this->scenario_) {
-        this->scenario_->update();
-    }
-
     bool graphic = true;
 
     while(graphic && !graphicsQueue_->empty()) {
         elementToGraphic_t elementToGraphic = graphicsQueue_->pop();
-        if(elementToGraphic.type != END_GRAPHIC)
-            this->elements_[elementToGraphic.type]->update(elementToGraphic.position);
-        else
+        if(elementToGraphic.type == END_GRAPHIC)
             graphic = false;
+        else if(elementToGraphic.type == BACKGROUND) {
+            cout << elementToGraphic.step << endl;
+            this->image_ = nullptr;
+            this->scenaries_[elementToGraphic.stage]->update(elementToGraphic.layer, elementToGraphic.step);
+        }
+        else
+            this->elements_[elementToGraphic.type]->update(elementToGraphic.position);
+            
     }
 
     SDL_RenderPresent(this->renderer_);
@@ -153,25 +154,19 @@ void GameGraphics::updateEntity(elementType_t type, position_t position){
     this->graphicsQueue_->push(elementToGraphic);
 }
 
-void GameGraphics::setBackground(stage_t stage){
-
-    if (this->scenario_){
-        this->scenario_=nullptr;
-    }
-
-    if (this->image_){
-        this->image_=nullptr;
-    }
-    this->scenario_ = this->scenaries_[stage];
-
-    Logger::getInstance()->log(DEBUG, "Se actualiza el background");
+void GameGraphics::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
+    Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en GameGraphics");
+    
+    elementToGraphic_t elementToGraphic;
+    elementToGraphic.type = BACKGROUND;
+    elementToGraphic.layer = layer;
+    elementToGraphic.stage = stage;
+    elementToGraphic.step = step;
+    this->graphicsQueue_->push(elementToGraphic);
 }
 
 void GameGraphics::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en GameGraphics");
-    if (this->scenario_){
-        this->scenario_= nullptr;
-    }
     if (this->image_){
         this->image_=nullptr;
     }

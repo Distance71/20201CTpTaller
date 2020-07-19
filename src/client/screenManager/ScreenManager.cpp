@@ -198,16 +198,16 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
     }
 }
 
-void ScreenManager::setBackground(stage_t stage){
-    Logger::getInstance()->log(DEBUG, "Se va a setear un background en ScreenManager");
+void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
+    Logger::getInstance()->log(DEBUG, "Se va a actualizar un BackgroundLayer en ScreenManager");
+
     if(this->gameGraphics_){
-        this->gameGraphics_->setBackground(stage);
+        this->gameGraphics_->updateBackgroundLayer(layer, stage, step);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,  no se han inicializado graficos");
+        Logger::getInstance()->log(DEBUG, "No se ha podido actualizar la entidad, no se han inicializado graficos");
     }
 }
-
 
 void ScreenManager::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en ScreenManager");

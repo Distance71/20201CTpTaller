@@ -1,5 +1,3 @@
-// OUTDATED
-
 #include "Game.h"
 
 Game::Game(Server *server){
@@ -39,8 +37,6 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantityStages = gameSettings.levelParams[actualStep.level].stagesParams.size();
 
-    
-
     auto stages = level->getStages();
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
 
@@ -48,10 +44,6 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
         actualStep.stage = static_cast<stage_t>(i);
         runStage(actualStep, stages[i]);  
     }
-
-    // if (GameProvider::getStatus().normalStatus){
-    //     
-    // }
 }
 
 void Game::runStage(currentStep_t actualStep, Stage *stage){
@@ -59,8 +51,6 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
     size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
 
     this->sendStartStage(actualStep.stage);
-
-    this->sendBackground(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
 
@@ -71,23 +61,20 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
     }
 
     this->sendStageCleared(actualStep.stage);
-    //this->map_->initializePositionPlayers(gameSettings);
 }
 
 void Game::runStep(currentStep_t actualStep){
     double elaptedTimeMS = GameProvider::getElaptedTimeFPS();
 
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
-    
-    // initializeStep(actualStep);
-    
+
     while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
         auto begin = chrono::high_resolution_clock::now();
         auto end = chrono::high_resolution_clock::now();   
         auto dur = end - begin;
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
 
-        while(0 >= (ms - 14.5)) { 
+        while(0 >= (ms - elaptedTimeMS)) { 
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
@@ -95,10 +82,6 @@ void Game::runStep(currentStep_t actualStep){
         updateState(actualStep);
     }
 }
-
-// void Game::initializeStep(currentStep_t actualStep){
-//     map_->initializeStep(actualStep, this);
-// }
 
 void Game::updateState(currentStep_t actualStep) {
     map_->update(actualStep, this);
@@ -161,11 +144,6 @@ void Game::sendStageCleared(stage_t stage){
 
 void Game::movePlayer(string user, orientation_t orientation){
     this->map_->movePlayer(user, orientation);
-}
-
-void Game::sendBackground(stage_t stage){
-    Event* event = new EventSetStage(stage);
-    this->sendEvent(event);
 }
 
 void Game::sendEvent(Event *event){

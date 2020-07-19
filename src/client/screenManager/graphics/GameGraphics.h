@@ -22,7 +22,6 @@ class GameGraphics {
         unordered_map <elementType_t, GraphicsMapElement*> elements_;
         unordered_map <sceneScreen_t, GraphicsMapElement*> scenes_;
         unordered_map <stage_t, GraphicsScenario*> scenaries_;
-        GraphicsScenario *scenario_;
         GraphicsMapElement* image_;
         std::mutex mutex;
         BlockingQueue<elementToGraphic_t>* graphicsQueue_;
@@ -36,6 +35,7 @@ class GameGraphics {
         ~GameGraphics();
         void update();
         void updateEntity(elementType_t type, position_t position);
+        void updateBackgroundLayer(layer_t layer, stage_t stage, int step);
         
         void setBackground(stage_t level);
         void setImage(sceneScreen_t scene);

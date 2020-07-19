@@ -14,14 +14,12 @@ class Sprite;
 
 class GraphicsScenario {
     private:
-    vector<Sprite *> sprites_; //refactor if add more levels
-    vector<Speed *> layersSpeeds_;
-    vector<Position *> layersPositions_;
+    unordered_map<layer_t, Sprite *> sprites_;
 
     public:
     GraphicsScenario(stageSource_t stageSource);
     ~GraphicsScenario();
-    void update();
+    void update(layer_t layer, int step);
     
 };
 

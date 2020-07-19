@@ -13,7 +13,7 @@ typedef struct status {
     string errorLog;
 } status_t;
 
-typedef enum layer {
+typedef enum {
     LAYER_1 = 0, 
     LAYER_2 = 1, 
     LAYER_3 = 2, 
@@ -53,7 +53,7 @@ typedef enum message {
     REQUEST_LOGIN_PLAYER = 5,
     RESPONSE_LOGIN_PLAYER = 6,
     USER_MOVEMENT = 7,
-    SET_STAGE = 8,
+    BACKGROUND_UPDATE = 8,
 } message_t;
 
 typedef enum {
@@ -138,6 +138,7 @@ typedef enum {
     PLAYER_3_OUT = 10,
     PLAYER_4_OUT = 11,
     END_GRAPHIC = 12,
+    BACKGROUND = 13,
 } elementType_t;
 
 typedef struct {
@@ -156,6 +157,9 @@ typedef struct {
 typedef struct {
     elementType_t type;
     position_t position;
+    layer_t layer;
+    stage_t stage;
+    int step;
 } elementToGraphic_t;
 
 typedef enum {

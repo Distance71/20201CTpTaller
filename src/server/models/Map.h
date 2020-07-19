@@ -13,8 +13,11 @@
 #include "MovementHandler.h"
 #include "PlayerController.h"
 #include "../../common/types.h"
+#include "MapElementBackground.h"
 
 #include "../../common/models/events/Event.h"
+#include "../../common/models/events/Event.h"
+
 #include "Game.h"
 
 // Es el contenedor principal del juego. Se va mostrando una parte de este en la pantalla
@@ -53,7 +56,6 @@ class Map {
 class Level: public Map {
     private:
     vector<Stage *> stages_;
-    //void clearStage();
 
     public:
     Level();
@@ -68,9 +70,12 @@ class Level: public Map {
 class Stage: public Level {
     private:
     vector<Step *> steps_;
-    //IdElement lastId_ = 0;
+    vector<unordered_map<layer_t, MapElementBackground*>> stagesBackground_;
     void clearMap();
+    void createBackground();
 
+    MapElementBackground* buildStageBackgroundLayer(layer_t layer, stage_t stage, int speedX);
+    
     public:
     
     Stage();
@@ -80,6 +85,7 @@ class Stage: public Level {
     void update(currentStep_t currentStep, Game *game);
     bool endStep(size_t numberStep);
     void initializeStep(currentStep_t currentStep, Game *game);
+    void updateBackground(Game *game, stage_t stage);
 };
 
 class Step: public Stage {

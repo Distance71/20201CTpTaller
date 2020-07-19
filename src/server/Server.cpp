@@ -124,7 +124,7 @@ int Server::run(){
 }
 
 void Server::informDisconnection(string username){
-    //this->game_->informDisconnection(username);
+    this->game_->informDisconnection(username);
 }
 
 void Server::informConnection(string username){
