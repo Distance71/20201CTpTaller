@@ -35,8 +35,6 @@ void GraphicsScenario::update(layer_t layer, int step){
     size_t screenWidht = GameProvider::getWidth();
     size_t screenHeight = GameProvider::getHeight();
 
-    cout << "acceso" << layer << endl;
-
     SDL_Renderer *renderer = GameProvider::getRenderer();
 
     //SDL_Texture* layerTexture = this->sprites_[LAYER_4]->getTexture();

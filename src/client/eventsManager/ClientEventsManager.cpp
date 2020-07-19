@@ -109,7 +109,7 @@ static void * detectPlayerEvents(void* arg){
             client->sendMessage(message);
         }
 
-        SDL_Delay(14);
+        SDL_Delay(15);
     }
 
     return nullptr;

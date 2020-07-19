@@ -30,12 +30,14 @@ class Level;
 class Map {
     private:
     vector <Level *> levels_;
-    unordered_map<string, MapElement*> players;
+    
     void updatePlayers(Game *game);
     size_t loggedPlayers_ = 0;
 
     elementType_t getPlayerType();
     position_t getInitialPosition();
+
+    unordered_map<string, MapElement*> players;
 
     public:    
     Map();
@@ -62,7 +64,7 @@ class Level: public Map {
     Level(levelParams_t &params);
     void addStage(Stage *stage);
     vector<Stage *> getStages();
-    void update(currentStep_t currentStep, Game *game);
+    void update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players);
     void initializeStep(currentStep_t currentStep, Game *game);
     bool endStep(size_t numberStage, size_t numberStep);
 };
@@ -82,7 +84,7 @@ class Stage: public Level {
     Stage(stageParams_t &params);
     void addStep(Step *step);
     vector<Step *> getSteps();
-    void update(currentStep_t currentStep, Game *game);
+    void update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players);
     bool endStep(size_t numberStep);
     void initializeStep(currentStep_t currentStep, Game *game);
     void updateBackground(Game *game, stage_t stage);

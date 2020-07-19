@@ -178,25 +178,15 @@ vector<Step *> Stage::getSteps(){
 
 void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
-    
-    this->updatePlayers(game);
-    levels_[actualLevel]->update(currentStep, game);
+
+    levels_[actualLevel]->update(currentStep, game, this->players);
     position_t aux;
     game->sendEvent(new EventMapElementUpdate(END_GRAPHIC, aux)); 
 }
 
-void Map::updatePlayers(Game *game){
-
-    for(auto mapElementPlayer : this->players){
-        position_t actualPosition = mapElementPlayer.second->getActualPosition();
-        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
-        game->sendEvent(eventUpdate);
-    }
-}
-
-void Level::update(currentStep_t currentStep, Game *game){
+void Level::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
     size_t actualStage = currentStep.stage;
-    stages_[actualStage]->update(currentStep, game);
+    stages_[actualStage]->update(currentStep, game, players);
 }
 
 void Stage::updateBackground(Game *game, stage_t stage){
@@ -212,9 +202,16 @@ void Stage::updateBackground(Game *game, stage_t stage){
 
 }
 
-void Stage::update(currentStep_t currentStep, Game *game){
+void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
     size_t actualStep = currentStep.step;
     updateBackground(game, currentStep.stage);
+
+    for(auto mapElementPlayer : players){
+        
+        position_t actualPosition = mapElementPlayer.second->getActualPosition();
+        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+        game->sendEvent(eventUpdate);
+    }
     steps_[actualStep]->update(game);
 }
 

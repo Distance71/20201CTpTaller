@@ -87,6 +87,7 @@ class ConfigurationHandler {
         gameParams_t getGameParams();
         player_t getPlayerParam(int numberPlayer);
         string getPathEnemy(int numberTypeEnemy);
+        transitionScreen_t getTransitionScreenForStage(int oneStage);
 
 };
 

@@ -201,11 +201,11 @@ typedef struct {
     stageSource_t backgroundSources;
     vector<stepParams_t> stepsParams;
     vector<enemy_t> totalEnemies;
+    transitionScreen_t pathTransitionScreen;
 } stageParams_t;
 
 typedef struct {
     vector<stageParams_t> stagesParams;
-    transitionScreen_t pathTransitionScreen;
 } levelParams_t;
 
 //Exported to a class -> se deja por el momento

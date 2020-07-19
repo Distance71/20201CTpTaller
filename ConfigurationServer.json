@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "DEBUG"
+            "level": "INFO"
         },
         "screen":{
             "width": 1280,
@@ -34,7 +34,7 @@
                         "sizeY": 45			  
                     },
                     {
-                        "quantity": 0,
+                        "quantity": 5,
                         "sizeX": 90,
                         "sizeY": 56
                     }
@@ -48,7 +48,7 @@
                         "sizeY": 45			  
                     },
                     {
-                        "quantity": 0,
+                        "quantity": 5,
                         "sizeX": 95,
                         "sizeY": 62
                     }
@@ -57,12 +57,12 @@
             {
                 "enemies": [
                     {
-                        "quantity": 1,
+                        "quantity": 5,
                         "sizeX": 90,
                         "sizeY": 56			  
                     },
                     {
-                        "quantity": 1,
+                        "quantity": 5,
                         "sizeX": 95,
                         "sizeY": 62
                     }
@@ -72,12 +72,12 @@
                 "enemies": [
                     {
                         "type": 0,
-                        "quantity": 1,
+                        "quantity": 5,
                         "sizeX": 90,
                         "sizeY": 56			  
                     },
                     {
-                        "quantity": 1,
+                        "quantity": 5,
                         "sizeX": 95,
                         "sizeY": 62
                     }
@@ -86,12 +86,12 @@
         ],    
         "users": [
             {
-                "username": "agustin",
-                "password": "agustin"
+                "username": "a",
+                "password": "a"
             },
             {
-                "username": "dario",
-                "password": "dario"
+                "username": "d",
+                "password": "d"
             },
             {
                 "username": "sergio",

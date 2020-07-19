@@ -74,10 +74,11 @@ void Game::runStep(currentStep_t actualStep){
         auto dur = end - begin;
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
 
-        while(0 >= (ms - elaptedTimeMS)) { 
+        while(0 >= (ms - 10)) { 
             end = chrono::high_resolution_clock::now();
             dur = end - begin;
             ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+            
         }
         updateState(actualStep);
     }

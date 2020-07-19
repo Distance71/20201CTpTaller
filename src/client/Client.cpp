@@ -70,19 +70,17 @@ int Client::run(){
          return EXIT_FAILURE;
     }
 
-    int res = this->waitForPlayers();
+        int res = this->waitForPlayers();
+        if(res==0){
+            Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
+            return EXIT_SUCCESS;
+        }
+        
+        else if (res<0){
+            Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
+            return EXIT_FAILURE;
+        }
 
-    if(res==0){
-        Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
-        return EXIT_SUCCESS;
-    }
-    
-    else if (res<0){
-        Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
-        return EXIT_FAILURE;
-    }
-
-    //this->connected_ = true;
     this->eventsManager_->RunDetectPlayerEventsThread();
 
     this->screenManager_->graphic();

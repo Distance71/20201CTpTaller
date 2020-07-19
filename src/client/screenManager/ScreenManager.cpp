@@ -58,7 +58,6 @@ bool ScreenManager::initializeGraphics(){
     
     if(r1 && r2 && r3){
         Logger::getInstance()->log(DEBUG, "Se inicializarán los graficos del juego correctamente");
-        runScreenGraphicsThread();
         return true;
     }
     else{
