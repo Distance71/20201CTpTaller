@@ -53,6 +53,7 @@ class ScreenManager{
         Client* getClient();
         SDL_Renderer* getRenderer();
         void runScreenGraphicsThread();
+        void ServerDisconnection();
 };
 
 #endif

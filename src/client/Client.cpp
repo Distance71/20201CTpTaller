@@ -87,8 +87,6 @@ int Client::run(){
 
     this->screenManager_->graphic();
 
-    this->screenManager_->viewEndGameScreen();
-
     Logger::getInstance()->log(INFO, "El juego ha finalizado normalmente");
     
     return EXIT_SUCCESS;    
@@ -163,6 +161,8 @@ void Client::disconnect(){
 }
 
 void Client::endGame(){
+    this->screenManager_->setImage(GAME_OVER);
+    usleep(5000000);
     this->disconnect();
 }
 
@@ -182,4 +182,10 @@ void Client::processEvent(Event* event){
 
 void Client::updateScreen(){
     this->screenManager_->graphic();
+}
+
+void Client::ServerDisconnection(){
+    this->screenManager_->ServerDisconnection();
+    usleep(5000000);
+    this->disconnect();
 }

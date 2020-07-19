@@ -11,22 +11,26 @@
             {
                 "sizeX": 95,
                 "sizeY": 74,
-                "sprite": "assets/playerReducido.png"
+                "sprite": "assets/Players/player1Reducido.png",
+                "spriteDisconnected": "assets/Players/player1Reducido_Out.png"
             },
             {
                 "sizeX": 95,
                 "sizeY": 36,
-                "sprite": "assets/player2Reducido.png"
+                "sprite": "assets/Players/player2Reducido.png",
+                "spriteDisconnected": "assets/Players/player2Reducido_Out.png"
             },
             {
                 "sizeX": 95,
                 "sizeY": 68,
-                "sprite": "assets/player3Reducido.png"
+                "sprite": "assets/Players/player3Reducido.png",
+                "spriteDisconnected": "assets/Players/player3Reducido_Out.png"
             },
             {
                 "sizeX": 95,
                 "sizeY": 53,
-                "sprite": "assets/player4Reducido.png"
+                "sprite": "assets/Players/player4Reducido.png",
+                "spriteDisconnected": "assets/Players/player4Reducido_Out.png"
             }
         ],
         "loginScreen": {
@@ -40,6 +44,12 @@
             "password1": "assets/LoginScreen/password1.png",
             "password2": "assets/LoginScreen/password2.png",
             "login": "assets/LoginScreen/login.png"
+        },
+        "informationScreen": {
+            "endGame": "assets/TransitionScreens/gameOver.png",
+            "waitingPlayers": "assets/TransitionScreens/waitingForPlayers.png",
+            "disconnection": "assets/TransitionScreens/disconnection.png",
+            "gameOver": "assets/TransitionScreens/gameOver.png"
         },
         "level": [
             {
@@ -56,12 +66,12 @@
                     {
                         "sizeX": 85,
                         "sizeY": 45,
-                        "sprite": "assets/Enemies/enemigo8.png"				  
+                        "sprite": "assets/Enemies/enemigo1.png"				  
                     },
                     {
                         "sizeX": 90,
                         "sizeY": 56,
-                        "sprite": "assets/Enemies/enemigo6.png"
+                        "sprite": "assets/Enemies/enemigo2.png"
                     }
                 ]
             },
@@ -114,13 +124,13 @@
             {
                 "transitionInit": "assets/TransitionScreens/Stage4.JPG",
                 "transitionEnd": "assets/TransitionScreens/Stage4Cleared.JPG",
-                "layer1": "assets/Stage/Level4/layer_a.png",
-                "layer2": "assets/Stage/Level4/placebo.png",
-                "layer3": "assets/Stage/Level4/layer_b.png",
-                "layer4": "assets/Stage/Level4/placebo.png",
-                "layer5": "assets/Stage/Level4/placebo.png",
-                "layer6": "assets/Stage/Level4/layer_c.png",
-                "layer7": "assets/Stage/Level4/layer_d.png",
+                "layer1": "assets/Stage/Level4/layer_1.png",
+                "layer2": "assets/Stage/Level4/layer_2.png",
+                "layer3": "assets/Stage/Level4/layer_3.png",
+                "layer4": "assets/Stage/Level4/layer_4.png",
+                "layer5": "",
+                "layer6": "",
+                "layer7": "",
                 "enemies": [
                     {
                         "sizeX": 90,

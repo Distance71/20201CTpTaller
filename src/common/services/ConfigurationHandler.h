@@ -16,6 +16,7 @@
 #define PATH_USER "/configuracion/users"
 #define PATH_BASE_USER "/configuracion/users/"
 #define PATH_BASE_LOGIN_SCREEN "/configuracion/loginScreen/"
+#define PATH_INFORMATION_SCREEN "/configuracion/informationScreen/"
 
 #define DEFAULT_SIZE_X 110
 #define DEFAULT_SIZE_Y 90
@@ -42,6 +43,7 @@ class ConfigurationHandler {
 
     private: 
         gameParams_t gameData;
+        informationScreen_t informationScreen_;
         bool isServer_;
         ParserJson *parserJson;
 
@@ -61,6 +63,9 @@ class ConfigurationHandler {
         string getPathScreen(string paramScreen);
         void setSizeScreen();
 
+        string getPathInformationScreen(string paramScreen);
+        void setInformationScreen();
+
         string getPathLoginScreen(string paramLogin);
         loginScreen_t readLoginScreen();
 
@@ -76,9 +81,12 @@ class ConfigurationHandler {
         void setLogLevel();
         void setConfigDefault();
 
-        stageSource_t getSourcesForStage(int oneLevel, int oneStage);
+        stageSource_t getSourcesForStage(int oneStage);
         transitionScreen_t getTransitionScreenForLevel(int oneLevel);
+        informationScreen_t getinformationScreen();
         gameParams_t getGameParams();
+        player_t getPlayerParam(int numberPlayer);
+        string getPathEnemy(int numberTypeEnemy);
 
 };
 

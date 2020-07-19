@@ -279,8 +279,6 @@ void ScreenManager::stopWaiting(){
 
 void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage(END_GAME_ANIMATION);
-    this->gameGraphics_->update();
-    SDL_Delay(1000);
 }
 
 Client* ScreenManager::getClient(){
@@ -290,4 +288,8 @@ Client* ScreenManager::getClient(){
 
 SDL_Renderer* ScreenManager::getRenderer(){
     return this->renderer_;
+}
+
+void ScreenManager::ServerDisconnection(){
+    this->gameGraphics_->setImage(SERVER_DISCONNECTION);
 }

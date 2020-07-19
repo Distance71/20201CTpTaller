@@ -47,6 +47,7 @@ class Client {
         void initGame(int Xsize, int Ysize);
         void endGame();
         void updateScreen();
+        void ServerDisconnection();
         
         //menu methods
         void setLoginResponse(responseStatus_t response);

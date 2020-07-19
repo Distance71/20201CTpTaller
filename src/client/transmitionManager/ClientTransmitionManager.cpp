@@ -95,7 +95,7 @@ static void* receiveMessages(void *arg){
         if (response.status == DISCONNECTION || response.status==ERROR_CONNECTION) {
             Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente.");
             Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
-			client->disconnect();
+            client->ServerDisconnection();
             return nullptr;
         }
         else if (response.ok){
