@@ -58,6 +58,9 @@ void GameGraphics::createScenes(){
     string sourceEndStage4 = "assets/TransitionScreens/Stage4Cleared.JPG";    
     string sourceEndGame = "assets/TransitionScreens/gameOver.png";
     string sourceWaitingPlayers = "assets/TransitionScreens/waitingForPlayers.png";
+    string disconnection = "assets/TransitionScreens/disconnection.png";
+    string gameOver = "assets/TransitionScreens/gameOver.png";
+    
     this->scenes_[INIT_STAGE_1] = new GraphicsMapElement(sourceInitStage1, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[END_STAGE_1] = new GraphicsMapElement(sourceEndStage1, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[INIT_STAGE_2] = new GraphicsMapElement(sourceInitStage2, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
@@ -68,6 +71,7 @@ void GameGraphics::createScenes(){
     this->scenes_[END_STAGE_4] = new GraphicsMapElement(sourceEndStage4, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[END_GAME_ANIMATION] = new GraphicsMapElement(sourceEndGame, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[WAITING_PLAYERS] = new GraphicsMapElement(sourceWaitingPlayers, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
+    this->scenes_[SERVER_DISCONNECTION] = new GraphicsMapElement(disconnection, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
 
 }
 

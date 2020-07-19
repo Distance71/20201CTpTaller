@@ -171,6 +171,8 @@ typedef enum {
     END_STAGE_DEFAULT = 9,
     END_GAME_ANIMATION = 10,
     WAITING_PLAYERS = 11,
+    SERVER_DISCONNECTION= 12,
+    GAME_OVER = 13 
 } sceneScreen_t;
 
 typedef size_t Id;
