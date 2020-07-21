@@ -630,7 +630,7 @@ player_t ConfigurationHandler::getPlayerParam(int numberPlayer){
     onePlayer.size_y = GameProvider::getElementsSize();
     onePlayer.sprite = "";
     onePlayer.spriteDisconnected = "";
-
+    
     if (this->gameData.playersParams.size() > numberPlayer)
         onePlayer = this->gameData.playersParams[numberPlayer].playerParams;
 
