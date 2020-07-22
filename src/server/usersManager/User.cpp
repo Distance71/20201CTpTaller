@@ -11,7 +11,7 @@ User::User(UsersManager* userManager,Socket* socket){
 
 
 User::~User() {
-	delete this->sendingQueue_;
+	delete this->socket_;
 }
 
 
@@ -38,10 +38,10 @@ void User::setConnection(){
 
 
 void User::setDisconnection(){
-    Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente " + this->username_);
-	
+   Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente " + this->username_);
 	this->connected_ = false;
-	this->usersManager_->informDisconnection(this->username_);
+	if (this->username_ != "")
+		this->usersManager_->informDisconnection(this->username_);
 }
 
 
@@ -65,36 +65,13 @@ void User::sendEvent(Event* event){
 }
 
 
-Message* User::getMessage(){
-	if (!this->sendingQueue_->empty()){
-		return this->sendingQueue_->pop();
+void User::sendMessage(Message* message){
+	if(connected_){
+		MessageSerializer serializer = MessageSerializer();
+		serializer.sendSerializedEvent(this->socket_, message);
 	}
-	return NULL;
 }
 
-
-static void* sendMessages(void* arg){
-	Logger::getInstance()->log(DEBUG, "Se inicia hilo envíos para un usuario");
-	User* user = (User*) arg;
-	MessageSerializer serializer = MessageSerializer();
-	Socket* socket = user->getSocket();
-	
-	while (user->isConnected()){
-		Message* message = user->getMessage();
-		if (message){
-			serializer.sendSerializedEvent(socket, message);
-			delete message;
-		}
-	}
-	Logger::getInstance()->log(DEBUG, "Se detiene hilo de envíos para un usuario");
-	return nullptr;
-}
-
-
-void User::runSendingMessagesThread(){
-	pthread_t sending_thread;
-    pthread_create(&sending_thread,NULL,sendMessages,this);
-}
 
 
 static void* receivingMessages(void * arg){
@@ -111,9 +88,9 @@ static void* receivingMessages(void * arg){
 		Id id = user->getId();
 		string userName = user->getUserName();
 		if (res.status == DISCONNECTION || res.status==ERROR_CONNECTION) {
-            Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
+			Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
 			user->setDisconnection();
-            return nullptr;
+			return nullptr;
         }
 		else{
 			event->setOwn(id);

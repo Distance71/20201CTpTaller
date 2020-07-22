@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "DEBUG"
+            "level": "INFO"
         },
         "screen":{
             "width": 1280,
@@ -46,8 +46,8 @@
             "login": "assets/LoginScreen/login.png"
         },
         "informationScreen": {
-            "endGame": "assets/TransitionScreens/gameOver.png",
-            "waitingPlayers": "assets/TransitionScreens/waitingForPlayers.png",
+            "endGame": "assets/TransitionScreens/gameOver.jpg",
+            "waitingPlayers": "assets/TransitionScreens/waitingForPlayers.jpg",
             "disconnection": "assets/TransitionScreens/disconnection.png",
             "gameOver": "assets/TransitionScreens/gameOver.png"
         },

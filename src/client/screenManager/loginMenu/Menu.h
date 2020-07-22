@@ -25,7 +25,7 @@ class Menu {
         ~Menu();
         void processEvent();
         void setLoginResponse(responseStatus_t response);
-        bool getLoggedInStatus();
+        void checkStatus();
         void show();
         
         

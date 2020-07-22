@@ -31,18 +31,18 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
         sprites_[LAYER_7] = new Sprite(layer7Path);
 }
 
+
+
 void GraphicsScenario::update(layer_t layer, int step){
     size_t screenWidht = GameProvider::getWidth();
     size_t screenHeight = GameProvider::getHeight();
 
     SDL_Renderer *renderer = GameProvider::getRenderer();
-
-    //SDL_Texture* layerTexture = this->sprites_[LAYER_4]->getTexture();
-    if(sprites_[layer] != NULL) {
-        SDL_Texture* layerTexture = sprites_[layer]->getTexture();
-        SDL_Rect auxParallax = { step, 0, (int)screenWidht, (int)screenHeight};
-
-        SDL_RenderCopy(renderer, layerTexture, &auxParallax, NULL);
+    auto iter = sprites_.find(layer);
+    if (iter!=sprites_.end()){
+        SDL_Texture* layerTexture = iter->second->getTexture();
+        SDL_Rect auxParallax = {step, 0, (int)screenWidht, (int)screenHeight};
+        SDL_RenderCopy(renderer, layerTexture, &auxParallax, NULL);        
     }
 }
 

@@ -24,10 +24,13 @@ class Client {
         std::atomic<bool> connected_;
         string ipHost_;
         size_t port_;
+        bool loggedIn_;
 
         ScreenManager *screenManager_;
         ClientTransmitionManager *transmitionManager_;
         ClientEventsManager* eventsManager_;
+        bool serverDisconection_;
+        bool endGame_;
 
     public:
 
@@ -46,11 +49,12 @@ class Client {
         int waitForPlayers();
         void initGame(int Xsize, int Ysize);
         void endGame();
-        void updateScreen();
         void ServerDisconnection();
         
         //menu methods
         void setLoginResponse(responseStatus_t response);
+        void setLoggedInStatus();
+        bool isLoggedIn();
         
         //transmition methods
         void sendMessage(Message* message);
@@ -61,6 +65,7 @@ class Client {
         void updateBackgroundLayer(layer_t layer, stage_t stage, int step);
         void setImage(sceneScreen_t scene);
         void setScreenSizes(int Xsize, int Ysize);
+        void runDetectEventThread();
     };
 
 #endif

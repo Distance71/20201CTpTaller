@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <chrono>
 #include <thread>
+#include <unistd.h>
 #include "GraphicsMapElement.h"
 #include "GraphicsScenario.h"
 #include "../../../common/types.h"
@@ -33,7 +34,6 @@ class GameGraphics {
 
         GameGraphics(SDL_Renderer* renderer);
         ~GameGraphics();
-        void update();
         void updateEntity(elementType_t type, position_t position);
         void updateBackgroundLayer(layer_t layer, stage_t stage, int step);
         

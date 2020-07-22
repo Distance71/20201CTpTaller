@@ -9,6 +9,9 @@ Game::~Game(){
 }
 
 void Game::run() {
+
+    usleep(10000);
+    
     if (!GameProvider::getStatus().normalStatus)
         return;
 
@@ -44,6 +47,10 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
         actualStep.stage = static_cast<stage_t>(i);
         runStage(actualStep, stages[i]);  
     }
+
+    sendEvent(new EventEndGame());
+
+    usleep(5000000);
 }
 
 void Game::runStage(currentStep_t actualStep, Stage *stage){
@@ -61,6 +68,7 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
     }
 
     this->sendStageCleared(actualStep.stage);
+    
 }
 
 void Game::runStep(currentStep_t actualStep){
@@ -69,18 +77,8 @@ void Game::runStep(currentStep_t actualStep){
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
 
     while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
-        auto begin = chrono::high_resolution_clock::now();
-        auto end = chrono::high_resolution_clock::now();   
-        auto dur = end - begin;
-        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-
-        while(0 >= (ms - 10)) { 
-            end = chrono::high_resolution_clock::now();
-            dur = end - begin;
-            ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-            
-        }
         updateState(actualStep);
+        usleep(16000);
     }
 }
 
@@ -112,7 +110,7 @@ void Game::sendStartStage(stage_t stage){
     Event* event = new EventSceneAnimation(sceneScreen);
     this->sendEvent(event);
     
-    usleep(5000000);//5 seg
+    usleep(3000000);//5 seg
 }
 
 void Game::sendStageCleared(stage_t stage){
@@ -152,7 +150,6 @@ void Game::sendEvent(Event *event){
 }
 
 void Game::informDisconnection(string username){
-    cout << username << endl;
     Logger::getInstance()->log(DEBUG, "Se informa desconexion en Game");
     this->map_->informDisconnection(username);
 }

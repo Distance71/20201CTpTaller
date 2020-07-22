@@ -285,9 +285,7 @@ transitionScreen_t ConfigurationHandler::getTransitionScreenForStage(int oneStag
     }
 
     Logger::getInstance()->log(DEBUG, "Se devuelve el transitionScreen del nivel " + to_string(oneStage));
-
-    cout << "Level" << oneStage << endl;
-    //cout << this->gameData.levelParams[0].pathTransitionScreen.initPath << endl; 
+    
     return this->gameData.levelParams[0].stagesParams[oneStage].pathTransitionScreen; 
 }
 

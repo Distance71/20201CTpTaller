@@ -42,7 +42,6 @@ static void* processEvents(void * arg){
             event->update();
             delete event;
         }
-        //usleep(10000);
     }
 
     Logger::getInstance()->log(DEBUG, "Finaliza el hilo de proceso de eventos");

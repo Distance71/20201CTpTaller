@@ -31,12 +31,15 @@ bool GraphicsMapElement::isSet(){
 }
 
 void GraphicsMapElement::update(position_t position){
+
     SDL_Rect auxGraphicsSprite = {position.axis_x, position.axis_y, this->size_x_, this->size_y_};
 
     SDL_Renderer *renderer = GameProvider::getRenderer();
     
-    if(position.orientation == FRONT)
+    if(position.orientation == FRONT){
         SDL_RenderCopy(renderer, this->sprite_->getTexture(), NULL, &auxGraphicsSprite);
-    else if(position.orientation == BACK)
+    }
+    else if(position.orientation == BACK){
         SDL_RenderCopyEx(renderer, this->sprite_->getTexture(), NULL, &auxGraphicsSprite, 180, nullptr, SDL_FLIP_VERTICAL);
+    }
 }

@@ -326,7 +326,7 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
     response_t response = this->sendMessageType(socket, type);
 
     if(!response.ok){
-        cout << "No se pudo enviar el tipo" << endl;
+    
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el tipo de mensaje");
     }
 
