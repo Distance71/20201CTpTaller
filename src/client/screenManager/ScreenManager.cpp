@@ -12,15 +12,15 @@ ScreenManager::ScreenManager(Client *client){
 
 ScreenManager::~ScreenManager(){
     if (this->window_){
-        Logger::getInstance()->log(INFO, "Se destruye la ventana.");
+        Logger::getInstance()->log(DEBUG, "Se destruye la ventana.");
         SDL_DestroyWindow(this->window_);
     }
     if(this->renderer_){
-        Logger::getInstance()->log(INFO, "Se destruye el renderer.");
+        Logger::getInstance()->log(DEBUG, "Se destruye el renderer.");
         SDL_DestroyRenderer(this->renderer_);
     }
     if (this->menu_){
-        Logger::getInstance()->log(INFO, "Se destruye el menu");
+        Logger::getInstance()->log(DEBUG, "Se destruye el menu");
         delete menu_;
     }
 }

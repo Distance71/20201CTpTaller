@@ -1,7 +1,7 @@
 #include "MessageDeserializer.h"
 
 response_t MessageDeserializer::_handleErrorStatus(){
-    Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
+    Logger::getInstance()->log(DEBUG, "No se ha podido obtener el mensaje");
     response_t response = {false, ERROR_CONNECTION};
     return response;
 }
@@ -240,7 +240,7 @@ response_t MessageDeserializer::getTypeMessage(Socket *socket, message_t &messag
     int res = socket->receiveMessage(s, sizeof(message_t));
  
     if (res < 0 ){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
+        Logger::getInstance()->log(DEBUG, "Se ha producido un error al recibir el mensaje de typeMessage.");
         return this->_handleErrorStatus();
     }
 

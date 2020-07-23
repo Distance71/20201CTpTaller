@@ -92,7 +92,7 @@ static void* receiveMessages(void *arg){
         Event* event;
         response_t response = deserealizer.getReceivedMessage(socket,event); 
         if (response.status == DISCONNECTION || response.status==ERROR_CONNECTION) {
-            Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente.");
+            Logger::getInstance()->log(INFO, "Se detecta desconexión del Servidor");
             Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
             client->ServerDisconnection();
             return nullptr;
