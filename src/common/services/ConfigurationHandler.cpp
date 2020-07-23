@@ -300,18 +300,27 @@ void ConfigurationHandler::setConfigDefault(){
 
 void ConfigurationHandler::initializeDataServer(){
 
-    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
+    Logger::getInstance()->log(DEBUG, "Se lee la cantidad de jugadores para la partida.");
+    size_t quantityPlayers = this->parserJson->getUnsignedInt(PATH_QUANTITY_PLAYERS);
 
     if (quantityPlayers > MAX_QUANTITY_PLAYERS){
-        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
+        Logger::getInstance()->log(ERROR, "La cantidad de jugadores supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
         quantityPlayers = MAX_QUANTITY_PLAYERS;
     }
 
-    GameProvider::setQuantityPlayers(quantityPlayers);
-    
-    vector<user_t> users (quantityPlayers);
+    size_t quantityUsers = this->parserJson->getSizeArray(PATH_USER);
 
-    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
+    if (quantityUsers < quantityPlayers){
+        Logger::getInstance()->log(ERROR, "La cantidad de usuarios es menor a la cantidad de juagores. Se settea la cantidad de jugadores con la cantidad de usuarios");
+        quantityPlayers = quantityUsers;
+    }
+
+    GameProvider::setQuantityPlayers(quantityPlayers);
+
+    vector<user_t> users (quantityUsers);
+
+    Logger::getInstance()->log(DEBUG, "Se comienzan a leer las credenciales de los usuarios.");
+    for (size_t oneUser = 0; oneUser < quantityUsers; oneUser++){
         user_t newUser;
 
         string pathUsername = this->getPathUser(oneUser, "username");

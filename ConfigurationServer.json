@@ -1,12 +1,13 @@
 {
     "configuracion": {
         "log":{
-            "level": "INFO"
+            "level": "DEBUG"
         },
         "screen":{
             "width": 1280,
             "height": 800
         },
+        "quantityPlayers": 4,
         "players": [
             {
                 "sizeX": 95,
@@ -29,12 +30,12 @@
             {
                 "enemies": [
                     {
-                        "quantity": 5,
+                        "quantity": 10,
                         "sizeX": 85,
                         "sizeY": 45			  
                     },
                     {
-                        "quantity": 5,
+                        "quantity": 15,
                         "sizeX": 90,
                         "sizeY": 56
                     }
@@ -43,12 +44,12 @@
             {
                 "enemies": [
                     {
-                        "quantity": 5,
+                        "quantity": 15,
                         "sizeX": 85,
                         "sizeY": 45			  
                     },
                     {
-                        "quantity": 5,
+                        "quantity": 15,
                         "sizeX": 95,
                         "sizeY": 62
                     }
@@ -57,12 +58,12 @@
             {
                 "enemies": [
                     {
-                        "quantity": 5,
+                        "quantity": 17,
                         "sizeX": 90,
                         "sizeY": 56			  
                     },
                     {
-                        "quantity": 5,
+                        "quantity": 18,
                         "sizeX": 95,
                         "sizeY": 62
                     }
@@ -72,12 +73,12 @@
                 "enemies": [
                     {
                         "type": 0,
-                        "quantity": 5,
+                        "quantity": 20,
                         "sizeX": 90,
                         "sizeY": 56			  
                     },
                     {
-                        "quantity": 5,
+                        "quantity": 19,
                         "sizeX": 95,
                         "sizeY": 62
                     }
