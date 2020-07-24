@@ -76,7 +76,7 @@ void Game::runStep(currentStep_t actualStep){
 
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
 
-    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
+    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){
         updateState(actualStep);
         usleep(18000);
     }
@@ -110,7 +110,7 @@ void Game::sendStartStage(stage_t stage){
     Event* event = new EventSceneAnimation(sceneScreen);
     this->sendEvent(event);
     
-    usleep(3000000);//5 seg
+    usleep(3000000);//3 seg
 }
 
 void Game::sendStageCleared(stage_t stage){
@@ -137,7 +137,7 @@ void Game::sendStageCleared(stage_t stage){
 
     Event* event = new EventSceneAnimation(sceneScreen);
     this->sendEvent(event);
-    usleep(3000000);//5 seg;
+    usleep(3000000);//3 seg;
     
 }
 

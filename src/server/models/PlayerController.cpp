@@ -1,7 +1,5 @@
 #include "PlayerController.h"
 
-//PlayerController::~PlayerController();
-
 PlayerController::PlayerController(Sprite* sprite_){
     sprite = sprite_;
 }

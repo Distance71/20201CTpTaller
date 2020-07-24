@@ -411,15 +411,3 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
     return this->_handleErrorMessage();
 };
-
-/*response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
-    message_t messageType;
-    void* _typeRef = (void *) &messageType;
-
-    if (socket->receiveMessage(_typeRef, sizeof(message_t)) <= 0){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje.");
-        return this->_handleErrorStatus();
-    }
-    Logger::getInstance()->log(DEBUG, "Se recibio el tamaño de un mensaje.");
-    return this->getEvent(messageType, socket, event);
-};*/

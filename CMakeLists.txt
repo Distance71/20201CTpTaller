@@ -153,9 +153,6 @@ add_executable(tp1taller
         
         src/server/Server.cpp
         src/server/Server.h
-
-        src/server/transmitionManager/ServerTransmitionManager.cpp
-        src/server/transmitionManager/ServerTransmitionManager.h
         
         src/server/usersManager/UsersManager.cpp
         src/server/usersManager/UsersManager.h

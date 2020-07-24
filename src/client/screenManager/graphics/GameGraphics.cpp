@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 GameGraphics::GameGraphics(SDL_Renderer* renderer){
-    //this->scenario_ = nullptr;
     this->image_ = nullptr;
     this->renderer_ = renderer;
     this->createElements();
