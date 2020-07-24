@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "DEBUG"
+            "level": "ERROR"
         },
         "screen":{
             "width": 1280,
@@ -93,6 +93,11 @@
                 ]
             }
         ],    
+        "finalBoss":{
+            "sizeX": 650,
+            "sizeY": 600,
+            "health": 1000
+        },
         "users": [
             {
                 "username": "agustin",

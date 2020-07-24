@@ -140,6 +140,7 @@ typedef enum {
     PLAYER_4_OUT = 11,
     END_GRAPHIC = 12,
     BACKGROUND = 13,
+    BOSS_ENEMY = 14,
 } elementType_t;
 
 typedef struct {
@@ -241,6 +242,7 @@ typedef struct {
     vector<levelParams_t> levelParams;
     vector<user_t> playersParams;
     loginScreen_t loginScreen;
+    enemy_t finalBoss;
 } gameParams_t;
 
 typedef struct argsThreadUser {

@@ -18,12 +18,14 @@
 #define PATH_BASE_LOGIN_SCREEN "/configuracion/loginScreen/"
 #define PATH_INFORMATION_SCREEN "/configuracion/informationScreen/"
 #define PATH_QUANTITY_PLAYERS "/configuracion/quantityPlayers"
+#define PATH_FINAL_BOSS "/configuracion/finalBoss/"
 
 #define DEFAULT_SIZE_X 110
 #define DEFAULT_SIZE_Y 90
 #define DEFAULT_ENEMY_QUANTITY 25
 #define DEFAULT_ENEMY_HEALTH 100
 #define DEFAULT_ENEMY_TYPE 0
+#define DEFAULT_BOSS_HEALTH 1000
 
 #define STEP_FOR_STAGE 1
 #define MAX_STEPS 20
@@ -70,6 +72,9 @@ class ConfigurationHandler {
 
         string getPathLoginScreen(string paramLogin);
         loginScreen_t readLoginScreen();
+        
+        string getPathFinalBoss(string paramBossEnemy);
+        enemy_t getBoss();
 
         void initializeDataServer();
         void initializeDataClient();
@@ -90,6 +95,7 @@ class ConfigurationHandler {
         player_t getPlayerParam(int numberPlayer);
         string getPathEnemy(int numberTypeEnemy);
         transitionScreen_t getTransitionScreenForStage(int oneStage);
+        string getPathFinalBoss();
 
 };
 

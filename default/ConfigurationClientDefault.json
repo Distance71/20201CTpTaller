@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "DEBUG"
+            "level": "ERROR"
         },
         "screen":{
             "width": 1280,
@@ -144,6 +144,11 @@
                     }
                 ]
             }
-        ]
+        ],    
+        "finalBoss":{
+            "sizeX": 23,
+            "sizeY": 80,
+            "sprite": "assets/Enemies/enemigo8.png"
+        }
     }
 }

@@ -298,6 +298,66 @@ void ConfigurationHandler::setConfigDefault(){
     this->parserJson->setConfigDefault();
 };
 
+string ConfigurationHandler::getPathFinalBoss(string paramBossEnemy){
+    return PATH_FINAL_BOSS + paramBossEnemy;
+}
+
+enemy_t ConfigurationHandler::getBoss(){
+
+    enemy_t finalBoss;
+    finalBoss.type = BOSS_ENEMY;
+
+    if (this->isServer_){
+        string pathBossHealth = getPathFinalBoss("health");
+        int cantBossHealth = this->parserJson->getUnsignedInt(pathBossHealth); 
+
+        if (cantBossHealth >= 0){
+            finalBoss.health = cantBossHealth;
+        } else {
+            finalBoss.health = DEFAULT_BOSS_HEALTH;
+        }
+    } else {
+        string pathBossSprite = getPathFinalBoss("sprite");
+        finalBoss.sprite = this->parserJson->getString(pathBossSprite); 
+    }
+
+    unsigned int sizeScreenX = GameProvider::getWidth();
+    unsigned int sizeScreenY = GameProvider::getHeight();
+
+    string pathBossSizeX = getPathFinalBoss("sizeX");
+    int sizeXBoss = this->parserJson->getUnsignedInt(pathBossSizeX);
+
+    if (sizeXBoss >= 0){
+        finalBoss.size_x = sizeXBoss;
+    } else {
+        finalBoss.size_x = DEFAULT_SIZE_X;
+    }
+
+    if (sizeXBoss > sizeScreenX){
+        Logger::getInstance()->log(ERROR, "El largo del enemigo final supera el largo de la pantalla. Se settea este ultimo como su largo");
+        finalBoss.size_x = sizeScreenX;
+    }
+
+    string pathBossSizeY = getPathFinalBoss("sizeY");
+    int sizeYBoss = this->parserJson->getUnsignedInt(pathBossSizeY);
+    if (sizeYBoss >= 0){
+        finalBoss.size_y = sizeYBoss;
+    } else {
+        finalBoss.size_y = DEFAULT_SIZE_Y;
+    }
+
+    if (sizeYBoss > sizeScreenY){
+        Logger::getInstance()->log(ERROR, "El ancho del enemigo final supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+        finalBoss.size_y = sizeScreenY;
+    }   
+
+    return finalBoss;
+}
+
+string ConfigurationHandler::getPathFinalBoss(){
+    return this->gameData.finalBoss.sprite;
+}
+
 void ConfigurationHandler::initializeDataServer(){
 
     Logger::getInstance()->log(DEBUG, "Se lee la cantidad de jugadores para la partida.");
@@ -337,8 +397,11 @@ void ConfigurationHandler::initializeDataServer(){
     int sizeLevel = 1;
 
 
-    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
-    
+    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");    
+
+    unsigned int sizeScreenX = GameProvider::getWidth();
+    unsigned int sizeScreenY = GameProvider::getHeight();
+
     for(int numberLevel = 0; numberLevel < 1; numberLevel++){
         Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del nivel " + to_string(numberLevel));
         string pathLevel = getPathLevel(numberLevel);
@@ -361,15 +424,12 @@ void ConfigurationHandler::initializeDataServer(){
             unsigned int cantTotalType1 = 0;
             unsigned int cantTotalType2 = 0;
 
-            unsigned int sizeScreenX = GameProvider::getWidth();
-            unsigned int sizeScreenY = GameProvider::getHeight();
-
             for(int numberEnemy = 0; numberEnemy < sizeEnemies; numberEnemy++){
                 Logger::getInstance()->log(DEBUG, "Se comienza a analizar el enemigo " + to_string(numberEnemy) + " del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
             
                 enemy_t oneEnemy;
 
-                string pathEnemyType = getPathStageEnemy(pathStage, numberEnemy, "type");
+                // string pathEnemyType = getPathStageEnemy(pathStage, numberEnemy, "type");
 
                 elementType_t typeEnemy = ENEMY_1;
 
@@ -444,6 +504,12 @@ void ConfigurationHandler::initializeDataServer(){
 
         this->gameData.levelParams.push_back(oneLevelParams);
     }    
+
+    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del enemigo final.");
+    
+    enemy_t finalBoss = getBoss();
+    this->gameData.finalBoss = finalBoss;
+
 }
 
 void ConfigurationHandler::initializeDataClient(){
@@ -565,6 +631,12 @@ void ConfigurationHandler::initializeDataClient(){
 
         this->gameData.levelParams.push_back(oneLevelParams);
     }
+
+    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del enemigo final.");
+    
+    enemy_t finalBoss = getBoss();
+    this->gameData.finalBoss = finalBoss;
+    
 }
 
 string ConfigurationHandler::getPathLoginScreen(string paramLogin){
