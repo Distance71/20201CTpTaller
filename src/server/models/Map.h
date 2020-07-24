@@ -38,6 +38,7 @@ class Map {
     position_t getInitialPosition();
 
     unordered_map<string, MapElement*> players;
+    MapElement* finalBoss_;
 
     public:    
     Map();
@@ -47,7 +48,10 @@ class Map {
     vector<Level *> getLevels();
     bool endStep(currentStep_t currentStep);
     void initializePositionPlayers(gameParams_t &gameSettings);
+    void initializeFinalBoss(gameParams_t &gameSettings);
     void movePlayer(string user, orientation_t orientation);
+
+    void updateFinal(Game* game);
 
     void initializeStep(currentStep_t currentStep, Game *game);
 
@@ -65,6 +69,7 @@ class Level: public Map {
     void addStage(Stage *stage);
     vector<Stage *> getStages();
     void update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players);
+    void updateFinal(Game *game, unordered_map<string, MapElement*> players, MapElement* finalBoss);
     void initializeStep(currentStep_t currentStep, Game *game);
     bool endStep(size_t numberStage, size_t numberStep);
 };
@@ -85,6 +90,7 @@ class Stage: public Level {
     void addStep(Step *step);
     vector<Step *> getSteps();
     void update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players);
+    void updateFinal(Game *game, unordered_map<string, MapElement*> players, MapElement* finalBoss, stage_t stage);
     bool endStep(size_t numberStep);
     void initializeStep(currentStep_t currentStep, Game *game);
     void updateBackground(Game *game, stage_t stage);

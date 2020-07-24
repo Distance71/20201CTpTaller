@@ -27,7 +27,7 @@ class Game {
 
     void initializeGameParams();
     void runLevel(currentStep_t actualStep, Level *level);
-    void runStage(currentStep_t actualStep, Stage *stage);
+    void runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage);
     void runStep(currentStep_t actualStep);
 
     void processEvent();
@@ -38,6 +38,7 @@ class Game {
     void sendStartStage(stage_t stage);
     void sendStageCleared(stage_t stage);
 
+    void runFinal();
     public:
     Game(Server *server);
     ~Game();

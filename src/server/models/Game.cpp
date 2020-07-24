@@ -45,7 +45,9 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
 
     for(size_t i = 0; i < quantityStages; i++){
         actualStep.stage = static_cast<stage_t>(i);
-        runStage(actualStep, stages[i]);  
+
+        bool isFinalStage = (i == quantityStages - 1);
+        runStage(actualStep, stages[i], isFinalStage);  
     }
 
     sendEvent(new EventEndGame());
@@ -53,7 +55,7 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     usleep(5000000);
 }
 
-void Game::runStage(currentStep_t actualStep, Stage *stage){
+void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
 
@@ -66,6 +68,9 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
         actualStep.step = i;
         runStep(actualStep);
     }
+
+    // if (isFinalStage)
+    //     this->runFinal();
 
     this->sendStageCleared(actualStep.stage);
     
@@ -84,6 +89,16 @@ void Game::runStep(currentStep_t actualStep){
 
 void Game::updateState(currentStep_t actualStep) {
     map_->update(actualStep, this);
+}
+
+void Game::runFinal(){
+
+    Logger::getInstance()->log(DEBUG, "Se comienza round con Boss");
+
+    while(GameProvider::getStatus().normalStatus){
+        map_->updateFinal(this);
+        usleep(18000);
+    }
 }
 
 void Game::sendStartStage(stage_t stage){

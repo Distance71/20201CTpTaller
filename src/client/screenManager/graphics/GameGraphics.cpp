@@ -34,6 +34,8 @@ void GameGraphics::createElements(){
 
     string sourceEnemy1 = GameProvider::getConfig()->getPathEnemy(0);
     string sourceEnemy2 = GameProvider::getConfig()->getPathEnemy(1);
+
+    string sourceBoss = GameProvider::getConfig()->getPathFinalBoss();
     
     this->elements_[PLAYER_1] = new GraphicsMapElement(sourcePlayers[0], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[PLAYER_2] = new GraphicsMapElement(sourcePlayers[1], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
@@ -45,6 +47,7 @@ void GameGraphics::createElements(){
     this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(sourcePlayersDisconnected[3], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_1] = new GraphicsMapElement(sourceEnemy1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_2] = new GraphicsMapElement(sourceEnemy2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[BOSS_ENEMY] = new GraphicsMapElement(sourceBoss, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
 }
 
 void GameGraphics::createScenes(){

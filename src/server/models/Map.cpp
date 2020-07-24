@@ -10,6 +10,8 @@ Map::Map(gameParams_t &gameSettings){
         Level *newLevel = new Level(gameSettings.levelParams[i]);
         this->addLevel(newLevel);
     }
+
+    this->initializeFinalBoss(gameSettings);
 }
 
 bool Map::endStep(currentStep_t currentStep){
@@ -335,3 +337,46 @@ void Stage::initializeStep(currentStep_t currentStep, Game *game){
 }
 
 void Step::initializeStep(Game *game){}
+
+void Map::initializeFinalBoss(gameParams_t &gameSettings){
+    enemy_t finalBoss = gameSettings.finalBoss;
+
+    position_t position;
+    position.axis_x = GameProvider::getWidth() - (finalBoss.size_x - 2);
+    position.axis_y = (GameProvider::getHeight() / 2) - (finalBoss.size_y / 2);
+    position.orientation = FRONT;
+
+    this->finalBoss_ = new MapElement(finalBoss.type, position, 2, 2, finalBoss.size_x, finalBoss.size_y, finalBoss.health);
+
+}
+
+void Map::updateFinal(Game* game){
+
+    this->levels_.back()->updateFinal(game, this->players, this->finalBoss_);
+
+    position_t aux;
+    game->sendEvent(new EventMapElementUpdate(END_GRAPHIC, aux)); 
+}
+
+void Level::updateFinal(Game* game, unordered_map<string, MapElement*> players, MapElement* finalBoss){
+
+    stage_t actualStage =  static_cast<stage_t>(this->stages_.size() - 1);
+    this->stages_.back()->updateFinal(game, players, finalBoss, actualStage);
+}
+
+void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, MapElement* finalBoss, stage_t stage){
+
+    updateBackground(game, stage);
+
+    for(auto mapElementPlayer : players){
+        
+        position_t actualPosition = mapElementPlayer.second->getActualPosition();
+        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+        game->sendEvent(eventUpdate);
+    }
+
+    position_t actualPositionBoss = finalBoss->getActualPosition();
+    Event *eventUpdateBoss = new EventMapElementUpdate(finalBoss->getType(), actualPositionBoss);
+    game->sendEvent(eventUpdateBoss);   
+
+}
