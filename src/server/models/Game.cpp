@@ -78,7 +78,7 @@ void Game::runStep(currentStep_t actualStep){
 
     while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
         updateState(actualStep);
-        usleep(25000);
+        usleep(18000);
     }
 }
 
