@@ -124,7 +124,4 @@ void GameGraphics::setImage(sceneScreen_t scene){
         SDL_RenderPresent(this->renderer_);
     }
     
-
-     
-    
 }
