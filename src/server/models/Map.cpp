@@ -37,7 +37,7 @@ Stage::Stage(stageParams_t &params){
     this->createBackground();
 
     size_t quantitySteps = params.stepsParams.size();
-    for(size_t i = 0; i < quantitySteps; i++) {|
+    for(size_t i = 0; i < quantitySteps; i++) {
         Step *step = new Step(params.stepsParams[i]);
         this->addStep(step);
     }
