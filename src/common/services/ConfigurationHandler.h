@@ -17,6 +17,7 @@
 #define PATH_BASE_USER "/configuracion/users/"
 #define PATH_BASE_LOGIN_SCREEN "/configuracion/loginScreen/"
 #define PATH_INFORMATION_SCREEN "/configuracion/informationScreen/"
+#define PATH_QUANTITY_PLAYERS "/configuracion/quantityPlayers"
 
 #define DEFAULT_SIZE_X 110
 #define DEFAULT_SIZE_Y 90
@@ -87,6 +88,7 @@ class ConfigurationHandler {
         gameParams_t getGameParams();
         player_t getPlayerParam(int numberPlayer);
         string getPathEnemy(int numberTypeEnemy);
+        transitionScreen_t getTransitionScreenForStage(int oneStage);
 
 };
 

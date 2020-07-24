@@ -108,7 +108,7 @@ int Server::run(){
     this->eventsManager_->RunProcessEventsThread();
     
     while (this->isConnected()){
-        usleep(100000);
+        usleep(10000);
         if(this->usersManager_->isFullGame()){
             cout << "Se conectaron todos los jugadores, iniciará la partida"<< endl;
             Logger::getInstance()->log(INFO, "Se conectaron todos los jugadores, iniciará la partida");
@@ -124,7 +124,7 @@ int Server::run(){
 }
 
 void Server::informDisconnection(string username){
-    //this->game_->informDisconnection(username);
+    this->game_->informDisconnection(username);
 }
 
 void Server::informConnection(string username){

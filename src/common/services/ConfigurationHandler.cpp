@@ -275,18 +275,18 @@ stageSource_t ConfigurationHandler::getSourcesForStage(int oneStage){
     return this->gameData.levelParams[0].stagesParams[oneStage].backgroundSources;
 }
 
-transitionScreen_t ConfigurationHandler::getTransitionScreenForLevel(int oneLevel){
+transitionScreen_t ConfigurationHandler::getTransitionScreenForStage(int oneStage){
 
     transitionScreen_t transitionScreen;
 
-    if (oneLevel >= this->gameData.levelParams.size()){
-        Logger::getInstance()->log(ERROR, "Se quiere acceder al transitionScreen de un nivel invalido. Level: " + to_string(oneLevel));
+    if (oneStage >= this->gameData.levelParams[0].stagesParams.size()){
+        Logger::getInstance()->log(ERROR, "Se quiere acceder al transitionScreen de un stage invalido. Level: " + to_string(oneStage));
         return transitionScreen;
     }
 
-    Logger::getInstance()->log(DEBUG, "Se devuelve el transitionScreen del nivel " + to_string(oneLevel));
-
-    return this->gameData.levelParams[oneLevel].pathTransitionScreen; 
+    Logger::getInstance()->log(DEBUG, "Se devuelve el transitionScreen del nivel " + to_string(oneStage));
+    
+    return this->gameData.levelParams[0].stagesParams[oneStage].pathTransitionScreen; 
 }
 
 gameParams_t ConfigurationHandler::getGameParams(){
@@ -300,18 +300,27 @@ void ConfigurationHandler::setConfigDefault(){
 
 void ConfigurationHandler::initializeDataServer(){
 
-    size_t quantityPlayers = this->parserJson->getSizeArray(PATH_USER);
+    Logger::getInstance()->log(DEBUG, "Se lee la cantidad de jugadores para la partida.");
+    size_t quantityPlayers = this->parserJson->getUnsignedInt(PATH_QUANTITY_PLAYERS);
 
     if (quantityPlayers > MAX_QUANTITY_PLAYERS){
-        Logger::getInstance()->log(ERROR, "La cantidad de usuarios supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
+        Logger::getInstance()->log(ERROR, "La cantidad de jugadores supera la máxima permitida (4 jugadores). Se settea con esta cantidad.");
         quantityPlayers = MAX_QUANTITY_PLAYERS;
     }
 
-    GameProvider::setQuantityPlayers(quantityPlayers);
-    
-    vector<user_t> users (quantityPlayers);
+    size_t quantityUsers = this->parserJson->getSizeArray(PATH_USER);
 
-    for (size_t oneUser = 0; oneUser < quantityPlayers; oneUser++){
+    if (quantityUsers < quantityPlayers){
+        Logger::getInstance()->log(ERROR, "La cantidad de usuarios es menor a la cantidad de juagores. Se settea la cantidad de jugadores con la cantidad de usuarios");
+        quantityPlayers = quantityUsers;
+    }
+
+    GameProvider::setQuantityPlayers(quantityPlayers);
+
+    vector<user_t> users (quantityUsers);
+
+    Logger::getInstance()->log(DEBUG, "Se comienzan a leer las credenciales de los usuarios.");
+    for (size_t oneUser = 0; oneUser < quantityUsers; oneUser++){
         user_t newUser;
 
         string pathUsername = this->getPathUser(oneUser, "username");
@@ -330,7 +339,7 @@ void ConfigurationHandler::initializeDataServer(){
 
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion de los distintos niveles.");
     
-    for(int numberLevel = 0; numberLevel < sizeLevel; numberLevel++){
+    for(int numberLevel = 0; numberLevel < 1; numberLevel++){
         Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del nivel " + to_string(numberLevel));
         string pathLevel = getPathLevel(numberLevel);
         int sizeStages = this->parserJson->getSizeArray(PATH_LEVEL);
@@ -467,12 +476,11 @@ void ConfigurationHandler::initializeDataClient(){
 
             string pathTransitionInit = pathStage + "/transitionInit";
             //cout << "pathTransitionInit " << pathTransitionInit << endl;
-            oneLevelParams.pathTransitionScreen.initPath = this->parserJson->getString(pathTransitionInit);
-            //cout << "Esto " << this->parserJson->getString("/configuracion/level/0/transitionInit") << endl;
+            oneStageParams.pathTransitionScreen.initPath = this->parserJson->getString(pathTransitionInit);
 
             //cout << "pathTransitionInit " << pathTransitionInit << endl;
             string pathTransitionEnd = pathStage + "/transitionEnd";
-            oneLevelParams.pathTransitionScreen.endPath = this->parserJson->getString(pathTransitionEnd);
+            oneStageParams.pathTransitionScreen.endPath = this->parserJson->getString(pathTransitionEnd);
 
             string pathLayer1 = getPathStageLayer(pathStage, 1);
             oneStageParams.backgroundSources.layer1 = this->parserJson->getString(pathLayer1);
@@ -629,7 +637,7 @@ player_t ConfigurationHandler::getPlayerParam(int numberPlayer){
     onePlayer.size_y = GameProvider::getElementsSize();
     onePlayer.sprite = "";
     onePlayer.spriteDisconnected = "";
-
+    
     if (this->gameData.playersParams.size() > numberPlayer)
         onePlayer = this->gameData.playersParams[numberPlayer].playerParams;
 

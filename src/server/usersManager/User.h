@@ -1,3 +1,4 @@
+ 
 #ifndef USER_H
 #define USER_H
 
@@ -53,7 +54,7 @@ public:
 
     
     void sendEvent(Event* event);
-    Message* getMessage();
+    void sendMessage(Message* message);
     
     void runSendingMessagesThread();
     void runReceivingMessagesThread();

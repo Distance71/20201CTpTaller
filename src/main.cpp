@@ -78,7 +78,6 @@ int mainServer(int port, string levelLog, string pathConfiguration){
     Server *newServer = new Server(port);
     int codExitServer = newServer->run();
     delete newServer;
-
     return codExitServer;
 }
 

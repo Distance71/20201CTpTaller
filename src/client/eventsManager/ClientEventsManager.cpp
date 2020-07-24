@@ -39,7 +39,9 @@ static void * detectPlayerEvents(void* arg){
     
     const Uint8 *keystate;
     
-    while (client->isConnected()){
+ 
+    while (client->isConnected() && client->isLoggedIn()){
+
         SDL_Event e;
 
         while (SDL_PollEvent(&e)){
@@ -50,10 +52,11 @@ static void * detectPlayerEvents(void* arg){
                 Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego de forma voluntaria");
                 client->disconnect();
             }
+        
         }
-            
+        
         keystate = SDL_GetKeyboardState(NULL);  
-    
+        
         up =  keystate[SDL_SCANCODE_UP];
         down = keystate[SDL_SCANCODE_DOWN];
         right =  keystate[SDL_SCANCODE_RIGHT];
@@ -66,41 +69,33 @@ static void * detectPlayerEvents(void* arg){
 
         if (up && !down && !right && !left){ 
             movementOrientation = UP;
-            cout << "ARRIBA" << endl;
         }
-        
+                
         else if(!up && down && !right && !left){
             movementOrientation = DOWN;
-            cout << "ABAJO" << endl;
         }
-        
+                
         else if(!up && !down && right && !left){
             movementOrientation = FRONT;
-            cout << "DERECHA" << endl;
         }
-        
+                
         else if(!up && !down && !right && left){
             movementOrientation = BACK;
-            cout << "IZQUIERDA" << endl;
         }
 
         else if(up && !down && right && !left){
-            cout << "DERECHA ARRIBA" << endl;
             movementOrientation = FRONT_UP;
         }
-        
+                
         else if(up && !down && !right && left){
-            cout << "IZQUIERDA ARRIBA" << endl; 
             movementOrientation = BACK_UP;
         }
-        
+                
         else if(!up && down && right && !left){ 
-            cout << "DERECHA ABAJO" << endl;
             movementOrientation = FRONT_DOWN;
         }
-        
+                
         else if(!up && down && !right && left){
-            cout << "IZQUIERDA ABAJO" << endl;
             movementOrientation = BACK_DOWN;
         }
 
@@ -109,22 +104,22 @@ static void * detectPlayerEvents(void* arg){
             client->sendMessage(message);
         }
 
-        SDL_Delay(14);
-    }
+        SDL_Delay(17);
+        
+    }   
 
     return nullptr;
 }
 
 
 void ClientEventsManager::RunDetectPlayerEventsThread(){
-    //this->stop_ = false;
     Logger::getInstance()->log(DEBUG, "Se inicializa hilo de detección de eventos del jugador");
     pthread_t detect_player_events_thread;
     pthread_create(&detect_player_events_thread, NULL, detectPlayerEvents, this);
 }
 
 
-static void* processEvents(void * arg){
+/*static void* processEvents(void * arg){
     ClientEventsManager* eventsManager = (ClientEventsManager*) arg;
     Client * client = eventsManager->getClient();
     while(client->isConnected()){
@@ -136,16 +131,23 @@ static void* processEvents(void * arg){
         }
     }
     return nullptr;
-}
+}*/
 
 
 void ClientEventsManager::RunProcessEventsThread(){
     Logger::getInstance()->log(DEBUG, "Se inicializa hilo de proceso de eventos");
-    pthread_t process_events_thread;
-    pthread_create(&process_events_thread,NULL,processEvents,this);
+     while(this->clientOwn_->isConnected()){
+        Event* event = getEvent();
+        if (event){
+            event->setContext(this->clientOwn_);
+            event->update();
+            delete event;
+        }
+    }
 }
 
 
 Client* ClientEventsManager:: getClient(){
     return this->clientOwn_;
 }
+

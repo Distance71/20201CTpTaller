@@ -13,6 +13,7 @@
 #include "loginMenu/Menu.h"
 #include "graphics/GameGraphics.h"
 #include "../common/types.h"
+#include "../common/models/Sprite.h"
 
 class Client;
 class Menu;
@@ -28,8 +29,7 @@ class ScreenManager{
         SDL_Renderer* renderer_;
         Menu* menu_;
         GameGraphics* gameGraphics_;
-        bool waiting_;
-
+        Sprite* loading_;
 
         bool initMenu();
         bool initSDL();
@@ -41,19 +41,17 @@ class ScreenManager{
         ~ScreenManager();
         void setScreenSizes(int Xsize, int YSize);
         bool initializeGraphics();
-        bool viewLogin();
-        void graphic();
+        void viewLogin();
         void updateEntity(elementType_t type, position_t position);
-        void setBackground(stage_t stage);
+        void updateBackgroundLayer(layer_t layer, stage_t stage, int step);
         void setImage(sceneScreen_t scene);
         void setLoginResponse(responseStatus_t response);
-        int waitForPlayers();
         void stopWaiting();
         void viewEndGameScreen();
         Client* getClient();
         SDL_Renderer* getRenderer();
-        void runScreenGraphicsThread();
         void ServerDisconnection();
+        Menu* getMenu();
 };
 
 #endif

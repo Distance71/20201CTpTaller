@@ -3,18 +3,14 @@
 UsersManager::UsersManager(Server *serverOwn){
     this->serverOwn_ = serverOwn;
     this->lastId_ = 0;
+    this->sendingQueue_ = new BlockingQueue <Message*>();
+    runSendingThread();
 }
 
 UsersManager::~UsersManager(){
     for (auto user: this->notLoggedInUsers_){
         if (user.second){
             delete user.second;
-        }
-    }
-
-    for (auto loggedUser: this->loggedInUsers_){
-        if (loggedUser.second){
-            delete loggedUser.second;
         }
     }
 }
@@ -36,15 +32,44 @@ void UsersManager::processEvent(Event* event){
 
 
 void UsersManager::sendEventToNotLoggedUser(Id id, Event* event){
-    this->notLoggedInUsers_[id]->sendEvent(event);
+    this->notLoggedInUsers_[id]->sendMessage(event->serialize());
 }
 
 
 void UsersManager::sendEventToAllLogged(Event* event){
-    for (auto user : this->loggedInUsers_){
-        user.second->sendEvent(event);
+    this->sendingQueue_->push(event->serialize());
+    delete event;
+}
+
+BlockingQueue <Message*> * UsersManager::getQueue(){
+     return this->sendingQueue_;
+ }
+
+static void* sendMessages(void* arg){
+    UsersManager* usersManager = (UsersManager*) arg;
+    Server* server = usersManager->getServer();
+    BlockingQueue <Message*> * sendingQueue = usersManager->getQueue();
+    
+    while(server->isConnected()){
+        if(!sendingQueue->empty()){
+            Message* message = sendingQueue->pop();
+            usersManager->sendToAll(message);
+        }
     }
 }
+
+void UsersManager::sendToAll(Message* message){
+    for (auto user :this->loggedInUsers_){
+        user.second->sendMessage(message);
+    }
+}
+
+
+void UsersManager::runSendingThread(){
+    pthread_t sending_thread;
+    pthread_create(&sending_thread,NULL,sendMessages,this);
+}
+
 
 responseStatus_t UsersManager::loginRequest(Id id,string username,string password){
     bool valid = GameProvider::isValidCredential(username,password);
@@ -148,7 +173,6 @@ void UsersManager::acceptUser(){
     User* newUser = new User(this,socketNewUser);
     newUser->setConnection();
     newUser->setId(idUser);
-    newUser->runSendingMessagesThread();
     newUser->runReceivingMessagesThread();
     this->notLoggedInUsers_.emplace(idUser,newUser);
     this->lastId_ ++;
@@ -184,4 +208,3 @@ void UsersManager::informDisconnection(string username){
 void UsersManager::informConnection(string username){
     this->serverOwn_->informConnection(username);
 }
-

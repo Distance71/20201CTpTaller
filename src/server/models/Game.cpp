@@ -1,5 +1,3 @@
-// OUTDATED
-
 #include "Game.h"
 
 Game::Game(Server *server){
@@ -11,6 +9,9 @@ Game::~Game(){
 }
 
 void Game::run() {
+
+    usleep(10000);
+    
     if (!GameProvider::getStatus().normalStatus)
         return;
 
@@ -39,8 +40,6 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantityStages = gameSettings.levelParams[actualStep.level].stagesParams.size();
 
-    
-
     auto stages = level->getStages();
     Logger::getInstance()->log(INFO, "Se comienza el nivel " + to_string(actualStep.level));
 
@@ -49,9 +48,9 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
         runStage(actualStep, stages[i]);  
     }
 
-    // if (GameProvider::getStatus().normalStatus){
-    //     
-    // }
+    sendEvent(new EventEndGame());
+
+    usleep(5000000);
 }
 
 void Game::runStage(currentStep_t actualStep, Stage *stage){
@@ -59,8 +58,6 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
     size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
 
     this->sendStartStage(actualStep.stage);
-
-    this->sendBackground(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
 
@@ -71,34 +68,19 @@ void Game::runStage(currentStep_t actualStep, Stage *stage){
     }
 
     this->sendStageCleared(actualStep.stage);
-    //this->map_->initializePositionPlayers(gameSettings);
+    
 }
 
 void Game::runStep(currentStep_t actualStep){
     double elaptedTimeMS = GameProvider::getElaptedTimeFPS();
 
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
-    
-    // initializeStep(actualStep);
-    
-    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
-        auto begin = chrono::high_resolution_clock::now();
-        auto end = chrono::high_resolution_clock::now();   
-        auto dur = end - begin;
-        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
 
-        while(0 >= (ms - 14.5)) { 
-            end = chrono::high_resolution_clock::now();
-            dur = end - begin;
-            ms = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-        }
+    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){ // || funcionFinStep) {
         updateState(actualStep);
+        usleep(25000);
     }
 }
-
-// void Game::initializeStep(currentStep_t actualStep){
-//     map_->initializeStep(actualStep, this);
-// }
 
 void Game::updateState(currentStep_t actualStep) {
     map_->update(actualStep, this);
@@ -128,7 +110,7 @@ void Game::sendStartStage(stage_t stage){
     Event* event = new EventSceneAnimation(sceneScreen);
     this->sendEvent(event);
     
-    usleep(5000000);//5 seg
+    usleep(3000000);//5 seg
 }
 
 void Game::sendStageCleared(stage_t stage){
@@ -163,17 +145,11 @@ void Game::movePlayer(string user, orientation_t orientation){
     this->map_->movePlayer(user, orientation);
 }
 
-void Game::sendBackground(stage_t stage){
-    Event* event = new EventSetStage(stage);
-    this->sendEvent(event);
-}
-
 void Game::sendEvent(Event *event){
     this->serverOwn_->sendToAllUsers(event);
 }
 
 void Game::informDisconnection(string username){
-    cout << username << endl;
     Logger::getInstance()->log(DEBUG, "Se informa desconexion en Game");
     this->map_->informDisconnection(username);
 }

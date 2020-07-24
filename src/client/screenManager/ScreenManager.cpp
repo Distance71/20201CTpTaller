@@ -7,21 +7,20 @@ ScreenManager::ScreenManager(Client *client){
     this->window_ = nullptr;
     this->renderer_ = nullptr;
     this->gameGraphics_ = nullptr;
-    this->waiting_ = false;
 }
 
 
 ScreenManager::~ScreenManager(){
     if (this->window_){
-        Logger::getInstance()->log(INFO, "Se destruye la ventana.");
+        Logger::getInstance()->log(DEBUG, "Se destruye la ventana.");
         SDL_DestroyWindow(this->window_);
     }
     if(this->renderer_){
-        Logger::getInstance()->log(INFO, "Se destruye el renderer.");
+        Logger::getInstance()->log(DEBUG, "Se destruye el renderer.");
         SDL_DestroyRenderer(this->renderer_);
     }
     if (this->menu_){
-        Logger::getInstance()->log(INFO, "Se destruye el menu");
+        Logger::getInstance()->log(DEBUG, "Se destruye el menu");
         delete menu_;
     }
 }
@@ -58,7 +57,6 @@ bool ScreenManager::initializeGraphics(){
     
     if(r1 && r2 && r3){
         Logger::getInstance()->log(DEBUG, "Se inicializarán los graficos del juego correctamente");
-        runScreenGraphicsThread();
         return true;
     }
     else{
@@ -67,31 +65,6 @@ bool ScreenManager::initializeGraphics(){
     }
 }
 
-
-static void* screenGraphicsThread(void* arg){
-    
-    Logger::getInstance()->log(DEBUG, "Se inicializa hilo de presentación en pantalla");
-    
-    ScreenManager* screenManager = (ScreenManager*) arg;
-    SDL_Renderer* renderer = screenManager->getRenderer();
-    Client* client = screenManager->getClient();
-
-    while (client->isConnected()){
-        SDL_RenderPresent(renderer);
-        usleep(10000);
-    } 
-
-    Logger::getInstance()->log(DEBUG, "Finaliza el hilo de presentación en pantalla");
-
-    return nullptr;
-}
-
-
-void ScreenManager::runScreenGraphicsThread(){
-    pthread_t screenGraphics;
-    pthread_create(&screenGraphics,NULL,screenGraphicsThread,this);
-
-}
 
 bool ScreenManager::initSDL(){
     if (this->screenWidth_<0 || this->screenHeight_<0){
@@ -136,7 +109,11 @@ bool ScreenManager::initSDL(){
         GameProvider::setErrorStatus(TTF_GetError());
         return false;
     }
-
+    this->loading_ = new Sprite("assets/TransitionScreens/loading.png");
+    
+    SDL_RenderCopy(this->renderer_,this->loading_->getTexture(),NULL,NULL);
+    SDL_RenderPresent(this->renderer_);
+    
     return true;
 }
 
@@ -174,18 +151,6 @@ bool ScreenManager::initGameGraphics(){
     return true;
 }
 
-void ScreenManager::graphic(){
-
-    Logger::getInstance()->log(DEBUG, "Se inicia el hilo graficador");
-
-    while(this->clientOwn_->isConnected()) {
-
-        this->gameGraphics_->update();
-    }
-        
-
-    Logger::getInstance()->log(DEBUG, "Finaliza el hilo graficador");
-}
 
 void ScreenManager::updateEntity(elementType_t type, position_t position){
     Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en ScreenManager");
@@ -198,16 +163,16 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
     }
 }
 
-void ScreenManager::setBackground(stage_t stage){
-    Logger::getInstance()->log(DEBUG, "Se va a setear un background en ScreenManager");
+void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
+    Logger::getInstance()->log(DEBUG, "Se va a actualizar un BackgroundLayer en ScreenManager");
+
     if(this->gameGraphics_){
-        this->gameGraphics_->setBackground(stage);
+        this->gameGraphics_->updateBackgroundLayer(layer,stage,step);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,  no se han inicializado graficos");
+        Logger::getInstance()->log(DEBUG, "No se ha podido actualizar la entidad, no se han inicializado graficos");
     }
 }
-
 
 void ScreenManager::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en ScreenManager");
@@ -229,53 +194,41 @@ void ScreenManager::setLoginResponse(responseStatus_t response){
     } 
 }
 
-bool ScreenManager::viewLogin(){
-    Logger::getInstance()->log(DEBUG, "Se va a mostrar el login");
-    SDL_Event e; 
-    
-    while (true){
-        
+Menu* ScreenManager::getMenu(){
+    return this->menu_;
+}
+
+static void* viewLoginThread(void* arg){
+    ScreenManager* screenManager = (ScreenManager*) arg;
+    Client* client = screenManager->getClient();
+    Menu* menu = screenManager->getMenu();
+    SDL_Event e;
+    while (!client->isLoggedIn() && client->isConnected()){
         while (SDL_PollEvent(&e)){
-            
             GameProvider::setLastEvent(e);
-            
             if (e.type == SDL_QUIT){
-                Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
-                return false;
+                Logger::getInstance()->log(INFO, "El usuario ha cerrado el juego de forma voluntaria");
+                client->disconnect();
+                return nullptr;
             }
-            this->menu_->processEvent();
+            menu->processEvent();
         }
-        
-        if (this->menu_->getLoggedInStatus()){
-            Logger::getInstance()->log(DEBUG, "El usuario se ha logueado con exito en ScreenManager");
-            return true;
-        }  
-        this->menu_->show();
+        menu->checkStatus();
+        menu->show();
     }
-
-    Logger::getInstance()->log(ERROR ,"Se ha cerrado el menu debido a un problema");
-    SDL_RenderClear(this->renderer_);
-    return false;
+    
+    SDL_RenderClear(GameProvider::getRenderer());  
+    client->runDetectEventThread();
 }
 
 
-int ScreenManager::waitForPlayers(){
-    Logger::getInstance()->log(DEBUG, "Se esperaran jugadores en ScreenManager");
-    if(!this->gameGraphics_){
-        Logger::getInstance()->log(DEBUG,"No se puede presentar la pantalla de espera, no se han inicializado gráficos");
-        return -1;
-    }
-    else{
-        SDL_Event e;
-        Logger::getInstance()->log( DEBUG ,"Se esperan jugadores");
-        this->gameGraphics_->setImage(WAITING_PLAYERS);
-        return 1;
-    }
+
+void ScreenManager::viewLogin(){
+    pthread_t viewLogin;
+    pthread_create(&viewLogin, NULL, viewLoginThread, this);
 }
 
-void ScreenManager::stopWaiting(){
-    this->waiting_= false;
-}
+
 
 void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage(END_GAME_ANIMATION);

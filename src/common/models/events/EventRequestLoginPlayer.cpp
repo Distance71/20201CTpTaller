@@ -22,6 +22,8 @@ void EventRequestLoginPlayer::update() {
       responseStatus_t res = server->loginRequest(this->own_,this->userName_,this->password_);
       EventResponseLoginPlayer* event = new EventResponseLoginPlayer(res);
       server->sendToUser(this->own_,event);
+      if (res == OK)
+      server->sendToUser(this->own_ ,new EventSceneAnimation(WAITING_PLAYERS));
       Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventRequestLoginPlayer");
     }
 

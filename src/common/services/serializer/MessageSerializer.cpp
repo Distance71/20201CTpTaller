@@ -123,17 +123,22 @@ response_t MessageSerializer::sendMessageUserMovement(Socket *socket, Message *m
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendMessageSetStage(Socket *socket, Message *message){
-    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje SetStage.");
-    stage_t stage = ((MessageSetStage *) message)->getStage();
+response_t MessageSerializer::sendMessageBackgroundUpdate(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje BackgroundUpdate.");
+    layer_t layer = ((MessageBackgroundUpdate *) message)->getLayer();
+    stage_t stage = ((MessageBackgroundUpdate *) message)->getStage();
+    int step = ((MessageBackgroundUpdate *) message)->getStep();
 
+    response_t responseLayer = this->sendLayer(socket, layer);
     response_t responseStage = this->sendStage(socket, stage);
+    response_t responseStep = this->sendInteger(socket, step);
 
-    if(!responseStage.ok) {
-        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en SetStage.");
+
+    if(!responseLayer.ok || !responseStep.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en BackgroundUpdate.");
         return this->_handleErrorStatus();
     }
-    Logger::getInstance()->log(DEBUG, "Se envio SetStage con exito.");
+    Logger::getInstance()->log(DEBUG, "Se envio BackgroundUpdate con exito.");
     return this->_handleSuccess();    
 };
 
@@ -213,6 +218,21 @@ response_t MessageSerializer::sendStage(Socket *socket, stage_t &stage){
 
     return this->_handleSuccess();    
 };
+
+response_t MessageSerializer::sendLayer(Socket *socket, layer_t &layer){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje layer.");
+
+    s << layer << endl;
+
+    if (socket->sendMessage(s, sizeof(layer_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de layer.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();  
+}
 
 response_t MessageSerializer::sendInteger(Socket *socket, int &value){
 
@@ -306,7 +326,7 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
     response_t response = this->sendMessageType(socket, type);
 
     if(!response.ok){
-        cout << "No se pudo enviar el tipo" << endl;
+    
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el tipo de mensaje");
     }
 
@@ -335,8 +355,8 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
         case USER_MOVEMENT:
             return this->sendMessageUserMovement(socket, message);
         
-        case SET_STAGE:
-            return this->sendMessageSetStage(socket, message);
+        case BACKGROUND_UPDATE:
+            return this->sendMessageBackgroundUpdate(socket, message);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

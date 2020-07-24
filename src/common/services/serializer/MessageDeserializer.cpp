@@ -1,7 +1,7 @@
 #include "MessageDeserializer.h"
 
 response_t MessageDeserializer::_handleErrorStatus(){
-    Logger::getInstance()->log(ERROR, "No se ha podido obtener el mensaje");
+    Logger::getInstance()->log(DEBUG, "No se ha podido obtener el mensaje");
     response_t response = {false, ERROR_CONNECTION};
     return response;
 }
@@ -167,21 +167,25 @@ response_t MessageDeserializer::getEventUserMovement(Socket *socket, Event* &eve
     return this->_handleSuccess();
 };
 
-response_t MessageDeserializer::getEventSetStage(Socket *socket, Event* &event){
-    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento SetStage en Deserializer");
+response_t MessageDeserializer::getEventBackgroundUpdate(Socket *socket, Event* &event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento BackgroundUpdate en Deserializer");
+    layer_t layer;
     stage_t stage;
+    int step;
 
+    this->getLayer(socket, layer);
     this->getStage(socket, stage);
+    this->getInteger(socket, step);
 
-    Message *message = new MessageSetStage(stage);
+    Message *message = new MessageBackgroundUpdate(layer, stage, step);
     event = message->deSerialize();
     
     if(!event){
-        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento SetStage");
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento BackgroundUpdate");
         return this->_handleErrorStatus();
     }
 
-    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento SetStage en Deserializer");
+    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento BackgroundUpdate en Deserializer");
     return this->_handleSuccess();
 };
 
@@ -236,7 +240,7 @@ response_t MessageDeserializer::getTypeMessage(Socket *socket, message_t &messag
     int res = socket->receiveMessage(s, sizeof(message_t));
  
     if (res < 0 ){
-        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de typeMessage.");
+        Logger::getInstance()->log(DEBUG, "Se ha producido un error al recibir el mensaje de typeMessage.");
         return this->_handleErrorStatus();
     }
 
@@ -335,6 +339,20 @@ response_t MessageDeserializer::getElementType(Socket *socket, elementType_t &el
     elementType = (elementType_t) atoi(msg.c_str());
 }
 
+response_t MessageDeserializer::getLayer(Socket *socket, layer_t &layer){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje layer");
+
+    if (socket->receiveMessage(s, sizeof(layer_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de layer.");
+        return this->_handleErrorStatus();
+    }
+
+    string msg = s.str();
+    layer = (layer_t) atoi(msg.c_str());
+}
+
 response_t MessageDeserializer::getStage(Socket *socket, stage_t &stage){
     stringstream s;
 
@@ -384,8 +402,9 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case USER_MOVEMENT:
             return this->getEventUserMovement(socket, event);
-        case SET_STAGE:
-            return this->getEventSetStage(socket, event);
+
+        case BACKGROUND_UPDATE:
+            return this->getEventBackgroundUpdate(socket, event);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

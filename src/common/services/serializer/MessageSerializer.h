@@ -14,7 +14,7 @@
 #include "../../models/messages/MessageRequestLoginPlayer.h"
 #include "../../models/messages/MessageResponseLoginPlayer.h"
 #include "../../models/messages/MessageUserMovement.h"
-#include "../../models/messages/MessageSetStage.h"
+#include "../../models/messages/MessageBackgroundUpdate.h"
 
 using namespace std;
 
@@ -31,7 +31,7 @@ class MessageSerializer {
         response_t sendMessageRequestLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageResponseLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageUserMovement(Socket *socket, Message *message);
-        response_t sendMessageSetStage(Socket *socket, Message *message);
+        response_t sendMessageBackgroundUpdate(Socket *socket, Message *message);
 
         response_t sendResponseType(Socket *socket, responseStatus_t value);
 
@@ -39,11 +39,12 @@ class MessageSerializer {
         response_t sendMessageType(Socket *socket, message_t type);
         response_t sendInteger(Socket *socket, int &value);
         response_t sendOrientation(Socket *socket, orientation_t &orientation);
-        response_t sendStage(Socket *socket, stage_t &stage);
+        response_t sendLayer(Socket *socket, layer_t &layer);
         response_t sendLongInteger(Socket *socket, size_t &value);
         response_t sendUInt(Socket *socket, unsigned int size);
         response_t sendElementType(Socket *socket, elementType_t elementType);
         response_t sendSceneScreen(Socket *socket, sceneScreen_t scene);
+        response_t sendStage(Socket *socket, stage_t &stage);
 
     public:
         response_t sendSerializedEvent(Socket *socket, Message *message);

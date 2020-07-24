@@ -1,3 +1,4 @@
+ 
 #ifndef _USERS_MANAGER_H_
 #define _USERS_MANAGER_H_
 
@@ -6,6 +7,7 @@
 #include "User.h"
 #include "../../common/providers/GameProvider.h"
 #include "../Server.h"
+#include "../../common/models/BlockingQueue.h"
 
 class Server;
 class User;
@@ -17,6 +19,7 @@ class UsersManager {
         Id lastId_ ;
         unordered_map< Id, User *> notLoggedInUsers_;
         unordered_map< string, User *> loggedInUsers_;
+        BlockingQueue <Message*> * sendingQueue_;
    
     public:
         UsersManager(Server *serverOwn);
@@ -29,9 +32,11 @@ class UsersManager {
         responseStatus_t loginRequest(Id id,string username,string password);
         void runAcceptUsersThread();  
         void acceptUser();
-        
+        void runSendingThread();
         void informDisconnection(string user);
         void informConnection(string user);
+        BlockingQueue <Message*> * getQueue();
+        void sendToAll(Message* message);
 };
 
 #endif 

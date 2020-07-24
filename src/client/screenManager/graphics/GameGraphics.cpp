@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 GameGraphics::GameGraphics(SDL_Renderer* renderer){
-    this->scenario_ = nullptr;
+    //this->scenario_ = nullptr;
     this->image_ = nullptr;
     this->renderer_ = renderer;
     this->createElements();
@@ -13,8 +13,8 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
 
 
 GameGraphics::~GameGraphics(){
-    if (this->scenario_)
-        delete this->scenario_;
+    for(auto scenario:this->scenaries_)
+        delete scenario.second;
     if(this->image_)
         delete this->image_;
     for(auto element:this->elements_)
@@ -24,7 +24,6 @@ GameGraphics::~GameGraphics(){
 }
 
 void GameGraphics::createElements(){
-
     vector<string> sourcePlayers;
     vector<string> sourcePlayersDisconnected;
 
@@ -47,14 +46,14 @@ void GameGraphics::createElements(){
     this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(sourcePlayersDisconnected[3], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_1] = new GraphicsMapElement(sourceEnemy1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_2] = new GraphicsMapElement(sourceEnemy2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-
 }
 
 void GameGraphics::createScenes(){
-    transitionScreen_t transitionScreenStage1 = GameProvider::getConfig()->getTransitionScreenForLevel(LEVEL_ONE);
-    transitionScreen_t transitionScreenStage2 = GameProvider::getConfig()->getTransitionScreenForLevel(LEVEL_TWO);
-    transitionScreen_t transitionScreenStage3 = GameProvider::getConfig()->getTransitionScreenForLevel(LEVEL_THREE);
-    transitionScreen_t transitionScreenStage4 = GameProvider::getConfig()->getTransitionScreenForLevel(LEVEL_FOUR);
+
+    transitionScreen_t transitionScreenStage1 = GameProvider::getConfig()->getTransitionScreenForStage(STAGE_ONE);
+    transitionScreen_t transitionScreenStage2 = GameProvider::getConfig()->getTransitionScreenForStage(STAGE_TWO);
+    transitionScreen_t transitionScreenStage3 = GameProvider::getConfig()->getTransitionScreenForStage(STAGE_THREE);
+    transitionScreen_t transitionScreenStage4 = GameProvider::getConfig()->getTransitionScreenForStage(STAGE_FOUR);
     
     informationScreen_t informationScreen = GameProvider::getConfig()->getinformationScreen();
     
@@ -73,6 +72,7 @@ void GameGraphics::createScenes(){
 }
 
 void GameGraphics::createScenarios(){
+    
     stageSource_t stage1 = GameProvider::getConfig()->getSourcesForStage(STAGE_ONE);
 
     stageSource_t stage2 = GameProvider::getConfig()->getSourcesForStage(STAGE_TWO);
@@ -85,68 +85,43 @@ void GameGraphics::createScenarios(){
     this->scenaries_[STAGE_TWO] = new GraphicsScenario(stage2);
     this->scenaries_[STAGE_THREE] = new GraphicsScenario(stage3);
     this->scenaries_[STAGE_FOUR] = new GraphicsScenario(stage4);
-}
 
-void GameGraphics::update(){
-    SDL_RenderClear(this->renderer_);
-    position_t positionImage;
-    positionImage.axis_x = 0;
-    positionImage.axis_y = 0;
-    positionImage.orientation = FRONT;
-    vector <elementToGraphic_t> renderElementsBackground;
-
-    if (this->image_){
-        this->graphicsQueue_->clear();
-        this->image_->update(positionImage);
-    }
-
-    if (this->scenario_) {
-        this->scenario_->update();
-    }
-
-    bool graphic = true;
-
-    while(graphic && !graphicsQueue_->empty()) {
-        elementToGraphic_t elementToGraphic = graphicsQueue_->pop();
-        if(elementToGraphic.type != END_GRAPHIC)
-            this->elements_[elementToGraphic.type]->update(elementToGraphic.position);
-        else
-            graphic = false;
-    }
-
-    SDL_RenderPresent(this->renderer_);
 }
 
 void GameGraphics::updateEntity(elementType_t type, position_t position){
-    Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en GameGraphics");
-    
-    elementToGraphic_t elementToGraphic;
-    elementToGraphic.position = position;
-    elementToGraphic.type = type;
-    this->graphicsQueue_->push(elementToGraphic);
+   if (type == END_GRAPHIC){
+        SDL_RenderPresent(this->renderer_);
+        SDL_RenderClear(this->renderer_);
+    }
+    else{
+        auto iter = this->elements_.find(type);
+        if (iter != this->elements_.end()){
+            this->elements_[type]->update(position);
+        }
+    }          
 }
 
-void GameGraphics::setBackground(stage_t stage){
 
-    if (this->scenario_){
-        this->scenario_=nullptr;
-    }
-
-    if (this->image_){
-        this->image_=nullptr;
-    }
-    this->scenario_ = this->scenaries_[stage];
-
-    Logger::getInstance()->log(DEBUG, "Se actualiza el background");
+void GameGraphics::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
+    auto iter = this->scenaries_.find(stage); 
+    if (iter != this->scenaries_.end()){
+        this->scenaries_[stage]->update(layer,step);
+    }          
 }
+
 
 void GameGraphics::setImage(sceneScreen_t scene){
-    Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en GameGraphics");
-    if (this->scenario_){
-        this->scenario_= nullptr;
+    usleep(100000);
+    SDL_RenderClear(this->renderer_);
+    position_t position;
+    position.axis_x= 0;
+    position.axis_y= 0;
+    position.orientation= FRONT;
+ 
+    auto iter = this->scenes_.find(scene);
+    if ( iter != this->scenes_.end()){
+        this->scenes_[scene]->update(position);
+        SDL_RenderPresent(this->renderer_);
     }
-    if (this->image_){
-        this->image_=nullptr;
-    }
-    this->image_ = this->scenes_[scene];
+    
 }

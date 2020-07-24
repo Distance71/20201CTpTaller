@@ -67,8 +67,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageEndGame.h
         src/common/models/messages/MessageLog.cpp
         src/common/models/messages/MessageLog.h
-        src/common/models/messages/MessageSetStage.cpp
-        src/common/models/messages/MessageSetStage.h
+        src/common/models/messages/MessageBackgroundUpdate.cpp
+        src/common/models/messages/MessageBackgroundUpdate.h
 
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
@@ -98,8 +98,8 @@ add_executable(tp1taller
         src/common/models/events/EventResponseLoginPlayer.h
         src/common/models/events/EventSceneAnimation.cpp
         src/common/models/events/EventSceneAnimation.h
-        src/common/models/events/EventSetStage.cpp
-        src/common/models/events/EventSetStage.h
+        src/common/models/events/EventBackgroundUpdate.cpp
+        src/common/models/events/EventBackgroundUpdate.h
         src/common/models/events/EventMapElementUpdate.cpp
         src/common/models/events/EventMapElementUpdate.h
         src/common/models/events/EventPlayerDisconnect.cpp
@@ -140,6 +140,8 @@ add_executable(tp1taller
         src/server/models/Map.h
         src/server/models/MapElement.cpp
         src/server/models/MapElement.h
+        src/server/models/MapElementBackground.cpp
+        src/server/models/MapElementBackground.h
         src/server/models/MovementHandler.cpp
         src/server/models/MovementHandler.h
         src/server/models/PlayerController.cpp

@@ -68,7 +68,6 @@ static void* sendMessages(void *arg){
         if (!(messagesQueue->empty())){
             Message *message = messagesQueue->pop(); 
             transmitionManager->sendSerializedMessage(message);
-            cout << "Se va a mandar un mensaje" << endl;
             Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje en TransmitionManager");
         }
     }
@@ -93,7 +92,7 @@ static void* receiveMessages(void *arg){
         Event* event;
         response_t response = deserealizer.getReceivedMessage(socket,event); 
         if (response.status == DISCONNECTION || response.status==ERROR_CONNECTION) {
-            Logger::getInstance()->log(INFO, "Se detecta desconexión del cliente.");
+            Logger::getInstance()->log(INFO, "Se detecta desconexión del Servidor");
             Logger::getInstance()->log(DEBUG, "Se detiene el hilo de recepción para un usuario");
             client->ServerDisconnection();
             return nullptr;
@@ -101,7 +100,7 @@ static void* receiveMessages(void *arg){
         else if (response.ok){
             Logger::getInstance()->log(DEBUG, "Se recibio ok un evento en transmitionManager");
             client->processEvent(event);
-            cout << "Se recibio" << endl;
+
         }
         else{
             Logger::getInstance()->log(ERROR, "Error al recibir el mensaje");

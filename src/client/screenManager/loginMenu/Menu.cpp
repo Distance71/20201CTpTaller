@@ -109,12 +109,9 @@ void Menu::sendCredentialsMessage(){
 }
 
 
-bool Menu::getLoggedInStatus(){
-    cout << this->response_ << endl;
-    if (this->response_ == OK){
-        return true;
-    }
-    return false;
+void Menu::checkStatus(){
+    if (this->response_ == OK)
+        this->clientOwn_->setLoggedInStatus();
 }
 
 void Menu::processEvent(){  
@@ -136,7 +133,6 @@ void Menu::processEvent(){
 }
 
 void Menu::show(){
-    //Logger::getInstance()->log(DEBUG, "Se va a graficar el menu");
     update(-1,-1,false);
     SDL_RenderPresent(this->gRenderer);  
 }
@@ -148,6 +144,6 @@ void Menu::setLoginResponse(responseStatus_t response){
         Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse, ha ingresado mal sus credenciales");
     else
         Logger::getInstance()->log(INFO, "El usuario se ha logueado con exito en Menu");
-    cout << response << endl;
+
     this->response_ = response;
 }

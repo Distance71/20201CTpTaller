@@ -7,6 +7,9 @@ Client::Client(string ipHost,size_t port){
     this->screenManager_= new ScreenManager(this);
     this->transmitionManager_ = new ClientTransmitionManager(this, port);
     this->eventsManager_= new ClientEventsManager(this);
+    this-> loggedIn_ = false;
+    this->serverDisconection_ = false;
+    this->endGame_ = false;
 }
 
 
@@ -27,7 +30,7 @@ bool Client::connectWithServer(){
     this->connected_ = true;
 
     this->transmitionManager_->run();
-    this-> eventsManager_ -> RunProcessEventsThread();
+
 
     Logger::getInstance()->log(DEBUG, "Se creo el socket con exito. Se conecta el cliente con host " + this->ipHost_ + " y puerto " + to_string(this->port_));
 
@@ -54,83 +57,36 @@ int Client::run(){
     Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
     cout << "Se estableció conexión con el servidor " << endl;
 
-    SDL_Event e;
-    while (SDL_PollEvent(&e)){
-        if (e.type == SDL_QUIT){
-            Logger::getInstance()->log(INFO, "El usuario ha cerrado el menu de forma voluntaria");
-            return EXIT_SUCCESS;
-        }
-    }
+    this->screenManager_-> viewLogin();
 
-    bool logged = this->screenManager_-> viewLogin();
-
-     if (!logged){
-         Logger::getInstance()->log(INFO, "El usuario no ha podido loguearse,juego finalizado");
-        disconnect();
-         return EXIT_FAILURE;
-    }
-
-    int res = this->waitForPlayers();
-
-    if(res==0){
-        Logger::getInstance()->log(INFO, "El usuario cerró el juego,juego finalizado");
-        return EXIT_SUCCESS;
-    }
-    
-    else if (res<0){
-        Logger::getInstance()->log(ERROR, "Ha ocurrido un problema con los gráficos al esperar jugadores,juego finalizado");
-        return EXIT_FAILURE;
-    }
-
-    //this->connected_ = true;
-    this->eventsManager_->RunDetectPlayerEventsThread();
-
-    this->screenManager_->graphic();
+    this-> eventsManager_ -> RunProcessEventsThread();
 
     Logger::getInstance()->log(INFO, "El juego ha finalizado normalmente");
+    
+    if (this->serverDisconection_ || this->endGame_)
+        usleep(3000000);
+    
     
     return EXIT_SUCCESS;    
 }
 
+
+
 void Client::updateEntity(elementType_t type, position_t position){
-    Logger::getInstance()->log(DEBUG, "Se va a actualizar un MapElement en Client");
-    if(this->screenManager_){
-        this->screenManager_->updateEntity(type, position);
-    }
-    else{
-         Logger::getInstance()->log(DEBUG, "No se ha podido actualizar entidad,falta crear el objeto ScreenManager");
-    }
+    this->screenManager_->updateEntity(type, position); 
 }
 
-void Client::setBackground(stage_t stage){
-    Logger::getInstance()->log(DEBUG, "Se va a actualizar un background en Client");
-    if(this->screenManager_){
-        this->screenManager_->setBackground(stage);
-    }
-    else{
-         Logger::getInstance()->log(DEBUG, "No se ha podido cargar el background,falta crear el objeto ScreenManager");
-    } 
+void Client::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
+    this->screenManager_->updateBackgroundLayer(layer,stage,step);
 }
-
 
 void Client::setImage(sceneScreen_t scene){
-    Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en Client");
-    if(this->screenManager_){
-        this->screenManager_->setImage(scene);
-    }
-    else{
-         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,falta crear el objeto ScreenManager");
-    } 
+    this->screenManager_->setImage(scene);
 }
 
 
 void Client::setLoginResponse(responseStatus_t response){
-    if(this->screenManager_){
-        this->screenManager_->setLoginResponse(response);
-    }
-    else{
-         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la respuesta en el menu,falta crear el objeto ScreenManager");
-    } 
+    this->screenManager_->setLoginResponse(response);
 }
 
 
@@ -143,6 +99,13 @@ string Client::getIpHost(){
     return this->ipHost_;
 }
 
+bool Client::isLoggedIn(){
+    return this->loggedIn_;
+}
+
+void Client::setLoggedInStatus(){
+    this->loggedIn_ = true;
+}
 
 void Client::sendMessage(Message* message){
     this->transmitionManager_->sendMessage(message);
@@ -158,35 +121,30 @@ bool Client::isConnected(){
 
 void Client::disconnect(){
     this->connected_ = false;
-     Logger::getInstance()->log(DEBUG, "Se desconecta el cliente");
+    Logger::getInstance()->log(DEBUG, "Se desconecta el cliente");
 }
 
+
 void Client::endGame(){
-    this->screenManager_->setImage(GAME_OVER);
-    usleep(5000000);
+    this->endGame_ = true;
+    this->screenManager_->setImage(END_GAME_ANIMATION);
     this->disconnect();
 }
 
-int Client::waitForPlayers(){
-    Logger::getInstance()->log(DEBUG, "Se esperaran jugadores en Client");
-    return this->screenManager_->waitForPlayers();
-}
-
-void Client::initGame(int Xsize, int Ysize){
-    this->screenManager_->stopWaiting();
-    setScreenSizes(Xsize,Ysize);
-}
 
 void Client::processEvent(Event* event){
     this->eventsManager_->pushBackEvent(event);
 }
 
-void Client::updateScreen(){
-    this->screenManager_->graphic();
+void Client::ServerDisconnection(){
+    this->serverDisconection_ = true;
+    this->disconnect();
+    usleep(100000);
+    this->screenManager_->ServerDisconnection();
+    usleep(500000);
+    
 }
 
-void Client::ServerDisconnection(){
-    this->screenManager_->ServerDisconnection();
-    usleep(5000000);
-    this->disconnect();
+void Client::runDetectEventThread(){
+    this->eventsManager_-> RunDetectPlayerEventsThread();
 }
