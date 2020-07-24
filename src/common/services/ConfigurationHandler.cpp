@@ -391,6 +391,19 @@ void ConfigurationHandler::initializeDataServer(){
                     oneEnemy.quantity = DEFAULT_ENEMY_QUANTITY;
                 }
 
+                string pathEnemyLife = getPathStageEnemy(pathStage, numberEnemy, "life");
+
+                //cout << pathEnemyLife << endl;
+                int cantLife = this->parserJson->getUnsignedInt(pathEnemyLife); 
+
+                //cout << cantLife << endl;
+
+                if (cantLife >= 0){
+                    oneEnemy.life = cantLife;
+                } else {
+                    oneEnemy.life = DEFAULT_ENEMY_LIFE;
+                }
+
                 string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
                 int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
                 

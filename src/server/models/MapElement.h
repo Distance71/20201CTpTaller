@@ -26,12 +26,14 @@ class MapElement {
         int size_x_;
         int size_y_;
 
+        int life_;
+
         vector<Action *> getActions();
         vector<State *> getStates();
         
 
     public:
-        MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y);
+        MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y, int life);
         ~MapElement();
        
        
@@ -43,6 +45,8 @@ class MapElement {
         void update();
         position_t getActualPosition();
         string getImageSource();
+        int getLife();
+        int subtractLife(int damage);
 
         elementType_t getType();
         void setType(elementType_t type);

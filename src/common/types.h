@@ -148,6 +148,7 @@ typedef struct {
     int size_x;
     int size_y;
     string sprite;
+    int life;
 } enemy_t;
 
 typedef struct {
