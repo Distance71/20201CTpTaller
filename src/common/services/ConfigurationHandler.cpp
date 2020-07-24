@@ -391,17 +391,17 @@ void ConfigurationHandler::initializeDataServer(){
                     oneEnemy.quantity = DEFAULT_ENEMY_QUANTITY;
                 }
 
-                string pathEnemyLife = getPathStageEnemy(pathStage, numberEnemy, "life");
+                string pathEnemyHealth = getPathStageEnemy(pathStage, numberEnemy, "health");
 
-                //cout << pathEnemyLife << endl;
-                int cantLife = this->parserJson->getUnsignedInt(pathEnemyLife); 
+                //cout << pathEnemyHealth << endl;
+                int cantHealth = this->parserJson->getUnsignedInt(pathEnemyHealth); 
 
-                //cout << cantLife << endl;
+                //cout << cantHealth << endl;
 
-                if (cantLife >= 0){
-                    oneEnemy.life = cantLife;
+                if (cantHealth >= 0){
+                    oneEnemy.health = cantHealth;
                 } else {
-                    oneEnemy.life = DEFAULT_ENEMY_LIFE;
+                    oneEnemy.health = DEFAULT_ENEMY_HEALTH;
                 }
 
                 string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");

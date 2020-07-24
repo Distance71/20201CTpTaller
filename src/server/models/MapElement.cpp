@@ -1,6 +1,6 @@
 #include "MapElement.h"
 
-MapElement::MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y, int life){
+MapElement::MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y, int health, int lives){
     Position* position =new Position(position_.axis_x, position_.axis_y);
     Speed* speed = new Speed(x_speed,y_speed);
     Orientation* orientation = new Orientation(position_.orientation, 0);
@@ -11,7 +11,8 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->size_x_ = size_x;
     this->size_y_ = size_y;
     this->type = type; 
-    this->life_ = life; 
+    this->health_ = health; 
+    this->lives_ = lives; 
 
     if((type == ENEMY_1) || (type == ENEMY_2)){
         EnemyIA* enemyia = new EnemyIA();
@@ -41,13 +42,22 @@ elementType_t MapElement::getType() {
     return this->type;
 }
 
-int MapElement::getLife() {
-    return this->life_;
+int MapElement::getHealth() {
+    return this->health_;
 }
 
-int MapElement::subtractLife(int damage){
+int MapElement::reduceHealth(int damage){
     //TODO check < 0 aca? o el q lo invova?
-    return this->life_ - damage;
+    return this->health_ - damage;
+}
+
+int MapElement::getLives() {
+    return this->lives_;
+}
+
+int MapElement::quitLives(){
+    //TODO check < 0 aca? o el q lo invova?
+    return this->lives_--;
 }
 
 void MapElement::setType(elementType_t type) {

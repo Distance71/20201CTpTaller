@@ -112,11 +112,11 @@ Step::Step(stepParams_t params) {
         int size_x = params.enemies[i].size_x;
         int size_y = params.enemies[i].size_y;
         elementType_t typeEnemy = (elementType_t) params.enemies[i].type;
-        int lifeEnemy = params.enemies[i].life;
+        int healthEnemy = params.enemies[i].health;
         
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             position_t positionEnemy = getPosition(size_x, size_y);
-            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy, 2, 2, size_x, size_y, lifeEnemy);
+            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy, 2, 2, size_x, size_y, healthEnemy);
             this->mapElements_.emplace(this->lastId_, newEnemy);
             this->lastId_++;
         }
@@ -293,7 +293,7 @@ elementType_t Map::getPlayerType(){
 
 void Map::informConnection(string username){
     if (this->players.find(username) == this->players.end()) { 
-        MapElement *newPlayer = new MapElement(this->getPlayerType(), this->getInitialPosition(), 4, 4, 100, 100, 100); 
+        MapElement *newPlayer = new MapElement(this->getPlayerType(), this->getInitialPosition(), 4, 4, 100, 100, 100, 3); 
         this->players.emplace(username, newPlayer);
         this->loggedPlayers_++;
         return;

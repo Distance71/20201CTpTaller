@@ -148,7 +148,7 @@ typedef struct {
     int size_x;
     int size_y;
     string sprite;
-    int life;
+    int health;
 } enemy_t;
 
 typedef struct {
