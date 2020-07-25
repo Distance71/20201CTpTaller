@@ -311,7 +311,7 @@ enemy_t ConfigurationHandler::getBoss(){
         string pathBossHealth = getPathFinalBoss("health");
         int cantBossHealth = this->parserJson->getUnsignedInt(pathBossHealth); 
 
-        if (cantBossHealth >= 0){
+        if (cantBossHealth > 0){
             finalBoss.health = cantBossHealth;
         } else {
             finalBoss.health = DEFAULT_BOSS_HEALTH;
@@ -451,19 +451,6 @@ void ConfigurationHandler::initializeDataServer(){
                     oneEnemy.quantity = DEFAULT_ENEMY_QUANTITY;
                 }
 
-                string pathEnemyHealth = getPathStageEnemy(pathStage, numberEnemy, "health");
-
-                //cout << pathEnemyHealth << endl;
-                int cantHealth = this->parserJson->getUnsignedInt(pathEnemyHealth); 
-
-                //cout << cantHealth << endl;
-
-                if (cantHealth >= 0){
-                    oneEnemy.health = cantHealth;
-                } else {
-                    oneEnemy.health = DEFAULT_ENEMY_HEALTH;
-                }
-
                 string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
                 int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
                 
@@ -493,6 +480,19 @@ void ConfigurationHandler::initializeDataServer(){
                 if (sizeY > sizeScreenY){
                     Logger::getInstance()->log(ERROR, "El ancho del enemigo " + to_string(numberEnemy) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
                     oneEnemy.size_y = sizeScreenY;
+                }
+
+                string pathEnemyHealth = getPathStageEnemy(pathStage, numberEnemy, "health");
+
+                //cout << pathEnemyHealth << endl;
+                int cantHealth = this->parserJson->getUnsignedInt(pathEnemyHealth); 
+
+                //cout << cantHealth << endl;
+
+                if (cantHealth > 0){
+                    oneEnemy.health = cantHealth;
+                } else {
+                    oneEnemy.health = DEFAULT_ENEMY_HEALTH;
                 }
 
                 oneStageParams.totalEnemies.push_back(oneEnemy);
