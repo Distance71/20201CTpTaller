@@ -181,6 +181,46 @@ vector<Step *> Stage::getSteps(){
      return this->steps_;
 }
 
+MapElement* Map::getRandomTarget(Game *game){
+    unsigned int target = RandomGenerate::generate(GameProvider::getQuantityPlayers());
+    //cout << "player target: "<< target << endl;
+
+    unsigned int count = 0;
+    unordered_map<string, MapElement*>::iterator it = game->getMap()->players.begin();
+    while(it != this->players.end())
+    {
+        if (count == target-1) {
+            return it->second;
+        }
+        count++;
+        it++;
+    }
+    //TODO puede no encontrarlo??
+    return nullptr;
+}
+
+void Map::setTargetsForStep(currentStep_t currentStep, Game *game){
+  size_t actualLevel = currentStep.level;
+  levels_[actualLevel]->setTargetsForStep(currentStep, game);
+}
+
+void Level::setTargetsForStep(currentStep_t currentStep, Game *game){
+    size_t actualStage = currentStep.stage;
+    stages_[actualStage]->setTargetsForStep(currentStep, game);
+}
+
+void Stage::setTargetsForStep(currentStep_t currentStep, Game *game){
+    size_t actualStep = currentStep.step;
+    steps_[actualStep]->setTargetsForStep(game);
+}
+
+void Step::setTargetsForStep(Game *game){
+    for(auto mapElement : this->mapElements_) {
+        MapElement *target = getRandomTarget(game);
+        mapElement.second->setTarget(target);
+    }
+}
+
 void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
 

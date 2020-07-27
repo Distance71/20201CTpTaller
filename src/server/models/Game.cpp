@@ -8,6 +8,10 @@ Game::Game(Server *server){
 Game::~Game(){
 }
 
+Map* Game::getMap(){
+    return map_;
+}
+
 void Game::run() {
 
     usleep(10000);
@@ -80,6 +84,7 @@ void Game::runStep(currentStep_t actualStep){
     double elaptedTimeMS = GameProvider::getElaptedTimeFPS();
 
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
+    map_->setTargetsForStep(actualStep, this);
 
     while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){
         updateState(actualStep);

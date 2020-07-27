@@ -15,7 +15,7 @@
 #include "../../common/types.h"
 #include "MapElementBackground.h"
 
-#include "../../common/models/events/Event.h"
+#include "../../common/services/RandomGenerate.h"
 #include "../../common/models/events/Event.h"
 
 #include "Game.h"
@@ -31,7 +31,7 @@ class Map {
     private:
     vector <Level *> levels_;
     
-    void updatePlayers(Game *game);
+    //void updatePlayers(Game *game);
     size_t loggedPlayers_ = 0;
 
     elementType_t getPlayerType();
@@ -53,6 +53,9 @@ class Map {
 
     void updateFinal(Game* game);
 
+    MapElement* getRandomTarget(Game* game);
+    void setTargetsForStep(currentStep_t actualStep, Game *game);
+
     void initializeStep(currentStep_t currentStep, Game *game);
 
     void informDisconnection(string user); 
@@ -68,6 +71,7 @@ class Level: public Map {
     Level(levelParams_t &params);
     void addStage(Stage *stage);
     vector<Stage *> getStages();
+    void setTargetsForStep(currentStep_t actualStep, Game *game);
     void update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players);
     void updateFinal(Game *game, unordered_map<string, MapElement*> players, MapElement* finalBoss);
     void initializeStep(currentStep_t currentStep, Game *game);
@@ -89,6 +93,7 @@ class Stage: public Level {
     Stage(stageParams_t &params);
     void addStep(Step *step);
     vector<Step *> getSteps();
+    void setTargetsForStep(currentStep_t actualStep, Game *game);
     void update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players);
     void updateFinal(Game *game, unordered_map<string, MapElement*> players, MapElement* finalBoss, stage_t stage);
     bool endStep(size_t numberStep);
@@ -106,7 +111,7 @@ class Step: public Stage {
     Step();
     Step(stepParams_t params);
 
-
+    void setTargetsForStep(Game *game);
     void update(Game *game);
     void initializeStep(Game *game);
     bool endStep();

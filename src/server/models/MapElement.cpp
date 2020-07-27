@@ -14,9 +14,23 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->health_ = health; 
     this->lives_ = lives; 
 
-    if((type == ENEMY_1) || (type == ENEMY_2)){
+
+    //WIP / TODO es un ejemplo
+    //if((type == ENEMY_1) || (type == ENEMY_2)){
+    if((type == ENEMY_1) ){
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
+    }
+    if((type == ENEMY_2)){
+        ProjectileIA* enemyia = new ProjectileIA();
+        addAction("ProjectileIA", enemyia);
+    }
+}
+
+void MapElement::setTarget(MapElement* target) {
+    if(type == ENEMY_1){
+        EnemyIA* enemyia = this->getAction<EnemyIA>("EnemyIA");
+        enemyia->setTarget(target);
     }
 }
 

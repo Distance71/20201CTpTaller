@@ -119,6 +119,8 @@ add_executable(tp1taller
         src/common/services/ConfigurationHandler.h
         src/common/services/Logger.cpp
         src/common/services/Logger.h
+        src/common/services/RandomGenerate.cpp
+        src/common/services/RandomGenerate.h
         src/common/services/ParserJson.cpp
         src/common/services/ParserJson.h
         src/common/services/ThreadsHandler.cpp
@@ -133,7 +135,11 @@ add_executable(tp1taller
         src/common/models/Action.cpp
         src/common/models/Action.h
         src/server/models/EnemyIA.cpp
-        src/server/models/EnemyIA.h
+        src/server/models/EnemyIA.h        
+        src/server/models/ProjectileIA.cpp
+        src/server/models/ProjectileIA.h
+        src/server/models/BossIA.cpp
+        src/server/models/BossIA.h
         src/server/models/Game.cpp
         src/server/models/Game.h
         src/server/models/Map.cpp

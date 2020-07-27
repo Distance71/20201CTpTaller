@@ -46,6 +46,7 @@ class Game {
     void run();
     void movePlayer(string user, orientation_t orientation);
     void sendEvent(Event *event);
+    Map* getMap();
 
     void informDisconnection(string user); 
     void informConnection(string user); 

@@ -13,6 +13,8 @@
 #include "../../common/types.h"
 #include "PlayerController.h"
 #include "EnemyIA.h"
+#include "ProjectileIA.h"
+#include "BossIA.h"
 
 using namespace std;
 
@@ -44,6 +46,7 @@ class MapElement {
         template<typename T> T* getAction(const string name);
         
         void update();
+        void setTarget(MapElement* target);
         position_t getActualPosition();
         string getImageSource();
         
