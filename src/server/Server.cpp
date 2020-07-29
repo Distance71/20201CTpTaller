@@ -93,6 +93,10 @@ void Server::moveUser(string user, orientation_t orientation){
     this->game_->movePlayer(user, orientation);
 }
 
+void Server::shootUser(string user){
+    this->game_->shootPlayer(user);
+}
+
 responseStatus_t Server::loginRequest(Id id,string username,string password){
     return this->usersManager_->loginRequest(id,username,password);
 }

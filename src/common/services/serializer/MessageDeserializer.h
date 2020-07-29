@@ -9,6 +9,7 @@
 #include "../../services/Logger.h"
 #include <stdlib.h>
 
+#include "../../models/messages/MessageUserShoot.h"
 #include "../../models/messages/MessageSceneAnimation.h"
 #include "../../models/messages/MessageEndGame.h"
 #include "../../models/messages/MessageGameInit.h"
@@ -41,6 +42,7 @@ class MessageDeserializer {
         response_t getEventResponseLoginPlayer(Socket *socket, Event* &event);
         response_t getEventUserMovement(Socket *socket, Event* &event);
         response_t getEventBackgroundUpdate(Socket *socket, Event* &event);
+        response_t getEventUserShoot(Socket *socket, Event *event);
         
         response_t getInteger(Socket *socket, int &value);
         response_t getUInteger(Socket *socket, unsigned int &value);

@@ -36,6 +36,7 @@ static void * detectPlayerEvents(void* arg){
     Uint8 down;
     Uint8 right;
     Uint8 left;
+    Uint8 shoot;
     
     const Uint8 *keystate;
     
@@ -61,6 +62,7 @@ static void * detectPlayerEvents(void* arg){
         down = keystate[SDL_SCANCODE_DOWN];
         right =  keystate[SDL_SCANCODE_RIGHT];
         left = keystate[SDL_SCANCODE_LEFT];
+        shoot = keystate[SDL_SCANCODE_SPACE];
 
         orientation_t movementOrientation = NOT_MOVEMENT;
 
@@ -103,6 +105,10 @@ static void * detectPlayerEvents(void* arg){
             MessageUserMovement* message = new MessageUserMovement(movementOrientation);  
             client->sendMessage(message);
         }
+
+
+        if (shoot)
+            client->sendMessage(new MessageUserShoot());
 
         SDL_Delay(17);
         

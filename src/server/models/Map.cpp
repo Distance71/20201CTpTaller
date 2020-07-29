@@ -221,6 +221,12 @@ void Step::setTargetsForStep(Game *game){
     }
 }
 
+void Map::cleanStage(){
+    for (auto onePlayer : this->players){
+        onePlayer.second->cleanShoots();
+    }
+}
+
 void Map::update(currentStep_t currentStep, Game *game){
     size_t actualLevel = currentStep.level;
 
@@ -254,6 +260,15 @@ void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, 
     for(auto mapElementPlayer : players){
         
         position_t actualPosition = mapElementPlayer.second->getActualPosition();
+        vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
+
+        for (auto projectile : projectiles){
+            projectile->update();
+            position_t actualPositionProjectile = projectile->getActualPosition();
+            Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+            game->sendEvent(eventUpdateProjectile);
+        }
+
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
     }
@@ -269,9 +284,18 @@ void Step::update(Game *game){
             mapElementDead.push_back(mapElement.first);
         } else {
             position_t actualPosition = mapElement.second->getActualPosition();
+            vector<MapElement*> projectiles = mapElement.second->getShoots();
+
+            for (auto projectile : projectiles){
+                position_t actualPositionProjectile = projectile->getActualPosition();
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+                game->sendEvent(eventUpdateProjectile);
+            }
+
             Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
             game->sendEvent(eventUpdate);
         }
+
     }
 
     for(auto oneIdDead : mapElementDead){
@@ -293,6 +317,18 @@ void Map::movePlayer(string user, orientation_t orientation){
     }
     onePlayer->moveTo(orientation);
     Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+}
+
+void Map::shootPlayer(string user){
+    MapElement *onePlayer = this->players[user];
+    
+    if (!onePlayer){
+        Logger::getInstance()->log(ERROR, "No se encontro el jugador para disparar.");
+        return;
+    }
+    
+    onePlayer->shoot();
+    Logger::getInstance()->log(DEBUG, "Se efectua disparo del jugador.");
 }
 
 void Map::informDisconnection(string username){   

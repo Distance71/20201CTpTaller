@@ -54,6 +54,7 @@ typedef enum message {
     RESPONSE_LOGIN_PLAYER = 6,
     USER_MOVEMENT = 7,
     BACKGROUND_UPDATE = 8,
+    USER_SHOOT = 9,
 } message_t;
 
 typedef enum {
@@ -141,6 +142,7 @@ typedef enum {
     END_GRAPHIC = 12,
     BACKGROUND = 13,
     BOSS_ENEMY = 14,
+    PROJECTILE = 15,
 } elementType_t;
 
 typedef struct {
@@ -151,6 +153,12 @@ typedef struct {
     string sprite;
     int health;
 } enemy_t;
+
+typedef struct {
+    int size_x;
+    int size_y;
+    string sprite;
+} projectile_t;
 
 typedef struct {
     stage_t stage;

@@ -15,6 +15,7 @@
 #include "../../models/messages/MessageResponseLoginPlayer.h"
 #include "../../models/messages/MessageUserMovement.h"
 #include "../../models/messages/MessageBackgroundUpdate.h"
+#include "../../models/messages/MessageUserShoot.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class MessageSerializer {
         response_t sendMessageResponseLoginPlayer(Socket *socket, Message *message);
         response_t sendMessageUserMovement(Socket *socket, Message *message);
         response_t sendMessageBackgroundUpdate(Socket *socket, Message *message);
+        response_t sendMessageUserShoot(Socket *socket, Message *message);
 
         response_t sendResponseType(Socket *socket, responseStatus_t value);
 

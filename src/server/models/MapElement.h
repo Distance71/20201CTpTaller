@@ -25,6 +25,7 @@ class MapElement {
         elementType_t type;
         unordered_map<string, State *> states_;
         unordered_map<string, Action *> actions_;
+        vector<MapElement*> projectiles_; 
         int size_x_;
         int size_y_;
 
@@ -58,7 +59,11 @@ class MapElement {
         elementType_t getType();
         void setType(elementType_t type);
 
-        void moveTo(orientation_t oneOrientation);    
+        void moveTo(orientation_t oneOrientation); 
+
+        vector<MapElement*> getShoots();   
+        void shoot();
+        void cleanShoots();
 
         void setIdElement(Id oneIdElement);
         Id getIdElement();
