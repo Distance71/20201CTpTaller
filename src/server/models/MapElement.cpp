@@ -18,16 +18,11 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
         EnemyIA* enemyia = new EnemyIA();
         addAction("EnemyIA", enemyia);
     }
-
-    //WIP es un ejemplo
-    /*     if((type == ENEMY_1) ){
-        EnemyIA* enemyia = new EnemyIA();
-        addAction("EnemyIA", enemyia);
-    }
-    if((type == ENEMY_2)){
+    
+    if(type == PROJECTILE){
         ProjectileIA* enemyia = new ProjectileIA();
         addAction("ProjectileIA", enemyia);
-    } */
+    }
 }
 
 void MapElement::setTarget(MapElement* target) {
@@ -97,9 +92,15 @@ Id MapElement::getIdElement(){
 }
 
 void MapElement::update(){
+
+    for(auto projectiile : projectiles_){
+        projectiile->update();
+    }
+
     for(auto action : actions_){
         action.second->update(states_); 
     }
+
 }
 
 position_t MapElement::getActualPosition(){
@@ -231,4 +232,23 @@ bool MapElement::leftScreen(){
     }
     
     return (this->getState<Position>("Position")->getX() - this->size_x_ >= (int)GameProvider::getWidth());
+}
+
+vector<MapElement*> MapElement::getShoots(){
+    return this->projectiles_;
+};
+
+void MapElement::shoot(){
+
+    position_t position = this->getActualPosition();
+    MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, 10, 10, 10, 1);
+    this->projectiles_.push_back(oneProjetil);
+};
+
+void MapElement::cleanShoots(){
+    
+    for (auto oneProjectile : this->projectiles_)
+        delete oneProjectile;
+        
+    this->projectiles_ = vector<MapElement*>();
 }

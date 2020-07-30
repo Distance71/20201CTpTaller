@@ -36,6 +36,7 @@ void GameGraphics::createElements(){
     string sourceEnemy2 = GameProvider::getConfig()->getPathEnemy(1);
 
     string sourceBoss = GameProvider::getConfig()->getPathFinalBoss();
+    string sourceProjectile = "assets/Projectile/projectile.png";
     
     this->elements_[PLAYER_1] = new GraphicsMapElement(sourcePlayers[0], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[PLAYER_2] = new GraphicsMapElement(sourcePlayers[1], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
@@ -48,6 +49,7 @@ void GameGraphics::createElements(){
     this->elements_[ENEMY_1] = new GraphicsMapElement(sourceEnemy1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[ENEMY_2] = new GraphicsMapElement(sourceEnemy2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[BOSS_ENEMY] = new GraphicsMapElement(sourceBoss, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[PROJECTILE] = new GraphicsMapElement(sourceProjectile, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
 }
 
 void GameGraphics::createScenes(){

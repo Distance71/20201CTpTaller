@@ -142,6 +142,11 @@ response_t MessageSerializer::sendMessageBackgroundUpdate(Socket *socket, Messag
     return this->_handleSuccess();    
 };
 
+response_t MessageSerializer::sendMessageUserShoot(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se envio UserShoot con exito.");
+    return this->_handleSuccess(); 
+};
+
 response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t value){
     stringstream s;
 
@@ -322,7 +327,7 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
     message_t type = message->getType();
 
     Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje en Serializer");
-
+    
     response_t response = this->sendMessageType(socket, type);
 
     if(!response.ok){
@@ -357,6 +362,9 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
         
         case BACKGROUND_UPDATE:
             return this->sendMessageBackgroundUpdate(socket, message);
+        
+        case USER_SHOOT:
+            return this->sendMessageUserShoot(socket, message);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

@@ -76,6 +76,7 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     // if (isFinalStage)
     //     this->runFinal();
 
+    this->map_->cleanStage();
     this->sendStageCleared(actualStep.stage);
     
 }
@@ -164,6 +165,10 @@ void Game::sendStageCleared(stage_t stage){
 
 void Game::movePlayer(string user, orientation_t orientation){
     this->map_->movePlayer(user, orientation);
+}
+
+void Game::shootPlayer(string user){
+    this->map_->shootPlayer(user);
 }
 
 void Game::sendEvent(Event *event){

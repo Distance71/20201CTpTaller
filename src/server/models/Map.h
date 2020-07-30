@@ -50,11 +50,13 @@ class Map {
     void initializePositionPlayers(gameParams_t &gameSettings);
     void initializeFinalBoss(gameParams_t &gameSettings);
     void movePlayer(string user, orientation_t orientation);
+    void shootPlayer(string user);
 
     void updateFinal(Game* game);
 
     MapElement* getRandomTarget(Game* game);
     void setTargetsForStep(currentStep_t actualStep, Game *game);
+    void cleanStage();
 
     void initializeStep(currentStep_t currentStep, Game *game);
 
@@ -114,6 +116,7 @@ class Step: public Stage {
     void setTargetsForStep(Game *game);
     void update(Game *game);
     void initializeStep(Game *game);
+    void shootEnemy();
     bool endStep();
 };
 

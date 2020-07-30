@@ -189,6 +189,21 @@ response_t MessageDeserializer::getEventBackgroundUpdate(Socket *socket, Event* 
     return this->_handleSuccess();
 };
 
+response_t MessageDeserializer::getEventUserShoot(Socket *socket, Event *event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento EndGame en Deserializer");
+
+    Message *message = new MessageUserShoot();
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento EndGame");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento EndGame en Deserializer");
+
+    return this->_handleSuccess();
+};
+
 response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     stringstream s;
 
@@ -377,7 +392,7 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
     if (res.status == DISCONNECTION || res.status == ERROR_CONNECTION){
         return res;
     }
-
+    
     switch (messageType){
         case SCENE_ANIMATION:
             return this->getEventSceneAnimatiom(socket, event);
@@ -405,6 +420,13 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case BACKGROUND_UPDATE:
             return this->getEventBackgroundUpdate(socket, event);
+
+        case USER_SHOOT:{
+            Message *message = new MessageUserShoot();
+            event = message->deSerialize();
+            return this->_handleSuccess();
+            // return this->getEventUserShoot(socket, event);
+        }
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");
