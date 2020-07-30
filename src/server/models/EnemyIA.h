@@ -6,12 +6,15 @@
 #include "../../common/services/Logger.h"
 #include "../../common/types.h"
 #include "../../server/models/MapElement.h"
+#include "../../common/services/RandomGenerate.h"
 
 class MapElement;
 
 class EnemyIA: public MovementHandler {
 	private:
-		MapElement* target_;	
+		MapElement* target_;
+
+		int randomMovement(int yp, int ys);
 
 	public:
 		EnemyIA();

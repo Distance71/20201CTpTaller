@@ -8,43 +8,87 @@ void EnemyIA::setTarget(MapElement* target){
 }
 
 void EnemyIA::update(unordered_map<string, State *> states_){
-    //En principio mueve el enemigo a velocidad constante para simular que está estatico
     Logger::getInstance()->log(DEBUG, "Entro al update de Enemy IA");
     State* position = states_.at("Position");
     State* speed = states_.at("Speed");
     State* orientation = states_.at("Orientation");
 
     int xp = position->getX();
+    int yp = position->getY();
     int xs = speed->getX();
+    int ys = speed->getY();
     
     int new_xp;
     int new_yp;
+    bool abort = false;
 
     //TODO check si target esta muerto o se desconecto
-    //if (this->target_ != nullptr) {
+    //si perdio el objetivo:
+    if (this->target_ == nullptr) {
+        if (orientation->getX() == FRONT){
+            new_xp = xp + xs;
+        } else {
+            new_xp = xp - xs;
+        }
+        position->setX(new_xp);
+        return;
+    }
+
+    //si tiene objetivo:
     auto ubicacion = this->target_->getActualPosition();
     //cout << "posicion buscada x " << ubicacion.axis_x<< endl;
     //cout << "posicion buscada y " << ubicacion.axis_y<< endl;
 
-    //WIP es un ejemplo
-
+    // eje x siempre constante
     if (orientation->getX() == FRONT){
         new_xp = xp + xs;
+        if(xp >= ubicacion.axis_x){
+            abort = true;
+        }
     } else {
         new_xp = xp - xs;
+        if(xp <= ubicacion.axis_x){
+            abort = true;
+        }
     }
+
+    //eje y persigue al target hasta sobrepasarlo
+    if (!abort) {
+        if (yp < ubicacion.axis_y){
+            new_yp = yp + ys;
+        } else {
+            if (yp > ubicacion.axis_y){
+                new_yp = yp - ys;
+            }
+        }
+    } else {
+        // habria q agregarle el factor tiempo para mejorar el comportamiento (vale la pena?)
+        //new_yp = randomMovement(yp, ys);
+    }
+
     position->setX(new_xp);
 
+ //   cout<<"altura"<<GameProvider::getHeight()<<  " y es "<< new_yp<< endl;
 
-    int yp = position->getY();
-    if (yp < ubicacion.axis_y){
-        new_yp = yp + xs;
-        position->setY(new_yp);
-    } else {
-        if (yp > ubicacion.axis_y){
-            new_yp = yp - xs;
-            position->setY(new_yp);
-        }
+    int screen_height = GameProvider::getHeight();
+    if ((abort && new_yp == yp) || new_yp < 0 || new_yp > screen_height - 62 ) { return;}  
+    position->setY(new_yp);
+}
+
+int EnemyIA::randomMovement(int yp, int ys){
+
+    switch (RandomGenerate::generate(100))
+    {
+    case 1 ... 20:
+        return yp + ys;
+        break;
+    case 80 ... 100:
+         return yp - ys;
+        break;
+    
+    default:
+        return yp;
+        break;
     }
 
 
