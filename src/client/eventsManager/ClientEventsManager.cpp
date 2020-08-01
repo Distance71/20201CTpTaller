@@ -37,7 +37,8 @@ static void * detectPlayerEvents(void* arg){
     Uint8 right;
     Uint8 left;
     Uint8 shoot;
-    
+    bool canShoot = true;
+
     const Uint8 *keystate;
     
  
@@ -107,8 +108,14 @@ static void * detectPlayerEvents(void* arg){
         }
 
 
-        if (shoot)
+        if (shoot && canShoot){
             client->sendMessage(new MessageUserShoot());
+            canShoot = false;
+        }
+
+        // Si Space no esta presionada, le habilitamos poder dispara en proximo ciclo
+        if (!shoot)
+            canShoot = true;
 
         SDL_Delay(17);
         
