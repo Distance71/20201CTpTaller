@@ -15,7 +15,7 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->lives_ = lives; 
 
     if((type == ENEMY_1) || (type == ENEMY_2)){
-        EnemyIA* enemyia = new EnemyIA();
+        EnemyIA* enemyia = new EnemyIA(this);
         addAction("EnemyIA", enemyia);
     }
     
@@ -41,6 +41,10 @@ MapElement::~MapElement() {
     for (auto oneAction : this->actions_){
         delete oneAction.second;
     }
+}
+
+int MapElement::getSizeY(){
+    return this->size_y_;
 }
 
 vector<Action *> MapElement::getActions() {
