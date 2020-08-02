@@ -230,7 +230,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
 
 }
 
-bool MapElement::leftScreen(){++++
+bool MapElement::leftScreen(){
 
     if (this->getState<Orientation>("Orientation")->getX() == BACK){
         return (this->getState<Position>("Position")->getX() + this->size_x_ <= 0);

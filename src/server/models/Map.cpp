@@ -286,12 +286,13 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         
         for (auto projectile : projectiles){
             projectile->update();
+            //mapElementPlayer.second->checkCollisions(mapElements, players);
             position_t actualPositionProjectile = projectile->getActualPosition();
             Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
             game->sendEvent(eventUpdateProjectile);
         }
 
-        mapElementPlayer.second->checkCollisions(mapElements, players);
+        //mapElementPlayer.second->checkCollisions(mapElements, players);
 
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -302,11 +303,14 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
         } else {
+        //mapElementPlayer.second->checkCollisions(mapElements, players);
+
             position_t actualPosition = mapElement.second->getActualPosition();
             vector<MapElement*> projectiles = mapElement.second->getShoots();
 
             for (auto projectile : projectiles){
                 projectile->update();
+                //mapElementPlayer.second->checkCollisions(mapElements, players);
                 position_t actualPositionProjectile = projectile->getActualPosition();
                 Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
                 game->sendEvent(eventUpdateProjectile);
