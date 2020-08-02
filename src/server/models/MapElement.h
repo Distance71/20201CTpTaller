@@ -56,6 +56,7 @@ class MapElement {
         int reduceHealth(int damage);
         int getLives();
         int quitLives();
+        int getSizeX();
         int getSizeY();
 
         elementType_t getType();

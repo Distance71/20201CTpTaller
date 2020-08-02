@@ -304,12 +304,18 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                 projectile->update();
                 mapElement.second->checkEnemyProyectileToPlayersCollisions(players, projectile);
                 position_t actualPositionProjectile = projectile->getActualPosition();
-                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-                game->sendEvent(eventUpdateProjectile);
+
+                if (this->shouldSend(projectile, actualPositionProjectile)){
+                    Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+                    game->sendEvent(eventUpdateProjectile);
+                }
             }
 
-            Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
-            game->sendEvent(eventUpdate);
+            if (this->shouldSend(mapElement.second, actualPosition)){
+                Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
+                game->sendEvent(eventUpdate);
+            }
+
         }
     }
 
@@ -321,6 +327,10 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             delete enemyDead;
         }
     }
+}
+
+bool Step::shouldSend(MapElement* oneMapElement, position_t actualPosition){
+    return ((actualPosition.axis_x >= -oneMapElement->getSizeX()) && actualPosition.axis_y <= GameProvider::getWidth());
 }
 
 void Step::killElementWithExplosion(Game *game, MapElement *mapElement){
