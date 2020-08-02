@@ -44,6 +44,10 @@ MapElement::~MapElement() {
     }
 }
 
+int MapElement::getSizeX(){
+    return this->size_x_;
+}
+
 int MapElement::getSizeY(){
     return this->size_y_;
 }

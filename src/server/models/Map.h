@@ -108,6 +108,7 @@ class Step: public Stage {
     unordered_map<Id, MapElement*> mapElements_;
     Id lastId_ = 0;
     position_t getPosition(int sizeMapElement_x, int sizeMapElement_y);
+    bool shouldSend(MapElement* oneMapElement, position_t actualPosition);
 
     public:
     Step();
