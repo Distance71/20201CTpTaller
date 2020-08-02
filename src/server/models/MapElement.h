@@ -40,8 +40,7 @@ class MapElement {
 
     public:
         MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y, int health, int lives=1);
-        ~MapElement();
-       
+        ~MapElement(); 
        
         template<typename T> void addState(const string name, T *t);
         template<typename T> void addAction(const string name, T *t);
@@ -71,6 +70,12 @@ class MapElement {
         void setIdElement(Id oneIdElement);
         Id getIdElement();
         bool leftScreen();
+
+        void checkPlayerProyectileToEnemiesCollisions(unordered_map<Id, MapElement*> mapElements, MapElement* projectile);
+        void checkEnemyToPlayersCollisions(unordered_map<string, MapElement*> players);
+        void checkEnemyProyectileToPlayersCollisions(unordered_map<string, MapElement*> players, MapElement* projectile);
+        bool checkPlayerToEnemyCollision(MapElement* mapElement);
+        CollisionRectangle* getCollisionRectangle();
 };
 
 template<typename T>

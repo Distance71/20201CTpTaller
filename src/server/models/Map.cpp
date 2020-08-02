@@ -270,13 +270,21 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         
         for (auto projectile : projectiles){
             projectile->update();
-            //mapElementPlayer.second->checkCollisions(mapElements, players);
+            mapElementPlayer.second->checkPlayerProyectileToEnemiesCollisions(this->mapElements_, projectile);
             position_t actualPositionProjectile = projectile->getActualPosition();
             Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
             game->sendEvent(eventUpdateProjectile);
         }
 
-        //mapElementPlayer.second->checkCollisions(mapElements, players);
+        for(auto enemy: this->mapElements_) {
+            bool isCollision = mapElementPlayer.second->checkPlayerToEnemyCollision(enemy.second);
+            if(isCollision) {
+                mapElementDead.push_back(enemy.first);
+                informDisconnection(mapElementPlayer.first);
+                killElementWithExplosion(game, mapElementPlayer.second);
+                killElementWithExplosion(game, enemy.second);
+            }
+        }
 
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -284,17 +292,17 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
+        mapElement.second->checkEnemyToPlayersCollisions(players);
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
         } else {
-        //mapElementPlayer.second->checkCollisions(mapElements, players);
 
             position_t actualPosition = mapElement.second->getActualPosition();
             vector<MapElement*> projectiles = mapElement.second->getShoots();
 
             for (auto projectile : projectiles){
                 projectile->update();
-                //mapElementPlayer.second->checkCollisions(mapElements, players);
+                mapElement.second->checkEnemyProyectileToPlayersCollisions(players, projectile);
                 position_t actualPositionProjectile = projectile->getActualPosition();
                 Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
                 game->sendEvent(eventUpdateProjectile);
@@ -303,7 +311,6 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
             game->sendEvent(eventUpdate);
         }
-
     }
 
     for(auto oneIdDead : mapElementDead){
@@ -313,8 +320,23 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             this->mapElements_.erase(oneIdDead);
             delete enemyDead;
         }
-               
     }
+}
+
+void Step::killElementWithExplosion(Game *game, MapElement *mapElement){
+    position_t actualPosition = mapElement->getActualPosition();
+    
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_1, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_2, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_3, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_4, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_5, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_6, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_7, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_8, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_9, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_10, actualPosition));
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_11, actualPosition));
 }
 
 void Map::movePlayer(string user, orientation_t orientation){

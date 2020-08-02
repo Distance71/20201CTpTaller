@@ -143,6 +143,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
             orientation->setX(FRONT);
             if(new_xp <= (screen_widht - this->size_x_)){
                 position->setX(new_xp);
+                collisionRectangle_->setX(new_xp);
             }
             break;
 
@@ -151,6 +152,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
             orientation->setX(BACK);
             if(new_xp >= 0){
                 position->setX(new_xp);
+                collisionRectangle_->setX(new_xp);
             }        
             break;
 
@@ -158,6 +160,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_yp = yp-ys;
             if (new_yp >= 0){
                 position->setY(new_yp);
+                collisionRectangle_->setY(new_yp);
             }
             break;
 
@@ -165,6 +168,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_yp = yp + ys;
             if(new_yp <= (screen_height - this->size_y_)){
                 position->setY(new_yp);
+                collisionRectangle_->setY(new_yp);
             } 
             break;
 
@@ -175,11 +179,12 @@ void MapElement::moveTo(orientation_t oneOrientation){
 
             if (new_xp <= screen_widht - this->size_x_){
                 position->setX(new_xp);
+                collisionRectangle_->setX(new_xp);
             }
 
             if (new_yp > 0){
                 position->setY(new_yp);
-
+                collisionRectangle_->setY(new_yp);
             }        
             break;
 
@@ -190,11 +195,12 @@ void MapElement::moveTo(orientation_t oneOrientation){
 
             if (new_xp <= (screen_widht - this->size_x_)){
                 position->setX(new_xp);
+                collisionRectangle_->setX(new_xp);
             }
 
             if (new_yp <= (screen_height - this->size_y_)){
                 position->setY(new_yp);
-
+                collisionRectangle_->setY(new_yp);
             }        
             break;
 
@@ -204,11 +210,12 @@ void MapElement::moveTo(orientation_t oneOrientation){
             orientation->setX(BACK);
             if (new_xp >= 0){
                 position->setX(new_xp);
+                collisionRectangle_->setX(new_xp);
             }
 
             if (new_yp <= (screen_height - this->size_y_)){
                 position->setY(new_yp);
-
+                collisionRectangle_->setY(new_yp);
             }        
             break;
 
@@ -219,16 +226,39 @@ void MapElement::moveTo(orientation_t oneOrientation){
 
             if (new_xp >= 0 ){
                 position->setX(new_xp);
+                collisionRectangle_->setX(new_xp);
             }
 
             if (new_yp >= 0){
                 position->setY(new_yp);
-
+                collisionRectangle_->setY(new_yp);
             }        
             break;
     }
+}
+
+CollisionRectangle* MapElement::getCollisionRectangle(){
+    return this->collisionRectangle_;
+}
+
+bool MapElement::checkPlayerToEnemyCollision(MapElement* mapElement){
+    auto rectangle = mapElement->getCollisionRectangle();
+    return this->collisionRectangle_->isCollision(rectangle);
+}
+
+void MapElement::checkPlayerProyectileToEnemiesCollisions(unordered_map<Id, MapElement*> mapElements, MapElement* projectile){
 
 }
+
+void MapElement::checkEnemyToPlayersCollisions(unordered_map<string, MapElement*> players){
+
+}
+
+void MapElement::checkEnemyProyectileToPlayersCollisions(unordered_map<string, MapElement*> players, MapElement* projectile){
+
+}
+
+
 
 bool MapElement::leftScreen(){
 

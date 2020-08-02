@@ -118,6 +118,7 @@ class Step: public Stage {
     void initializeStep(Game *game);
     void shootEnemy();
     bool endStep();
+    void killElementWithExplosion(Game *game, MapElement *mapElement);
 };
 
 #endif

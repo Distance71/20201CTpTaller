@@ -2,6 +2,7 @@
 #define COLLISION_RECTANGLE_H_
 
 using namespace std;
+#include <iostream>
 
 class CollisionRectangle {
 
@@ -17,6 +18,8 @@ public:
 	bool isCollision(CollisionRectangle* other);
 	int getX();
 	int getY();
+    void setX(int x);
+    void setY(int y);
 	int getWidth();
 	int getHeight();
 };
