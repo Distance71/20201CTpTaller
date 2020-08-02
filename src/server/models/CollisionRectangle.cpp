@@ -11,8 +11,8 @@ bool CollisionRectangle::isCollision(CollisionRectangle* other) {
 	int otherX = other->getX();
 	int otherY = other->getY();
 
-    cout << "El valor x " << this->x_ << "El otro " << otherX << endl;
-    cout << "El valor y " << this->y_ << "El otro " << otherY << endl;
+    cout << "El valor x " << this->x_ << " El otro " << otherX << endl;
+    cout << "El valor y " << this->y_ << " El otro " << otherY << endl;
 
 	bool result = ((this->x_ + this->width_) < otherX || 
                     (otherX + other->getWidth()) < this->x_ || 

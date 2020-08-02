@@ -3,7 +3,7 @@
 EnemyIA::EnemyIA(MapElement* owner){
     owner_ = owner;
     timeShoot = 0;
-    timeLimitShoot = 100 + RandomGenerate::generate(FRECUENCIA);
+    timeLimitShoot = 70 + RandomGenerate::generate(FRECUENCIA);
 }
 
 void EnemyIA::setTarget(MapElement* target){
@@ -40,8 +40,6 @@ void EnemyIA::update(unordered_map<string, State *> states_){
 
     //si tiene objetivo:
     auto ubicacion = this->target_->getActualPosition();
-    //cout << "posicion buscada x " << ubicacion.axis_x<< endl;
-    //cout << "posicion buscada y " << ubicacion.axis_y<< endl;
 
     // eje x siempre constante
     if (orientation->getX() == FRONT){
@@ -55,6 +53,10 @@ void EnemyIA::update(unordered_map<string, State *> states_){
             abort = true;
         }
     }
+
+    // Si no esta en la pantalla q no dispare y no persiga (80 es casi el largo del enemigo)
+    int screen_width = GameProvider::getWidth();
+    if (xp < 80 || screen_width < xp) return;    
 
     //eje y persigue al target hasta sobrepasarlo
     if (!abort) {
@@ -72,8 +74,6 @@ void EnemyIA::update(unordered_map<string, State *> states_){
         
     position->setX(new_xp);
 
- //   cout<<"altura"<<GameProvider::getHeight()<<  " y es "<< new_yp<< endl;
-
     randomShoot();
     int screen_height = GameProvider::getHeight();
     if ((abort && new_yp == yp) || new_yp < 0 || new_yp > screen_height - this->owner_->getSizeY()) { return;}  
@@ -88,17 +88,8 @@ void EnemyIA::randomShoot(){
     {
        this->owner_->shoot();
        this->timeShoot = 0;
-       this->timeLimitShoot = 100 + RandomGenerate::generate(FRECUENCIA);
+       this->timeLimitShoot = 70 + RandomGenerate::generate(FRECUENCIA);
     }
-    
-/*     switch (RandomGenerate::generate(100))
-    {
-    case 20 ... 22:
-        this->owner_->shoot();
-        break;
-    default:
-        break;
-    } */
 }
 
 int EnemyIA::randomMovement(int yp, int ys){
