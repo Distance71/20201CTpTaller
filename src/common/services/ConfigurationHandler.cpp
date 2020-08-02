@@ -417,10 +417,6 @@ void ConfigurationHandler::initializeDataServer(){
             string pathEnemiesBase = getPathStageEnemy(pathStage, -1, "");
             int sizeEnemies = this->parserJson->getSizeArray(pathEnemiesBase);
 
-            //cout << "params " << pathStage << endl;
-            //cout << "params " << pathEnemiesBase << endl;
-            //cout << "params " << sizeEnemies << endl;
-            
             unsigned int cantTotalType1 = 0;
             unsigned int cantTotalType2 = 0;
 
@@ -428,8 +424,6 @@ void ConfigurationHandler::initializeDataServer(){
                 Logger::getInstance()->log(DEBUG, "Se comienza a analizar el enemigo " + to_string(numberEnemy) + " del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
             
                 enemy_t oneEnemy;
-
-                // string pathEnemyType = getPathStageEnemy(pathStage, numberEnemy, "type");
 
                 elementType_t typeEnemy = ENEMY_1;
 
@@ -440,10 +434,8 @@ void ConfigurationHandler::initializeDataServer(){
 
                 string pathEnemyQuantity = getPathStageEnemy(pathStage, numberEnemy, "quantity");
 
-                //cout << pathEnemyQuantity << endl;
                 int cantEnemy = this->parserJson->getUnsignedInt(pathEnemyQuantity); 
 
-                //cout << cantEnemy << endl;
 
                 if (cantEnemy >= 0){
                     oneEnemy.quantity = cantEnemy;
@@ -454,7 +446,6 @@ void ConfigurationHandler::initializeDataServer(){
                 string pathEnemySizeX = getPathStageEnemy(pathStage, numberEnemy, "sizeX");
                 int sizeX = this->parserJson->getUnsignedInt(pathEnemySizeX);
                 
-                //cout << "El size x " << sizeX << endl;
                 if (sizeX >= 0){
                     oneEnemy.size_x = sizeX;
                 } else {
@@ -474,9 +465,6 @@ void ConfigurationHandler::initializeDataServer(){
                     oneEnemy.size_y = DEFAULT_SIZE_Y;
                 }
 
-                //cout << "El size y " << sizeY << endl;
-                //cout << "le bg " << sizeScreenX << endl;
-
                 if (sizeY > sizeScreenY){
                     Logger::getInstance()->log(ERROR, "El ancho del enemigo " + to_string(numberEnemy) + " supera el ancho de la pantalla. Se settea este ultimo como su ancho");
                     oneEnemy.size_y = sizeScreenY;
@@ -484,10 +472,7 @@ void ConfigurationHandler::initializeDataServer(){
 
                 string pathEnemyHealth = getPathStageEnemy(pathStage, numberEnemy, "health");
 
-                //cout << pathEnemyHealth << endl;
                 int cantHealth = this->parserJson->getUnsignedInt(pathEnemyHealth); 
-
-                //cout << cantHealth << endl;
 
                 if (cantHealth > 0){
                     oneEnemy.health = cantHealth;
@@ -505,6 +490,11 @@ void ConfigurationHandler::initializeDataServer(){
         this->gameData.levelParams.push_back(oneLevelParams);
     }    
 
+    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del proyectil.");
+    
+    projectile_t commonProjectile = getCommonProjectile();
+    this->gameData.commonProjectile = commonProjectile;
+
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del enemigo final.");
     
     enemy_t finalBoss = getBoss();
@@ -516,7 +506,6 @@ void ConfigurationHandler::initializeDataClient(){
 
     size_t quantityPlayers = this->parserJson->getSizeArray(PATH_PLAYERS);
 
-    //cout << "quant " << quantityPlayers << endl;
     GameProvider::setQuantityPlayers(quantityPlayers);
     
     vector<user_t> users (quantityPlayers);
@@ -541,23 +530,16 @@ void ConfigurationHandler::initializeDataClient(){
         string pathLevel = getPathLevel(numberLevel);
         int sizeStage = this->parserJson->getSizeArray(PATH_LEVEL);
         levelParams_t oneLevelParams;
-
-        //cout << "pathLevel " << pathLevel << endl;
-        //cout << "quantStages " << sizeStage << endl;
-
+        
         for(int numberStage = 0; numberStage < sizeStage; numberStage++){
             Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del stage " + to_string(numberStage) + " para el nivel " + to_string(numberLevel));
             stageParams_t oneStageParams;
 
             string pathStage = getPathStage(numberLevel, numberStage);
 
-            //cout << "pathStage " << pathStage << endl;
-
             string pathTransitionInit = pathStage + "/transitionInit";
-            //cout << "pathTransitionInit " << pathTransitionInit << endl;
             oneStageParams.pathTransitionScreen.initPath = this->parserJson->getString(pathTransitionInit);
 
-            //cout << "pathTransitionInit " << pathTransitionInit << endl;
             string pathTransitionEnd = pathStage + "/transitionEnd";
             oneStageParams.pathTransitionScreen.endPath = this->parserJson->getString(pathTransitionEnd);
 
@@ -631,6 +613,11 @@ void ConfigurationHandler::initializeDataClient(){
 
         this->gameData.levelParams.push_back(oneLevelParams);
     }
+
+    Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del proyectil.");
+    
+    projectile_t commonProjectile = getCommonProjectile();
+    this->gameData.commonProjectile = commonProjectile;
 
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del enemigo final.");
     
@@ -729,14 +716,64 @@ player_t ConfigurationHandler::getPlayerParam(int numberPlayer){
     return onePlayer;
 }
 
-string ConfigurationHandler::getPathEnemy(int numberTypeEnemy){
+enemy_t ConfigurationHandler::getEnemyData(int numberTypeEnemy){
 
-    string pathEnemy = "";
+    enemy_t enemy;
 
     if (this->gameData.levelParams[0].stagesParams[0].totalEnemies.size() > numberTypeEnemy){
-        pathEnemy = this->gameData.levelParams[0].stagesParams[0].totalEnemies[numberTypeEnemy].sprite;
+        enemy = this->gameData.levelParams[0].stagesParams[0].totalEnemies[numberTypeEnemy];
     }
 
-    return pathEnemy;
+    return enemy;
 
+}
+
+string ConfigurationHandler::getPathCommonProjectile(string paramProjectile){
+    return PATH_ROJECTILE + paramProjectile;
+}
+
+projectile_t ConfigurationHandler::getCommonProjectile(){
+
+    projectile_t oneProjectile;
+
+    unsigned int sizeScreenX = GameProvider::getWidth();
+    unsigned int sizeScreenY = GameProvider::getHeight();
+
+    string pathProjectileSizeX = getPathCommonProjectile("sizeX");
+    int sizeXProjectile = this->parserJson->getUnsignedInt(pathProjectileSizeX);
+
+    if (sizeXProjectile >= 0){
+        oneProjectile.size_x = sizeXProjectile;
+    } else {
+        oneProjectile.size_x = DEFAULT_SIZE_X;
+    }
+
+    if (sizeXProjectile > sizeScreenX){
+        Logger::getInstance()->log(ERROR, "El largo del proyectil supera el largo de la pantalla. Se settea este ultimo como su largo");
+        oneProjectile.size_x = sizeScreenX;
+    }
+
+    string pathProjectileSizeY = getPathCommonProjectile("sizeY");
+    int sizeYProjectile = this->parserJson->getUnsignedInt(pathProjectileSizeY);
+    if (sizeYProjectile >= 0){
+        oneProjectile.size_y = sizeYProjectile;
+    } else {
+        oneProjectile.size_y = DEFAULT_SIZE_Y;
+    }
+
+    if (sizeYProjectile > sizeScreenY){
+        Logger::getInstance()->log(ERROR, "El ancho del proyectil supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+        oneProjectile.size_y = sizeScreenY;
+    }   
+
+    if (!this->isServer_){
+        string pathProjectileSprite = getPathCommonProjectile("sprite");
+        oneProjectile.sprite = this->parserJson->getString(pathProjectileSprite); 
+    }
+
+    return oneProjectile;    
+}
+
+projectile_t ConfigurationHandler::getProjectileData(){
+    return this->gameData.commonProjectile;
 }

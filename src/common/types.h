@@ -261,6 +261,7 @@ typedef struct {
     vector<levelParams_t> levelParams;
     vector<user_t> playersParams;
     loginScreen_t loginScreen;
+    projectile_t commonProjectile;
     enemy_t finalBoss;
 } gameParams_t;
 

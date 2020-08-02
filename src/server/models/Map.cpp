@@ -283,13 +283,15 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         
         position_t actualPosition = mapElementPlayer.second->getActualPosition();
         vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
-        //mapElementPlayer.second->checkCollisions(mapElements, players);
+        
         for (auto projectile : projectiles){
             projectile->update();
             position_t actualPositionProjectile = projectile->getActualPosition();
             Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
             game->sendEvent(eventUpdateProjectile);
         }
+
+        mapElementPlayer.second->checkCollisions(mapElements, players);
 
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -303,11 +305,12 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             position_t actualPosition = mapElement.second->getActualPosition();
             vector<MapElement*> projectiles = mapElement.second->getShoots();
 
-            // for (auto projectile : projectiles){
-            //     position_t actualPositionProjectile = projectile->getActualPosition();
-            //     Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-            //     game->sendEvent(eventUpdateProjectile);
-            // }
+            for (auto projectile : projectiles){
+                projectile->update();
+                position_t actualPositionProjectile = projectile->getActualPosition();
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+                game->sendEvent(eventUpdateProjectile);
+            }
 
             Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
             game->sendEvent(eventUpdate);
@@ -388,7 +391,8 @@ elementType_t Map::getPlayerType(){
 
 void Map::informConnection(string username){
     if (this->players.find(username) == this->players.end()) { 
-        MapElement *newPlayer = new MapElement(this->getPlayerType(), this->getInitialPosition(), 4, 4, 100, 100, 100, 3); 
+        player_t onePlayer = GameProvider::getConfig()->getPlayerParam(this->loggedPlayers_);
+        MapElement *newPlayer = new MapElement(this->getPlayerType(), this->getInitialPosition(), 4, 4, onePlayer.size_x, onePlayer.size_y, 100, 3); 
         this->players.emplace(username, newPlayer);
         this->loggedPlayers_++;
         return;

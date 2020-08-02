@@ -1,6 +1,9 @@
 #include "EnemyIA.h"
 
-EnemyIA::EnemyIA(){
+EnemyIA::EnemyIA(MapElement* owner){
+    owner_ = owner;
+    timeShoot = 0;
+    timeLimitShoot = 100 + RandomGenerate::generate(FRECUENCIA);
 }
 
 void EnemyIA::setTarget(MapElement* target){
@@ -31,6 +34,7 @@ void EnemyIA::update(unordered_map<string, State *> states_){
             new_xp = xp - xs;
         }
         position->setX(new_xp);
+        randomShoot();        
         return;
     }
 
@@ -65,14 +69,36 @@ void EnemyIA::update(unordered_map<string, State *> states_){
         // habria q agregarle el factor tiempo para mejorar el comportamiento (vale la pena?)
         //new_yp = randomMovement(yp, ys);
     }
-
+        
     position->setX(new_xp);
 
  //   cout<<"altura"<<GameProvider::getHeight()<<  " y es "<< new_yp<< endl;
 
+    randomShoot();
     int screen_height = GameProvider::getHeight();
-    if ((abort && new_yp == yp) || new_yp < 0 || new_yp > screen_height - 62 ) { return;}  
+    if ((abort && new_yp == yp) || new_yp < 0 || new_yp > screen_height - this->owner_->getSizeY()) { return;}  
     position->setY(new_yp);
+    
+}
+
+void EnemyIA::randomShoot(){
+    this->timeShoot++;
+    //cout<<"contador "<<this->timeShoot<< endl;
+    if (this->timeShoot > this->timeLimitShoot)
+    {
+       this->owner_->shoot();
+       this->timeShoot = 0;
+       this->timeLimitShoot = 100 + RandomGenerate::generate(FRECUENCIA);
+    }
+    
+/*     switch (RandomGenerate::generate(100))
+    {
+    case 20 ... 22:
+        this->owner_->shoot();
+        break;
+    default:
+        break;
+    } */
 }
 
 int EnemyIA::randomMovement(int yp, int ys){

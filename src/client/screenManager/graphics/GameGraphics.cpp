@@ -23,19 +23,20 @@ GameGraphics::~GameGraphics(){
 }
 
 void GameGraphics::createElements(){
-    vector<string> sourcePlayers;
+    vector<player_t> players;
     vector<string> sourcePlayersDisconnected;
 
     for (int i = 0; i < 4; i++){
         player_t onePlayer = GameProvider::getConfig()->getPlayerParam(i);
-        sourcePlayers.push_back(onePlayer.sprite);
-        sourcePlayersDisconnected.push_back(onePlayer.spriteDisconnected);
+        players.push_back(onePlayer);
     }
 
-    string sourceEnemy1 = GameProvider::getConfig()->getPathEnemy(0);
-    string sourceEnemy2 = GameProvider::getConfig()->getPathEnemy(1);
+    enemy_t enemy1 = GameProvider::getConfig()->getEnemyData(0);
+    enemy_t enemy2 = GameProvider::getConfig()->getEnemyData(1);
 
     string sourceBoss = GameProvider::getConfig()->getPathFinalBoss();
+    projectile_t projectile = GameProvider::getConfig()->getProjectileData();
+
     string sourceProjectile = "assets/Projectile/projectile.png";
     string sourceExplosionAnimation1 = "assets/Explosions/Explosion1_1.png";
     string sourceExplosionAnimation2 = "assets/Explosions/Explosion1_2.png";
@@ -49,30 +50,30 @@ void GameGraphics::createElements(){
     string sourceExplosionAnimation10 = "assets/Explosions/Explosion1_10.png";
     string sourceExplosionAnimation11 = "assets/Explosions/Explosion1_11.png";
 
-    this->elements_[PLAYER_1] = new GraphicsMapElement(sourcePlayers[0], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PLAYER_2] = new GraphicsMapElement(sourcePlayers[1], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PLAYER_3] = new GraphicsMapElement(sourcePlayers[2], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PLAYER_4] = new GraphicsMapElement(sourcePlayers[3], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PLAYER_1_OUT] = new GraphicsMapElement(sourcePlayersDisconnected[0], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PLAYER_2_OUT] = new GraphicsMapElement(sourcePlayersDisconnected[1], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PLAYER_3_OUT] = new GraphicsMapElement(sourcePlayersDisconnected[2], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(sourcePlayersDisconnected[3], GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[ENEMY_1] = new GraphicsMapElement(sourceEnemy1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[ENEMY_2] = new GraphicsMapElement(sourceEnemy2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[PLAYER_1] = new GraphicsMapElement(players[0].sprite, players[0].size_x, players[0].size_y, 0, 0, FRONT);
+    this->elements_[PLAYER_2] = new GraphicsMapElement(players[1].sprite, players[1].size_x, players[1].size_y, 0, 0, FRONT);
+    this->elements_[PLAYER_3] = new GraphicsMapElement(players[2].sprite, players[2].size_x, players[2].size_y, 0, 0, FRONT);
+    this->elements_[PLAYER_4] = new GraphicsMapElement(players[3].sprite, players[3].size_x, players[3].size_y, 0, 0, FRONT);
+    this->elements_[PLAYER_1_OUT] = new GraphicsMapElement(players[0].spriteDisconnected, players[0].size_x, players[0].size_y, 0, 0, FRONT);
+    this->elements_[PLAYER_2_OUT] = new GraphicsMapElement(players[1].spriteDisconnected, players[1].size_x, players[1].size_y, 0, 0, FRONT);
+    this->elements_[PLAYER_3_OUT] = new GraphicsMapElement(players[2].spriteDisconnected, players[2].size_x, players[2].size_y, 0, 0, FRONT);
+    this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(players[3].spriteDisconnected, players[3].size_x, players[3].size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_1] = new GraphicsMapElement(enemy1.sprite, enemy1.size_x, enemy1.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_2] = new GraphicsMapElement(enemy2.sprite, enemy2.size_x, enemy2.size_y, 0, 0, FRONT);
     this->elements_[BOSS_ENEMY] = new GraphicsMapElement(sourceBoss, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[PROJECTILE] = new GraphicsMapElement(sourceProjectile, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[PROJECTILE] = new GraphicsMapElement(projectile.sprite, projectile.size_x, projectile.size_y, 0, 0, FRONT);
 
-    this->elements_[EXPLOSION_ANIMATION_1] = new GraphicsMapElement(sourceExplosionAnimation1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_2] = new GraphicsMapElement(sourceExplosionAnimation2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_3] = new GraphicsMapElement(sourceExplosionAnimation3, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_4] = new GraphicsMapElement(sourceExplosionAnimation4, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_5] = new GraphicsMapElement(sourceExplosionAnimation5, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_6] = new GraphicsMapElement(sourceExplosionAnimation6, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_7] = new GraphicsMapElement(sourceExplosionAnimation7, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_8] = new GraphicsMapElement(sourceExplosionAnimation8, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_9] = new GraphicsMapElement(sourceExplosionAnimation9, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_10] = new GraphicsMapElement(sourceExplosionAnimation10, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
-    this->elements_[EXPLOSION_ANIMATION_11] = new GraphicsMapElement(sourceExplosionAnimation11, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_1] = new GraphicsMapElement(sourceExplosionAnimation1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_2] = new GraphicsMapElement(sourceExplosionAnimation2, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_3] = new GraphicsMapElement(sourceExplosionAnimation3, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_4] = new GraphicsMapElement(sourceExplosionAnimation4, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_5] = new GraphicsMapElement(sourceExplosionAnimation5, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_6] = new GraphicsMapElement(sourceExplosionAnimation6, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_7] = new GraphicsMapElement(sourceExplosionAnimation7, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_8] = new GraphicsMapElement(sourceExplosionAnimation8, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_9] = new GraphicsMapElement(sourceExplosionAnimation9, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_10] = new GraphicsMapElement(sourceExplosionAnimation10, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    // this->elements_[EXPLOSION_ANIMATION_11] = new GraphicsMapElement(sourceExplosionAnimation11, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
 
 }
 

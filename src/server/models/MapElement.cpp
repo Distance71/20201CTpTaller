@@ -16,7 +16,7 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     collisionRectangle_ = new CollisionRectangle(position_.axis_x, position_.axis_y, size_x, size_y);
 
     if((type == ENEMY_1) || (type == ENEMY_2)){
-        EnemyIA* enemyia = new EnemyIA();
+        EnemyIA* enemyia = new EnemyIA(this);
         addAction("EnemyIA", enemyia);
     }
     
@@ -42,6 +42,10 @@ MapElement::~MapElement() {
     for (auto oneAction : this->actions_){
         delete oneAction.second;
     }
+}
+
+int MapElement::getSizeY(){
+    return this->size_y_;
 }
 
 vector<Action *> MapElement::getActions() {
@@ -226,7 +230,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
 
 }
 
-bool MapElement::leftScreen(){
+bool MapElement::leftScreen(){++++
 
     if (this->getState<Orientation>("Orientation")->getX() == BACK){
         return (this->getState<Position>("Position")->getX() + this->size_x_ <= 0);
@@ -242,7 +246,12 @@ vector<MapElement*> MapElement::getShoots(){
 void MapElement::shoot(){
 
     position_t position = this->getActualPosition();
-    MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, 10, 10, 10, 1);
+    position.axis_x = position.axis_x + (this->size_x_ / 2);
+    position.axis_y = position.axis_y + (this->size_y_ / 2); 
+
+    projectile_t projectile = GameProvider::getConfig()->getProjectileData();
+
+    MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, projectile.size_x, projectile.size_y, 10, 1);
     this->projectiles_.push_back(oneProjetil);
 };
 

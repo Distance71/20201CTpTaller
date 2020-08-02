@@ -18,6 +18,7 @@
 #define PATH_BASE_LOGIN_SCREEN "/configuracion/loginScreen/"
 #define PATH_INFORMATION_SCREEN "/configuracion/informationScreen/"
 #define PATH_QUANTITY_PLAYERS "/configuracion/quantityPlayers"
+#define PATH_ROJECTILE "/configuracion/projectiles/"
 #define PATH_FINAL_BOSS "/configuracion/finalBoss/"
 
 #define DEFAULT_SIZE_X 110
@@ -73,6 +74,9 @@ class ConfigurationHandler {
         string getPathLoginScreen(string paramLogin);
         loginScreen_t readLoginScreen();
         
+        string getPathCommonProjectile(string paramProjectile);
+        projectile_t getCommonProjectile();
+
         string getPathFinalBoss(string paramBossEnemy);
         enemy_t getBoss();
 
@@ -93,9 +97,10 @@ class ConfigurationHandler {
         informationScreen_t getinformationScreen();
         gameParams_t getGameParams();
         player_t getPlayerParam(int numberPlayer);
-        string getPathEnemy(int numberTypeEnemy);
+        enemy_t getEnemyData(int numberTypeEnemy);
         transitionScreen_t getTransitionScreenForStage(int oneStage);
         string getPathFinalBoss();
+        projectile_t getProjectileData();
 
 };
 
