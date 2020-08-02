@@ -280,8 +280,8 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             bool isCollision = mapElementPlayer.second->checkPlayerToEnemyCollision(enemy.second);
             if(isCollision) {
                 mapElementDead.push_back(enemy.first);
-                informDisconnection(mapElementPlayer.first);
-                killElementWithExplosion(game, mapElementPlayer.second);
+                //informDisconnection(mapElementPlayer.first);
+                //killElementWithExplosion(game, mapElementPlayer.second);
                 killElementWithExplosion(game, enemy.second);
             }
         }
@@ -292,6 +292,9 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
+        position_t position = mapElement.second->getActualPosition();
+        mapElement.second->getCollisionRectangle()->setX(position.axis_x); //TODO: Send to other place
+        mapElement.second->getCollisionRectangle()->setY(position.axis_y);
         mapElement.second->checkEnemyToPlayersCollisions(players);
         if (mapElement.second->leftScreen()){
             mapElementDead.push_back(mapElement.first);
@@ -327,15 +330,25 @@ void Step::killElementWithExplosion(Game *game, MapElement *mapElement){
     position_t actualPosition = mapElement->getActualPosition();
     
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_1, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_2, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_3, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_4, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_5, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_6, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_7, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_8, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_9, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_10, actualPosition));
+    usleep(100000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_11, actualPosition));
 }
 
