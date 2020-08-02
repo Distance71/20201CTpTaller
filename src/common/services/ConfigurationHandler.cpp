@@ -494,7 +494,7 @@ void ConfigurationHandler::initializeDataServer(){
     
     projectile_t commonProjectile = getCommonProjectile();
     this->gameData.commonProjectile = commonProjectile;
-    
+
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del enemigo final.");
     
     enemy_t finalBoss = getBoss();
@@ -716,15 +716,15 @@ player_t ConfigurationHandler::getPlayerParam(int numberPlayer){
     return onePlayer;
 }
 
-string ConfigurationHandler::getPathEnemy(int numberTypeEnemy){
+enemy_t ConfigurationHandler::getEnemyData(int numberTypeEnemy){
 
-    string pathEnemy = "";
+    enemy_t enemy;
 
     if (this->gameData.levelParams[0].stagesParams[0].totalEnemies.size() > numberTypeEnemy){
-        pathEnemy = this->gameData.levelParams[0].stagesParams[0].totalEnemies[numberTypeEnemy].sprite;
+        enemy = this->gameData.levelParams[0].stagesParams[0].totalEnemies[numberTypeEnemy];
     }
 
-    return pathEnemy;
+    return enemy;
 
 }
 

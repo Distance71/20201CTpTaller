@@ -372,7 +372,8 @@ elementType_t Map::getPlayerType(){
 
 void Map::informConnection(string username){
     if (this->players.find(username) == this->players.end()) { 
-        MapElement *newPlayer = new MapElement(this->getPlayerType(), this->getInitialPosition(), 4, 4, 100, 100, 100, 3); 
+        player_t onePlayer = GameProvider::getConfig()->getPlayerParam(this->loggedPlayers_);
+        MapElement *newPlayer = new MapElement(this->getPlayerType(), this->getInitialPosition(), 4, 4, onePlayer.size_x, onePlayer.size_y, 100, 3); 
         this->players.emplace(username, newPlayer);
         this->loggedPlayers_++;
         return;

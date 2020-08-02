@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "INFO"
+            "level": "ERROR"
         },
         "screen":{
             "width": 1280,
@@ -49,7 +49,7 @@
             "endGame": "assets/TransitionScreens/gameOver.jpg",
             "waitingPlayers": "assets/TransitionScreens/waitingForPlayers.jpg",
             "disconnection": "assets/TransitionScreens/disconnection.png",
-            "gameOver": "assets/TransitionScreens/gameOver.png"
+            "gameOver": "assets/TransitionScreens/gameOver.jpg"
         },
         "level": [
             {
@@ -64,13 +64,13 @@
                 "layer7": "",
                 "enemies": [
                     {
-                        "sizeX": 85,
-                        "sizeY": 45,
+                        "sizeX": 120,
+                        "sizeY": 80,
                         "sprite": "assets/Enemies/enemigo1.png"				  
                     },
                     {
-                        "sizeX": 90,
-                        "sizeY": 56,
+                        "sizeX": 100,
+                        "sizeY": 70,
                         "sprite": "assets/Enemies/enemigo2.png"
                     }
                 ]
@@ -87,13 +87,13 @@
                 "layer7": "assets/Stage/Level2/layer_7.png",
                 "enemies": [
                     {
-                        "sizeX": 85,
-                        "sizeY": 45,
+                        "sizeX": 120,
+                        "sizeY": 80,
                         "sprite": "assets/Enemies/enemigo8.png"				  
                     },
                     {
-                        "sizeX": 95,
-                        "sizeY": 62,
+                        "sizeX": 100,
+                        "sizeY": 70,
                         "sprite": "assets/Enemies/enemigo9.png"
                     }
                 ]
@@ -110,13 +110,13 @@
                 "layer7": "assets/Stage/Level3/layer_7.png",
                 "enemies": [
                     {
-                        "sizeX": 90,
-                        "sizeY": 56,
+                        "sizeX": 120,
+                        "sizeY": 80,
                         "sprite": "assets/Enemies/enemigo6.png"				  
                     },
                     {
-                        "sizeX": 95,
-                        "sizeY": 62,
+                        "sizeX": 100,
+                        "sizeY": 70,
                         "sprite": "assets/Enemies/enemigo9.png"
                     }
                 ]
@@ -133,17 +133,27 @@
                 "layer7": "",
                 "enemies": [
                     {
-                        "sizeX": 90,
-                        "sizeY": 56,
+                        "sizeX": 120,
+                        "sizeY": 80,
                         "sprite": "assets/Enemies/enemigo6.png"				  
                     },
                     {
-                        "sizeX": 95,
-                        "sizeY": 62,
+                        "sizeX": 100,
+                        "sizeY": 70,
                         "sprite": "assets/Enemies/enemigo9.png"
                     }
                 ]
             }
-        ]
+        ],    
+        "projectiles": {
+            "sizeX": 33,
+            "sizeY": 14,
+            "sprite": "assets/Projectile/projectile.png" 
+        },
+        "finalBoss":{
+            "sizeX": 23,
+            "sizeY": 80,
+            "sprite": "assets/Enemies/enemigo8.png"
+        }
     }
 }

@@ -97,7 +97,7 @@ class ConfigurationHandler {
         informationScreen_t getinformationScreen();
         gameParams_t getGameParams();
         player_t getPlayerParam(int numberPlayer);
-        string getPathEnemy(int numberTypeEnemy);
+        enemy_t getEnemyData(int numberTypeEnemy);
         transitionScreen_t getTransitionScreenForStage(int oneStage);
         string getPathFinalBoss();
         projectile_t getProjectileData();
