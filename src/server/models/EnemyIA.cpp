@@ -65,7 +65,7 @@ void EnemyIA::update(unordered_map<string, State *> states_){
         // habria q agregarle el factor tiempo para mejorar el comportamiento (vale la pena?)
         //new_yp = randomMovement(yp, ys);
     }
-
+        
     position->setX(new_xp);
 
  //   cout<<"altura"<<GameProvider::getHeight()<<  " y es "<< new_yp<< endl;
@@ -73,6 +73,7 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     int screen_height = GameProvider::getHeight();
     if ((abort && new_yp == yp) || new_yp < 0 || new_yp > screen_height - 62 ) { return;}  
     position->setY(new_yp);
+
 }
 
 int EnemyIA::randomMovement(int yp, int ys){

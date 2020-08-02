@@ -241,7 +241,12 @@ vector<MapElement*> MapElement::getShoots(){
 void MapElement::shoot(){
 
     position_t position = this->getActualPosition();
-    MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, 10, 10, 10, 1);
+    position.axis_x = position.axis_x + (this->size_x_ / 2);
+    position.axis_y = position.axis_y + (this->size_y_ / 2); 
+
+    projectile_t projectile = GameProvider::getConfig()->getProjectileData();
+
+    MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, projectile.size_x, projectile.size_y, 10, 1);
     this->projectiles_.push_back(oneProjetil);
 };
 
