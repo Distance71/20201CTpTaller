@@ -114,7 +114,7 @@ class Step: public Stage {
     Step(stepParams_t params);
 
     void setTargetsForStep(Game *game);
-    void update(Game *game);
+    void update(Game *game, unordered_map<string, MapElement*> players);
     void initializeStep(Game *game);
     void shootEnemy();
     bool endStep();

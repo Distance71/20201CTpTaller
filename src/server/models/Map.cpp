@@ -258,11 +258,32 @@ void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, 
     size_t actualStep = currentStep.step;
     updateBackground(game, currentStep.stage);
 
+    // for(auto mapElementPlayer : players){
+        
+    //     position_t actualPosition = mapElementPlayer.second->getActualPosition();
+    //     vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
+    //     mapElementPlayer.second->checkCollisions(mapElements, players, finalBoss);
+    //     for (auto projectile : projectiles){
+    //         projectile->update();
+    //         position_t actualPositionProjectile = projectile->getActualPosition();
+    //         //Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+    //         //game->sendEvent(eventUpdateProjectile);
+    //     }
+
+    //     Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+    //     game->sendEvent(eventUpdate);
+    // }
+    steps_[actualStep]->update(game, players);
+}
+
+void Step::update(Game *game, unordered_map<string, MapElement*> players){
+    vector<Id> mapElementDead;
+
     for(auto mapElementPlayer : players){
         
         position_t actualPosition = mapElementPlayer.second->getActualPosition();
         vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
-
+        //mapElementPlayer.second->checkCollisions(mapElements, players);
         for (auto projectile : projectiles){
             projectile->update();
             position_t actualPositionProjectile = projectile->getActualPosition();
@@ -273,11 +294,6 @@ void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, 
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
     }
-    steps_[actualStep]->update(game);
-}
-
-void Step::update(Game *game){
-    vector<Id> mapElementDead;
 
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
@@ -287,11 +303,11 @@ void Step::update(Game *game){
             position_t actualPosition = mapElement.second->getActualPosition();
             vector<MapElement*> projectiles = mapElement.second->getShoots();
 
-            for (auto projectile : projectiles){
-                position_t actualPositionProjectile = projectile->getActualPosition();
-                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-                game->sendEvent(eventUpdateProjectile);
-            }
+            // for (auto projectile : projectiles){
+            //     position_t actualPositionProjectile = projectile->getActualPosition();
+            //     Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+            //     game->sendEvent(eventUpdateProjectile);
+            // }
 
             Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
             game->sendEvent(eventUpdate);

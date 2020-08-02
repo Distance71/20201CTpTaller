@@ -146,6 +146,8 @@ add_executable(tp1taller
         src/server/models/BossIA.h
         src/server/models/Game.cpp
         src/server/models/Game.h
+        src/server/models/CollisionRectangle.cpp
+        src/server/models/CollisionRectangle.h
         src/server/models/Map.cpp
         src/server/models/Map.h
         src/server/models/MapElement.cpp

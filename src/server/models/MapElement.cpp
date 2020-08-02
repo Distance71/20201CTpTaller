@@ -12,7 +12,8 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->size_y_ = size_y;
     this->type = type; 
     this->health_ = health; 
-    this->lives_ = lives; 
+    this->lives_ = lives;
+    collisionRectangle_ = new CollisionRectangle(position_.axis_x, position_.axis_y, size_x, size_y);
 
     if((type == ENEMY_1) || (type == ENEMY_2)){
         EnemyIA* enemyia = new EnemyIA();
@@ -20,8 +21,8 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     }
     
     if(type == PROJECTILE){
-        ProjectileIA* enemyia = new ProjectileIA();
-        addAction("ProjectileIA", enemyia);
+        ProjectileIA* proyectileIA = new ProjectileIA();
+        addAction("ProjectileIA", proyectileIA);
     }
 }
 
@@ -93,8 +94,8 @@ Id MapElement::getIdElement(){
 
 void MapElement::update(){
 
-    for(auto projectiile : projectiles_){
-        projectiile->update();
+    for(auto projectile : projectiles_){
+        projectile->update();
     }
 
     for(auto action : actions_){

@@ -15,6 +15,7 @@
 #include "EnemyIA.h"
 #include "ProjectileIA.h"
 #include "BossIA.h"
+#include "CollisionRectangle.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ class MapElement {
         unordered_map<string, State *> states_;
         unordered_map<string, Action *> actions_;
         vector<MapElement*> projectiles_; 
+        CollisionRectangle *collisionRectangle_; 
         int size_x_;
         int size_y_;
 
