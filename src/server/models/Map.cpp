@@ -257,22 +257,6 @@ void Stage::updateBackground(Game *game, stage_t stage){
 void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
     size_t actualStep = currentStep.step;
     updateBackground(game, currentStep.stage);
-
-    // for(auto mapElementPlayer : players){
-        
-    //     position_t actualPosition = mapElementPlayer.second->getActualPosition();
-    //     vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
-    //     mapElementPlayer.second->checkCollisions(mapElements, players, finalBoss);
-    //     for (auto projectile : projectiles){
-    //         projectile->update();
-    //         position_t actualPositionProjectile = projectile->getActualPosition();
-    //         //Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-    //         //game->sendEvent(eventUpdateProjectile);
-    //     }
-
-    //     Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
-    //     game->sendEvent(eventUpdate);
-    // }
     steps_[actualStep]->update(game, players);
 }
 
