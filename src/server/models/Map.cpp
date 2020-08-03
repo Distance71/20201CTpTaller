@@ -477,7 +477,7 @@ void Map::initializeFinalBoss(gameParams_t &gameSettings){
     position.axis_y = (GameProvider::getHeight() / 2) - (finalBoss.size_y / 2);
     position.orientation = BACK;
 
-    this->finalBoss_ = new MapElement(finalBoss.type, position, 4, 4, finalBoss.size_x, finalBoss.size_y, finalBoss.health);
+    this->finalBoss_ = new MapElement(finalBoss.type, position, 2, 2, finalBoss.size_x, finalBoss.size_y, finalBoss.health);
 
 }
 
@@ -495,6 +495,12 @@ void Level::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
     this->stages_.back()->updateFinal(game, players, finalBoss, actualStage);
 }
 
+
+bool Stage::shouldSend(MapElement* oneMapElement, position_t actualPosition){
+    return ((actualPosition.axis_x >= -oneMapElement->getSizeX()) && actualPosition.axis_y <= GameProvider::getWidth());
+}
+
+
 void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, MapElement* finalBoss, stage_t stage){
 
     updateBackground(game, stage);
@@ -502,13 +508,39 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
     for(auto mapElementPlayer : players){
         
         position_t actualPosition = mapElementPlayer.second->getActualPosition();
+
+        vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
+        for (auto projectile : projectiles){
+            projectile->update();
+            position_t actualPositionProjectile = projectile->getActualPosition();
+
+            if (this->shouldSend(projectile, actualPositionProjectile)){
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+                game->sendEvent(eventUpdateProjectile);
+            }            
+
+        }
+
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
     }
 
     if (finalBoss != NULL){
         finalBoss->update();
-        position_t actualPositionBoss = finalBoss->getActualPosition();        
+        position_t actualPositionBoss = finalBoss->getActualPosition();   
+
+        vector<MapElement*> projectiles = finalBoss->getShoots();
+
+        for (auto projectile : projectiles){
+            projectile->update();
+            position_t actualPositionProjectile = projectile->getActualPosition();
+
+            if (this->shouldSend(projectile, actualPositionProjectile)){
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+                game->sendEvent(eventUpdateProjectile);
+            }
+        }          
+
         Event *eventUpdateBoss = new EventMapElementUpdate(finalBoss->getType(), actualPositionBoss);
         game->sendEvent(eventUpdateBoss);   
     }
