@@ -48,51 +48,51 @@ Stage::Stage(stageParams_t &params){
 void Stage::createBackground(){
     unordered_map<layer_t, size_t> layersSpeeds = GameProvider::getLayersSpeeds();
     
-     unordered_map<layer_t, MapElementBackground*> layersStageOne;
-     layersStageOne[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_ONE, layersSpeeds[LAYER_1]);
-     layersStageOne[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_ONE, layersSpeeds[LAYER_2]);
-     layersStageOne[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_ONE, layersSpeeds[LAYER_3]);
-     layersStageOne[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_ONE, layersSpeeds[LAYER_4]);
-     layersStageOne[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_ONE, layersSpeeds[LAYER_5]);
-     layersStageOne[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_ONE, layersSpeeds[LAYER_6]);
-     layersStageOne[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_ONE, layersSpeeds[LAYER_7]);
+     vector <MapElementBackground*>* layersStageOne = new vector <MapElementBackground*>();
+     layersStageOne->push_back(this->buildStageBackgroundLayer(LAYER_1, STAGE_ONE, layersSpeeds[LAYER_1]));
+     layersStageOne->push_back(this->buildStageBackgroundLayer(LAYER_2, STAGE_ONE, layersSpeeds[LAYER_2]));
+     layersStageOne->push_back(this->buildStageBackgroundLayer(LAYER_3, STAGE_ONE, layersSpeeds[LAYER_3]));
+     layersStageOne->push_back(this->buildStageBackgroundLayer(LAYER_4, STAGE_ONE, layersSpeeds[LAYER_4]));
+     layersStageOne->push_back(this->buildStageBackgroundLayer(LAYER_5, STAGE_ONE, layersSpeeds[LAYER_5]));
+     layersStageOne->push_back(this->buildStageBackgroundLayer(LAYER_6, STAGE_ONE, layersSpeeds[LAYER_6]));
+     layersStageOne->push_back(this->buildStageBackgroundLayer(LAYER_7, STAGE_ONE, layersSpeeds[LAYER_7]));
 
  
-     stagesBackground_.push_back(layersStageOne);
+    stagesBackground_.emplace(STAGE_ONE,layersStageOne);
  
-     unordered_map<layer_t, MapElementBackground*> layersStageTwo;
-     layersStageTwo[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_TWO, layersSpeeds[LAYER_1]);
-     layersStageTwo[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_TWO, layersSpeeds[LAYER_2]);
-     layersStageTwo[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_TWO, layersSpeeds[LAYER_3]);
-     layersStageTwo[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_TWO, layersSpeeds[LAYER_4]);
-     layersStageTwo[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_TWO, layersSpeeds[LAYER_5]);
-     layersStageTwo[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_TWO, layersSpeeds[LAYER_6]);
-     layersStageTwo[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_TWO, layersSpeeds[LAYER_7]);
+    vector <MapElementBackground*>* layersStageTwo = new vector <MapElementBackground*>();
+     layersStageTwo->push_back(this->buildStageBackgroundLayer(LAYER_1, STAGE_TWO, layersSpeeds[LAYER_1]));
+     layersStageTwo->push_back(this->buildStageBackgroundLayer(LAYER_2, STAGE_TWO, layersSpeeds[LAYER_2]));
+     layersStageTwo->push_back(this->buildStageBackgroundLayer(LAYER_3, STAGE_TWO, layersSpeeds[LAYER_3]));
+     layersStageTwo->push_back(this->buildStageBackgroundLayer(LAYER_4, STAGE_TWO, layersSpeeds[LAYER_4]));
+     layersStageTwo->push_back(this->buildStageBackgroundLayer(LAYER_5, STAGE_TWO, layersSpeeds[LAYER_5]));
+     layersStageTwo->push_back(this->buildStageBackgroundLayer(LAYER_6, STAGE_TWO, layersSpeeds[LAYER_6]));
+     layersStageTwo->push_back(this->buildStageBackgroundLayer(LAYER_7, STAGE_TWO, layersSpeeds[LAYER_7]));
 
-     stagesBackground_.push_back(layersStageTwo);
+    stagesBackground_.emplace(STAGE_TWO,layersStageTwo);
  
-     unordered_map<layer_t, MapElementBackground*> layersStageThree;
-     layersStageThree[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_THREE, layersSpeeds[LAYER_1]);
-     layersStageThree[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_THREE, layersSpeeds[LAYER_2]);
-     layersStageThree[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_THREE, layersSpeeds[LAYER_3]);
-     layersStageThree[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_THREE, layersSpeeds[LAYER_4]);
-     layersStageThree[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_THREE, layersSpeeds[LAYER_5]);
-     layersStageThree[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_THREE, layersSpeeds[LAYER_6]);
-     layersStageThree[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_THREE, layersSpeeds[LAYER_7]);
+    vector <MapElementBackground*>*layersStageThree = new vector <MapElementBackground*>();
+    layersStageThree->push_back(this->buildStageBackgroundLayer(LAYER_1, STAGE_THREE, layersSpeeds[LAYER_1]));
+    layersStageThree->push_back(this->buildStageBackgroundLayer(LAYER_2, STAGE_THREE, layersSpeeds[LAYER_2]));
+    layersStageThree->push_back(this->buildStageBackgroundLayer(LAYER_3, STAGE_THREE, layersSpeeds[LAYER_3]));
+    layersStageThree->push_back(this->buildStageBackgroundLayer(LAYER_4, STAGE_THREE, layersSpeeds[LAYER_4]));
+    layersStageThree->push_back(this->buildStageBackgroundLayer(LAYER_5, STAGE_THREE, layersSpeeds[LAYER_5]));
+    layersStageThree->push_back(this->buildStageBackgroundLayer(LAYER_6, STAGE_THREE, layersSpeeds[LAYER_6]));
+    layersStageThree->push_back(this->buildStageBackgroundLayer(LAYER_7, STAGE_THREE, layersSpeeds[LAYER_7]));
 
-     stagesBackground_.push_back(layersStageThree);
+    stagesBackground_.emplace(STAGE_THREE,layersStageThree);
  
-     unordered_map<layer_t, MapElementBackground*> layersStageFour;
-     layersStageFour[LAYER_1] = this->buildStageBackgroundLayer(LAYER_1, STAGE_FOUR, layersSpeeds[LAYER_1]);
-     layersStageFour[LAYER_2] = this->buildStageBackgroundLayer(LAYER_2, STAGE_FOUR, layersSpeeds[LAYER_2]);
-     layersStageFour[LAYER_3] = this->buildStageBackgroundLayer(LAYER_3, STAGE_FOUR, layersSpeeds[LAYER_3]);
-     layersStageFour[LAYER_4] = this->buildStageBackgroundLayer(LAYER_4, STAGE_FOUR, layersSpeeds[LAYER_4]);
-     layersStageFour[LAYER_5] = this->buildStageBackgroundLayer(LAYER_5, STAGE_FOUR, layersSpeeds[LAYER_5]);
-     layersStageFour[LAYER_6] = this->buildStageBackgroundLayer(LAYER_6, STAGE_FOUR, layersSpeeds[LAYER_6]);
-     layersStageFour[LAYER_7] = this->buildStageBackgroundLayer(LAYER_7, STAGE_FOUR, layersSpeeds[LAYER_7]);
+     vector <MapElementBackground*>* layersStageFour = new vector <MapElementBackground*>();
+    layersStageFour->push_back(this->buildStageBackgroundLayer(LAYER_1, STAGE_FOUR, layersSpeeds[LAYER_1]));
+    layersStageFour->push_back(this->buildStageBackgroundLayer(LAYER_2, STAGE_FOUR, layersSpeeds[LAYER_2]));
+    layersStageFour->push_back(this->buildStageBackgroundLayer(LAYER_3, STAGE_FOUR, layersSpeeds[LAYER_3]));
+    layersStageFour->push_back(this->buildStageBackgroundLayer(LAYER_4, STAGE_FOUR, layersSpeeds[LAYER_4]));
+    layersStageFour->push_back(this->buildStageBackgroundLayer(LAYER_5, STAGE_FOUR, layersSpeeds[LAYER_5]));
+    layersStageFour->push_back(this->buildStageBackgroundLayer(LAYER_6, STAGE_FOUR, layersSpeeds[LAYER_6]));
+    layersStageFour->push_back(this->buildStageBackgroundLayer(LAYER_7, STAGE_FOUR, layersSpeeds[LAYER_7]));
 
  
-     stagesBackground_.push_back(layersStageFour);
+    stagesBackground_.emplace(STAGE_FOUR,layersStageFour);
  }
 
 MapElementBackground* Stage::buildStageBackgroundLayer(layer_t layer, stage_t stage, int speedX){
@@ -242,16 +242,17 @@ void Level::update(currentStep_t currentStep, Game *game, unordered_map<string, 
 }
 
 void Stage::updateBackground(Game *game, stage_t stage){
-    
-    for(auto stageBackground : this->stagesBackground_[stage]){
-        int step = stageBackground.second->getStep();
-        layer_t layer = stageBackground.second->getLayer();
-        stage_t stage = stageBackground.second->getStage();
-        Event *eventUpdate = new EventBackgroundUpdate(layer, stage, step);
+    vector <MapElementBackground*>* vect = this->stagesBackground_.at(stage);
+    auto iter = vect->begin();
+    while (iter != vect->end()){
+        MapElementBackground* layer = *iter;
+        int step = layer->getStep();
+        layer_t layer_n = layer->getLayer();
+        Event *eventUpdate = new EventBackgroundUpdate(layer_n, stage, step);
         game->sendEvent(eventUpdate);
-        stageBackground.second->update();
+        layer->update();
+        iter++;
     }
-
 }
 
 void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
