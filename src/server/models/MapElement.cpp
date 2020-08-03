@@ -26,7 +26,7 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     }
 
     if(type == BOSS_ENEMY){
-        BossIA* bossIA = new BossIA();
+        BossIA* bossIA = new BossIA(this);
         addAction("BossIA", bossIA);
     }
 }
@@ -284,14 +284,15 @@ vector<MapElement*> MapElement::getShoots(){
 
 void MapElement::shoot(){
 
-    position_t position = this->getActualPosition();
-    position.axis_x = position.axis_x + (this->size_x_ / 2);
-    position.axis_y = position.axis_y + (this->size_y_ / 2); 
+    projectile_t projectileData = GameProvider::getConfig()->getProjectileData();
 
-    projectile_t projectile = GameProvider::getConfig()->getProjectileData();
+    if (this->type == BOSS_ENEMY){
+        this->shootBoss(projectileData);
+        return;
+    }
 
-    MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, projectile.size_x, projectile.size_y, 10, 1);
-    this->projectiles_.push_back(oneProjetil);
+    this->shootNormal(projectileData);
+
 };
 
 void MapElement::cleanShoots(){
@@ -300,4 +301,39 @@ void MapElement::cleanShoots(){
         delete oneProjectile;
         
     this->projectiles_ = vector<MapElement*>();
+}
+
+
+void MapElement::shootNormal(projectile_t projectileData){
+    position_t position = this->getActualPosition();
+    position.axis_x = position.axis_x + (this->size_x_ / 2);
+    position.axis_y = position.axis_y + (this->size_y_ / 2); 
+
+    MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
+    this->projectiles_.push_back(oneProjetil);
+}
+
+void MapElement::shootBoss(projectile_t projectileData){
+    position_t position = this->getActualPosition();
+
+    int sizeY = this->size_y_;
+    int positionXProjectil = position.axis_x + (this->size_x_ / 2);
+
+    position_t middlePosition = position;
+    middlePosition.axis_x = positionXProjectil;
+    middlePosition.axis_y = position.axis_y + (this->size_y_ / 4); 
+    MapElement *middleProjetil = new MapElement(PROJECTILE, middlePosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
+    this->projectiles_.push_back(middleProjetil);
+
+    position_t topPosition = position;
+    topPosition.axis_x = positionXProjectil;
+    topPosition.axis_y = position.axis_y + (this->size_y_ / 2); 
+    MapElement *topProjetil = new MapElement(PROJECTILE, topPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
+    this->projectiles_.push_back(topProjetil);
+
+    position_t bottomPosition = position;
+    bottomPosition.axis_x = positionXProjectil;
+    bottomPosition.axis_y = position.axis_y + 3 * (this->size_y_ / 4); 
+    MapElement *bottomProjetil = new MapElement(PROJECTILE, bottomPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
+    this->projectiles_.push_back(bottomProjetil);
 }

@@ -86,6 +86,7 @@ class Stage: public Level {
     vector<unordered_map<layer_t, MapElementBackground*>> stagesBackground_;
     void clearMap();
     void createBackground();
+    bool shouldSend(MapElement* oneMapElement, position_t actualPosition);
 
     MapElementBackground* buildStageBackgroundLayer(layer_t layer, stage_t stage, int speedX);
     
