@@ -354,8 +354,8 @@ enemy_t ConfigurationHandler::getBoss(){
     return finalBoss;
 }
 
-string ConfigurationHandler::getPathFinalBoss(){
-    return this->gameData.finalBoss.sprite;
+enemy_t ConfigurationHandler::getFinalBoss(){
+    return this->gameData.finalBoss;
 }
 
 void ConfigurationHandler::initializeDataServer(){

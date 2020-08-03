@@ -34,7 +34,7 @@ void GameGraphics::createElements(){
     enemy_t enemy1 = GameProvider::getConfig()->getEnemyData(0);
     enemy_t enemy2 = GameProvider::getConfig()->getEnemyData(1);
 
-    string sourceBoss = GameProvider::getConfig()->getPathFinalBoss();
+    enemy_t finalBoss = GameProvider::getConfig()->getFinalBoss();
     projectile_t projectile = GameProvider::getConfig()->getProjectileData();
 
     string sourceProjectile = "assets/Projectile/projectile.png";
@@ -60,7 +60,7 @@ void GameGraphics::createElements(){
     this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(players[3].spriteDisconnected, players[3].size_x, players[3].size_y, 0, 0, FRONT);
     this->elements_[ENEMY_1] = new GraphicsMapElement(enemy1.sprite, enemy1.size_x, enemy1.size_y, 0, 0, FRONT);
     this->elements_[ENEMY_2] = new GraphicsMapElement(enemy2.sprite, enemy2.size_x, enemy2.size_y, 0, 0, FRONT);
-    this->elements_[BOSS_ENEMY] = new GraphicsMapElement(sourceBoss, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
+    this->elements_[BOSS_ENEMY] = new GraphicsMapElement(finalBoss.sprite, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
     this->elements_[PROJECTILE] = new GraphicsMapElement(projectile.sprite, projectile.size_x, projectile.size_y, 0, 0, FRONT);
 
     this->elements_[EXPLOSION_ANIMATION_1] = new GraphicsMapElement(sourceExplosionAnimation1, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);

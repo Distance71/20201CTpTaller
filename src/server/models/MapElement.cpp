@@ -24,6 +24,11 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
         ProjectileIA* proyectileIA = new ProjectileIA();
         addAction("ProjectileIA", proyectileIA);
     }
+
+    if(type == BOSS_ENEMY){
+        BossIA* bossIA = new BossIA();
+        addAction("BossIA", bossIA);
+    }
 }
 
 void MapElement::setTarget(MapElement* target) {

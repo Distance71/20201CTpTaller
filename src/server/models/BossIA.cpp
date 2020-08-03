@@ -10,7 +10,7 @@ void BossIA::update(unordered_map<string, State *> states_){
     State* orientation = states_.at("Orientation");
 
     //TODO implementar IA
-    /* 
+ 
     int xp = position->getX();
     int xs = speed->getX();
     
@@ -22,5 +22,5 @@ void BossIA::update(unordered_map<string, State *> states_){
         new_xp = xp - xs;
     }
 
-    position->setX(new_xp); */
+    position->setX(new_xp);
 }

@@ -99,7 +99,7 @@ class ConfigurationHandler {
         player_t getPlayerParam(int numberPlayer);
         enemy_t getEnemyData(int numberTypeEnemy);
         transitionScreen_t getTransitionScreenForStage(int oneStage);
-        string getPathFinalBoss();
+        enemy_t getFinalBoss();
         projectile_t getProjectileData();
 
 };
