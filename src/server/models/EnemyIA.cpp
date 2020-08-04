@@ -20,6 +20,7 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     int yp = position->getY();
     int xs = speed->getX();
     int ys = speed->getY();
+    int screen_width = GameProvider::getWidth();
     
     int new_xp;
     int new_yp;
@@ -34,7 +35,8 @@ void EnemyIA::update(unordered_map<string, State *> states_){
             new_xp = xp - xs;
         }
         position->setX(new_xp);
-        randomShoot();        
+
+        if (screen_width > xp && xp > this->owner_->getSizeX()) randomShoot();        
         return;
     }
 
@@ -52,13 +54,11 @@ void EnemyIA::update(unordered_map<string, State *> states_){
         if(xp <= ubicacion.axis_x){
             abort = true;
         }
-    }
-    
+    }    
     position->setX(new_xp);
 
-    // Si no esta en la pantalla q no dispare y no persiga (80 es casi el largo del enemigo)
-    int screen_width = GameProvider::getWidth();
-    if (xp < 80 || screen_width < xp) return;    
+    // Si no esta en la pantalla q no dispare y no persiga 
+    if (xp < this->owner_->getSizeX() || screen_width < xp) return;    
 
     //eje y persigue al target hasta sobrepasarlo
     if (!abort) {
@@ -72,11 +72,11 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     } else {
         // habria q agregarle el factor tiempo para mejorar el comportamiento (vale la pena?)
         //new_yp = randomMovement(yp, ys);
-    }
-        
+    }        
 
     randomShoot();
     int screen_height = GameProvider::getHeight();
+    // si no hubo cambios en el eje Y o se quiere salir de la pantalla evita actualizar el eje Y
     if ((abort && new_yp == yp) || new_yp < 0 || new_yp > screen_height - this->owner_->getSizeY()) { return;}  
     position->setY(new_yp);
     
