@@ -10,13 +10,15 @@ CollisionRectangle::CollisionRectangle(int x, int y, int width, int height) {
 bool CollisionRectangle::isCollision(CollisionRectangle* other) {
 	int otherX = other->getX();
 	int otherY = other->getY();
-
-	bool result = ((this->x_ + this->width_) < otherX || 
-                    (otherX + other->getWidth()) < this->x_ || 
-                    (this->y_ + this->height_) < otherY || 
-                    (otherY + other->getHeight()) < this->y_);
-	return !result;
+	if (this->x_ >= otherX && this->x_ <= (otherX + other->getWidth())){ //|| (this->x_ + this->width_ >= otherX && this->x_ + this->width_ <= otherX + other->getWidth())){
+		if ( (otherY >= this->y_ && otherY <= this->y_ + this->height_ ) || ( otherY + other->getHeight() >= this->y_  && otherY + other->getHeight()  <= this->y_ + this->height_)){
+			return true;
+		}
+	}
+	
+	return false;
 }
+
 
 int CollisionRectangle::getX() {
 	return this->x_;

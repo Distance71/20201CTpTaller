@@ -104,12 +104,13 @@ class Stage: public Level {
     void updateBackground(Game *game, stage_t stage);
 };
 
-class Step: public Stage {
+class Step: public Stage{
     private:
     unordered_map<Id, MapElement*> mapElements_;
     Id lastId_ = 0;
     position_t getPosition(int sizeMapElement_x, int sizeMapElement_y);
     bool shouldSend(MapElement* oneMapElement, position_t actualPosition);
+    int updateShift_;
 
     public:
     Step();
