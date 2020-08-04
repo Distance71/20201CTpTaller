@@ -7,7 +7,7 @@ Message* EventGameInit::serialize() {
 
 void EventGameInit::update() {
     if (!this->context_){
-		  Logger::getInstance()->log(DEBUG, "No hay conecto para el evento EventGameInit");
+		  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventGameInit");
     }
     else{
         Client* client = (Client*) Event::context_;

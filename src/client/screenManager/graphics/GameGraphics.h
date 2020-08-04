@@ -14,6 +14,7 @@
 #include "../../../common/providers/GameProvider.h"
 #include "../../../common/services/Logger.h"
 #include "../../../common/models/BlockingQueue.h"
+#include "../../audio/Music.h"
 
 
 class GameGraphics {
@@ -39,6 +40,7 @@ class GameGraphics {
         
         void setBackground(stage_t level);
         void setImage(sceneScreen_t scene);
+        void setAudio(sceneScreen_t scene);
 };
 
 #endif

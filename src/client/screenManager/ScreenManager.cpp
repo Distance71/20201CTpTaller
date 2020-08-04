@@ -72,7 +72,7 @@ bool ScreenManager::initSDL(){
         return false;
     }
 
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if(SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO )  < 0) {
         Logger::getInstance()->log(ERROR, string("Error al inicializar SDL! Error: ").append(SDL_GetError()));
         GameProvider::setErrorStatus(SDL_GetError());
         return false;
@@ -178,6 +178,7 @@ void ScreenManager::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en ScreenManager");
     if(this->gameGraphics_){
         this->gameGraphics_->setImage(scene);
+        this->gameGraphics_->setAudio(scene);
     }
     else{
         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,  no se han inicializado graficos");

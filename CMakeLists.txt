@@ -20,6 +20,9 @@ include_directories(src/common)
 include_directories(src/client)
 include_directories(src/server)
 
+include(FindPkgConfig)
+pkg_check_modules(SDL2_Mixer REQUIRED IMPORTED_TARGET SDL2_mixer)
+
 file(COPY src/client/assets DESTINATION ${CMAKE_BINARY_DIR})
 
 
@@ -29,6 +32,8 @@ add_executable(tp1taller
         src/client/ClientTest.h
         src/client/Client.cpp
         src/client/Client.h
+        src/client/audio/Music.h
+        src/client/audio/Music.cpp
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
         src/client/eventsManager/ClientEventsManager.cpp
@@ -176,5 +181,5 @@ add_executable(tp1taller
 
 
 
-target_link_libraries(tp1taller ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2TTF_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(tp1taller ${SDL2_LIBRARIES} SDL2_mixer PkgConfig::SDL2_Mixer ${SDL2_IMAGE_LIBRARIES} ${SDL2TTF_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 

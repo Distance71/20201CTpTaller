@@ -9,6 +9,7 @@
 *install cmake 3.17: sudo snap install cmake --classic # version 3.17.1
 *install Libreria Json: sudo apt install nlohmann-json-dev
 *install sdl_ttf: sudo apt-get install libsdl2-ttf-dev
+*install sdl_mixer: sudo apt-get install libsdl2-mixer-dev
 
 *verificar carpeta build vacia
 *hacer 'cmake ..' en build

@@ -35,6 +35,9 @@ Menu::Menu(Client* clientOwn){
     string cpyLogin = loginScreen.login;
     Button* login = new Button(300,260,200,50,loginScreen.login.c_str(),cpyLogin.c_str());
     addButton("LOGIN",login);
+
+    Music::getInstance()->setSong("assets/Music/menu.mp3");   
+    Music::getInstance()->play();  
 }
 
 
