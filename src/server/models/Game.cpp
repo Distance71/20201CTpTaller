@@ -73,8 +73,8 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
         runStep(actualStep);
     }
 
-    // if (isFinalStage)
-    //     this->runFinal();
+    if (isFinalStage)
+        this->runFinal();
 
     this->map_->cleanStage();
     this->sendStageCleared(actualStep.stage);

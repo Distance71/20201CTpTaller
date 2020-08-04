@@ -36,6 +36,9 @@ class MapElement {
 
         vector<Action *> getActions();
         vector<State *> getStates();
+
+        void shootNormal(projectile_t projectileData);
+        void shootBoss(projectile_t projectileData);
         
 
     public:

@@ -83,9 +83,10 @@ class Level: public Map {
 class Stage: public Level {
     private:
     vector<Step *> steps_;
-    vector<unordered_map<layer_t, MapElementBackground*>> stagesBackground_;
+    unordered_map <stage_t, vector <MapElementBackground*> * > stagesBackground_;
     void clearMap();
     void createBackground();
+    bool shouldSend(MapElement* oneMapElement, position_t actualPosition);
 
     MapElementBackground* buildStageBackgroundLayer(layer_t layer, stage_t stage, int speedX);
     

@@ -53,6 +53,8 @@ void EnemyIA::update(unordered_map<string, State *> states_){
             abort = true;
         }
     }
+    
+    position->setX(new_xp);
 
     // Si no esta en la pantalla q no dispare y no persiga (80 es casi el largo del enemigo)
     int screen_width = GameProvider::getWidth();
@@ -72,7 +74,6 @@ void EnemyIA::update(unordered_map<string, State *> states_){
         //new_yp = randomMovement(yp, ys);
     }
         
-    position->setX(new_xp);
 
     randomShoot();
     int screen_height = GameProvider::getHeight();

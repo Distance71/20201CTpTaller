@@ -74,75 +74,6 @@
                         "sprite": "assets/Enemies/enemigo2.png"
                     }
                 ]
-            },
-            {
-                "transitionInit": "assets/TransitionScreens/Stage2.JPG",
-                "transitionEnd": "assets/TransitionScreens/Stage2Cleared.JPG",
-                "layer1": "assets/Stage/Level2/layer_1.png",
-                "layer2": "assets/Stage/Level2/layer_2.png",
-                "layer3": "assets/Stage/Level2/layer_3.png",
-                "layer4": "assets/Stage/Level2/layer_4.png",
-                "layer5": "assets/Stage/Level2/layer_5.png",
-                "layer6": "assets/Stage/Level2/layer_6.png",
-                "layer7": "assets/Stage/Level2/layer_7.png",
-                "enemies": [
-                    {
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "sprite": "assets/Enemies/enemigo8.png"				  
-                    },
-                    {
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "sprite": "assets/Enemies/enemigo9.png"
-                    }
-                ]
-            },
-            {
-                "transitionInit": "assets/TransitionScreens/Stage3.JPG",
-                "transitionEnd": "assets/TransitionScreens/Stage3Cleared.JPG",
-                "layer1": "assets/Stage/Level3/layer_1.png",
-                "layer2": "assets/Stage/Level3/layer_2.png",
-                "layer3": "assets/Stage/Level3/layer_3.png",
-                "layer4": "assets/Stage/Level3/layer_4.png",
-                "layer5": "assets/Stage/Level3/layer_5.png",
-                "layer6": "assets/Stage/Level3/layer_6.png",
-                "layer7": "assets/Stage/Level3/layer_7.png",
-                "enemies": [
-                    {
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "sprite": "assets/Enemies/enemigo6.png"				  
-                    },
-                    {
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "sprite": "assets/Enemies/enemigo9.png"
-                    }
-                ]
-            },
-            {
-                "transitionInit": "assets/TransitionScreens/Stage4.JPG",
-                "transitionEnd": "assets/TransitionScreens/Stage4Cleared.JPG",
-                "layer1": "assets/Stage/Level4/layer_1.png",
-                "layer2": "assets/Stage/Level4/layer_2.png",
-                "layer3": "assets/Stage/Level4/layer_3.png",
-                "layer4": "assets/Stage/Level4/layer_4.png",
-                "layer5": "",
-                "layer6": "",
-                "layer7": "",
-                "enemies": [
-                    {
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "sprite": "assets/Enemies/enemigo6.png"				  
-                    },
-                    {
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "sprite": "assets/Enemies/enemigo9.png"
-                    }
-                ]
             }
         ],    
         "projectiles": {
@@ -151,9 +82,9 @@
             "sprite": "assets/Projectile/projectile.png" 
         },
         "finalBoss":{
-            "sizeX": 23,
-            "sizeY": 80,
-            "sprite": "assets/Enemies/enemigo8.png"
+            "sizeX": 178,
+            "sizeY": 180,
+            "sprite": "assets/Enemies/EnemyBoss.png"
         }
     }
 }
