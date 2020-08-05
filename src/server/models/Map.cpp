@@ -556,6 +556,12 @@ void Map::initializeFinalBoss(gameParams_t &gameSettings){
 
 void Map::updateFinal(Game* game){
 
+    if (!this->hasSetTargetFinal){
+        this->hasSetTargetFinal = true;
+        for (auto player : this->players)
+            this->finalBoss_->setTarget(player.second);
+    }
+
     this->levels_.back()->updateFinal(game, this->players, this->finalBoss_);
 
     position_t aux;

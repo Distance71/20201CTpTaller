@@ -28,7 +28,7 @@ void BossIA::update(unordered_map<string, State *> states_){
         position->setX(new_xp);
     }
 
-    new_yp = randomMovement(yp, ys);
+    new_yp = doMovement(yp, ys);
     
     if (new_yp < 0) new_yp = 0;
     if (new_yp > (screenHeight - this->owner_->getSizeY())) new_yp = screenHeight - this->owner_->getSizeY();
@@ -36,6 +36,10 @@ void BossIA::update(unordered_map<string, State *> states_){
     position->setY(new_yp);
  
     randomShoot();
+}
+
+void BossIA::addTarget(MapElement* target){
+    this->targets_.push_back(target);
 }
 
 void BossIA::randomShoot(){
@@ -49,8 +53,38 @@ void BossIA::randomShoot(){
     }
 }
 
-int BossIA::randomMovement(int yp, int ys){
+int BossIA::doMovement(int yp, int ys){
 
+    if (RandomGenerate::generate(10) < 5)
+        return this->searchPlayers(yp, ys);
+
+    return this->randomMovement(yp, ys);
+}
+
+int BossIA::searchPlayers(int yp, int ys){
+    
+    if (this->targets_.size() == 0) return this->randomMovement(yp, ys);
+
+    int sumPosY = 0,
+        avgPosY = GameProvider::getWidth() / 2,
+        randomMovement = RandomGenerate::generate(5);
+
+    for (auto onePlayer : this->targets_){
+        position_t position = onePlayer->getActualPosition();
+        sumPosY += position.axis_y;
+    }
+
+    if (sumPosY)
+        avgPosY = sumPosY / this->targets_.size();
+
+    if (yp < avgPosY)
+        return yp + randomMovement * ys;
+
+    return yp - randomMovement * ys;
+}
+
+int BossIA::randomMovement(int yp, int ys){
+    
     unsigned int screenHeight = GameProvider::getHeight();
     int randomMovement = RandomGenerate::generate(5);
 

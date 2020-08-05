@@ -37,6 +37,9 @@ void MapElement::setTarget(MapElement* target) {
         EnemyIA* enemyia = this->getAction<EnemyIA>("EnemyIA");
         enemyia->setTarget(target);
     }
+
+    if (type == BOSS_ENEMY)
+        this->getAction<BossIA>("BossIA")->addTarget(target);
 }
 
 MapElement::~MapElement() {
