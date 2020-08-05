@@ -37,6 +37,7 @@ class Map {
     elementType_t getPlayerType();
     position_t getInitialPosition();
 
+    bool hasSetTargetFinal = false;
     unordered_map<string, MapElement*> players;
     MapElement* finalBoss_;
 
