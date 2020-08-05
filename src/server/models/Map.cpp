@@ -295,6 +295,20 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     mapElementDead.clear();
 
+    //Se revisan colisiones entre jugadores y enemigos
+    for(auto mapElementPlayer : players){
+        for(auto mapElement :this->mapElements_){
+            bool isCollision = mapElementPlayer.second->checkCollision(mapElement.second);
+            if(isCollision) {
+                killElementWithExplosion(game,mapElement.second);
+                //killElementWithExplosion(game, mapElementPlayer.second);
+                mapElementDead.push_back(mapElement.first);
+                //falta restar vida al jugador o matarlo
+            }
+        }
+    }
+
+
     // Actaulizo proyectiles de los jugadores
     for(auto player: players){
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
@@ -319,18 +333,6 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         }
     }
 
-    //Se revisan colisiones entre jugadores y enemigos
-    for(auto mapElementPlayer : players){
-        for(auto mapElement :this->mapElements_){
-            bool isCollision = mapElementPlayer.second->checkCollision(mapElement.second);
-            if(isCollision) {
-                killElementWithExplosion(game,mapElement.second);
-                //killElementWithExplosion(game, mapElementPlayer.second);
-                mapElementDead.push_back(mapElement.first);
-                //falta restar vida al jugador o matarlo
-            }
-        }
-    }
 
     for(auto IdDead : mapElementDead){
         MapElement* deadMapElement = this->mapElements_.at(IdDead);
