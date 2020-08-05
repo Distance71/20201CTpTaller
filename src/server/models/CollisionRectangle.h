@@ -7,21 +7,19 @@ using namespace std;
 class CollisionRectangle {
 
 private:
-	int x_;
-	int y_;
-	int width_;
-	int height_;
+	int Xstart_;
+	int Xend_;
+	int Ystart_;
+	int Yend_;
 
 public:
-	CollisionRectangle(int x, int y, int width, int height);
+	CollisionRectangle(int Xstart, int Ystart, int Xend, int Yend);
 	void setOffset(int x, int y);
 	bool isCollision(CollisionRectangle* other);
-	int getX();
-	int getY();
-    void setX(int x);
-    void setY(int y);
-	int getWidth();
-	int getHeight();
+	int getXstart();
+	int getYstart();
+	int getXend();
+	int getYend();
 };
 
 #endif

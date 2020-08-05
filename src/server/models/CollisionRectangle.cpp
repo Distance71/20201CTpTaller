@@ -1,17 +1,15 @@
 #include "CollisionRectangle.h"
 
-CollisionRectangle::CollisionRectangle(int x, int y, int width, int height) {
-	this->x_ = x;
-	this->y_ = y;
-	this->width_ = width;
-	this->height_ = height;
+CollisionRectangle::CollisionRectangle(int Xstart, int Ystart, int Xend, int Yend) {
+	this->Xstart_ = Xstart;
+	this->Xend_ = Xend;
+	this->Ystart_ = Ystart;
+	this->Yend_ = Yend;
 }
 
 bool CollisionRectangle::isCollision(CollisionRectangle* other) {
-	int otherX = other->getX();
-	int otherY = other->getY();
-	if (this->x_ >= otherX && this->x_ <= (otherX + other->getWidth())){ //|| (this->x_ + this->width_ >= otherX && this->x_ + this->width_ <= otherX + other->getWidth())){
-		if ( (otherY >= this->y_ && otherY <= this->y_ + this->height_ ) || ( otherY + other->getHeight() >= this->y_  && otherY + other->getHeight()  <= this->y_ + this->height_)){
+	if ( (this->Xstart_ >= other->getXstart() && this->Xstart_<= other->getXend() )|| (this->Xend_ >= other->getXstart() && this->Xend_ <= other->getXend())){
+		if ((other->getYstart() >= this->Ystart_ && other->getYstart() <=this->Yend_ )|| (this->getYend() >= this->Xstart_ && other->getYend()  <=this->Yend_)){
 			return true;
 		}
 	}
@@ -20,26 +18,19 @@ bool CollisionRectangle::isCollision(CollisionRectangle* other) {
 }
 
 
-int CollisionRectangle::getX() {
-	return this->x_;
+int CollisionRectangle::getXstart() {
+	return this->Xstart_;
 }
 
-void CollisionRectangle::setX(int x){
-    this->x_ = x;
+
+int CollisionRectangle::getYstart() {
+	return 	this->Ystart_;
 }
 
-void CollisionRectangle::setY(int y){
-    this->y_ = y;
+int CollisionRectangle::getXend(){
+	return this->Xend_;
 }
 
-int CollisionRectangle::getY() {
-	return this->y_;
-}
-
-int CollisionRectangle::getWidth() {
-	return this->width_;
-}
-
-int CollisionRectangle::getHeight() {
-	return this->height_;
+int CollisionRectangle::getYend() {
+	return this->Yend_;
 }
