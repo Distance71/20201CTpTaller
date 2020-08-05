@@ -237,7 +237,7 @@ void MapElement::moveTo(orientation_t oneOrientation){
 
 CollisionRectangle* MapElement::getCollisionRectangle(){
     position_t position = this->getActualPosition();
-    CollisionRectangle* rectangle = new CollisionRectangle(position.axis_x, position.axis_y,this->getSizeX(), this->getSizeY());
+    CollisionRectangle* rectangle = new CollisionRectangle(position.axis_x, position.axis_y,position.axis_x + this->getSizeX(), position.axis_y + this->getSizeY());
     return rectangle;
 }
 
