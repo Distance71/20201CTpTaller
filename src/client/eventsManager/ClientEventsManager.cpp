@@ -37,6 +37,8 @@ static void * detectPlayerEvents(void* arg){
     Uint8 right;
     Uint8 left;
     Uint8 shoot;
+    Uint8 music;
+    Uint8 godMode;
     bool canShoot = true;
 
     const Uint8 *keystate;
@@ -64,6 +66,8 @@ static void * detectPlayerEvents(void* arg){
         right =  keystate[SDL_SCANCODE_RIGHT];
         left = keystate[SDL_SCANCODE_LEFT];
         shoot = keystate[SDL_SCANCODE_SPACE];
+        music = keystate[SDL_SCANCODE_M];
+        godMode = keystate[SDL_SCANCODE_X];
 
         orientation_t movementOrientation = NOT_MOVEMENT;
 
@@ -107,6 +111,15 @@ static void * detectPlayerEvents(void* arg){
             client->sendMessage(message);
         }
 
+        if (music)
+        {
+            Music::getInstance()->pause();  
+        }
+
+        if (godMode)
+        {
+            /* TODO */
+        }  
 
         if (shoot && canShoot){
             client->sendMessage(new MessageUserShoot());
