@@ -265,9 +265,15 @@ unordered_map<Id,MapElement*> MapElement::getShoots(){
 };
 
 void MapElement::eraseProjectile(Id id){
-    MapElement* deadProjectile = this->projectiles_.at(id);
-    delete deadProjectile;
-    this->projectiles_.erase(id);
+    try {
+        MapElement* deadProjectile = this->projectiles_.at(id);
+        this->projectiles_.erase(id);
+        delete deadProjectile;
+    }
+    
+    catch (const std::out_of_range& oor){
+        cout << "se levanta violacion de segmento al eliminar projectil con id"<<id << endl;
+    }
 }
 
 

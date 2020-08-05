@@ -264,126 +264,145 @@ void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, 
 }
 
 void Step::update(Game *game, unordered_map<string, MapElement*> players){
+    vector <Id> enemiesDead;
+    vector <Id> projectilesDead;
     
-    //Actaulizo posiciones de los jugadores
-    for(auto mapElementPlayer : players){
-        position_t actualPosition = mapElementPlayer.second->getActualPosition();
-        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+    //Actualizo posiciones de los jugadores
+    for(auto player : players){
+        position_t actualPosition = player.second->getActualPosition();
+        Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
     }
         
-    //Actaulizo posiciones enemigos
-    vector <Id> mapElementDead;
-    for(auto mapElement : this->mapElements_) {
-        mapElement.second->update();
-        if (!mapElement.second->leftScreen()){
-            position_t position = mapElement.second->getActualPosition();
-            Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), position);
+    //Actualizo posiciones enemigos
+    for(auto enemy : this->mapElements_) {
+        enemy.second->update();
+        if (!enemy.second->leftScreen()){
+            position_t position = enemy.second->getActualPosition();
+            Event *eventUpdate = new EventMapElementUpdate(enemy.second->getType(), position);
             game->sendEvent(eventUpdate);
         }
         else{
-            mapElementDead.push_back(mapElement.first);
+            enemiesDead.push_back(enemy.first);
         }
     
     }
 
-    for(auto IdDead : mapElementDead){
-        MapElement* deadMapElement = this->mapElements_.at(IdDead);
+    for(auto IdDead : enemiesDead){
+        MapElement* deadEnemy = this->mapElements_.at(IdDead);
         this->mapElements_.erase(IdDead);
-        delete deadMapElement;
+        delete deadEnemy;
     }
 
-    mapElementDead.clear();
+    enemiesDead.clear();
+
 
     //Se revisan colisiones entre jugadores y enemigos
-    for(auto mapElementPlayer : players){
-        for(auto mapElement :this->mapElements_){
-            bool isCollision = mapElementPlayer.second->checkCollision(mapElement.second);
-            if(isCollision) {
-                killElementWithExplosion(game,mapElement.second);
-                //killElementWithExplosion(game, mapElementPlayer.second);
-                mapElementDead.push_back(mapElement.first);
+    for(auto player : players){
+        for(auto enemy :this->mapElements_){
+            bool isCollision = player.second->checkCollision(enemy.second);
+            if(isCollision){
+                killElementWithExplosion(game,enemy.second);
+                //killElementWithExplosion(game,player.second);
+                enemiesDead.push_back(enemy.first);
                 //falta restar vida al jugador o matarlo
             }
         }
     }
 
+    for(auto IdDead : enemiesDead){
+        MapElement* deadEnemy = this->mapElements_.at(IdDead);
+        this->mapElements_.erase(IdDead);
+        delete deadEnemy;
+    }
+    
+    enemiesDead.clear();
 
-    // Actaulizo proyectiles de los jugadores
+
+    // Actualizo proyectiles de los jugadores
+    
     for(auto player: players){
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
-        for (auto element : projectiles){
-            MapElement* projectile = element.second;
-            projectile->update();
-            position_t actualPositionProjectile = projectile->getActualPosition();
-            Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-            game->sendEvent(eventUpdateProjectile);
+        for (auto projectile : projectiles){
+            projectile.second->update();
+            if(!projectile.second->leftScreen()){
+                position_t actualPositionProjectile = projectile.second->getActualPosition();
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile.second->getType(), actualPositionProjectile);
+                game->sendEvent(eventUpdateProjectile);
+            }
+            else{
+                projectilesDead.push_back(projectile.first);
+            }
         }
+
+
+        for (auto idDead :projectilesDead){
+            player.second->eraseProjectile(idDead);
+        }
+        projectilesDead.clear();
     }
+
 
     //Actualizo proyectiles de los enemigos
-    for(auto mapElement :this->mapElements_){
-        unordered_map <Id,MapElement*> projectiles = mapElement.second->getShoots();
-         for (auto element : projectiles){
-            MapElement* projectile = element.second;
-            projectile->update();
-            position_t actualPositionProjectile = projectile->getActualPosition();
-            Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-            game->sendEvent(eventUpdateProjectile);
+    for(auto enemy :this->mapElements_){
+        unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
+         for (auto projectile: projectiles){
+            projectile.second->update();
+            if(!projectile.second->leftScreen()){
+                position_t actualPositionProjectile = projectile.second->getActualPosition();
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile.second->getType(), actualPositionProjectile);
+                game->sendEvent(eventUpdateProjectile);
+            }
+            else{
+                projectilesDead.push_back(projectile.first); 
+            }
         }
+
+        for (auto idDead :projectilesDead){
+            enemy.second->eraseProjectile(idDead);
+        }
+        
+        projectilesDead.clear(); 
     }
-
-
-    for(auto IdDead : mapElementDead){
-        MapElement* deadMapElement = this->mapElements_.at(IdDead);
-        this->mapElements_.erase(IdDead);
-        delete deadMapElement;
-    }
-    mapElementDead.clear();
-
+ 
     //Reviso si alguna bala de de los enemigos le pega a un jugador
-    for(auto mapElement : this->mapElements_){
-        vector <Id> enemyProjectilesDead;
-        unordered_map <Id,MapElement*> projectiles = mapElement.second->getShoots();
+    for(auto enemy: this->mapElements_){
+        unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
         for (auto player:players){
-           for (auto element: projectiles){
-                MapElement* projectile = element.second;
-                bool collision = player.second->checkCollision(projectile);
+           for (auto projectile: projectiles){
+                bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
-                   enemyProjectilesDead.push_back(element.first);
+                   projectilesDead.push_back(projectile.first);
                     //Quitar vida al jugador
                 }
             }
         }
 
-        for (auto idDead :enemyProjectilesDead){
-            mapElement.second->eraseProjectile(idDead);
+        for (auto idDead :projectilesDead){
+            enemy.second->eraseProjectile(idDead);
         }
-        enemyProjectilesDead.clear(); 
+        projectilesDead.clear(); 
     
     }
 
     //Reviso si alguna bala del jugador le pega a algun enemigo
-    vector <Id> playerProjectilesDead;
     for (auto player:players){
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
-        for (auto mapElement : this->mapElements_){
-            for (auto element: projectiles){
-                MapElement* projectile = element.second;
-                bool collision =mapElement.second->checkCollision(projectile);
+        for (auto enemy : this->mapElements_){
+            for (auto projectile: projectiles){
+                bool collision =enemy.second->checkCollision(projectile.second);
                 if (collision){
-                    playerProjectilesDead.push_back(element.first);
+                    projectilesDead.push_back(projectile.first);
                    //quitar vida al enemigo
                 }
             }
         }
 
-        for (auto idDead :playerProjectilesDead){
+        for (auto idDead :projectilesDead){
             player.second->eraseProjectile(idDead);
         }
-
-        playerProjectilesDead.clear();
-
+        
+        projectilesDead.clear();
     }
 }
 

@@ -9,6 +9,7 @@
 #include "../../common/models/Action.h"
 #include "../../common/models/Orientation.h"
 #include "../../common/models/Position.h"
+#include <stdexcept>
 #include "Speed.h"
 #include "../../common/types.h"
 #include "PlayerController.h"
