@@ -40,6 +40,8 @@ static void * detectPlayerEvents(void* arg){
     Uint8 music;
     Uint8 godMode;
     bool canShoot = true;
+    bool canSetAudio = true;
+    bool canBeGod = true;
 
     const Uint8 *keystate;
     
@@ -111,14 +113,16 @@ static void * detectPlayerEvents(void* arg){
             client->sendMessage(message);
         }
 
-        if (music)
+        if (music && canSetAudio)
         {
-            Music::getInstance()->pause();  
+            Music::getInstance()->pause(); 
+            canSetAudio = false;
         }
 
-        if (godMode)
+        if (godMode && canBeGod)
         {
-            /* TODO */
+            //client->sendMessage(new Messagexxx());
+            canBeGod = false;
         }  
 
         if (shoot && canShoot){
@@ -129,6 +133,12 @@ static void * detectPlayerEvents(void* arg){
         // Si Space no esta presionada, le habilitamos poder dispara en proximo ciclo
         if (!shoot)
             canShoot = true;
+        
+        if (!music)
+            canSetAudio = true;
+         
+        if (!godMode)
+            canBeGod = true;
 
         SDL_Delay(17);
         
