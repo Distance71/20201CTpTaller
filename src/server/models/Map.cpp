@@ -546,7 +546,7 @@ void Map::initializeFinalBoss(gameParams_t &gameSettings){
     position.axis_y = (GameProvider::getHeight() / 2) - (finalBoss.size_y / 2);
     position.orientation = BACK;
 
-    this->finalBoss_ = new MapElement(finalBoss.type, position, 2, 2, finalBoss.size_x, finalBoss.size_y, finalBoss.health);
+    this->finalBoss_ = new MapElement(finalBoss.type, position, 4, 4, finalBoss.size_x, finalBoss.size_y, finalBoss.health);
 
 }
 

@@ -12,7 +12,7 @@ void BossIA::update(unordered_map<string, State *> states_){
     State* speed = states_.at("Speed");
     State* orientation = states_.at("Orientation");
 
-    //TODO implementar IA
+    unsigned int screenHeight = GameProvider::getHeight();
  
     int xp = position->getX();
     int yp = position->getY();
@@ -28,31 +28,51 @@ void BossIA::update(unordered_map<string, State *> states_){
         position->setX(new_xp);
     }
 
-    // int randomMovement = rand()%(10);
-    // int randomOrientacion = rand()%(2);
-
-    // if (randomOrientacion == 1){
-    //     randomMovement = randomMovement;
-    // } else {
-    //     randomMovement = - randomMovement;
-    // }
-
-    // new_yp = yp + randomMovement * ys;
+    new_yp = randomMovement(yp, ys);
     
-    // if (new_yp < 0) new_yp = 0;
-    // if (new_yp > (GameProvider::getHeight() - this->owner_->getSizeY())) new_yp = GameProvider::getHeight() - this->owner_->getSizeY();
+    if (new_yp < 0) new_yp = 0;
+    if (new_yp > (screenHeight - this->owner_->getSizeY())) new_yp = screenHeight - this->owner_->getSizeY();
 
-    // position->setY(new_yp);
+    position->setY(new_yp);
+ 
     randomShoot();
 }
 
 void BossIA::randomShoot(){
     this->timeShoot++;
-    //cout<<"contador "<<this->timeShoot<< endl;
+    
     if (this->timeShoot > this->timeLimitShoot)
     {
        this->owner_->shoot();
        this->timeShoot = 0;
        this->timeLimitShoot = 70 + RandomGenerate::generate(FRECUENCIA);
     }
+}
+
+int BossIA::randomMovement(int yp, int ys){
+
+    unsigned int screenHeight = GameProvider::getHeight();
+    int randomMovement = RandomGenerate::generate(5);
+
+    switch (RandomGenerate::generate(100)) {
+        case 1 ... 20:
+            return yp + randomMovement * ys;
+            break;
+        case 80 ... 100:
+            return yp - randomMovement * ys;
+            break;
+        
+        default:
+
+            if (yp < 0.25 * screenHeight)
+                return yp + randomMovement * ys;
+
+            if (yp > 0.75 * screenHeight)
+                return yp - randomMovement * ys;
+
+            return yp;
+            break;
+    }
+
+
 }

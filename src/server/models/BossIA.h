@@ -20,6 +20,7 @@ class BossIA: public MovementHandler {
 		const unsigned long FRECUENCIA = 200;
 
 		void randomShoot();
+		int randomMovement(int yp, int ys);
 
 	public:
 		BossIA(MapElement* owner);
