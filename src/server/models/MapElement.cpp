@@ -28,6 +28,8 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
         BossIA* bossIA = new BossIA(this);
         addAction("BossIA", bossIA);
     }
+    
+    this->projectileKey_ = 0;
 }
 
 void MapElement::setTarget(MapElement* target) {
@@ -107,7 +109,7 @@ Id MapElement::getIdElement(){
 void MapElement::update(){
 
     for(auto projectile : projectiles_){
-        projectile->update();
+        projectile.second->update();
     }
 
     for(auto action : actions_){
@@ -239,7 +241,7 @@ CollisionRectangle* MapElement::getCollisionRectangle(){
     return rectangle;
 }
 
-bool MapElement::checkPlayerToEnemyCollision(MapElement* mapElement){
+bool MapElement::checkCollision(MapElement* mapElement){
     CollisionRectangle* myRectangle = this->getCollisionRectangle();
     CollisionRectangle* otherRectangle = mapElement->getCollisionRectangle();
     bool result = myRectangle->isCollision(otherRectangle);
@@ -247,19 +249,6 @@ bool MapElement::checkPlayerToEnemyCollision(MapElement* mapElement){
     delete otherRectangle;
     return result;
 }
-
-void MapElement::checkPlayerProyectileToEnemiesCollisions(unordered_map<Id, MapElement*> mapElements, MapElement* projectile){
-
-}
-
-void MapElement::checkEnemyToPlayersCollisions(unordered_map<string, MapElement*> players){
-
-}
-
-void MapElement::checkEnemyProyectileToPlayersCollisions(unordered_map<string, MapElement*> players, MapElement* projectile){
-
-}
-
 
 
 bool MapElement::leftScreen(){
@@ -271,9 +260,16 @@ bool MapElement::leftScreen(){
     return (this->getState<Position>("Position")->getX() - this->size_x_ >= (int)GameProvider::getWidth());
 }
 
-vector<MapElement*> MapElement::getShoots(){
+unordered_map<Id,MapElement*> MapElement::getShoots(){
     return this->projectiles_;
 };
+
+void MapElement::eraseProjectile(Id id){
+    MapElement* deadProjectile = this->projectiles_.at(id);
+    delete deadProjectile;
+    this->projectiles_.erase(id);
+}
+
 
 void MapElement::shoot(){
 
@@ -291,9 +287,9 @@ void MapElement::shoot(){
 void MapElement::cleanShoots(){
     
     for (auto oneProjectile : this->projectiles_)
-        delete oneProjectile;
-        
-    this->projectiles_ = vector<MapElement*>();
+        delete oneProjectile.second;
+    
+    this->projectiles_.clear();
 }
 
 
@@ -303,7 +299,8 @@ void MapElement::shootNormal(projectile_t projectileData){
     position.axis_y = position.axis_y + (this->size_y_ / 2); 
 
     MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
-    this->projectiles_.push_back(oneProjetil);
+    this->projectiles_.emplace(this->projectileKey_ ,oneProjetil);
+    this->projectileKey_ ++;
 }
 
 void MapElement::shootBoss(projectile_t projectileData){
@@ -316,17 +313,20 @@ void MapElement::shootBoss(projectile_t projectileData){
     middlePosition.axis_x = positionXProjectil;
     middlePosition.axis_y = position.axis_y + (this->size_y_ / 4); 
     MapElement *middleProjetil = new MapElement(PROJECTILE, middlePosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
-    this->projectiles_.push_back(middleProjetil);
+    this->projectiles_.emplace(this->projectileKey_ ,middleProjetil);
+    this->projectileKey_++;
 
     position_t topPosition = position;
     topPosition.axis_x = positionXProjectil;
     topPosition.axis_y = position.axis_y + (this->size_y_ / 2); 
     MapElement *topProjetil = new MapElement(PROJECTILE, topPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
-    this->projectiles_.push_back(topProjetil);
+    this->projectiles_.emplace(this->projectileKey_ ,topProjetil);
+    this->projectileKey_++;
 
     position_t bottomPosition = position;
     bottomPosition.axis_x = positionXProjectil;
     bottomPosition.axis_y = position.axis_y + 3 * (this->size_y_ / 4); 
     MapElement *bottomProjetil = new MapElement(PROJECTILE, bottomPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
-    this->projectiles_.push_back(bottomProjetil);
+    this->projectiles_.emplace(this->projectileKey_ ,bottomProjetil);
+    this->projectileKey_++;
 }

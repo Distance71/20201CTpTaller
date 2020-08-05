@@ -26,7 +26,8 @@ class MapElement {
         elementType_t type;
         unordered_map<string, State *> states_;
         unordered_map<string, Action *> actions_;
-        vector<MapElement*> projectiles_; 
+        unordered_map<Id,MapElement*> projectiles_; 
+        Id projectileKey_;
         int size_x_;
         int size_y_;
 
@@ -66,19 +67,20 @@ class MapElement {
 
         void moveTo(orientation_t oneOrientation); 
 
-        vector<MapElement*> getShoots();   
+        unordered_map<Id,MapElement*> getShoots();   
         void shoot();
         void cleanShoots();
 
         void setIdElement(Id oneIdElement);
         Id getIdElement();
         bool leftScreen();
-
-        void checkPlayerProyectileToEnemiesCollisions(unordered_map<Id, MapElement*> mapElements, MapElement* projectile);
+        bool checkCollision(MapElement* mapElement);
+        /*void checkPlayerProyectileToEnemiesCollisions(unordered_map<Id, MapElement*> mapElements, MapElement* projectile);
         void checkEnemyToPlayersCollisions(unordered_map<string, MapElement*> players);
         void checkEnemyProyectileToPlayersCollisions(unordered_map<string, MapElement*> players, MapElement* projectile);
-        bool checkPlayerToEnemyCollision(MapElement* mapElement);
+        bool checkPlayerToEnemyCollision(MapElement* mapElement);*/
         CollisionRectangle* getCollisionRectangle();
+        void eraseProjectile(Id id);
 };
 
 template<typename T>

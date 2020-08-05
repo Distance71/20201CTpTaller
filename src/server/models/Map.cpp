@@ -264,8 +264,8 @@ void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, 
 }
 
 void Step::update(Game *game, unordered_map<string, MapElement*> players){
-    //Actaulizo posiciones de los jugadores
     
+    //Actaulizo posiciones de los jugadores
     for(auto mapElementPlayer : players){
         position_t actualPosition = mapElementPlayer.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
@@ -273,9 +273,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     }
         
     //Actaulizo posiciones enemigos
-
     vector <Id> mapElementDead;
-
     for(auto mapElement : this->mapElements_) {
         mapElement.second->update();
         if (!mapElement.second->leftScreen()){
@@ -297,11 +295,11 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     mapElementDead.clear();
 
-
     // Actaulizo proyectiles de los jugadores
-    for(auto mapElementPlayer : players){
-        vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
-        for (auto projectile : projectiles){
+    for(auto player: players){
+        unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
+        for (auto element : projectiles){
+            MapElement* projectile = element.second;
             projectile->update();
             position_t actualPositionProjectile = projectile->getActualPosition();
             Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
@@ -311,8 +309,9 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     //Actualizo proyectiles de los enemigos
     for(auto mapElement :this->mapElements_){
-        vector<MapElement*> projectiles = mapElement.second->getShoots();
-         for (auto projectile : projectiles){
+        unordered_map <Id,MapElement*> projectiles = mapElement.second->getShoots();
+         for (auto element : projectiles){
+            MapElement* projectile = element.second;
             projectile->update();
             position_t actualPositionProjectile = projectile->getActualPosition();
             Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
@@ -323,13 +322,12 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     //Se revisan colisiones entre jugadores y enemigos
     for(auto mapElementPlayer : players){
         for(auto mapElement :this->mapElements_){
-            bool isCollision = mapElementPlayer.second->checkPlayerToEnemyCollision(mapElement.second);
+            bool isCollision = mapElementPlayer.second->checkCollision(mapElement.second);
             if(isCollision) {
                 killElementWithExplosion(game,mapElement.second);
                 //killElementWithExplosion(game, mapElementPlayer.second);
                 mapElementDead.push_back(mapElement.first);
-                //falta restar vida al jugador
-                
+                //falta restar vida al jugador o matarlo
             }
         }
     }
@@ -339,67 +337,52 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         this->mapElements_.erase(IdDead);
         delete deadMapElement;
     }
-
     mapElementDead.clear();
-   
 
-
-
-
-
-    /*vector<Id> mapElementDead;
-
-    for(auto mapElementPlayer : players){
-       
-
-        /*for(auto enemy: this->mapElements_) {
-            bool isCollision = mapElementPlayer.second->checkPlayerToEnemyCollision(enemy.second);
-            if(isCollision) {
-                mapElementDead.push_back(enemy.first);
-                //informDisconnection(mapElementPlayer.first);
-                //killElementWithExplosion(game, mapElementPlayer.second);
-                killElementWithExplosion(game, enemy.second);
+    //Reviso si alguna bala de de los enemigos le pega a un jugador
+    for(auto mapElement : this->mapElements_){
+        vector <Id> enemyProjectilesDead;
+        unordered_map <Id,MapElement*> projectiles = mapElement.second->getShoots();
+        for (auto player:players){
+           for (auto element: projectiles){
+                MapElement* projectile = element.second;
+                bool collision = player.second->checkCollision(projectile);
+                if (collision){
+                   enemyProjectilesDead.push_back(element.first);
+                    //Quitar vida al jugador
+                }
             }
         }
 
-        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
-        game->sendEvent(eventUpdate);
+        for (auto idDead :enemyProjectilesDead){
+            mapElement.second->eraseProjectile(idDead);
+        }
+        enemyProjectilesDead.clear(); 
+    
     }
 
-    for(auto mapElement : this->mapElements_) {
-        mapElement.second->update();
-        position_t position = mapElement.second->getActualPosition();
-        mapElement.second->getCollisionRectangle()->setX(position.axis_x); //TODO: Send to other place
-        mapElement.second->getCollisionRectangle()->setY(position.axis_y);
-        mapElement.second->checkEnemyToPlayersCollisions(players);
-        if (mapElement.second->leftScreen()){
-            mapElementDead.push_back(mapElement.first);
-        } else {
-
-            position_t actualPosition = mapElement.second->getActualPosition();
-            vector<MapElement*> projectiles = mapElement.second->getShoots();
-
-            for (auto projectile : projectiles){
-                projectile->update();
-                mapElement.second->checkEnemyProyectileToPlayersCollisions(players, projectile);
-                position_t actualPositionProjectile = projectile->getActualPosition();
-
-                if (this->shouldSend(projectile, actualPositionProjectile)){
-                    Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-                    game->sendEvent(eventUpdateProjectile);
+    //Reviso si alguna bala del jugador le pega a algun enemigo
+    vector <Id> playerProjectilesDead;
+    for (auto player:players){
+        unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
+        for (auto mapElement : this->mapElements_){
+            for (auto element: projectiles){
+                MapElement* projectile = element.second;
+                bool collision =mapElement.second->checkCollision(projectile);
+                if (collision){
+                    playerProjectilesDead.push_back(element.first);
+                   //quitar vida al enemigo
                 }
             }
+        }
 
-            if (this->shouldSend(mapElement.second, actualPosition)){
-                Event *eventUpdate = new EventMapElementUpdate(mapElement.second->getType(), actualPosition);
-                game->sendEvent(eventUpdate);
-            }
+        for (auto idDead :playerProjectilesDead){
+            player.second->eraseProjectile(idDead);
+        }
 
-        
+        playerProjectilesDead.clear();
+
     }
-
-    */
-   
 }
 
 bool Step::shouldSend(MapElement* oneMapElement, position_t actualPosition){
@@ -578,8 +561,9 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
         
         position_t actualPosition = mapElementPlayer.second->getActualPosition();
 
-        vector<MapElement*> projectiles = mapElementPlayer.second->getShoots();
-        for (auto projectile : projectiles){
+        unordered_map<Id,MapElement*> projectiles = mapElementPlayer.second->getShoots();
+        for (auto element : projectiles){
+            MapElement* projectile = element.second;
             projectile->update();
             position_t actualPositionProjectile = projectile->getActualPosition();
 
@@ -598,9 +582,10 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
         finalBoss->update();
         position_t actualPositionBoss = finalBoss->getActualPosition();   
 
-        vector<MapElement*> projectiles = finalBoss->getShoots();
+        unordered_map<Id,MapElement*> projectiles = finalBoss->getShoots();
 
-        for (auto projectile : projectiles){
+        for (auto element: projectiles){
+            MapElement* projectile = element.second; 
             projectile->update();
             position_t actualPositionProjectile = projectile->getActualPosition();
 
