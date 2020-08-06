@@ -9,7 +9,7 @@ CollisionRectangle::CollisionRectangle(int Xstart, int Ystart, int Xend, int Yen
 
 bool CollisionRectangle::isCollision(CollisionRectangle* other) {
 	if ( (this->Xstart_ >= other->getXstart() && this->Xstart_<= other->getXend() )|| (this->Xend_ >= other->getXstart() && this->Xend_ <= other->getXend())){
-		if ((other->getYstart() >= this->Ystart_ && other->getYstart() <=this->Yend_ )|| (this->getYend() >= this->Xstart_ && other->getYend()  <=this->Yend_)){
+		if ((other->getYstart() >= this->Ystart_ && other->getYstart() <=this->Yend_ )||(other->getYend() >= this->Ystart_ && other->getYend()  <=this->Yend_)){
 			return true;
 		}
 	}
