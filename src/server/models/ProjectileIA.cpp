@@ -22,3 +22,11 @@ void ProjectileIA::update(unordered_map<string, State *> states_){
 
     position->setX(new_xp);
 }
+
+void ProjectileIA::setOwn(MapElement* own){
+    this->own_ = own;
+}
+
+MapElement* ProjectileIA::getOwn(){
+    return this->own_;
+}

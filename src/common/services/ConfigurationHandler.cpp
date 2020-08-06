@@ -183,6 +183,7 @@ vector<stepParams_t> ConfigurationHandler::getStep(vector<enemy_t> &totalEnemies
             oneEnemy.size_x = totalEnemies[i].size_x;
             oneEnemy.size_y = totalEnemies[i].size_y;
             oneEnemy.sprite = totalEnemies[i].sprite;
+            oneEnemy.health = totalEnemies[i].health;
 
             if (step == cantStepsAJugar - 1){
                 // Si es el ultimo Step debo poner todos los enemigos restantes para completar

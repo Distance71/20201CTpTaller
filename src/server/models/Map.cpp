@@ -1,4 +1,31 @@
 #include "Map.h"
+
+void killElementWithExplosion(Game *game, MapElement *mapElement){
+    position_t actualPosition = mapElement->getActualPosition();
+    
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_1, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_2, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_3, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_4, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_5, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_6, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_7, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_8, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_9, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_10, actualPosition));
+    usleep(100);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_11, actualPosition));
+}
+
 Map::Map(){}
 
 Map::Map(gameParams_t &gameSettings){
@@ -115,10 +142,10 @@ Step::Step(stepParams_t params) {
         int size_y = params.enemies[i].size_y;
         elementType_t typeEnemy = (elementType_t) params.enemies[i].type;
         int healthEnemy = params.enemies[i].health;
-        
+
         for(unsigned int j = 0; j < nEnemiesIguales; j++){
             position_t positionEnemy = getPosition(size_x, size_y);
-            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy, 2, 2, size_x, size_y, healthEnemy);
+            MapElement *newEnemy = new MapElement(typeEnemy, positionEnemy, 2, 2, size_x, size_y, healthEnemy, 1);
             this->mapElements_.emplace(this->lastId_, newEnemy);
             this->lastId_++;
         }
@@ -277,12 +304,18 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     //Actualizo posiciones enemigos
     for(auto enemy : this->mapElements_) {
         enemy.second->update();
-        if (!enemy.second->leftScreen()){
+        bool isDead = enemy.second->isDead();
+        if ((!enemy.second->leftScreen()) && (!isDead)){
             position_t position = enemy.second->getActualPosition();
             Event *eventUpdate = new EventMapElementUpdate(enemy.second->getType(), position);
             game->sendEvent(eventUpdate);
         }
         else{
+            
+            if (isDead){
+                killElementWithExplosion(game,enemy.second);
+            }
+
             enemiesDead.push_back(enemy.first);
         }
     
@@ -320,7 +353,6 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
 
     // Actualizo proyectiles de los jugadores
-    
     for(auto player: players){
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
         for (auto projectile : projectiles){
@@ -372,8 +404,10 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
            for (auto projectile: projectiles){
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
-                   projectilesDead.push_back(projectile.first);
-                    //Quitar vida al jugador
+                    projectilesDead.push_back(projectile.first);
+                
+                    // Le quitamos vida a player
+                    enemy.second->attackTo(player.second);
                 }
             }
         }
@@ -393,7 +427,15 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                 bool collision =enemy.second->checkCollision(projectile.second);
                 if (collision){
                     projectilesDead.push_back(projectile.first);
-                   //quitar vida al enemigo
+
+                    // Le quitamos vida a enemy y suma puntajes al player
+                    player.second->attackTo(enemy.second);
+
+                    if (enemy.second->isDead()){
+                        enemiesDead.push_back(enemy.first);
+                        killElementWithExplosion(game,enemy.second);
+                    }
+
                 }
             }
         }
@@ -404,36 +446,19 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         
         projectilesDead.clear();
     }
+
+    for(auto IdDead : enemiesDead){
+        MapElement* deadEnemy = this->mapElements_.at(IdDead);
+        this->mapElements_.erase(IdDead);
+        delete deadEnemy;
+    }
+    
+    enemiesDead.clear();    
+
 }
 
 bool Step::shouldSend(MapElement* oneMapElement, position_t actualPosition){
     return ((actualPosition.axis_x >= -oneMapElement->getSizeX()) && actualPosition.axis_y <= GameProvider::getWidth());
-}
-
-void Step::killElementWithExplosion(Game *game, MapElement *mapElement){
-    position_t actualPosition = mapElement->getActualPosition();
-    
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_1, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_2, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_3, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_4, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_5, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_6, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_7, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_8, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_9, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_10, actualPosition));
-    usleep(100);
-    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_11, actualPosition));
 }
 
 void Map::movePlayer(string user, orientation_t orientation){
@@ -554,6 +579,10 @@ void Map::initializeFinalBoss(gameParams_t &gameSettings){
 
 }
 
+bool Map::endFinal(){
+    return this->finalBoss_->isDead();
+}
+
 void Map::updateFinal(Game* game){
 
     if (!this->hasSetTargetFinal){
@@ -579,51 +608,125 @@ bool Stage::shouldSend(MapElement* oneMapElement, position_t actualPosition){
     return ((actualPosition.axis_x >= -oneMapElement->getSizeX()) && actualPosition.axis_y <= GameProvider::getWidth());
 }
 
-
 void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, MapElement* finalBoss, stage_t stage){
 
     updateBackground(game, stage);
 
-    for(auto mapElementPlayer : players){
-        
-        position_t actualPosition = mapElementPlayer.second->getActualPosition();
+    vector <Id> projectilesDead;
 
-        unordered_map<Id,MapElement*> projectiles = mapElementPlayer.second->getShoots();
-        for (auto element : projectiles){
-            MapElement* projectile = element.second;
-            projectile->update();
-            position_t actualPositionProjectile = projectile->getActualPosition();
-
-            if (this->shouldSend(projectile, actualPositionProjectile)){
-                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
-                game->sendEvent(eventUpdateProjectile);
-            }            
-
-        }
-
-        Event *eventUpdate = new EventMapElementUpdate(mapElementPlayer.second->getType(), actualPosition);
+    //Actualizo posiciones de los jugadores
+    for(auto player : players){
+        position_t actualPosition = player.second->getActualPosition();
+        Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
     }
 
+    //Actualizo posicion del Jefe
     if (finalBoss != NULL){
         finalBoss->update();
-        position_t actualPositionBoss = finalBoss->getActualPosition();   
 
-        unordered_map<Id,MapElement*> projectiles = finalBoss->getShoots();
+        if (finalBoss->isDead()){
+            killElementWithExplosion(game, finalBoss);
+            // delete FInalBoss
+        } else {
+            position_t position = finalBoss->getActualPosition();
+            Event *eventUpdateBoss = new EventMapElementUpdate(finalBoss->getType(), position);
+            game->sendEvent(eventUpdateBoss);
+        }
+    }
 
-        for (auto element: projectiles){
-            MapElement* projectile = element.second; 
-            projectile->update();
-            position_t actualPositionProjectile = projectile->getActualPosition();
+    //Reviso colisiones entre jugadores y el jefe
+    for (auto player : players){
+        bool isCollision = player.second->checkCollision(finalBoss);
+        if (isCollision){
+            // Como resolver que pasa con el Jefe Final
+        }
+    }
 
-            if (this->shouldSend(projectile, actualPositionProjectile)){
-                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile->getType(), actualPositionProjectile);
+    //Actualizo proyectiles de los jugadores
+    for(auto player: players){
+        unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
+        for (auto projectile : projectiles){
+            projectile.second->update();
+            if(!projectile.second->leftScreen()){
+                position_t actualPositionProjectile = projectile.second->getActualPosition();
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile.second->getType(), actualPositionProjectile);
                 game->sendEvent(eventUpdateProjectile);
             }
-        }          
+            else{
+                projectilesDead.push_back(projectile.first);
+            }
+        }
 
-        Event *eventUpdateBoss = new EventMapElementUpdate(finalBoss->getType(), actualPositionBoss);
-        game->sendEvent(eventUpdateBoss);   
+
+        for (auto idDead :projectilesDead){
+            player.second->eraseProjectile(idDead);
+        }
+        projectilesDead.clear();
+    }
+
+    //Actualizo proyectiles del jefe
+    if (finalBoss != NULL){
+        unordered_map <Id,MapElement*> projectiles = finalBoss->getShoots();
+         for (auto projectile: projectiles){
+            projectile.second->update();
+            if(!projectile.second->leftScreen()){
+                position_t actualPositionProjectile = projectile.second->getActualPosition();
+                Event *eventUpdateProjectile = new EventMapElementUpdate(projectile.second->getType(), actualPositionProjectile);
+                game->sendEvent(eventUpdateProjectile);
+            }
+            else{
+                projectilesDead.push_back(projectile.first); 
+            }
+        }
+
+        for (auto idDead :projectilesDead){
+            finalBoss->eraseProjectile(idDead);
+        }
+        
+        projectilesDead.clear(); 
+    }    
+
+    //Reviso si alguna bala de de los enemigos le pega a un jugador
+    if (finalBoss != NULL){
+       unordered_map <Id,MapElement*> projectiles = finalBoss->getShoots();
+        for (auto player:players){
+           for (auto projectile: projectiles){
+                bool collision = player.second->checkCollision(projectile.second);
+                if (collision){
+                    projectilesDead.push_back(projectile.first);
+                
+                    // Le quitamos vida a player
+                    finalBoss->attackTo(player.second);
+                }
+            }
+        }
+
+        for (auto idDead :projectilesDead){
+            finalBoss->eraseProjectile(idDead);
+        }
+        projectilesDead.clear(); 
+    }
+
+    //Reviso si alguna bala del jugador le pega al jefe
+    for (auto player : players){
+        unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
+       
+        for (auto projectile : projectiles){
+            bool collision = finalBoss->checkCollision(projectile.second);
+            if (collision){
+                projectilesDead.push_back(projectile.first);
+
+                // Le quitamos vida al jefe y suma puntajes al player
+                player.second->attackTo(finalBoss);
+            }
+        }
+
+        for (auto idDead :projectilesDead){
+            player.second->eraseProjectile(idDead);
+        }
+        
+        projectilesDead.clear();
     }
 
 }

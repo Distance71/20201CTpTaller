@@ -18,6 +18,17 @@
 #include "BossIA.h"
 #include "CollisionRectangle.h"
 
+// Al Config?
+#define DAMAGE_ENEMY_1 15
+#define DAMAGE_ENEMY_2 25
+#define DAMAGE_ENEMY_BOSS 35
+#define DAMAGE_PLAYER 50
+
+#define SCORE_KILLED_ENEMY_1 500
+#define SCORE_KILLED_ENEMY_2 1000
+#define SCORE_KILLED_ENEMY_BOSS 2000
+#define SCORE_KILLED_PLAYER 0 // No influiria este valor
+
 using namespace std;
 
 class MapElement {
@@ -33,7 +44,12 @@ class MapElement {
         int size_y_;
 
         int lives_;
+        int maxHealth_;
         int health_;
+        int damage_;
+        int scoreWhenKilled_;
+
+        int score_;
 
         vector<Action *> getActions();
         vector<State *> getStates();
@@ -57,11 +73,18 @@ class MapElement {
         string getImageSource();
         
         int getHealth();
-        int reduceHealth(int damage);
+        bool reduceHealth(int damage);
         int getLives();
-        int quitLives();
+        void quitLives();
         int getSizeX();
         int getSizeY();
+        bool isDead();
+
+        int getDamage();
+        int getScoreWhenKilled();
+
+        void addScore(int score);
+        int getScore();
 
         elementType_t getType();
         void setType(elementType_t type);
@@ -76,6 +99,7 @@ class MapElement {
         Id getIdElement();
         bool leftScreen();
         bool checkCollision(MapElement* mapElement);
+        void attackTo(MapElement* mapElement);
         /*void checkPlayerProyectileToEnemiesCollisions(unordered_map<Id, MapElement*> mapElements, MapElement* projectile);
         void checkEnemyToPlayersCollisions(unordered_map<string, MapElement*> players);
         void checkEnemyProyectileToPlayersCollisions(unordered_map<string, MapElement*> players, MapElement* projectile);
