@@ -11,25 +11,43 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->size_x_ = size_x;
     this->size_y_ = size_y;
     this->type = type; 
+    this->maxHealth_ = health;
     this->health_ = health; 
     this->lives_ = lives;
 
-    if((type == ENEMY_1) || (type == ENEMY_2)){
+    if(type == ENEMY_1){
         EnemyIA* enemyia = new EnemyIA(this);
         addAction("EnemyIA", enemyia);
-    }
-    
-    if(type == PROJECTILE){
+        this->damage_ = DAMAGE_ENEMY_1;
+        this->scoreWhenKilled_ = SCORE_KILLED_ENEMY_1;
+
+    } else if(type == ENEMY_2){
+        EnemyIA* enemyia = new EnemyIA(this);
+        addAction("EnemyIA", enemyia);
+        this->damage_ = DAMAGE_ENEMY_2;
+        this->scoreWhenKilled_ = SCORE_KILLED_ENEMY_2;
+
+    } else if(type == PROJECTILE){
         ProjectileIA* proyectileIA = new ProjectileIA();
         addAction("ProjectileIA", proyectileIA);
-    }
+        this->damage_ = 0;
+        this->scoreWhenKilled_ = 0;
 
-    if(type == BOSS_ENEMY){
+    } else if(type == BOSS_ENEMY){
         BossIA* bossIA = new BossIA(this);
         addAction("BossIA", bossIA);
+        this->damage_ = DAMAGE_ENEMY_BOSS;
+        this->scoreWhenKilled_ = SCORE_KILLED_ENEMY_BOSS;
+    
+    } else {
+        // Es Player
+        this->damage_ = DAMAGE_PLAYER;
+        this->scoreWhenKilled_ = SCORE_KILLED_PLAYER;
     }
     
+    this->score_ = 0;
     this->projectileKey_ = 0;
+
 }
 
 void MapElement::setTarget(MapElement* target) {
@@ -40,6 +58,11 @@ void MapElement::setTarget(MapElement* target) {
 
     if (type == BOSS_ENEMY)
         this->getAction<BossIA>("BossIA")->addTarget(target);
+
+
+    if (type == PROJECTILE)
+        this->getAction<ProjectileIA>("ProjectileIA")->setOwn(target);
+
 }
 
 MapElement::~MapElement() {
@@ -76,18 +99,49 @@ int MapElement::getHealth() {
     return this->health_;
 }
 
-int MapElement::reduceHealth(int damage){
-    //TODO check < 0 aca? o el q lo invova?
-    return this->health_ - damage;
+bool MapElement::reduceHealth(int damage){
+    
+    this->health_ -= damage;
+
+    if (this->health_ <= 0)
+        this->quitLives();
+
+    return this->isDead();
+}
+
+bool MapElement::isDead(){
+    return ((this->lives_ <= 0) && (this->health_ <= 0));
 }
 
 int MapElement::getLives() {
     return this->lives_;
 }
 
-int MapElement::quitLives(){
-    //TODO check < 0 aca? o el q lo invova?
-    return this->lives_--;
+void MapElement::quitLives(){
+    this->lives_--;
+
+    if (this->lives_ <= 0) {
+        this->lives_ = 0;
+        this->health_ = 0;
+    } else {
+        this->health_ = maxHealth_;
+    }
+}
+
+int MapElement::getDamage(){
+    return this->damage_;
+}
+
+int MapElement::getScoreWhenKilled(){
+    return this->scoreWhenKilled_;
+}
+
+void MapElement::addScore(int score){
+    this->score_ += score;
+}
+
+int MapElement::getScore(){
+    return this->score_;
 }
 
 void MapElement::setType(elementType_t type) {
@@ -253,6 +307,17 @@ bool MapElement::checkCollision(MapElement* mapElement){
     return result;
 }
 
+void MapElement::attackTo(MapElement* mapElementAttacked){
+
+    int damageProduced = this->getDamage();
+    bool kill = mapElementAttacked->reduceHealth(damageProduced);
+
+    if (kill){
+        int scoreFinal = mapElementAttacked->getScoreWhenKilled();
+        this->addScore(scoreFinal);
+    }
+
+}
 
 bool MapElement::leftScreen(){
 
@@ -310,6 +375,8 @@ void MapElement::shootNormal(projectile_t projectileData){
     MapElement *oneProjetil = new MapElement(PROJECTILE, position, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
     this->projectiles_.emplace(this->projectileKey_ ,oneProjetil);
     this->projectileKey_ ++;
+
+    oneProjetil->setTarget(this);
 }
 
 void MapElement::shootBoss(projectile_t projectileData){
@@ -324,6 +391,7 @@ void MapElement::shootBoss(projectile_t projectileData){
     MapElement *middleProjetil = new MapElement(PROJECTILE, middlePosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
     this->projectiles_.emplace(this->projectileKey_ ,middleProjetil);
     this->projectileKey_++;
+    middleProjetil->setTarget(this);
 
     position_t topPosition = position;
     topPosition.axis_x = positionXProjectil;
@@ -331,6 +399,7 @@ void MapElement::shootBoss(projectile_t projectileData){
     MapElement *topProjetil = new MapElement(PROJECTILE, topPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
     this->projectiles_.emplace(this->projectileKey_ ,topProjetil);
     this->projectileKey_++;
+    topProjetil->setTarget(this);
 
     position_t bottomPosition = position;
     bottomPosition.axis_x = positionXProjectil;
@@ -338,4 +407,5 @@ void MapElement::shootBoss(projectile_t projectileData){
     MapElement *bottomProjetil = new MapElement(PROJECTILE, bottomPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
     this->projectiles_.emplace(this->projectileKey_ ,bottomProjetil);
     this->projectileKey_++;
+    bottomProjetil->setTarget(this);
 }

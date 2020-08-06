@@ -54,6 +54,7 @@ class Map {
     void shootPlayer(string user);
 
     void updateFinal(Game* game);
+    bool endFinal();
 
     MapElement* getRandomTarget(Game* game);
     void setTargetsForStep(currentStep_t actualStep, Game *game);
@@ -122,7 +123,7 @@ class Step: public Stage{
     void initializeStep(Game *game);
     void shootEnemy();
     bool endStep();
-    void killElementWithExplosion(Game *game, MapElement *mapElement);
+    // void killElementWithExplosion(Game *game, MapElement *mapElement);
 };
 
 #endif

@@ -102,10 +102,12 @@ void Game::runFinal(){
 
     Logger::getInstance()->log(DEBUG, "Se comienza round con Boss");
 
-    while(GameProvider::getStatus().normalStatus){
+    while(GameProvider::getStatus().normalStatus && !this->map_->endFinal()){
         map_->updateFinal(this);
         usleep(18000);
     }
+
+    usleep(18000);
 }
 
 void Game::sendStartStage(stage_t stage){
