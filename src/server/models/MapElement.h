@@ -51,6 +51,8 @@ class MapElement {
 
         int score_;
 
+        gameMode_t gameMode_;
+
         vector<Action *> getActions();
         vector<State *> getStates();
 
@@ -90,6 +92,8 @@ class MapElement {
         void setType(elementType_t type);
 
         void moveTo(orientation_t oneOrientation); 
+        void changeGameMode();
+        gameMode_t getGameMode();
 
         unordered_map<Id,MapElement*> getShoots();   
         void shoot();

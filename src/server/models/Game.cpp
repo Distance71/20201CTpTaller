@@ -107,7 +107,7 @@ void Game::runFinal(){
         usleep(18000);
     }
 
-    usleep(18000);
+   usleep(3000000);//3 seg;
 }
 
 void Game::sendStartStage(stage_t stage){
@@ -167,6 +167,10 @@ void Game::sendStageCleared(stage_t stage){
 
 void Game::movePlayer(string user, orientation_t orientation){
     this->map_->movePlayer(user, orientation);
+}
+
+void Game::changeGameModePlayer(string user){
+    this->map_->changeGameModePlayer(user);
 }
 
 void Game::shootPlayer(string user){

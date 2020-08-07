@@ -296,6 +296,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     
     //Actualizo posiciones de los jugadores
     for(auto player : players){
+
         position_t actualPosition = player.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -338,7 +339,12 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                 killElementWithExplosion(game,enemy.second);
                 //killElementWithExplosion(game,player.second);
                 enemiesDead.push_back(enemy.first);
-                //falta restar vida al jugador o matarlo
+                
+                player.second->quitLives();
+
+                if (player.second->isDead()){
+                    killElementWithExplosion(game,player.second);
+                }
             }
         }
     }
@@ -401,6 +407,10 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     for(auto enemy: this->mapElements_){
         unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
         for (auto player:players){
+
+           if (player.second->isDead())
+            continue;
+
            for (auto projectile: projectiles){
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
@@ -408,6 +418,11 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                 
                     // Le quitamos vida a player
                     enemy.second->attackTo(player.second);
+
+                    if (player.second->isDead()){
+                        killElementWithExplosion(game,player.second);
+                    }
+
                 }
             }
         }
@@ -421,6 +436,9 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     //Reviso si alguna bala del jugador le pega a algun enemigo
     for (auto player:players){
+        if (player.second->isDead())
+            continue;
+
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
         for (auto enemy : this->mapElements_){
             for (auto projectile: projectiles){
@@ -469,6 +487,18 @@ void Map::movePlayer(string user, orientation_t orientation){
     }
     onePlayer->moveTo(orientation);
     Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+}
+
+void Map::changeGameModePlayer(string user){
+    MapElement *onePlayer = this->players[user];
+    
+    if (!onePlayer){
+        Logger::getInstance()->log(ERROR, "No se encontro el jugador para cambiar modo de juego.");
+        return;
+    }
+    
+    onePlayer->changeGameMode();
+    Logger::getInstance()->log(DEBUG, "Se cambia modo de juego del jugador.");
 }
 
 void Map::shootPlayer(string user){
@@ -575,7 +605,7 @@ void Map::initializeFinalBoss(gameParams_t &gameSettings){
     position.axis_y = (GameProvider::getHeight() / 2) - (finalBoss.size_y / 2);
     position.orientation = BACK;
 
-    this->finalBoss_ = new MapElement(finalBoss.type, position, 4, 4, finalBoss.size_x, finalBoss.size_y, finalBoss.health);
+    this->finalBoss_ = new MapElement(finalBoss.type, position, 3, 3, finalBoss.size_x, finalBoss.size_y, finalBoss.health);
 
 }
 

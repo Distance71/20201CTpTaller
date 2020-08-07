@@ -162,6 +162,11 @@ typedef enum {
     LASER_2 = 2,
 } soundType_t;
 
+typedef enum {
+    MODE_NORMAL_GAME = 0,
+    MODE_TEST_GAME = 1
+} gameMode_t;
+
 typedef struct {
     elementType_t type;
     unsigned int quantity;

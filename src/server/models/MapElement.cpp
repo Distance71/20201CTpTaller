@@ -14,6 +14,7 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->maxHealth_ = health;
     this->health_ = health; 
     this->lives_ = lives;
+    this->gameMode_ = MODE_NORMAL_GAME;
 
     if(type == ENEMY_1){
         EnemyIA* enemyia = new EnemyIA(this);
@@ -118,6 +119,10 @@ int MapElement::getLives() {
 }
 
 void MapElement::quitLives(){
+
+    if (this->gameMode_ == MODE_TEST_GAME)
+        return;
+
     this->lives_--;
 
     if (this->lives_ <= 0) {
@@ -146,6 +151,19 @@ int MapElement::getScore(){
 
 void MapElement::setType(elementType_t type) {
     this->type = type;
+}
+
+void MapElement::changeGameMode(){
+
+    if (this->gameMode_ == MODE_NORMAL_GAME)
+        this->gameMode_ = MODE_TEST_GAME;
+    else
+        this->gameMode_ = MODE_NORMAL_GAME;
+    
+}
+
+gameMode_t MapElement::getGameMode(){
+    return this->gameMode_;
 }
 
 vector<State *> MapElement::getStates() {
@@ -308,6 +326,9 @@ bool MapElement::checkCollision(MapElement* mapElement){
 }
 
 void MapElement::attackTo(MapElement* mapElementAttacked){
+
+    if (mapElementAttacked->getGameMode() == MODE_TEST_GAME)
+        return;
 
     int damageProduced = this->getDamage();
     bool kill = mapElementAttacked->reduceHealth(damageProduced);

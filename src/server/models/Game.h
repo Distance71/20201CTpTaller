@@ -45,6 +45,7 @@ class Game {
 
     void run();
     void movePlayer(string user, orientation_t orientation);
+    void changeGameModePlayer(string user);
     void shootPlayer(string user);
     void sendEvent(Event *event);
     Map* getMap();

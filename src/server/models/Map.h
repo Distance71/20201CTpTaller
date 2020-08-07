@@ -51,6 +51,7 @@ class Map {
     void initializePositionPlayers(gameParams_t &gameSettings);
     void initializeFinalBoss(gameParams_t &gameSettings);
     void movePlayer(string user, orientation_t orientation);
+    void changeGameModePlayer(string user);
     void shootPlayer(string user);
 
     void updateFinal(Game* game);
