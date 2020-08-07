@@ -14,7 +14,7 @@
 #include "../../../common/providers/GameProvider.h"
 #include "../../../common/services/Logger.h"
 #include "../../../common/models/BlockingQueue.h"
-#include "../../audio/Music.h"
+#include "../../audio/Audio.h"
 
 
 class GameGraphics {

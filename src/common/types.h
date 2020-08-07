@@ -156,6 +156,12 @@ typedef enum {
     EXPLOSION_ANIMATION_11 = 26,
 } elementType_t;
 
+typedef enum {
+    EXPLOSION = 0,
+    LASER_1 = 1,
+    LASER_2 = 2,
+} soundType_t;
+
 typedef struct {
     elementType_t type;
     unsigned int quantity;

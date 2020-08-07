@@ -32,8 +32,8 @@ add_executable(tp1taller
         src/client/ClientTest.h
         src/client/Client.cpp
         src/client/Client.h
-        src/client/audio/Music.h
-        src/client/audio/Music.cpp
+        src/client/audio/Audio.h
+        src/client/audio/Audio.cpp
         src/client/transmitionManager/ClientTransmitionManager.cpp
         src/client/transmitionManager/ClientTransmitionManager.h
         src/client/eventsManager/ClientEventsManager.cpp

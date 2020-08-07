@@ -115,7 +115,7 @@ static void * detectPlayerEvents(void* arg){
 
         if (music && canSetAudio)
         {
-            Music::getInstance()->pause(); 
+            Audio::getInstance()->pause(); 
             canSetAudio = false;
         }
 
@@ -128,6 +128,8 @@ static void * detectPlayerEvents(void* arg){
         if (shoot && canShoot){
             client->sendMessage(new MessageUserShoot());
             canShoot = false;
+            //TODO es prueba no va aca (todos los player tienen q escuchar el sonido)
+            Audio::getInstance()->playEffect(LASER_1); 
         }
 
         // Si Space no esta presionada, le habilitamos poder dispara en proximo ciclo

@@ -157,24 +157,24 @@ void GameGraphics::setImage(sceneScreen_t scene){
 
 void GameGraphics::setAudio(sceneScreen_t scene){
 
-    Music::getInstance()->gradualStop(1200);
+    Audio::getInstance()->gradualStop(1200);
     switch (scene)
     {
     case INIT_STAGE_1:
-        Music::getInstance()->setSong("assets/Music/stage_1.mp3");   
-        Music::getInstance()->play(); 
+        Audio::getInstance()->setSong("assets/Music/stage_1.mp3");   
+        Audio::getInstance()->playMusic(); 
         break;
     case INIT_STAGE_2:
-        Music::getInstance()->setSong("assets/Music/stage_2.mp3");   
-        Music::getInstance()->play(); 
+        Audio::getInstance()->setSong("assets/Music/stage_2.mp3");   
+        Audio::getInstance()->playMusic(); 
         break;
     case INIT_STAGE_3:
-        Music::getInstance()->setSong("assets/Music/stage_3.mp3");   
-        Music::getInstance()->play(); 
+        Audio::getInstance()->setSong("assets/Music/stage_3.mp3");   
+        Audio::getInstance()->playMusic(); 
         break;
     case INIT_STAGE_4:
-        Music::getInstance()->setSong("assets/Music/stage_boss.mp3");   
-        Music::getInstance()->play(); 
+        Audio::getInstance()->setSong("assets/Music/stage_boss.mp3");   
+        Audio::getInstance()->playMusic(); 
         break;
     default:
         break;
