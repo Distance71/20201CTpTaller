@@ -151,9 +151,9 @@
             "sprite": "assets/Projectile/projectile.png" 
         },
         "finalBoss":{
-            "sizeX": 178,
-            "sizeY": 180,
-            "sprite": "assets/Enemies/enemigo8.png"
+            "sizeX": 400,
+            "sizeY": 300,
+            "sprite": "assets/Enemies/EnemyBoss.png"
         }
     }
 }
