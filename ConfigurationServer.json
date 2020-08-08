@@ -7,7 +7,7 @@
             "width": 1280,
             "height": 800
         },
-        "quantityPlayers": 4,
+        "quantityPlayers": 2,
         "players": [
             {
                 "sizeX": 95,
@@ -30,13 +30,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 2,
+                        "quantity": 200,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100				  
                     },
                     {
-                        "quantity": 2,
+                        "quantity": 200,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200	
