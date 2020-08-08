@@ -147,6 +147,11 @@ response_t MessageSerializer::sendMessageUserShoot(Socket *socket, Message *mess
     return this->_handleSuccess(); 
 };
 
+response_t MessageSerializer::sendMessageUserChangeMode(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se envio UserChangeMode con exito.");
+    return this->_handleSuccess(); 
+};
+
 response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t value){
     stringstream s;
 
@@ -365,6 +370,9 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
         
         case USER_SHOOT:
             return this->sendMessageUserShoot(socket, message);
+
+        case USER_CHANGE_MODE:
+            return this->sendMessageUserChangeMode(socket, message);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

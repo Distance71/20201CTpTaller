@@ -18,6 +18,7 @@
 #include "../../models/messages/MessageRequestLoginPlayer.h"
 #include "../../models/messages/MessageResponseLoginPlayer.h"
 #include "../../models/messages/MessageUserMovement.h"
+#include "../../models/messages/MessageUserChangeMode.h"
 #include "../../models/messages/MessageBackgroundUpdate.h"
 
 class Event;
@@ -43,6 +44,7 @@ class MessageDeserializer {
         response_t getEventUserMovement(Socket *socket, Event* &event);
         response_t getEventBackgroundUpdate(Socket *socket, Event* &event);
         response_t getEventUserShoot(Socket *socket, Event *event);
+        response_t getEventUserChangeMode(Socket *socket, Event *event);
         
         response_t getInteger(Socket *socket, int &value);
         response_t getUInteger(Socket *socket, unsigned int &value);

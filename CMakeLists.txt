@@ -64,6 +64,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageUserMovement.h
         src/common/models/messages/MessageUserShoot.cpp
         src/common/models/messages/MessageUserShoot.h
+        src/common/models/messages/MessageUserChangeMode.cpp
+        src/common/models/messages/MessageUserChangeMode.h
         src/common/models/messages/MessageResponseLoginPlayer.cpp
         src/common/models/messages/MessageResponseLoginPlayer.h
         src/common/models/messages/MessageSceneAnimation.cpp
@@ -100,6 +102,8 @@ add_executable(tp1taller
         src/common/models/events/EventUserMovement.h
         src/common/models/events/EventUserShoot.cpp
         src/common/models/events/EventUserShoot.h
+        src/common/models/events/EventUserChangeMode.cpp
+        src/common/models/events/EventUserChangeMode.h
         src/common/models/events/EventWriteLog.h
         src/common/models/events/EventWriteLog.cpp
         src/common/models/events/EventResponseLoginPlayer.h

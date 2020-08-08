@@ -36,6 +36,7 @@ class Server {
         void sendToUser(Id id,Event* event);
         void moveUser(string user, orientation_t orientation);
         void shootUser(string user);
+        void changeUserGameMode(string user);
         void runGame();
         responseStatus_t loginRequest(Id id, string username,string password);
         int run();

@@ -498,6 +498,7 @@ void Map::changeGameModePlayer(string user){
     }
     
     onePlayer->changeGameMode();
+    
     Logger::getInstance()->log(DEBUG, "Se cambia modo de juego del jugador.");
 }
 
