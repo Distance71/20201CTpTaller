@@ -18,6 +18,7 @@ private:
 	Mix_Music* mixMusicSDL;
 	bool isPaused = false;
 	bool isInitMusic = false;
+	static const int VOLUME_DEFAULT = 80;
 
 	Audio(int volumen);
 

@@ -5,7 +5,7 @@ Audio* Audio::instance = nullptr;
 Audio* Audio::getInstance()
 {
   if (instance == nullptr)
-    instance = new Audio(80); //valores validos(0-128)
+    instance = new Audio(VOLUME_DEFAULT); //valores validos(0-128)
   return instance;
 }
 
@@ -41,12 +41,12 @@ void Audio::setSong(const std::string& path){
 }
 
 void Audio::playMusic(){
-	if (!this->isPaused) {
+	//if (!this->isPaused) {
 		if (Mix_PlayMusic(this->mixMusicSDL, -1) == -1){
 			Logger::getInstance()->log(ERROR,"Error al reproducir la musica");
 		}
 		this->isInitMusic = true;
-	}
+	//}
 }
 
 void Audio::playEffect(soundType_t soundType){
@@ -71,20 +71,27 @@ void Audio::playEffect(soundType_t soundType){
 
 void Audio::pause(){
     //If the music is paused
-    if( Mix_PausedMusic() == 1){
+	 //if( Mix_PausedMusic() == 1){
+    if(this->isPaused){
 		this->isPaused = false;
-		if (this->isInitMusic){
+/*  		if (this->isInitMusic){
 			//Resume the music
-			Mix_ResumeMusic();
+			//Mix_ResumeMusic();
+			Mix_VolumeMusic(VOLUME_DEFAULT);
 		}else{
 			//Inicia el nuevo tema
 			this->playMusic();
-		}
+			Mix_VolumeMusic(VOLUME_DEFAULT);
+
+			//Mix_SetMusicPosition(60.0); ejemplo de setPosition
+		} */
+		Mix_VolumeMusic(VOLUME_DEFAULT);
     }
     //If the music is playing
     else{
         //Pause the music
-        Mix_PauseMusic();
+        //Mix_PauseMusic();
+		Mix_VolumeMusic(0);
 		this->isPaused = true;
     }
 }
