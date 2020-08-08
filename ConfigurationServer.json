@@ -7,7 +7,7 @@
             "width": 1280,
             "height": 800
         },
-        "quantityPlayers": 1,
+        "quantityPlayers": 4,
         "players": [
             {
                 "sizeX": 95,

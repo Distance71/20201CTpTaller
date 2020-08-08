@@ -271,16 +271,20 @@ void Level::update(currentStep_t currentStep, Game *game, unordered_map<string, 
 }
 
 void Stage::updateBackground(Game *game, stage_t stage){
-    vector <MapElementBackground*>* vect = this->stagesBackground_.at(stage);
-    auto iter = vect->begin();
-    while (iter != vect->end()){
-        MapElementBackground* layer = *iter;
-        int step = layer->getStep();
-        layer_t layer_n = layer->getLayer();
-        Event *eventUpdate = new EventBackgroundUpdate(layer_n, stage, step);
-        game->sendEvent(eventUpdate);
-        layer->update();
-        iter++;
+    try {
+        vector <MapElementBackground*>* vect = this->stagesBackground_.at(stage);
+        auto iter = vect->begin();
+        while (iter != vect->end()){
+            MapElementBackground* layer = *iter;
+            int step = layer->getStep();
+            layer_t layer_n = layer->getLayer();
+            Event *eventUpdate = new EventBackgroundUpdate(layer_n, stage, step);
+            game->sendEvent(eventUpdate);
+            layer->update();
+            iter++;
+        }
+    } 
+    catch(const std::out_of_range& oor){
     }
 }
 
@@ -296,7 +300,6 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     
     //Actualizo posiciones de los jugadores
     for(auto player : players){
-
         position_t actualPosition = player.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -323,9 +326,14 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     }
 
     for(auto IdDead : enemiesDead){
-        MapElement* deadEnemy = this->mapElements_.at(IdDead);
-        this->mapElements_.erase(IdDead);
-        delete deadEnemy;
+        try {
+            MapElement* deadEnemy = this->mapElements_.at(IdDead);
+            this->mapElements_.erase(IdDead);
+            delete deadEnemy;
+        }
+        catch(const std::out_of_range& oor){
+
+        }
     }
 
     enemiesDead.clear();
@@ -337,7 +345,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             bool isCollision = player.second->checkCollision(enemy.second);
             if(isCollision){
                 killElementWithExplosion(game,enemy.second);
-                //killElementWithExplosion(game,player.second);
+                killElementWithExplosion(game,player.second);
                 enemiesDead.push_back(enemy.first);
                 
                 player.second->quitLives();
@@ -350,9 +358,13 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     }
 
     for(auto IdDead : enemiesDead){
-        MapElement* deadEnemy = this->mapElements_.at(IdDead);
-        this->mapElements_.erase(IdDead);
-        delete deadEnemy;
+        try {
+            MapElement* deadEnemy = this->mapElements_.at(IdDead);
+            this->mapElements_.erase(IdDead);
+            delete deadEnemy;
+        } catch(const std::out_of_range& oor){
+        
+        }
     }
     
     enemiesDead.clear();
@@ -466,9 +478,14 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     }
 
     for(auto IdDead : enemiesDead){
-        MapElement* deadEnemy = this->mapElements_.at(IdDead);
-        this->mapElements_.erase(IdDead);
-        delete deadEnemy;
+        try {
+            MapElement* deadEnemy = this->mapElements_.at(IdDead);
+            this->mapElements_.erase(IdDead);
+            delete deadEnemy;
+        } catch(const std::out_of_range& oor) {
+
+        }
+        
     }
     
     enemiesDead.clear();    

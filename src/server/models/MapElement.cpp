@@ -196,13 +196,17 @@ void MapElement::update(){
 position_t MapElement::getActualPosition(){
     position_t actualPosition;
 
-    State* position = states_.at("Position");
-    State* orientation = states_.at("Orientation");
+    try {
+        State* position = states_.at("Position");
+        State* orientation = states_.at("Orientation");
 
-    actualPosition.axis_x = position->getX();
-    actualPosition.axis_y = position->getY();
-    actualPosition.orientation = (orientation_t) orientation->getX();
-
+        actualPosition.axis_x = position->getX();
+        actualPosition.axis_y = position->getY();
+        actualPosition.orientation = (orientation_t) orientation->getX();
+    }
+    catch(const std::out_of_range& oor) {
+        cout << "Error getActualPosition" << endl;    
+    }
     return actualPosition;
 }
 
