@@ -5,12 +5,14 @@ Message* EventScoreUpdate::serialize() {
 }
 
 void EventScoreUpdate::update(){
-    if (!this->context_){
-		  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento ScoreUpdate");
-    }
-    else{
-      Client * client = (Client*) Event::context_;
-      //client ->updateBackgroundLayer(this->lives_, this->health_);
-      Logger::getInstance()->log(DEBUG, "Se ejecutó el evento ScoreUpdate");
-    }
+  std::cout << "LIVES: " << this->lives_ << " - HEALTH: " << this->health_ << " - SCORE: " << this->score_ << std::endl;
+    // if (!this->context_){
+		//   Logger::getInstance()->log(DEBUG, "No hay contexto para el evento ScoreUpdate");
+    // }
+    // else{
+    //   Client * client = (Client*) Event::context_;
+      
+    //   //client ->updateBackgroundLayer(this->lives_, this->health_);
+    //   Logger::getInstance()->log(DEBUG, "Se ejecutó el evento ScoreUpdate");
+    // }
 }

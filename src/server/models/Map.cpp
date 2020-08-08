@@ -263,6 +263,8 @@ void Map::update(currentStep_t currentStep, Game *game){
     levels_[actualLevel]->update(currentStep, game, this->players);
     position_t aux;
     game->sendEvent(new EventMapElementUpdate(END_GRAPHIC, aux)); 
+
+    this->sendScorePlayers(game);
 }
 
 void Level::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
@@ -550,6 +552,21 @@ bool Map::playerAlive(){
     return false;
 }
 
+void Map::sendScorePlayers(Game *game){
+    unsigned int positionPlayer = 0;
+
+    for (auto player : this->players){
+        unsigned int lives = player.second->getLives();
+        int health = player.second->getHealth();
+        int score = player.second->getScore();
+
+        Event *eventScoreUpdate = new EventScoreUpdate(positionPlayer, lives, health, score);
+        game->sendEvent(eventScoreUpdate);
+
+        positionPlayer++;
+    }
+}
+
 void Map::informDisconnection(string username){   
     elementType_t PLAYER_X = this->players[username]->getType();
     elementType_t NEW_TYPE;
@@ -662,6 +679,8 @@ void Map::updateFinal(Game* game){
 
     position_t aux;
     game->sendEvent(new EventMapElementUpdate(END_GRAPHIC, aux)); 
+
+    this->sendScorePlayers(game);
 }
 
 void Level::updateFinal(Game* game, unordered_map<string, MapElement*> players, MapElement* finalBoss){

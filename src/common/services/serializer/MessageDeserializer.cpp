@@ -221,7 +221,7 @@ response_t MessageDeserializer::getEventUserChangeMode(Socket *socket, Event *ev
 
 response_t MessageDeserializer::getEventScoreUpdate(Socket *socket, Event *event){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un evento ScoreUpdate en Deserializer");
-
+    
     unsigned int positionPlayer, lives;
     int health, score;
 
@@ -229,7 +229,7 @@ response_t MessageDeserializer::getEventScoreUpdate(Socket *socket, Event *event
     this->getUInteger(socket, lives);
     this->getInteger(socket, health);
     this->getInteger(socket, score);
-
+    
     Message *message = new MessageScoreUpdate(positionPlayer, lives, health, score);
     event = message->deSerialize();
     
@@ -470,11 +470,21 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
             Message *message = new MessageUserChangeMode();
             event = message->deSerialize();
             return this->_handleSuccess();
-            // return this->getEventUserShoot(socket, event);
         }
 
-        case SCORE_UPDATE:
-            return this->getEventScoreUpdate(socket, event);
+        case SCORE_UPDATE:{
+                unsigned int positionPlayer, lives;
+                int health, score;
+
+                this->getUInteger(socket, positionPlayer);
+                this->getUInteger(socket, lives);
+                this->getInteger(socket, health);
+                this->getInteger(socket, score);
+                
+                Message *message = new MessageScoreUpdate(positionPlayer, lives, health, score);
+                event = message->deSerialize();
+                return this->_handleSuccess();
+        }
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");
