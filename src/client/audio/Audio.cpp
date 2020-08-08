@@ -32,6 +32,7 @@ Audio::Audio(int volumen){
 	}
 	Mix_VolumeChunk(this->laser2, volumen);
 	this->isPaused = false;
+	this->isInitMusic = false;
 }
 
 void Audio::setSong(const std::string& path){
@@ -40,8 +41,11 @@ void Audio::setSong(const std::string& path){
 }
 
 void Audio::playMusic(){
-	if (Mix_PlayMusic(this->mixMusicSDL, -1) == -1){
-		Logger::getInstance()->log(ERROR,"Error al reproducir la musica");
+	if (!this->isPaused) {
+		if (Mix_PlayMusic(this->mixMusicSDL, -1) == -1){
+			Logger::getInstance()->log(ERROR,"Error al reproducir la musica");
+		}
+		this->isInitMusic = true;
 	}
 }
 
@@ -68,9 +72,14 @@ void Audio::playEffect(soundType_t soundType){
 void Audio::pause(){
     //If the music is paused
     if( Mix_PausedMusic() == 1){
-        //Resume the music
-        Mix_ResumeMusic();
 		this->isPaused = false;
+		if (this->isInitMusic){
+			//Resume the music
+			Mix_ResumeMusic();
+		}else{
+			//Inicia el nuevo tema
+			this->playMusic();
+		}
     }
     //If the music is playing
     else{
@@ -82,10 +91,16 @@ void Audio::pause(){
 
 void Audio::stop(){
 	if (this->mixMusicSDL) Mix_HaltMusic();
+	this->isInitMusic = false;
 }
 
 void Audio::gradualStop(int milisegundos){
-	if (this->mixMusicSDL) Mix_FadeOutMusic(milisegundos);
+	if (!this->isPaused) {
+		if (this->mixMusicSDL) Mix_FadeOutMusic(milisegundos);
+	} else {
+		this->stop();
+	}
+	this->isInitMusic = false;
 }
 
 Audio::~Audio(){
