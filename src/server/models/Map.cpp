@@ -300,6 +300,10 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     
     //Actualizo posiciones de los jugadores
     for(auto player : players){
+
+        if (player.second->isDead())
+            continue;
+
         position_t actualPosition = player.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -332,7 +336,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             delete deadEnemy;
         }
         catch(const std::out_of_range& oor){
-
+            continue;
         }
     }
 
@@ -363,7 +367,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             this->mapElements_.erase(IdDead);
             delete deadEnemy;
         } catch(const std::out_of_range& oor){
-        
+            continue;
         }
     }
     
@@ -502,8 +506,11 @@ void Map::movePlayer(string user, orientation_t orientation){
         Logger::getInstance()->log(ERROR, "No se encontro el jugador para mover.");
         return;
     }
-    onePlayer->moveTo(orientation);
-    Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+
+    if (!onePlayer->isDead()){
+        onePlayer->moveTo(orientation);
+        Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+    }
 }
 
 void Map::changeGameModePlayer(string user){
@@ -514,9 +521,10 @@ void Map::changeGameModePlayer(string user){
         return;
     }
     
-    onePlayer->changeGameMode();
-    
-    Logger::getInstance()->log(DEBUG, "Se cambia modo de juego del jugador.");
+    if (!onePlayer->isDead()){
+        onePlayer->changeGameMode();
+        Logger::getInstance()->log(DEBUG, "Se cambia modo de juego del jugador.");
+    }
 }
 
 void Map::shootPlayer(string user){
@@ -527,8 +535,19 @@ void Map::shootPlayer(string user){
         return;
     }
     
-    onePlayer->shoot();
-    Logger::getInstance()->log(DEBUG, "Se efectua disparo del jugador.");
+    if (!onePlayer->isDead()) {
+        onePlayer->shoot();
+        Logger::getInstance()->log(DEBUG, "Se efectua disparo del jugador.");
+    }
+}
+
+bool Map::playerAlive(){
+
+    for (auto player : this->players)
+        if (!player.second->isDead())
+            return true;
+
+    return false;
 }
 
 void Map::informDisconnection(string username){   
@@ -664,6 +683,10 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
 
     //Actualizo posiciones de los jugadores
     for(auto player : players){
+
+        if (player.second->isDead())
+            continue;
+
         position_t actualPosition = player.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -685,14 +708,30 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
 
     //Reviso colisiones entre jugadores y el jefe
     for (auto player : players){
+
+        if (player.second->isDead())
+            continue;
+
         bool isCollision = player.second->checkCollision(finalBoss);
         if (isCollision){
             // Como resolver que pasa con el Jefe Final
+            bool isBossDead = finalBoss->reduceHealth(50);
+
+            if (isBossDead){
+                killElementWithExplosion(game, finalBoss);
+            }
+
+            player.second->quitLives();
+
+            if (player.second->isDead()){
+                killElementWithExplosion(game,player.second);
+            }
         }
     }
 
     //Actualizo proyectiles de los jugadores
     for(auto player: players){
+        
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
         for (auto projectile : projectiles){
             projectile.second->update();
@@ -739,6 +778,10 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
     if (finalBoss != NULL){
        unordered_map <Id,MapElement*> projectiles = finalBoss->getShoots();
         for (auto player:players){
+
+            if (player.second->isDead())
+                continue;
+
            for (auto projectile: projectiles){
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
