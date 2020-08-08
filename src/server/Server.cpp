@@ -97,6 +97,10 @@ void Server::shootUser(string user){
     this->game_->shootPlayer(user);
 }
 
+void Server::changeUserGameMode(string user){
+    this->game_->changeGameModePlayer(user);
+};
+
 responseStatus_t Server::loginRequest(Id id,string username,string password){
     return this->usersManager_->loginRequest(id,username,password);
 }

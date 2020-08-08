@@ -55,6 +55,7 @@ typedef enum message {
     USER_MOVEMENT = 7,
     BACKGROUND_UPDATE = 8,
     USER_SHOOT = 9,
+    USER_CHANGE_MODE = 10,
 } message_t;
 
 typedef enum {

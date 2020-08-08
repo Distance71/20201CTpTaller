@@ -204,6 +204,21 @@ response_t MessageDeserializer::getEventUserShoot(Socket *socket, Event *event){
     return this->_handleSuccess();
 };
 
+response_t MessageDeserializer::getEventUserChangeMode(Socket *socket, Event *event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento UserChangeMode en Deserializer");
+
+    Message *message = new MessageUserChangeMode();
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento UserChangeMode");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento UserChangeMode en Deserializer");
+
+    return this->_handleSuccess();
+};
+
 response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     stringstream s;
 
@@ -423,6 +438,13 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case USER_SHOOT:{
             Message *message = new MessageUserShoot();
+            event = message->deSerialize();
+            return this->_handleSuccess();
+            // return this->getEventUserShoot(socket, event);
+        }
+
+        case USER_CHANGE_MODE:{
+            Message *message = new MessageUserChangeMode();
             event = message->deSerialize();
             return this->_handleSuccess();
             // return this->getEventUserShoot(socket, event);

@@ -121,6 +121,7 @@ static void * detectPlayerEvents(void* arg){
 
         if (godMode && canBeGod)
         {
+            client->sendMessage(new MessageUserChangeMode());
             //client->sendMessage(new Messagexxx());
             canBeGod = false;
         }  

@@ -9,6 +9,7 @@
 #include "../../common/models/events/Event.h"
 #include "../../common/models/BlockingQueue.h"
 #include"../../common/models/messages/MessageUserMovement.h"
+#include"../../common/models/messages/MessageUserChangeMode.h"
 
 class Client;
 
