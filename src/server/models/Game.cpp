@@ -88,7 +88,7 @@ void Game::runStep(currentStep_t actualStep){
     srand(time(NULL));
     map_->setTargetsForStep(actualStep, this);
 
-    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){
+    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep) && this->map_->playerAlive()){
         updateState(actualStep);
         usleep(18000);
     }
@@ -102,7 +102,7 @@ void Game::runFinal(){
 
     Logger::getInstance()->log(DEBUG, "Se comienza round con Boss");
 
-    while(GameProvider::getStatus().normalStatus && !this->map_->endFinal()){
+    while(GameProvider::getStatus().normalStatus && !this->map_->endFinal() && this->map_->playerAlive()){
         map_->updateFinal(this);
         usleep(18000);
     }
