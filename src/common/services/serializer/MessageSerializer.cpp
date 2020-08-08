@@ -152,6 +152,30 @@ response_t MessageSerializer::sendMessageUserChangeMode(Socket *socket, Message 
     return this->_handleSuccess(); 
 };
 
+response_t MessageSerializer::sendMessageScoreUpdate(Socket *socket, Message *message){
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje ScoreUpdate.");
+
+    unsigned int positionPlayer = ((MessageScoreUpdate *) message)->getPlayerPosition();
+    unsigned int lives = ((MessageScoreUpdate *) message)->getLives();
+    int health = ((MessageScoreUpdate *) message)->getHealth();
+    int score = ((MessageScoreUpdate *) message)->getScore();
+    
+    
+    response_t responsePosition = this->sendUInt(socket, positionPlayer);
+    response_t responseLives = this->sendUInt(socket, lives);
+    response_t responseHealth = this->sendInteger(socket, health);
+    response_t responseScore = this->sendInteger(socket, score);
+
+
+    if(!responsePosition.ok || !responseLives.ok || !responseHealth.ok || !responseScore.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en ScoreUpdate.");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se envio ScoreUpdate con exito.");
+    return this->_handleSuccess();  
+}
+
 response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t value){
     stringstream s;
 
@@ -373,6 +397,9 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
 
         case USER_CHANGE_MODE:
             return this->sendMessageUserChangeMode(socket, message);
+
+        case SCORE_UPDATE:
+            return this->sendMessageScoreUpdate(socket, message);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");
