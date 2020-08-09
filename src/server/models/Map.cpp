@@ -311,9 +311,11 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         if (player.second->isDead())
             continue;
 
-        position_t actualPosition = player.second->getActualPosition();
-        Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
-        game->sendEvent(eventUpdate);
+        if (player.second->shouldGraphed()){
+            position_t actualPosition = player.second->getActualPosition();
+            Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
+            game->sendEvent(eventUpdate);
+        }
     }
         
     //Actualizo posiciones enemigos
