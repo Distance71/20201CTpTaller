@@ -51,10 +51,11 @@ class Client {
         void endGame();
         void ServerDisconnection();
         
-        //GraphicsGraphicsMe
+        //GameGraphics
         void setLoginResponse(responseStatus_t response);
         void setLoggedInStatus();
         bool isLoggedIn();
+        void updateScore(elementType_t player,unsigned int lives,int health,int score);
         
         //transmition methods
         void sendMessage(Message* message);
@@ -66,6 +67,7 @@ class Client {
         void setImage(sceneScreen_t scene);
         void setScreenSizes(int Xsize, int Ysize);
         void runDetectEventThread();
+        
     };
 
 #endif

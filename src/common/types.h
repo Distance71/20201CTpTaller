@@ -316,4 +316,11 @@ typedef struct {
     int yEnd;
 }gameZone_t;
 
+typedef struct{
+    elementType_t playerImage;
+    unsigned int lives;
+    int health;
+    int score;
+} playerState_t;
+
 #endif

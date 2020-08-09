@@ -182,3 +182,7 @@ void GameGraphics::setAudio(sceneScreen_t scene){
         break;
     }
 }
+
+void GameGraphics::updateScore(elementType_t player,unsigned int lives,int health,int score){
+    this->scoreBoard_->updateScore(player,lives,health,score);
+}

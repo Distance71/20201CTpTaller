@@ -148,3 +148,7 @@ void Client::ServerDisconnection(){
 void Client::runDetectEventThread(){
     this->eventsManager_-> RunDetectPlayerEventsThread();
 }
+
+void Client::updateScore(elementType_t player,unsigned int lives,int health,int score){
+    this->screenManager_->updateScore(player,lives,health,score);
+}

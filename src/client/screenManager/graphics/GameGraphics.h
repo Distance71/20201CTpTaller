@@ -43,6 +43,8 @@ class GameGraphics {
         void setBackground(stage_t level);
         void setImage(sceneScreen_t scene);
         void setAudio(sceneScreen_t scene);
+
+        void updateScore(elementType_t player,unsigned int lives,int health,int score);
 };
 
 #endif
