@@ -82,6 +82,10 @@ void Server::sendToAllUsers(Event* event){
     this->usersManager_->sendEventToAllLogged(event);
 }
 
+void Server::sendToUserForUsername(string username, Event* event){
+    this->usersManager_->sendEventToOneUserLogged(username, event);
+}
+
 void Server::runGame(){
 
     Logger::getInstance()->log(INFO, "Juego iniciado");

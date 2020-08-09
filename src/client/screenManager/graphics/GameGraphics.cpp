@@ -98,6 +98,7 @@ void GameGraphics::createScenes(){
     this->scenes_[END_GAME_ANIMATION] = new GraphicsMapElement(informationScreen.endGame, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[WAITING_PLAYERS] = new GraphicsMapElement(informationScreen.waitingPlayers, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[SERVER_DISCONNECTION] = new GraphicsMapElement(informationScreen.disconnection, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
+    this->scenes_[GAME_OVER_ANIMATION] = new GraphicsMapElement(informationScreen.gameOver, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
 
 }
 

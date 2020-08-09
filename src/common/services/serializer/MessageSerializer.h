@@ -18,6 +18,7 @@
 #include "../../models/messages/MessageUserShoot.h"
 #include "../../models/messages/MessageUserChangeMode.h"
 #include "../../models/messages/MessageScoreUpdate.h"
+#include "../../models/messages/MessageGameOver.h"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ class MessageSerializer {
         response_t sendMessageUserShoot(Socket *socket, Message *message);
         response_t sendMessageUserChangeMode(Socket *socket, Message *message);
         response_t sendMessageScoreUpdate(Socket *socket, Message *message);
+        response_t sendMessageGameOver(Socket *socket, Message *message);
 
         response_t sendResponseType(Socket *socket, responseStatus_t value);
 

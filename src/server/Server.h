@@ -34,6 +34,7 @@ class Server {
         void processEvent(Event *event);
         void sendToAllUsers(Event* event);
         void sendToUser(Id id,Event* event);
+        void sendToUserForUsername(string username, Event* event);
         void moveUser(string user, orientation_t orientation);
         void shootUser(string user);
         void changeUserGameMode(string user);

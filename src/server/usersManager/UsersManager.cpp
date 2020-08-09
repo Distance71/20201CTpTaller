@@ -64,6 +64,15 @@ void UsersManager::sendToAll(Message* message){
     }
 }
 
+void UsersManager::sendEventToOneUserLogged(string username, Event* event){
+
+    try {
+        this->loggedInUsers_[username]->sendMessage(event->serialize());
+    } catch (const std::out_of_range& oor){
+
+    }
+    
+}
 
 void UsersManager::runSendingThread(){
     pthread_t sending_thread;

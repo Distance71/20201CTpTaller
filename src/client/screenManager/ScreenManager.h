@@ -49,6 +49,7 @@ class ScreenManager{
         void setLoginResponse(responseStatus_t response);
         void stopWaiting();
         void viewEndGameScreen();
+        void viewGameOverScreen();
         Client* getClient();
         SDL_Renderer* getRenderer();
         void ServerDisconnection();

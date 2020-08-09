@@ -181,6 +181,10 @@ void Game::sendEvent(Event *event){
     this->serverOwn_->sendToAllUsers(event);
 }
 
+void Game::sendEventToUser(string username, Event* event){
+    this->serverOwn_->sendToUserForUsername(username, event);
+}
+
 void Game::informDisconnection(string username){
     Logger::getInstance()->log(DEBUG, "Se informa desconexion en Game");
     this->map_->informDisconnection(username);

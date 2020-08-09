@@ -349,6 +349,10 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     //Se revisan colisiones entre jugadores y enemigos
     for(auto player : players){
+
+        if (player.second->isDead())
+            continue;
+
         for(auto enemy :this->mapElements_){
             bool isCollision = player.second->checkCollision(enemy.second);
             if(isCollision){
@@ -360,6 +364,8 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
                 if (player.second->isDead()){
                     killElementWithExplosion(game,player.second);
+
+                    game->sendEventToUser(player.first, new EventGameOver());
                 }
             }
         }
@@ -427,6 +433,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     for(auto enemy: this->mapElements_){
         unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
         for (auto player:players){
+
            if (player.second->isDead())
             continue;
 
@@ -441,6 +448,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
                     if (player.second->isDead()){
                         killElementWithExplosion(game,player.second);
+                        game->sendEventToUser(player.first, new EventGameOver());
                     }
 
                 }
@@ -750,6 +758,7 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
 
             if (player.second->isDead()){
                 killElementWithExplosion(game,player.second);
+                game->sendEventToUser(player.first, new EventGameOver());
             }
         }
     }
@@ -814,6 +823,11 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
                 
                     // Le quitamos vida a player
                     finalBoss->attackTo(player.second);
+
+                    if (player.second->isDead()){
+                        killElementWithExplosion(game,player.second);
+                        game->sendEventToUser(player.first, new EventGameOver());
+                    }
                 }
             }
         }

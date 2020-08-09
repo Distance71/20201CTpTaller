@@ -49,6 +49,7 @@ class Client {
         int waitForPlayers();
         void initGame(int Xsize, int Ysize);
         void endGame();
+        void gameOver();
         void ServerDisconnection();
         
         //GraphicsGraphicsMe
