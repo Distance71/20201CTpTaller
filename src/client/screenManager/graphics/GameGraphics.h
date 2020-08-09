@@ -26,7 +26,6 @@ class GameGraphics {
         unordered_map <stage_t, GraphicsScenario*> scenaries_;
         GraphicsMapElement* image_;
         std::mutex mutex;
-        BlockingQueue<elementToGraphic_t>* graphicsQueue_;
         GraphicsScoreBoard* scoreBoard_;
         
 

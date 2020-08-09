@@ -20,12 +20,13 @@ class GraphicsScoreBoard {
         void setScore(elementType_t player, int score);
         unordered_map <elementType_t,playerState_t> * players_;
         int getHealthImageNumber(int health);
-    
+        Image* scoreTable_;
     public:  
         GraphicsScoreBoard();
+        ~GraphicsScoreBoard();
         void updateScore(elementType_t playerImage,unsigned int lives,int health,int score);
         void update();
-        //void setScore(elementType_t player, int score);
+        void showScores();
 };
 
 #endif

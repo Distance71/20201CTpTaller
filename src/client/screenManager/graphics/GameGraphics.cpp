@@ -7,7 +7,6 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->createElements();
     this->createScenes();
     this->createScenarios();
-    this->graphicsQueue_ = new BlockingQueue<elementToGraphic_t>();
     this->scoreBoard_ = new GraphicsScoreBoard();
 }
 
@@ -19,6 +18,8 @@ GameGraphics::~GameGraphics(){
         delete this->image_;
     for(auto element:this->elements_)
         delete element.second;
+
+    delete this->scoreBoard_;
 
     Logger::getInstance()->log(INFO, "Se liberan los recursos utilizados para los gŕaficos del juego");
 }
@@ -149,13 +150,17 @@ void GameGraphics::setImage(sceneScreen_t scene){
     position.axis_x= 0;
     position.axis_y= 0;
     position.orientation= FRONT;
- 
-    auto iter = this->scenes_.find(scene);
-    if ( iter != this->scenes_.end()){
-        this->scenes_[scene]->update(position);
-        SDL_RenderPresent(this->renderer_);
-    }
     
+    if (scene == SCORE_TABLE){
+        this->scoreBoard_->showScores();
+    }   
+    
+    else{
+        auto iter = this->scenes_.find(scene);
+        if ( iter != this->scenes_.end())
+            this->scenes_[scene]->update(position);
+    } 
+    SDL_RenderPresent(this->renderer_);
 }
 
 void GameGraphics::setAudio(sceneScreen_t scene){

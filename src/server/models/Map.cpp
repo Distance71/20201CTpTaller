@@ -406,6 +406,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         for (auto idDead :projectilesDead){
             player.second->eraseProjectile(idDead);
         }
+        
         projectilesDead.clear();
     }
 

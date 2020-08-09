@@ -216,7 +216,8 @@ typedef enum {
     END_GAME_ANIMATION = 10,
     WAITING_PLAYERS = 11,
     SERVER_DISCONNECTION = 12,
-    GAME_OVER_ANIMATION = 13 
+    GAME_OVER_ANIMATION = 13,
+    SCORE_TABLE = 14,
 } sceneScreen_t;
 
 typedef size_t Id;

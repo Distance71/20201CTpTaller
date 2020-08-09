@@ -23,6 +23,11 @@ ScreenManager::~ScreenManager(){
         Logger::getInstance()->log(DEBUG, "Se destruye el menu");
         delete this->menu_;
     }
+    if (this->gameGraphics_){
+        Logger::getInstance()->log(DEBUG, "Se destruyen los graficos");
+        delete this->gameGraphics_;
+    }
+
 }
 
 
