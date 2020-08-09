@@ -5,6 +5,7 @@
 #include "../common/services/Logger.h"
 #include "../../common/types.h"
 #include <string>
+
 class Audio {
 
 private:
@@ -16,6 +17,8 @@ private:
 	static Audio* instance;
 	Mix_Music* mixMusicSDL;
 	bool isPaused = false;
+	bool isInitMusic = false;
+	static const int VOLUME_DEFAULT = 80;
 
 	Audio(int volumen);
 

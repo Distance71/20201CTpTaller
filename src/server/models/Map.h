@@ -57,6 +57,9 @@ class Map {
     void updateFinal(Game* game);
     bool endFinal();
 
+    bool playerAlive();
+    void sendScorePlayers(Game *game);
+
     MapElement* getRandomTarget(Game* game);
     void setTargetsForStep(currentStep_t actualStep, Game *game);
     void cleanStage();
