@@ -66,7 +66,8 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     this->sendStartStage(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
-
+    this->map_->cleanStage();
+    
     Logger::getInstance()->log(DEBUG, "Se comienza el stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantitySteps; i++){
         actualStep.step = i;
