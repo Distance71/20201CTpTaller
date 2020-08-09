@@ -20,6 +20,7 @@
 #include "../../models/messages/MessageUserMovement.h"
 #include "../../models/messages/MessageUserChangeMode.h"
 #include "../../models/messages/MessageBackgroundUpdate.h"
+#include "../../models/messages/MessageMusicUpdate.h"
 
 class Event;
 using namespace std;
@@ -45,6 +46,7 @@ class MessageDeserializer {
         response_t getEventBackgroundUpdate(Socket *socket, Event* &event);
         response_t getEventUserShoot(Socket *socket, Event *event);
         response_t getEventUserChangeMode(Socket *socket, Event *event);
+        response_t getEventMusicUpdate(Socket *socket, Event *event);
         
         response_t getInteger(Socket *socket, int &value);
         response_t getUInteger(Socket *socket, unsigned int &value);
@@ -57,6 +59,7 @@ class MessageDeserializer {
         response_t getElementType(Socket *socket, elementType_t &elementType);
         response_t getLayer(Socket *socket, layer_t &layer);
         response_t getStage(Socket *socket, stage_t &stage);
+        response_t getMusicType(Socket *socket, soundType_t &soundType);
     public:
         response_t getReceivedMessage(Socket *socket, Event* &event);
 };

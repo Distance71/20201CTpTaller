@@ -56,6 +56,7 @@ typedef enum message {
     BACKGROUND_UPDATE = 8,
     USER_SHOOT = 9,
     USER_CHANGE_MODE = 10,
+    MUSIC_UPDATE = 11,
 } message_t;
 
 typedef enum {
@@ -158,9 +159,13 @@ typedef enum {
 } elementType_t;
 
 typedef enum {
-    EXPLOSION = 0,
-    LASER_1 = 1,
-    LASER_2 = 2,
+    SOUND_STAGE_ONE = 0,
+    SOUND_STAGE_TWO = 1,
+    SOUND_STAGE_THREE = 2,
+    SOUND_STAGE_FOUR = 3,
+    EXPLOSION = 4,
+    PLAYER_SHOT = 5,
+    SHOT_IMPACTS = 6,
 } soundType_t;
 
 typedef enum {

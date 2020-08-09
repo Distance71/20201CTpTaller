@@ -78,6 +78,8 @@ add_executable(tp1taller
         src/common/models/messages/MessageLog.h
         src/common/models/messages/MessageBackgroundUpdate.cpp
         src/common/models/messages/MessageBackgroundUpdate.h
+        src/common/models/messages/MessageMusicUpdate.cpp
+        src/common/models/messages/MessageMusicUpdate.h
 
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
@@ -119,6 +121,8 @@ add_executable(tp1taller
         src/common/models/events/EventPlayerDisconnect.h
         src/common/models/events/EventEndGame.cpp
         src/common/models/events/EventEndGame.h
+        src/common/models/events/EventMusicUpdate.cpp
+        src/common/models/events/EventMusicUpdate.h
 
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h

@@ -76,6 +76,10 @@ void Client::updateEntity(elementType_t type, position_t position){
     this->screenManager_->updateEntity(type, position); 
 }
 
+void Client::updateMusic(soundType_t type){
+    this->screenManager_->updateMusic(type); 
+}
+
 void Client::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
     this->screenManager_->updateBackgroundLayer(layer,stage,step);
 }

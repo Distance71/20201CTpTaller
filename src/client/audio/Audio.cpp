@@ -22,15 +22,37 @@ Audio::Audio(int volumen){
 	}
 	Mix_VolumeChunk(this->explosion, volumen);
 
-	if ( (this->laser1 = Mix_LoadWAV("assets/Sounds/laser1.wav")) == NULL ){
-		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser1.wav'" );		
+	if ( (this->playerShot = Mix_LoadWAV("assets/Sounds/playerShot.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'playerShot.wav'" );		
 	}
-	Mix_VolumeChunk(this->laser1, volumen);
+	Mix_VolumeChunk(this->playerShot, volumen);
 
-	if ( (this->laser2 = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+	if ( (this->shotImpacts = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
 	}
-	Mix_VolumeChunk(this->laser2, volumen);
+	Mix_VolumeChunk(this->shotImpacts, volumen);
+
+	if ( (this->stageOne = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	}
+	Mix_VolumeChunk(this->stageOne, volumen);
+
+	if ( (this->stageTwo = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	}
+	Mix_VolumeChunk(this->stageTwo, volumen);
+
+	if ( (this->stageThree = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	}
+	Mix_VolumeChunk(this->stageThree, volumen);
+
+	if ( (this->stageFour = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	}
+	Mix_VolumeChunk(this->stageFour, volumen);
+
+
 	this->isPaused = false;
 }
 
@@ -47,18 +69,33 @@ void Audio::playMusic(){
 
 void Audio::playEffect(soundType_t soundType){
 	if (!this->isPaused) {
-		switch (soundType)
-		{
+		switch (soundType) {
 		case EXPLOSION:
 			//-1 por q no importa el canal y 0 por que se debe repetir una sola vez el sonido
 			if(this->explosion) Mix_PlayChannel(-1, this->explosion, 0);
 			break;
-		case LASER_1:
-			if(this->laser1) Mix_PlayChannel(-1, this->laser1, 0);
+		case PLAYER_SHOT:
+			if(this->playerShot) Mix_PlayChannel(-1, this->playerShot, 0);
 			break;
-		case LASER_2:
-			if(this->laser2) Mix_PlayChannel(-1, this->laser2, 0);
+		case SHOT_IMPACTS:
+			if(this->shotImpacts) Mix_PlayChannel(-1, this->shotImpacts, 0);
 			break;
+		
+		case SOUND_STAGE_ONE:
+			if(this->stageOne) Mix_PlayChannel(-1, this->stageOne, 0);
+			break;
+		case SOUND_STAGE_TWO:
+			if(this->stageTwo) Mix_PlayChannel(-1, this->stageTwo, 0);
+			break;
+		
+		case SOUND_STAGE_THREE:
+			if(this->stageThree) Mix_PlayChannel(-1, this->stageThree, 0);
+			break;
+		
+		case SOUND_STAGE_FOUR:
+			if(this->stageFour) Mix_PlayChannel(-1, this->stageFour, 0);
+			break;
+
 		default:
 			break;
 		}
@@ -96,10 +133,22 @@ Audio::~Audio(){
 	if (this->explosion){
 		Mix_FreeChunk(this->explosion);
 	}
-	if (this->laser1){
-		Mix_FreeChunk(this->laser1);
+	if (this->playerShot){
+		Mix_FreeChunk(this->playerShot);
 	}
-	if (this->laser2){
-		Mix_FreeChunk(this->laser2);
+	if (this->shotImpacts){
+		Mix_FreeChunk(this->shotImpacts);
+	}
+	if (this->stageOne){
+		Mix_FreeChunk(this->stageOne);
+	}
+	if (this->stageTwo){
+		Mix_FreeChunk(this->stageTwo);
+	}
+	if (this->stageThree){
+		Mix_FreeChunk(this->stageThree);
+	}
+	if (this->stageFour){
+		Mix_FreeChunk(this->stageFour);
 	}
 }

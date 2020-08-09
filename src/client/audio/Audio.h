@@ -10,8 +10,12 @@ class Audio {
 private:
 	//The sound effects that will be used
 	Mix_Chunk *explosion = NULL;
-	Mix_Chunk *laser1 = NULL;
-	Mix_Chunk *laser2 = NULL;
+	Mix_Chunk *playerShot = NULL;
+	Mix_Chunk *shotImpacts = NULL;
+	Mix_Chunk *stageOne = NULL;
+	Mix_Chunk *stageTwo = NULL;
+	Mix_Chunk *stageThree = NULL;
+	Mix_Chunk *stageFour = NULL;
 
 	static Audio* instance;
 	Mix_Music* mixMusicSDL;

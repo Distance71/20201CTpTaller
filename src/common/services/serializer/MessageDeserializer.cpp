@@ -219,6 +219,24 @@ response_t MessageDeserializer::getEventUserChangeMode(Socket *socket, Event *ev
     return this->_handleSuccess();
 };
 
+response_t MessageDeserializer::getEventMusicUpdate(Socket *socket, Event *event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento MusicUpdate en Deserializer");
+    soundType_t musicType;
+
+    this->getMusicType(socket, musicType);
+
+    Message *message = new MessageMusicUpdate(musicType);
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MusicUpdate");
+        return this->_handleErrorStatus();
+    }
+
+    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento MusicUpdate en Deserializer");
+    return this->_handleSuccess();
+}
+
 response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     stringstream s;
 
@@ -373,7 +391,6 @@ response_t MessageDeserializer::getLayer(Socket *socket, layer_t &layer){
     stringstream s;
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje layer");
-
     if (socket->receiveMessage(s, sizeof(layer_t)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de layer.");
         return this->_handleErrorStatus();
@@ -395,6 +412,20 @@ response_t MessageDeserializer::getStage(Socket *socket, stage_t &stage){
 
     string msg = s.str();
     stage = (stage_t) atoi(msg.c_str());
+};
+
+response_t MessageDeserializer::getMusicType(Socket *socket, soundType_t &soundType){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje musicType");
+
+    if (socket->receiveMessage(s, sizeof(soundType_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de musicType.");
+        return this->_handleErrorStatus();
+    }
+
+    string msg = s.str();
+    soundType = (soundType_t) atoi(msg.c_str());
 };
 
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
@@ -449,6 +480,9 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
             return this->_handleSuccess();
             // return this->getEventUserShoot(socket, event);
         }
+
+        case MUSIC_UPDATE:
+            return this->getEventMusicUpdate(socket, event);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

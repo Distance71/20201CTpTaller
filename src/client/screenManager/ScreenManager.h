@@ -44,6 +44,7 @@ class ScreenManager{
         bool initializeGraphics();
         void viewLogin();
         void updateEntity(elementType_t type, position_t position);
+        void updateMusic(soundType_t type);
         void updateBackgroundLayer(layer_t layer, stage_t stage, int step);
         void setImage(sceneScreen_t scene);
         void setLoginResponse(responseStatus_t response);

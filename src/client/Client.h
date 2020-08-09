@@ -66,6 +66,7 @@ class Client {
         void setImage(sceneScreen_t scene);
         void setScreenSizes(int Xsize, int Ysize);
         void runDetectEventThread();
+        void updateMusic(soundType_t type);
     };
 
 #endif
