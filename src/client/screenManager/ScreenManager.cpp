@@ -229,10 +229,12 @@ void ScreenManager::viewLogin(){
     pthread_create(&viewLogin, NULL, viewLoginThread, this);
 }
 
-
-
 void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage(END_GAME_ANIMATION);
+}
+
+void ScreenManager::viewGameOverScreen(){
+    this->gameGraphics_->setImage(GAME_OVER_ANIMATION);
 }
 
 Client* ScreenManager::getClient(){

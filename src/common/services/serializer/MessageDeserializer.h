@@ -21,6 +21,7 @@
 #include "../../models/messages/MessageUserChangeMode.h"
 #include "../../models/messages/MessageBackgroundUpdate.h"
 #include "../../models/messages/MessageScoreUpdate.h"
+#include "../../models/messages/MessageGameOver.h"
 
 class Event;
 using namespace std;
@@ -47,6 +48,7 @@ class MessageDeserializer {
         response_t getEventUserShoot(Socket *socket, Event *event);
         response_t getEventUserChangeMode(Socket *socket, Event *event);
         response_t getEventScoreUpdate(Socket *socket, Event *event);
+        response_t getEventGameOver(Socket *socket, Event* &event);
         
         response_t getInteger(Socket *socket, int &value);
         response_t getUInteger(Socket *socket, unsigned int &value);

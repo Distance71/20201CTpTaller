@@ -57,6 +57,7 @@ typedef enum message {
     USER_SHOOT = 9,
     USER_CHANGE_MODE = 10,
     SCORE_UPDATE = 11,
+    GAME_OVER = 12,
 } message_t;
 
 typedef enum {
@@ -215,7 +216,7 @@ typedef enum {
     END_GAME_ANIMATION = 10,
     WAITING_PLAYERS = 11,
     SERVER_DISCONNECTION = 12,
-    GAME_OVER = 13 
+    GAME_OVER_ANIMATION = 13 
 } sceneScreen_t;
 
 typedef size_t Id;
