@@ -150,6 +150,11 @@
             "sizeY": 14,
             "sprite": "assets/Projectile/projectile.png" 
         },
+        "projectilesBoss": {
+            "sizeX": 88,
+            "sizeY": 36,
+            "sprite": "assets/Projectile/projectileBoss.png" 
+        },
         "finalBoss":{
             "sizeX": 400,
             "sizeY": 300,

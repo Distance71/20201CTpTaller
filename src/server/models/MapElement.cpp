@@ -28,7 +28,7 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
         this->damage_ = DAMAGE_ENEMY_2;
         this->scoreWhenKilled_ = SCORE_KILLED_ENEMY_2;
 
-    } else if(type == PROJECTILE){
+    } else if(type == PROJECTILE || type == PROJECTILE_BOSS){
         ProjectileIA* proyectileIA = new ProjectileIA();
         addAction("ProjectileIA", proyectileIA);
         this->damage_ = 0;
@@ -57,11 +57,11 @@ void MapElement::setTarget(MapElement* target) {
         enemyia->setTarget(target);
     }
 
-    if (type == BOSS_ENEMY)
+    if (type == BOSS_ENEMY && target->getLives() != 0) 
         this->getAction<BossIA>("BossIA")->addTarget(target);
 
 
-    if (type == PROJECTILE)
+    if (type == PROJECTILE || type == PROJECTILE_BOSS)
         this->getAction<ProjectileIA>("ProjectileIA")->setOwn(target);
 
 }
@@ -381,7 +381,8 @@ void MapElement::shoot(){
     projectile_t projectileData = GameProvider::getConfig()->getProjectileData();
 
     if (this->type == BOSS_ENEMY){
-        this->shootBoss(projectileData);
+        projectile_t projectileBossData = GameProvider::getConfig()->getProjectileBossData();
+        this->shootBoss(projectileBossData);
         return;
     }
 
@@ -419,7 +420,7 @@ void MapElement::shootBoss(projectile_t projectileData){
     position_t middlePosition = position;
     middlePosition.axis_x = positionXProjectil;
     middlePosition.axis_y = position.axis_y + (this->size_y_ / 4); 
-    MapElement *middleProjetil = new MapElement(PROJECTILE, middlePosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
+    MapElement *middleProjetil = new MapElement(PROJECTILE_BOSS, middlePosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
     this->projectiles_.emplace(this->projectileKey_ ,middleProjetil);
     this->projectileKey_++;
     middleProjetil->setTarget(this);
@@ -427,7 +428,7 @@ void MapElement::shootBoss(projectile_t projectileData){
     position_t topPosition = position;
     topPosition.axis_x = positionXProjectil;
     topPosition.axis_y = position.axis_y + (this->size_y_ / 2); 
-    MapElement *topProjetil = new MapElement(PROJECTILE, topPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
+    MapElement *topProjetil = new MapElement(PROJECTILE_BOSS, topPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
     this->projectiles_.emplace(this->projectileKey_ ,topProjetil);
     this->projectileKey_++;
     topProjetil->setTarget(this);
@@ -435,7 +436,7 @@ void MapElement::shootBoss(projectile_t projectileData){
     position_t bottomPosition = position;
     bottomPosition.axis_x = positionXProjectil;
     bottomPosition.axis_y = position.axis_y + 3 * (this->size_y_ / 4); 
-    MapElement *bottomProjetil = new MapElement(PROJECTILE, bottomPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
+    MapElement *bottomProjetil = new MapElement(PROJECTILE_BOSS, bottomPosition, 6, 6, projectileData.size_x, projectileData.size_y, 10, 1);
     this->projectiles_.emplace(this->projectileKey_ ,bottomProjetil);
     this->projectileKey_++;
     bottomProjetil->setTarget(this);

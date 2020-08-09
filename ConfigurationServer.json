@@ -97,8 +97,8 @@
             "sizeY": 14
         },
         "finalBoss":{
-            "sizeX": 178,
-            "sizeY": 180,
+            "sizeX": 400,
+            "sizeY": 300,
             "health": 1000
         },
         "users": [
