@@ -114,6 +114,26 @@ bool MapElement::isDead(){
     return ((this->lives_ <= 0) && (this->health_ <= 0));
 }
 
+bool MapElement::isDisconnected(){
+    
+    switch (this->type) {
+        case PLAYER_1_OUT:
+            return true;
+
+        case PLAYER_2_OUT:
+            return true;
+
+        case PLAYER_3_OUT:
+            return true;
+
+        case PLAYER_4_OUT:
+            return true;
+        
+    }
+
+    return false;
+}
+
 int MapElement::getLives() {
     return this->lives_;
 }

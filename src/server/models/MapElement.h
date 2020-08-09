@@ -81,6 +81,7 @@ class MapElement {
         int getSizeX();
         int getSizeY();
         bool isDead();
+        bool isDisconnected();
 
         int getDamage();
         int getScoreWhenKilled();

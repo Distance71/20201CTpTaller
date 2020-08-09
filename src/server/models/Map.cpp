@@ -162,18 +162,21 @@ position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
     position_t positionMapElement;
     gameZone_t zone = GameProvider::getGameZone();
 
+    int minPosX, maxPosX;
+
     int orientationRand = rand() % 2;
 
     if (orientationRand == 0){
-        positionMapElement.orientation = BACK;//FRONT
- 
-        positionMapElement.axis_x = zone.xInit + rand()%(zone.xEnd + 1 - zone.xInit);
-    } 
+        positionMapElement.orientation = BACK;
+        minPosX = zone.xEnd;
+        maxPosX = zone.xEnd * 2;        
+        positionMapElement.axis_x = minPosX + rand()%(maxPosX + 1 - minPosX);
 
-else {
-        positionMapElement.orientation = FRONT;//BACK
-
-        positionMapElement.axis_x = -1 * (zone.xInit + rand()%(zone.xEnd + 1 - zone.xInit));
+    } else {
+        positionMapElement.orientation = FRONT;
+        minPosX = zone.xInit + sizeMapElement_x;
+        maxPosX = zone.xEnd;  
+        positionMapElement.axis_x = -1 * (minPosX + rand()%(maxPosX + 1 - minPosX));
     } 
 
     positionMapElement.axis_y  = zone.yInit + rand()%(zone.yEnd + 1 - zone.yInit);
@@ -350,7 +353,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     //Se revisan colisiones entre jugadores y enemigos
     for(auto player : players){
 
-        if (player.second->isDead())
+        if (player.second->isDead() || player.second->isDisconnected())
             continue;
 
         for(auto enemy :this->mapElements_){
@@ -434,7 +437,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
         for (auto player:players){
 
-           if (player.second->isDead())
+           if (player.second->isDead() || player.second->isDisconnected())
             continue;
 
            for (auto projectile: projectiles){
@@ -742,7 +745,7 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
     //Reviso colisiones entre jugadores y el jefe
     for (auto player : players){
 
-        if (player.second->isDead())
+        if (player.second->isDead() || player.second->isDisconnected())
             continue;
 
         bool isCollision = player.second->checkCollision(finalBoss);
@@ -808,12 +811,12 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
         projectilesDead.clear(); 
     }    
 
-    //Reviso si alguna bala de de los enemigos le pega a un jugador
+    //Reviso si alguna bala del jefe le pega a un jugador
     if (finalBoss != NULL){
        unordered_map <Id,MapElement*> projectiles = finalBoss->getShoots();
         for (auto player:players){
 
-            if (player.second->isDead())
+            if (player.second->isDead() || player.second->isDisconnected())
                 continue;
 
            for (auto projectile: projectiles){
