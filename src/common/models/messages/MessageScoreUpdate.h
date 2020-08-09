@@ -8,18 +8,18 @@
 class MessageScoreUpdate: public Message {
 
 	private:
-        unsigned int positionPlayer_;
+        elementType_t typePlayer_;
         unsigned int lives_;
         int health_;
         int score_;
         const message_t type_ = SCORE_UPDATE;
 
     public:
-        explicit MessageScoreUpdate(unsigned int positionPlayer, unsigned int lives, int health, int score) 
-            : positionPlayer_(positionPlayer), lives_(lives), health_(health), score_(score) {}
+        explicit MessageScoreUpdate(elementType_t typePlayer, unsigned int lives, int health, int score) 
+            : typePlayer_(typePlayer), lives_(lives), health_(health), score_(score) {}
         message_t getType();
         Event* deSerialize();
-        unsigned int getPlayerPosition();
+        elementType_t getTypePlayer();
         unsigned int getLives();
         int getHealth();
         int getScore();

@@ -558,17 +558,15 @@ bool Map::playerAlive(){
 }
 
 void Map::sendScorePlayers(Game *game){
-    unsigned int positionPlayer = 0;
 
     for (auto player : this->players){
+        elementType_t typePlayer = player.second->getType();
         unsigned int lives = player.second->getLives();
         int health = player.second->getHealth();
         int score = player.second->getScore();
 
-        Event *eventScoreUpdate = new EventScoreUpdate(positionPlayer, lives, health, score);
+        Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, score);
         game->sendEvent(eventScoreUpdate);
-
-        positionPlayer++;
     }
 }
 
@@ -590,6 +588,7 @@ void Map::informDisconnection(string username){
             break;
     }
     this->players[username]->setType(NEW_TYPE);
+    this->players[username]->setGameMode(MODE_TEST_GAME);
 }
 
 position_t Map::getInitialPosition(){
@@ -637,6 +636,7 @@ void Map::informConnection(string username){
             break;
     }
     this->players[username]->setType(NEW_TYPE);
+    this->players[username]->setGameMode(MODE_NORMAL_GAME);
 }
 
 void Map::initializeStep(currentStep_t currentStep, Game *game){

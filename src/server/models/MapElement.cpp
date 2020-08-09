@@ -162,6 +162,10 @@ void MapElement::changeGameMode(){
     
 }
 
+void MapElement::setGameMode(gameMode_t newGameMode){
+    this->gameMode_ = newGameMode;
+};
+
 gameMode_t MapElement::getGameMode(){
     return this->gameMode_;
 }
