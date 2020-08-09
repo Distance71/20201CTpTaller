@@ -93,6 +93,7 @@ class MapElement {
 
         void moveTo(orientation_t oneOrientation); 
         void changeGameMode();
+        void setGameMode(gameMode_t newGameMode);
         gameMode_t getGameMode();
 
         unordered_map<Id,MapElement*> getShoots();   

@@ -1,15 +1,15 @@
 #include "MessageScoreUpdate.h"
 
 Event* MessageScoreUpdate::deSerialize(){
-    return (Event *) new EventScoreUpdate(this->positionPlayer_, this->lives_, this->health_, this->score_);
+    return (Event *) new EventScoreUpdate(this->typePlayer_, this->lives_, this->health_, this->score_);
 }
 
 message_t MessageScoreUpdate::getType(){
 	return this->type_;
 }
 
-unsigned int MessageScoreUpdate::getPlayerPosition(){
-    return this->positionPlayer_;
+elementType_t MessageScoreUpdate::getTypePlayer(){
+    return this->typePlayer_;
 }
 
 unsigned int MessageScoreUpdate::getLives(){

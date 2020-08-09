@@ -222,15 +222,16 @@ response_t MessageDeserializer::getEventUserChangeMode(Socket *socket, Event *ev
 response_t MessageDeserializer::getEventScoreUpdate(Socket *socket, Event *event){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un evento ScoreUpdate en Deserializer");
     
-    unsigned int positionPlayer, lives;
+    elementType_t type;
+    unsigned int lives;
     int health, score;
 
-    this->getUInteger(socket, positionPlayer);
+    this->getElementType(socket, type);
     this->getUInteger(socket, lives);
     this->getInteger(socket, health);
     this->getInteger(socket, score);
     
-    Message *message = new MessageScoreUpdate(positionPlayer, lives, health, score);
+    Message *message = new MessageScoreUpdate(type, lives, health, score);
     event = message->deSerialize();
     
     if(!event){
@@ -473,17 +474,18 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
         }
 
         case SCORE_UPDATE:{
-                unsigned int positionPlayer, lives;
-                int health, score;
+            elementType_t type;
+            unsigned int lives;
+            int health, score;
 
-                this->getUInteger(socket, positionPlayer);
-                this->getUInteger(socket, lives);
-                this->getInteger(socket, health);
-                this->getInteger(socket, score);
-                
-                Message *message = new MessageScoreUpdate(positionPlayer, lives, health, score);
-                event = message->deSerialize();
-                return this->_handleSuccess();
+            this->getElementType(socket, type);
+            this->getUInteger(socket, lives);
+            this->getInteger(socket, health);
+            this->getInteger(socket, score);
+            
+            Message *message = new MessageScoreUpdate(type, lives, health, score);
+            event = message->deSerialize();
+            return this->_handleSuccess();
         }
     }
 
