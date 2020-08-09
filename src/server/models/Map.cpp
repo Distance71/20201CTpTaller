@@ -160,26 +160,28 @@ bool Step::endStep(){
 
 position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
     position_t positionMapElement;
-    int minPosX, maxPosX;
-    int minPosY = 0;
-    int maxPosY = GameProvider::getHeight() - sizeMapElement_y;
-    
+    gameZone_t zone = GameProvider::getGameZone();
+
     int orientationRand = rand() % 2;
 
     if (orientationRand == 0){
         positionMapElement.orientation = BACK;//FRONT
-        minPosX = GameProvider::getWidth();
-        maxPosX = minPosX * 2;
-        positionMapElement.axis_x = minPosX + rand()%(maxPosX + 1 - minPosX);
-    } else {
-        positionMapElement.orientation = FRONT;//BACK
-        minPosX = 0 + sizeMapElement_x;
-        maxPosX = GameProvider::getWidth();
-        positionMapElement.axis_x = -1 * (minPosX + rand()%(maxPosX + 1 - minPosX));
+ 
+        positionMapElement.axis_x = zone.xInit + rand()%(zone.xEnd + 1 - zone.xInit);
     } 
 
-    positionMapElement.axis_y = minPosY + rand()%(maxPosY + 1 - minPosY);
+else {
+        positionMapElement.orientation = FRONT;//BACK
+
+        positionMapElement.axis_x = -1 * (zone.xInit + rand()%(zone.xEnd + 1 - zone.xInit));
+    } 
+
+    positionMapElement.axis_y  = zone.yInit + rand()%(zone.yEnd + 1 - zone.yInit);
     
+    if (positionMapElement.axis_y > zone.yEnd -  sizeMapElement_y){
+        positionMapElement.axis_y = zone.yEnd -  sizeMapElement_y;
+    }
+
     return positionMapElement;
 }
 
@@ -396,7 +398,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     //Actualizo proyectiles de los enemigos
     for(auto enemy :this->mapElements_){
         unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
-         for (auto projectile: projectiles){
+        for (auto projectile: projectiles){
             projectile.second->update();
             if(!projectile.second->leftScreen()){
                 position_t actualPositionProjectile = projectile.second->getActualPosition();
@@ -419,13 +421,13 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     for(auto enemy: this->mapElements_){
         unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
         for (auto player:players){
-
            if (player.second->isDead())
             continue;
 
            for (auto projectile: projectiles){
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
+                    
                     projectilesDead.push_back(projectile.first);
                 
                     // Le quitamos vida a player
@@ -453,9 +455,12 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
         for (auto enemy : this->mapElements_){
+            
             for (auto projectile: projectiles){
+                
                 bool collision =enemy.second->checkCollision(projectile.second);
                 if (collision){
+                    
                     projectilesDead.push_back(projectile.first);
 
                     // Le quitamos vida a enemy y suma puntajes al player
@@ -554,7 +559,8 @@ void Map::informDisconnection(string username){
 position_t Map::getInitialPosition(){
     position_t position;
     position.orientation = FRONT;
-    position.axis_y = this->loggedPlayers_ * 100 + 50;
+    gameZone_t zone = GameProvider::getGameZone();
+    position.axis_y = this->loggedPlayers_ * 100 + 50 + zone.yInit;
     position.axis_x = 50;
 
     return position;

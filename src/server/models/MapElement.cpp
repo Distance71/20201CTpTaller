@@ -211,7 +211,7 @@ position_t MapElement::getActualPosition(){
 }
 
 void MapElement::moveTo(orientation_t oneOrientation){
-
+    
     State* position = states_.at("Position");
     State* speed = states_.at("Speed");
     State* orientation = states_.at("Orientation");
@@ -223,14 +223,13 @@ void MapElement::moveTo(orientation_t oneOrientation){
     int new_xp;
     int new_yp;
 
-    int screen_widht = GameProvider::getWidth();
-    int screen_height = GameProvider::getHeight();
+    gameZone_t zone = GameProvider::getGameZone();
 
     switch (oneOrientation){
         case FRONT:        
             new_xp = xp + xs;
             orientation->setX(FRONT);
-            if(new_xp <= (screen_widht - this->size_x_)){
+            if(new_xp <= (zone.xEnd - this->size_x_)){
                 position->setX(new_xp);
             }
             break;
@@ -238,21 +237,21 @@ void MapElement::moveTo(orientation_t oneOrientation){
         case BACK:
             new_xp = xp - xs;
             orientation->setX(BACK);
-            if(new_xp >= 0){
+            if(new_xp >= zone.xInit){
                 position->setX(new_xp);
             }        
             break;
 
         case UP:
             new_yp = yp-ys;
-            if (new_yp >= 0){
+            if (new_yp >= zone.yInit){
                 position->setY(new_yp);
             }
             break;
 
         case DOWN:
             new_yp = yp + ys;
-            if(new_yp <= (screen_height - this->size_y_)){
+            if(new_yp <= (zone.yEnd - this->size_y_)){
                 position->setY(new_yp);
             } 
             break;
@@ -262,11 +261,11 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_yp = yp - ys;
             orientation->setX(FRONT);
 
-            if (new_xp <= screen_widht - this->size_x_){
+            if (new_xp <= zone.xEnd - this->size_x_){
                 position->setX(new_xp);
             }
 
-            if (new_yp > 0){
+            if (new_yp > zone.yInit){
                 position->setY(new_yp);
             }        
             break;
@@ -276,11 +275,11 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_yp = yp + ys;
             orientation->setX(FRONT);
 
-            if (new_xp <= (screen_widht - this->size_x_)){
+            if (new_xp <= (zone.xEnd - this->size_x_)){
                 position->setX(new_xp);
             }
 
-            if (new_yp <= (screen_height - this->size_y_)){
+            if (new_yp <= (zone.yEnd - this->size_y_)){
                 position->setY(new_yp);
             }        
             break;
@@ -289,11 +288,11 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_xp = xp - xs;
             new_yp = yp + ys;
             orientation->setX(BACK);
-            if (new_xp >= 0){
+            if (new_xp >= zone.xInit){
                 position->setX(new_xp);
             }
 
-            if (new_yp <= (screen_height - this->size_y_)){
+            if (new_yp <= (zone.yEnd - this->size_y_)){
                 position->setY(new_yp);
             }        
             break;
@@ -303,11 +302,11 @@ void MapElement::moveTo(orientation_t oneOrientation){
             new_yp = yp - ys;
             orientation->setX(BACK);
 
-            if (new_xp >= 0 ){
+            if (new_xp >= zone.xInit ){
                 position->setX(new_xp);
             }
 
-            if (new_yp >= 0){
+            if (new_yp >= zone.yInit){
                 position->setY(new_yp);
             }        
             break;
@@ -346,15 +345,18 @@ void MapElement::attackTo(MapElement* mapElementAttacked){
 
 bool MapElement::leftScreen(){
 
+    gameZone_t zone = GameProvider::getGameZone();
+
     if (this->getState<Orientation>("Orientation")->getX() == BACK){
         return (this->getState<Position>("Position")->getX() + this->size_x_ <= 0);
     }
     
-    return (this->getState<Position>("Position")->getX() - this->size_x_ >= (int)GameProvider::getWidth());
+    return (this->getState<Position>("Position")->getX() - this->size_x_ >= zone.xEnd);
 }
 
 unordered_map<Id,MapElement*> MapElement::getShoots(){
     return this->projectiles_;
+
 };
 
 void MapElement::eraseProjectile(Id id){

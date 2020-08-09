@@ -44,16 +44,18 @@ add_executable(tp1taller
         src/client/screenManager/graphics/GraphicsMapElement.h
         src/client/screenManager/graphics/GameGraphics.cpp
         src/client/screenManager/graphics/GameGraphics.h
+        src/client/screenManager/graphics/GraphicsScoreBoard.h
+        src/client/screenManager/graphics/GraphicsScoreBoard.cpp
         src/client/screenManager/ScreenManager.cpp
         src/client/screenManager/ScreenManager.h
-        src/client/screenManager/loginMenu/Button.h
-        src/client/screenManager/loginMenu/Button.cpp
-        src/client/screenManager/loginMenu/Menu.h
-        src/client/screenManager/loginMenu/Menu.cpp
-        src/client/screenManager/loginMenu/TextBox.h
-        src/client/screenManager/loginMenu/TextBox.cpp
-        src/client/screenManager/loginMenu/MenuElement.h
-        src/client/screenManager/loginMenu/MenuElement.cpp
+        src/client/screenManager/graphics/GraphicsMenu.h
+        src/client/screenManager/graphics/GraphicsMenu.cpp
+        src/client/screenManager/graphics/graphicElements/Button.h
+        src/client/screenManager/graphics/graphicElements/Button.cpp
+        src/client/screenManager/graphics/graphicElements/TextBox.h
+        src/client/screenManager/graphics/graphicElements/TextBox.cpp
+        src/client/screenManager/graphics/graphicElements/Image.h
+        src/client/screenManager/graphics/graphicElements/Image.cpp
 
         src/common/models/messages/Message.h
         src/common/models/messages/MessageGameInit.cpp

@@ -51,7 +51,7 @@ class Client {
         void endGame();
         void ServerDisconnection();
         
-        //menu methods
+        //GraphicsGraphicsMe
         void setLoginResponse(responseStatus_t response);
         void setLoggedInStatus();
         bool isLoggedIn();

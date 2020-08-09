@@ -155,6 +155,10 @@ typedef enum {
     EXPLOSION_ANIMATION_9 = 24,
     EXPLOSION_ANIMATION_10 = 25,
     EXPLOSION_ANIMATION_11 = 26,
+    PLAYER_1_G = 27,
+    PLAYER_2_G = 28,
+    PLAYER_3_G = 29,
+    PLAYER_4_G = 30,
 } elementType_t;
 
 typedef enum {
@@ -303,5 +307,12 @@ typedef struct {
     bool ok;
     responseStatus_t status;
 } response_t;
+
+typedef struct {
+    int xInit;
+    int xEnd;
+    int yInit;
+    int yEnd;
+}gameZone_t;
 
 #endif

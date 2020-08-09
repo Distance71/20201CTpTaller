@@ -1,13 +1,13 @@
-#ifndef _MENU_H_
-#define _MENU_H_
+#ifndef _GRAPHICS_MENU_H_
+#define _GRAPHICS_MENU_H_
 
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <unordered_map>
-#include "Button.h"
-#include "TextBox.h"
-#include "MenuElement.h"
+#include "graphicElements/Button.h"
+#include "graphicElements/TextBox.h"
+#include "graphicElements/Image.h"
 #include <string>
 #include "../../../common/models/Sprite.h"
 #include "../../../common/providers/GameProvider.h"
@@ -19,11 +19,11 @@
 
 class Client;
 
-class Menu {
+class GraphicsMenu {
 
     public:
-        Menu(Client* clientOwn);
-        ~Menu();
+        GraphicsMenu(Client* clientOwn);
+        ~GraphicsMenu();
         void processEvent();
         void setLoginResponse(responseStatus_t response);
         void checkStatus();
@@ -32,7 +32,7 @@ class Menu {
         
     private:
         SDL_Renderer* gRenderer;
-        unordered_map <string, MenuElement*> menu_elements; 
+        unordered_map <string, Image*> menuImages_; 
         unordered_map <string, Button*> buttons; 
         unordered_map <string, TextBox*> text_boxes;
         responseStatus_t response_;
@@ -40,7 +40,7 @@ class Menu {
 
         void addButton(string button_name,Button* button);
         void addTextBox(string text_box_name,TextBox* text_box);
-        void addMenuElement(string element_name,MenuElement* menu_element);
+        void addImage(string element_name,Image* image);
         void update(int x,int y, bool update);
         void sendCredentialsMessage();
         

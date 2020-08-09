@@ -8,6 +8,7 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->createScenes();
     this->createScenarios();
     this->graphicsQueue_ = new BlockingQueue<elementToGraphic_t>();
+    this->scoreBoard_ = new GraphicsScoreBoard();
 }
 
 
@@ -119,6 +120,7 @@ void GameGraphics::createScenarios(){
 
 void GameGraphics::updateEntity(elementType_t type, position_t position){
    if (type == END_GRAPHIC){
+        this->scoreBoard_->update();
         SDL_RenderPresent(this->renderer_);
         SDL_RenderClear(this->renderer_);
     }

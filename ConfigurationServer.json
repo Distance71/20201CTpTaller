@@ -30,13 +30,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 2,
+                        "quantity": 15,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100				  
                     },
                     {
-                        "quantity": 2,
+                        "quantity": 15,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200	

@@ -34,15 +34,21 @@ GraphicsScenario::GraphicsScenario(stageSource_t background){
 
 
 void GraphicsScenario::update(layer_t layer, int step){
-    size_t screenWidht = GameProvider::getWidth();
-    size_t screenHeight = GameProvider::getHeight();
 
     SDL_Renderer *renderer = GameProvider::getRenderer();
     auto iter = sprites_.find(layer);
     if (iter!=sprites_.end()){
         SDL_Texture* layerTexture = iter->second->getTexture();
-        SDL_Rect auxParallax = {step, 0, (int)screenWidht, (int)screenHeight};
-        SDL_RenderCopy(renderer, layerTexture, &auxParallax, NULL);        
+
+        gameZone_t gameZone = GameProvider::getGameZone();
+
+        int height;
+        SDL_QueryTexture(layerTexture, nullptr, nullptr,NULL,&height);
+        
+        SDL_Rect auxParallax = {step, 0,gameZone.xEnd-gameZone.xInit, height};
+
+        SDL_Rect screenLimits = {gameZone.xInit,gameZone.yInit,gameZone.xEnd-gameZone.xInit,gameZone.yEnd-gameZone.yInit};
+        SDL_RenderCopy(renderer, layerTexture, &auxParallax, &screenLimits);        
     }
 }
 

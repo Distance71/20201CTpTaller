@@ -22,7 +22,8 @@ Server* UsersManager::getServer(){
 
 
 bool UsersManager::isFullGame(){
-    return this->loggedInUsers_.size() == GameProvider::getQuantityPlayers();
+    //return this->loggedInUsers_.size() == GameProvider::getQuantityPlayers();
+    return this->loggedInUsers_.size() == 1;
 }
 
 
