@@ -607,7 +607,7 @@ position_t Map::getInitialPosition(){
     position.orientation = FRONT;
     gameZone_t zone = GameProvider::getGameZone();
     position.axis_y = this->loggedPlayers_ * 100 + 50 + zone.yInit;
-    position.axis_x = 50;
+    position.axis_x = 250;
 
     return position;
 }
