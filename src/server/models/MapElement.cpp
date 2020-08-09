@@ -49,6 +49,8 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->score_ = 0;
     this->projectileKey_ = 0;
 
+    this->countImmune_ = 0;
+    this->isTemporaryImmune_ = false;
 }
 
 void MapElement::setTarget(MapElement* target) {
@@ -140,7 +142,7 @@ int MapElement::getLives() {
 
 void MapElement::quitLives(){
 
-    if (this->gameMode_ == MODE_TEST_GAME)
+    if (this->isImmune())
         return;
 
     this->lives_--;
@@ -150,6 +152,10 @@ void MapElement::quitLives(){
         this->health_ = 0;
     } else {
         this->health_ = maxHealth_;
+    }
+
+    if ((this->type == PLAYER_1) || (this->type == PLAYER_2) || (this->type == PLAYER_3) || (this->type == PLAYER_4)){
+        this->setTemporaryImmunity();
     }
 }
 
@@ -354,7 +360,7 @@ bool MapElement::checkCollision(MapElement* mapElement){
 
 void MapElement::attackTo(MapElement* mapElementAttacked){
 
-    if (mapElementAttacked->getGameMode() == MODE_TEST_GAME)
+    if (mapElementAttacked->isImmune())
         return;
 
     int damageProduced = this->getDamage();
@@ -395,6 +401,33 @@ void MapElement::eraseProjectile(Id id){
     }
 }
 
+bool MapElement::isImmune(){
+    return ((this->gameMode_ == MODE_TEST_GAME) || (this->isTemporaryImmune_));
+}
+
+void MapElement::setTemporaryImmunity(){
+    this->countImmune_ = 120;
+    this->isTemporaryImmune_ = true;
+}
+
+void MapElement::quitTemporaryImmunity(){
+    this->isTemporaryImmune_ = false;
+    this->countImmune_ = 0;
+}
+
+bool MapElement::shouldGraphed(){
+
+    if (this->isTemporaryImmune_){
+
+        this->countImmune_--;
+
+        if (this->countImmune_ < 0)
+            this->quitTemporaryImmunity();
+    
+    }    
+
+    return ((this->countImmune_ % 2) == 0);
+}
 
 void MapElement::shoot(){
 
