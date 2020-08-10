@@ -152,6 +152,7 @@ void MapElement::quitLives(){
     if (this->lives_ <= 0) {
         this->lives_ = 0;
         this->health_ = 0;
+        this->setTypeDead();
     } else {
         this->health_ = maxHealth_;
     }
