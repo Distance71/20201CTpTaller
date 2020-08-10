@@ -169,7 +169,7 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
 }
 
 void ScreenManager::updateMusic(musicType_t type){
-    Audio::getInstance()->playEffect(EXPLOSION);
+    Audio::getInstance()->playEffect(type);
 }
 
 void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
