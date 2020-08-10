@@ -7,7 +7,7 @@
             "width": 1280,
             "height": 800
         },
-        "quantityPlayers": 1,
+        "quantityPlayers": 3,
         "players": [
             {
                 "sizeX": 95,
@@ -95,6 +95,10 @@
         "projectiles": {
             "sizeX": 33,
             "sizeY": 14
+        },
+        "projectilesBoss": {
+            "sizeX": 88,
+            "sizeY": 36
         },
         "finalBoss":{
             "sizeX": 400,

@@ -1,7 +1,7 @@
 #include "MessageScoreUpdate.h"
 
 Event* MessageScoreUpdate::deSerialize(){
-    return (Event *) new EventScoreUpdate(this->typePlayer_, this->lives_, this->health_, this->score_);
+    return (Event *) new EventScoreUpdate(this->typePlayer_, this->lives_, this->health_, this->scoreCurrent_, this->scoreAcc_);
 }
 
 message_t MessageScoreUpdate::getType(){
@@ -20,8 +20,12 @@ int MessageScoreUpdate::getHealth(){
     return this->health_;
 }
 
-int MessageScoreUpdate::getScore(){
-    return this->score_;
+int MessageScoreUpdate::getCurrentScore(){
+    return this->scoreCurrent_;
+}
+
+int MessageScoreUpdate::getScoreAcc(){
+    return this->scoreAcc_;
 }
 
 responseStatus_t MessageScoreUpdate::serialize(){

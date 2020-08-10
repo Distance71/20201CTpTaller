@@ -239,14 +239,15 @@ response_t MessageDeserializer::getEventScoreUpdate(Socket *socket, Event *event
     
     elementType_t type;
     unsigned int lives;
-    int health, score;
+    int health, scoreCurrent, scoreAcc;
 
     this->getElementType(socket, type);
     this->getUInteger(socket, lives);
     this->getInteger(socket, health);
-    this->getInteger(socket, score);
+    this->getInteger(socket, scoreCurrent);
+    this->getInteger(socket, scoreAcc);
     
-    Message *message = new MessageScoreUpdate(type, lives, health, score);
+    Message *message = new MessageScoreUpdate(type, lives, health, scoreCurrent, scoreAcc);
     event = message->deSerialize();
     
     if(!event){
@@ -491,14 +492,15 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
         case SCORE_UPDATE:{
             elementType_t type;
             unsigned int lives;
-            int health, score;
+            int health, scoreCurrent, scoreAcc;
 
             this->getElementType(socket, type);
             this->getUInteger(socket, lives);
             this->getInteger(socket, health);
-            this->getInteger(socket, score);
+            this->getInteger(socket, scoreCurrent);
+            this->getInteger(socket, scoreAcc);
             
-            Message *message = new MessageScoreUpdate(type, lives, health, score);
+            Message *message = new MessageScoreUpdate(type, lives, health, scoreCurrent, scoreAcc);
             event = message->deSerialize();
             return this->_handleSuccess();
         }
