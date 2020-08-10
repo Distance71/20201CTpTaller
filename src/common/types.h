@@ -170,13 +170,19 @@ typedef enum {
 } elementType_t;
 
 typedef enum {
+    EXPLOSION_ENEMY = 0,
+    EXPLOSION_PLAYER = 1,
+    EXPLOSION_BOSS = 2,
+    PLAYER_SHOT = 3,
+    ENEMY_SHOT = 4,
+    BOSS_SHOT = 5,
+    SHOT_IMPACTS = 6,
+    SHOT_IMPACTS_PLAYER = 7,
+    SHOT_IMPACTS_BOSS = 8,
     // SOUND_STAGE_ONE = 0,
     // SOUND_STAGE_TWO = 1,
     // SOUND_STAGE_THREE = 2,
     // SOUND_STAGE_FOUR = 3,
-    EXPLOSION = 0,
-    PLAYER_SHOT = 1,
-    SHOT_IMPACTS = 2,
 } musicType_t;
 
 typedef enum {

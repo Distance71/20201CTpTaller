@@ -10,9 +10,18 @@ class Audio {
 
 private:
 	//The sound effects that will be used
-	Mix_Chunk *explosion = NULL;
-	Mix_Chunk *playerShot = NULL;
+	Mix_Chunk *explosionEnemy = NULL;
 	Mix_Chunk *shotImpacts = NULL;
+	Mix_Chunk *enemyShot = NULL;
+
+	Mix_Chunk *playerShot = NULL;
+	Mix_Chunk *explosionPlayer = NULL;
+	Mix_Chunk *shotImpactsPlayer = NULL;
+
+	Mix_Chunk *explosionBoss = NULL;
+	Mix_Chunk *bossShot = NULL;
+	Mix_Chunk *shotImpactsBoss = NULL;
+
 	// Mix_Chunk *stageOne = NULL;
 	// Mix_Chunk *stageTwo = NULL;
 	// Mix_Chunk *stageThree = NULL;

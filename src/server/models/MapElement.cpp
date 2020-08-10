@@ -389,10 +389,10 @@ bool MapElement::checkCollision(MapElement* mapElement){
     return result;
 }
 
-void MapElement::attackTo(MapElement* mapElementAttacked){
+bool MapElement::attackTo(MapElement* mapElementAttacked){
 
     if (mapElementAttacked->isImmune())
-        return;
+        return false;
 
     int damageProduced = this->getDamage();
     bool kill = mapElementAttacked->reduceHealth(damageProduced);
@@ -401,6 +401,7 @@ void MapElement::attackTo(MapElement* mapElementAttacked){
         int scoreFinal = mapElementAttacked->getScoreWhenKilled();
         this->addScore(scoreFinal);
     }
+    return kill;
 
 }
 

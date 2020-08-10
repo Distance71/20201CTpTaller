@@ -17,20 +17,53 @@ Audio::Audio(int volumen){
 	Mix_VolumeMusic(volumen);
 
 	//Precarga de todos los sonidos
-	if ( (this->explosion = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+	if ( (this->explosionEnemy = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'explosion.wav'" );		
 	}
-	Mix_VolumeChunk(this->explosion, VOLUME_SOUNDS_DEFAULT+10);
+	Mix_VolumeChunk(this->explosionEnemy, VOLUME_SOUNDS_DEFAULT+10);
+
+	if ( (this->shotImpacts = Mix_LoadWAV("assets/Sounds/impacto.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto.wav'" );		
+	}
+	Mix_VolumeChunk(this->shotImpacts, VOLUME_SOUNDS_DEFAULT);
+
+	if ( (this->enemyShot = Mix_LoadWAV("assets/Sounds/laser3.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser3.wav'" );		
+	}
+	Mix_VolumeChunk(this->enemyShot, VOLUME_SOUNDS_DEFAULT);
+
 
 	if ( (this->playerShot = Mix_LoadWAV("assets/Sounds/playerShot.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'playerShot.wav'" );		
 	}
 	Mix_VolumeChunk(this->playerShot, VOLUME_SOUNDS_DEFAULT);
 
-	if ( (this->shotImpacts = Mix_LoadWAV("assets/Sounds/impacto.wav")) == NULL ){
-		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto.wav'" );		
+	if ( (this->explosionPlayer = Mix_LoadWAV("assets/Sounds/explosion_player.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'explosion_player.wav'" );		
 	}
-	Mix_VolumeChunk(this->shotImpacts, VOLUME_SOUNDS_DEFAULT);
+	Mix_VolumeChunk(this->explosionPlayer, VOLUME_SOUNDS_DEFAULT);
+
+	if ( (this->shotImpactsPlayer = Mix_LoadWAV("assets/Sounds/impacto4.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto4.wav'" );		
+	}
+	Mix_VolumeChunk(this->shotImpactsPlayer, VOLUME_SOUNDS_DEFAULT);
+
+
+	if ( (this->explosionBoss = Mix_LoadWAV("assets/Sounds/explosion_boss2.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'explosion_boss2.wav'" );		
+	}
+	Mix_VolumeChunk(this->explosionBoss, VOLUME_SOUNDS_DEFAULT);
+
+	if ( (this->bossShot = Mix_LoadWAV("assets/Sounds/disparo_boss.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'disparo_boss.wav'" );		
+	}
+	Mix_VolumeChunk(this->bossShot, VOLUME_SOUNDS_DEFAULT);
+
+	if ( (this->shotImpactsBoss = Mix_LoadWAV("assets/Sounds/impacto3.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto3.wav'" );		
+	}
+	Mix_VolumeChunk(this->shotImpactsBoss, VOLUME_SOUNDS_DEFAULT);
+
 
 	// if ( (this->stageOne = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
 	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
@@ -73,18 +106,38 @@ void Audio::playMusic(){
 
 void Audio::playEffect(musicType_t soundType){
 	if (!this->isPaused) {
-		switch (soundType) {
-		case EXPLOSION:
+		switch (soundType) {	
+		case EXPLOSION_ENEMY:
 			//-1 por q no importa el canal y 0 por que se debe repetir una sola vez el sonido
-			if(this->explosion) Mix_PlayChannel(-1, this->explosion, 0);
+			if(this->explosionEnemy) Mix_PlayChannel(-1, this->explosionEnemy, 0);
 			break;
-		case PLAYER_SHOT:
-			if(this->playerShot) Mix_PlayChannel(-1, this->playerShot, 0);
+		case ENEMY_SHOT:
+			if(this->enemyShot) Mix_PlayChannel(-1, this->enemyShot, 0);
 			break;
 		case SHOT_IMPACTS:
 			if(this->shotImpacts) Mix_PlayChannel(-1, this->shotImpacts, 0);
 			break;
-		
+
+		case EXPLOSION_PLAYER:
+			if(this->explosionPlayer) Mix_PlayChannel(-1, this->explosionPlayer, 0);
+			break;
+		case PLAYER_SHOT:
+			if(this->playerShot) Mix_PlayChannel(-1, this->playerShot, 0);
+			break;
+		case SHOT_IMPACTS_PLAYER:
+			if(this->shotImpactsPlayer) Mix_PlayChannel(-1, this->shotImpactsPlayer, 0);
+			break;
+
+		case BOSS_SHOT:
+			if(this->bossShot) Mix_PlayChannel(-1, this->bossShot, 0);
+			break;
+		case EXPLOSION_BOSS:
+			if(this->explosionBoss) Mix_PlayChannel(-1, this->explosionBoss, 0);
+			break;
+		case SHOT_IMPACTS_BOSS:
+			if(this->shotImpactsBoss) Mix_PlayChannel(-1, this->shotImpactsBoss, 0);
+			break;
+
 		// case SOUND_STAGE_ONE:
 		// 	if(this->stageOne) Mix_PlayChannel(-1, this->stageOne, 0);
 		// 	break;
@@ -152,15 +205,37 @@ Audio::~Audio(){
 		Mix_FreeMusic(this->mixMusicSDL);
 		this->mixMusicSDL = NULL;
 	}
-	if (this->explosion){
-		Mix_FreeChunk(this->explosion);
-	}
-	if (this->playerShot){
-		Mix_FreeChunk(this->playerShot);
+
+	if (this->explosionEnemy){
+		Mix_FreeChunk(this->explosionEnemy);
 	}
 	if (this->shotImpacts){
 		Mix_FreeChunk(this->shotImpacts);
 	}
+	if (this->enemyShot){
+		Mix_FreeChunk(this->enemyShot);
+	}
+
+	if (this->playerShot){
+		Mix_FreeChunk(this->playerShot);
+	}
+	if (this->explosionPlayer){
+		Mix_FreeChunk(this->explosionPlayer);
+	}
+	if (this->shotImpactsPlayer){
+		Mix_FreeChunk(this->shotImpactsPlayer);
+	}
+
+	if (this->explosionBoss){
+		Mix_FreeChunk(this->explosionBoss);
+	}
+	if (this->bossShot){
+		Mix_FreeChunk(this->bossShot);
+	}
+	if (this->shotImpactsBoss){
+		Mix_FreeChunk(this->shotImpactsBoss);
+	}
+
 	// if (this->stageOne){
 	// 	Mix_FreeChunk(this->stageOne);
 	// }
