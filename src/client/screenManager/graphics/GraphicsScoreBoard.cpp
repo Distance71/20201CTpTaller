@@ -136,23 +136,23 @@ int GraphicsScoreBoard::getHealthImageNumber(int health){
     cout<<health<<endl;
     if (health == 0)
         return 0;
-    else if ( 0 < health && health < 15)
+    else if (0 < health && health < 15)
         return 1;
-    else if (15 < health && health < 25)
+    else if (15 <= health && health < 25)
         return 2;
-    else if (25 < health && health <35)
+    else if (25 <= health && health <35)
         return 3;
-    else if (35 < health && health < 45)
+    else if (35 <= health && health < 45)
         return 4;
-    else if  ( 45 < health && health < 55)
+    else if  (45 <= health && health < 55)
         return 5;
-    else if ( 55 < health && health < 65)
+    else if (55 <= health && health < 65)
         return 6;
-    else if (65 < health && health < 75)
+    else if (65 <= health && health < 75)
         return 7;
-    else if (75 < health && health < 85)
+    else if (75 <= health && health < 85)
         return 8;
-    else if (85 < health && health<  95)
+    else if (85 <= health && health<  95)
         return 9;
     else 
         return 10;

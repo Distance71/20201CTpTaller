@@ -164,16 +164,18 @@ response_t MessageSerializer::sendMessageScoreUpdate(Socket *socket, Message *me
     elementType_t type = ((MessageScoreUpdate *) message)->getTypePlayer();
     unsigned int lives = ((MessageScoreUpdate *) message)->getLives();
     int health = ((MessageScoreUpdate *) message)->getHealth();
-    int score = ((MessageScoreUpdate *) message)->getScore();
+    int scoreCurrent = ((MessageScoreUpdate *) message)->getCurrentScore();
+    int scoreAcc = ((MessageScoreUpdate *) message)->getScoreAcc();
     
     
     response_t responseType = this->sendElementType(socket, type);
     response_t responseLives = this->sendUInt(socket, lives);
     response_t responseHealth = this->sendInteger(socket, health);
-    response_t responseScore = this->sendInteger(socket, score);
+    response_t responseScoreCurrent = this->sendInteger(socket, scoreCurrent);
+    response_t responseScoreAcc = this->sendInteger(socket, scoreAcc);
 
 
-    if(!responseType.ok || !responseLives.ok || !responseHealth.ok || !responseScore.ok) {
+    if(!responseType.ok || !responseLives.ok || !responseHealth.ok || !responseScoreCurrent.ok || !responseScoreAcc.ok) {
         Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en ScoreUpdate.");
         return this->_handleErrorStatus();
     }

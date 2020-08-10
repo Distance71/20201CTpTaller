@@ -49,7 +49,8 @@ class MapElement {
         int damage_;
         int scoreWhenKilled_;
 
-        int score_;
+        int scoreCurrent_;
+        int scoreAcc_;
 
         bool isTemporaryImmune_;
         int countImmune_;
@@ -94,7 +95,9 @@ class MapElement {
         int getScoreWhenKilled();
 
         void addScore(int score);
-        int getScore();
+        int getScoreAcc();
+        int getCurrentScore();
+        void cleanCurrentScore();
 
         elementType_t getType();
         void setType(elementType_t type);

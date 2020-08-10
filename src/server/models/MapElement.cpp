@@ -46,7 +46,9 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
         this->scoreWhenKilled_ = SCORE_KILLED_PLAYER;
     }
     
-    this->score_ = 0;
+    this->scoreCurrent_ = 0;
+    this->scoreAcc_ = 0;
+
     this->projectileKey_ = 0;
 
     this->countImmune_ = 0;
@@ -168,11 +170,21 @@ int MapElement::getScoreWhenKilled(){
 }
 
 void MapElement::addScore(int score){
-    this->score_ += score;
+
+    this->scoreCurrent_ += score;
+    this->scoreAcc_ += score;
 }
 
-int MapElement::getScore(){
-    return this->score_;
+int MapElement::getScoreAcc(){
+    return this->scoreAcc_;
+}
+
+void MapElement::cleanCurrentScore(){
+    this->scoreCurrent_ = 0;
+}
+
+int MapElement::getCurrentScore(){
+    return this->scoreCurrent_;
 }
 
 void MapElement::setType(elementType_t type) {
