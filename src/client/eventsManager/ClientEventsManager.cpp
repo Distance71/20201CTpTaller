@@ -10,7 +10,7 @@ ClientEventsManager::ClientEventsManager(Client* client){
 
 
 ClientEventsManager::~ClientEventsManager(){
-    //delete this->eventsQueue_; esto da violación de segmento
+    delete this->eventsQueue_;
 }
 
 

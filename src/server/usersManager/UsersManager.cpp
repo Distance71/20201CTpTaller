@@ -33,6 +33,8 @@ void UsersManager::processEvent(Event* event){
 
 void UsersManager::sendEventToNotLoggedUser(Id id, Event* event){
     this->notLoggedInUsers_[id]->sendMessage(event->serialize());
+    delete event;
+    
 }
 
 
@@ -54,6 +56,7 @@ static void* sendMessages(void* arg){
         if(!sendingQueue->empty()){
             Message* message = sendingQueue->pop();
             usersManager->sendToAll(message);
+            delete message;
         }
     }
 }

@@ -9,15 +9,19 @@ GraphicsScoreBoard::GraphicsScoreBoard(){
     this-> playerImages_->emplace(PLAYER_1,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player1.jpg"));
     this-> playerImages_->emplace(PLAYER_1_OUT,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player1_D.jpg"));
     this-> playerImages_->emplace(PLAYER_1_G, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player1_G.jpg"));
+    this-> playerImages_->emplace(PLAYER_1_DEAD,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player1_R.png"));
     this-> playerImages_->emplace(PLAYER_2, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player2.jpg"));
     this-> playerImages_->emplace(PLAYER_2_OUT, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player2_D.jpg"));
     this-> playerImages_->emplace(PLAYER_2_G, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player2_G.jpg"));
+    this-> playerImages_->emplace(PLAYER_2_DEAD,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player2_R.png"));
     this-> playerImages_->emplace(PLAYER_3, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player3.jpg"));
     this-> playerImages_->emplace(PLAYER_3_OUT, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player3_D.jpg"));
     this-> playerImages_->emplace(PLAYER_3_G, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player3_G.jpg"));
+    this-> playerImages_->emplace(PLAYER_3_DEAD,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player3_R.png"));
     this-> playerImages_->emplace(PLAYER_4,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player4.jpg"));
     this-> playerImages_->emplace(PLAYER_4_OUT,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player4_D.jpg"));
     this-> playerImages_->emplace(PLAYER_4_G,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player4_G.jpg"));
+    this-> playerImages_->emplace(PLAYER_4_DEAD,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player4_R.png"));
     
     this-> lives_ = new unordered_map <int, Image*>();
     int heartsW = 100;
@@ -124,6 +128,7 @@ void GraphicsScoreBoard::setScore(elementType_t player, int score){
 }
 
 void GraphicsScoreBoard::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
+    cout<<"tipo de imagen:"<<playerImage<<endl;
     
     playerState_t player;
     player.playerImage = playerImage;
@@ -132,23 +137,23 @@ void GraphicsScoreBoard::updateScore(elementType_t playerImage,unsigned int live
     player.levelScore = levelScore;
     player.totalScore = totalScore;
     
-    if (playerImage == PLAYER_1 || playerImage == PLAYER_1_OUT){
+    if (playerImage == PLAYER_1 || playerImage == PLAYER_1_OUT || playerImage==PLAYER_1_DEAD){
         this->players_->erase(PLAYER_1);
         this->players_->emplace(PLAYER_1,player);
     }
 
-    else if (playerImage== PLAYER_2 || playerImage== PLAYER_2_OUT){
+    else if (playerImage== PLAYER_2 || playerImage== PLAYER_2_OUT || playerImage==PLAYER_2_DEAD){
         this->players_->erase(PLAYER_2);
         this->players_->emplace(PLAYER_2,player);
     }
 
-    else if (playerImage== PLAYER_3 || playerImage == PLAYER_3_OUT){
+    else if (playerImage== PLAYER_3 || playerImage == PLAYER_3_OUT|| playerImage == PLAYER_3_DEAD){
         this->players_->erase(PLAYER_3);
         this->players_->emplace(PLAYER_3,player);
     }
 
     else{
-         this->players_->erase(PLAYER_4);
+        this->players_->erase(PLAYER_4);
         this->players_->emplace(PLAYER_4,player);
     }
 }
@@ -187,6 +192,7 @@ void GraphicsScoreBoard::update(){
  
     //imagen 
     this->playerImages_->at(player1.playerImage)->renderCopy(35,20);
+    
     //vida
     if (player1.playerImage == PLAYER_1)
          this->lives_->at(player1.lives)->renderCopy(190,20);
@@ -202,6 +208,7 @@ void GraphicsScoreBoard::update(){
 
     if (player1.playerImage == PLAYER_1)
         this->health_->at(healthImage1)->renderCopy(190,75);
+    
     else
         this->health_->at(healthImage1*-1)->renderCopy(190,75);
    

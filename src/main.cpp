@@ -50,7 +50,7 @@ void showHelp(){
 
 int mainServer(int port, string levelLog, string pathConfiguration){
 
-    if (port < 0){
+   if (port < 0){
         cout << "Falta parámetro Port requerido para conectar el servidor." << endl;
         showHelp();
         return EXIT_FAILURE;
@@ -83,7 +83,7 @@ int mainServer(int port, string levelLog, string pathConfiguration){
 
 int mainClient(int port, string ipAddress, string levelLog, string pathConfiguration, bool modeTest=false){
 
-    if (port < 0){
+   if (port < 0){
         cout << "Falta parámetro Port requerido para conectar el cliente." << endl;
         showHelp();
         return EXIT_FAILURE;
@@ -112,24 +112,16 @@ int mainClient(int port, string ipAddress, string levelLog, string pathConfigura
     }
     
     configurationHandler->initializeData();
+
+
     GameProvider::setConfig(configurationHandler);
 
     int codExitClient;
-    if (modeTest){
 
-        cout << "MODO TEST:" << endl;
-        ClientTest *newTestClient = new ClientTest(ipAddress, port);
-        codExitClient = newTestClient->runTest();
-        delete newTestClient;
-        cout << "FIN MODO TEST." << endl;
-
-    } else {
-
-        Client *newClient = new Client(ipAddress, port);
-        codExitClient = newClient->run();
-        delete newClient;
-    }
-
+    Client *newClient = new Client(ipAddress, port);
+    codExitClient = newClient->run();
+    delete newClient;
+    delete configurationHandler;
     return codExitClient;
 }
 

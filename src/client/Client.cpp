@@ -64,10 +64,9 @@ int Client::run(){
     Logger::getInstance()->log(INFO, "El juego ha finalizado normalmente");
     
     if (this->serverDisconection_ || this->endGame_)
-        usleep(3000000);
+        usleep(3000000); 
     
-    
-    return EXIT_SUCCESS;    
+    return EXIT_SUCCESS;  
 }
 
 

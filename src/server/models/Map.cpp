@@ -330,14 +330,11 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             game->sendEvent(eventUpdate);
         }
         else{
-            
             if (isDead){
                 killElementWithExplosion(game,enemy.second);
-            }
-
+            }     
             enemiesDead.push_back(enemy.first);
         }
-    
     }
 
     for(auto IdDead : enemiesDead){

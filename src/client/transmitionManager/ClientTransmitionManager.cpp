@@ -12,6 +12,8 @@ ClientTransmitionManager::ClientTransmitionManager(Client *client, size_t port){
 ClientTransmitionManager::~ClientTransmitionManager(){
     delete this->socket_;
     delete this->sendMessagesQueue_;
+    delete this->serializer_;
+    delete this->deserializer_;
 }
 
 
@@ -68,6 +70,7 @@ static void* sendMessages(void *arg){
         if (!(messagesQueue->empty())){
             Message *message = messagesQueue->pop(); 
             transmitionManager->sendSerializedMessage(message);
+            delete message;
             Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje en TransmitionManager");
         }
     }
