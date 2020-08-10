@@ -579,8 +579,8 @@ void Map::sendScorePlayers(Game *game){
         unsigned int lives = player.second->getLives();
         int health = player.second->getHealth();
         
-        int scoreActual = player.second->getCurrentScore();
-        int scoreAcc = player.second->getScoreAcc();
+        int scoreActual = player.second->getCurrentScore() / 500;
+        int scoreAcc = player.second->getScoreAcc() / 500;
 
         Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, scoreActual, scoreAcc);
         game->sendEvent(eventScoreUpdate);
