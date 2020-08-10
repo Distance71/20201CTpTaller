@@ -16,11 +16,12 @@ class EventScoreUpdate: public Event {
         elementType_t typePlayer_;
         unsigned int lives_;
         int health_;
-        int score_;
+        int scoreCurrent_;
+        int scoreAcc_;
 
     public:
-        EventScoreUpdate(elementType_t typePlayer, unsigned int lives, int health, int score)
-            : typePlayer_(typePlayer), lives_(lives), health_(health), score_(score) {}
+        EventScoreUpdate(elementType_t typePlayer, unsigned int lives, int health, int scoreCurrent, int scoreAcc)
+            : typePlayer_(typePlayer), lives_(lives), health_(health), scoreCurrent_(scoreCurrent), scoreAcc_(scoreAcc) {}
         
         Message* serialize();
         void update();

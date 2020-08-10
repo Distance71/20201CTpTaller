@@ -259,6 +259,7 @@ void Step::setTargetsForStep(Game *game){
 void Map::cleanStage(){
     for (auto onePlayer : this->players){
         onePlayer.second->cleanShoots();
+        onePlayer.second->cleanCurrentScore();
     }
 }
 
@@ -577,9 +578,11 @@ void Map::sendScorePlayers(Game *game){
         elementType_t typePlayer = player.second->getType();
         unsigned int lives = player.second->getLives();
         int health = player.second->getHealth();
-        int score = player.second->getScore();
+        
+        int scoreActual = player.second->getCurrentScore();
+        int scoreAcc = player.second->getScoreAcc();
 
-        Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, score);
+        Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, scoreActual, scoreAcc);
         game->sendEvent(eventScoreUpdate);
     }
 }
