@@ -161,6 +161,24 @@ void MapElement::quitLives(){
     }
 }
 
+void  MapElement::setTypeDead(){
+
+    switch (this->type){
+        case PLAYER_1:
+            this->setType(PLAYER_1_DEAD);
+            break;
+        case PLAYER_2:
+            this->setType(PLAYER_2_DEAD);
+            break;
+        case PLAYER_3:
+            this->setType(PLAYER_3_DEAD);
+            break;
+        case PLAYER_4:
+            this->setType(PLAYER_4_DEAD);
+            break;
+    }
+}
+
 int MapElement::getDamage(){
     return this->damage_;
 }

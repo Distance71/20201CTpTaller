@@ -603,6 +603,10 @@ void Map::informDisconnection(string username){
         case PLAYER_4:
             NEW_TYPE = PLAYER_4_OUT;
             break;
+       default:
+            NEW_TYPE = PLAYER_X;
+            break;
+            
     }
     this->players[username]->setType(NEW_TYPE);
     this->players[username]->setGameMode(MODE_TEST_GAME);

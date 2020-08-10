@@ -66,6 +66,7 @@ class MapElement {
         bool isImmune();
         void setTemporaryImmunity();
         void quitTemporaryImmunity();
+        void setTypeDead();
 
     public:
         MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y, int health, int lives=1);
