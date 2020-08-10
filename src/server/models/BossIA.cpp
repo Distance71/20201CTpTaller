@@ -79,7 +79,7 @@ int BossIA::searchPlayers(int yp, int ys){
     }
 
     if (sumPosY)
-        avgPosY = sumPosY - (this->owner_->getSizeY()/2) / nTargets;
+        avgPosY = (sumPosY / nTargets) - (this->owner_->getSizeY()/2) ;
 
     if (yp == avgPosY) return yp; //si ya esta centrado q no le agarre epilepsia
     if (yp < avgPosY)
