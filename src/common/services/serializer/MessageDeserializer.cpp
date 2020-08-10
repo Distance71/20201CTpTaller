@@ -234,7 +234,7 @@ response_t MessageDeserializer::getEventUserChangeMode(Socket *socket, Event *ev
     return this->_handleSuccess();
 };
 
-response_t MessageDeserializer::getEventMusicUpdate(Socket *socket, Event *event){
+response_t MessageDeserializer::getEventMusicUpdate(Socket *socket, Event* &event){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un evento MusicUpdate en Deserializer");
     musicType_t musicType;
 

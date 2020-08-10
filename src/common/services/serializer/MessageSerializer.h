@@ -55,7 +55,7 @@ class MessageSerializer {
         response_t sendElementType(Socket *socket, elementType_t elementType);
         response_t sendSceneScreen(Socket *socket, sceneScreen_t scene);
         response_t sendStage(Socket *socket, stage_t &stage);
-        response_t sendMusicType(Socket *socket, musicType_t type);
+        response_t sendMusicType(Socket *socket, musicType_t &type);
 
     public:
         response_t sendSerializedEvent(Socket *socket, Message *message);

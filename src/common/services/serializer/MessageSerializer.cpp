@@ -210,7 +210,7 @@ response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t 
     return this->_handleSuccess();
 }
 
-response_t MessageSerializer::sendMusicType(Socket *socket, musicType_t type){
+response_t MessageSerializer::sendMusicType(Socket *socket, musicType_t &type){
     stringstream s;
 
     Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje musicType.");

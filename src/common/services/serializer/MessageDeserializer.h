@@ -48,7 +48,7 @@ class MessageDeserializer {
         response_t getEventBackgroundUpdate(Socket *socket, Event* &event);
         response_t getEventUserShoot(Socket *socket, Event *event);
         response_t getEventUserChangeMode(Socket *socket, Event *event);
-        response_t getEventMusicUpdate(Socket *socket, Event *event);
+        response_t getEventMusicUpdate(Socket *socket, Event *&event);
         response_t getEventScoreUpdate(Socket *socket, Event *event);
         response_t getEventGameOver(Socket *socket, Event* &event);
         
