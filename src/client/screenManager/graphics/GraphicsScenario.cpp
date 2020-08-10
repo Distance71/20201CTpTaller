@@ -37,6 +37,7 @@ void GraphicsScenario::update(layer_t layer, int step){
 
     SDL_Renderer *renderer = GameProvider::getRenderer();
     auto iter = sprites_.find(layer);
+    
     if (iter!=sprites_.end()){
         SDL_Texture* layerTexture = iter->second->getTexture();
 

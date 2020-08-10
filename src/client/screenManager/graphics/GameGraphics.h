@@ -16,6 +16,7 @@
 #include "../../../common/models/BlockingQueue.h"
 #include "../../audio/Audio.h"
 #include "GraphicsScoreBoard.h"
+#include <stdexcept>  
 
 class GameGraphics {
 

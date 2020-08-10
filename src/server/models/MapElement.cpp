@@ -247,7 +247,7 @@ position_t MapElement::getActualPosition(){
         actualPosition.orientation = (orientation_t) orientation->getX();
     }
     catch(const std::out_of_range& oor) {
-        cout << "Error getActualPosition" << endl;    
+        std::cerr << "Out of Range error in MapElement getActualPosition: " << oor.what() << '\n'; 
     }
     return actualPosition;
 }
@@ -402,6 +402,7 @@ unordered_map<Id,MapElement*> MapElement::getShoots(){
 };
 
 void MapElement::eraseProjectile(Id id){
+    
     try {
         MapElement* deadProjectile = this->projectiles_.at(id);
         this->projectiles_.erase(id);
@@ -409,7 +410,7 @@ void MapElement::eraseProjectile(Id id){
     }
     
     catch (const std::out_of_range& oor){
-        cout << "se levanta violacion de segmento al eliminar projectil con id"<<id << endl;
+        std::cerr << "Out of Range error in MapElement eraseProjectile: " << oor.what() << '\n';
     }
 }
 

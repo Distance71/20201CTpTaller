@@ -293,6 +293,7 @@ void Stage::updateBackground(Game *game, stage_t stage){
         }
     } 
     catch(const std::out_of_range& oor){
+        std::cerr << "Out of Range error in map UpdateBackground: " << oor.what() << '\n';
     }
 }
 
@@ -346,7 +347,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             delete deadEnemy;
         }
         catch(const std::out_of_range& oor){
-            continue;
+            std::cerr << "Out of Range error in step update " << oor.what() << '\n';
         }
     }
 
@@ -383,7 +384,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             this->mapElements_.erase(IdDead);
             delete deadEnemy;
         } catch(const std::out_of_range& oor){
-            continue;
+            std::cerr << "Out of Range error: " << oor.what() << '\n';
         }
     }
     
@@ -509,7 +510,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             this->mapElements_.erase(IdDead);
             delete deadEnemy;
         } catch(const std::out_of_range& oor) {
-
+            std::cerr << "Out of Range error in step update: " << oor.what() << '\n';
         }
         
     }

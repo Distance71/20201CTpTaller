@@ -130,21 +130,24 @@ void GameGraphics::updateEntity(elementType_t type, position_t position){
         SDL_RenderClear(this->renderer_);
     }
     else{
-        auto iter = this->elements_.find(type);
-        if (iter != this->elements_.end()){
+        try{
             this->elements_[type]->update(position);
         }
+        catch (const std::out_of_range& oor){
+            std::cerr << "Out of Range error in GameGraphics UpdateEntity " << oor.what() << '\n';
+        }     
     }          
 }
 
 
 void GameGraphics::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
-    auto iter = this->scenaries_.find(stage); 
-    if (iter != this->scenaries_.end()){
+    try{
         this->scenaries_[stage]->update(layer,step);
-    }          
+    }
+    catch (const std::out_of_range& oor){
+        std::cerr << "Out of Range error in GameGraphics updateBackgroundLayer: " << oor.what() << '\n';
+    }               
 }
-
 
 void GameGraphics::setImage(sceneScreen_t scene){
     usleep(100000);
@@ -159,9 +162,12 @@ void GameGraphics::setImage(sceneScreen_t scene){
     }   
     
     else{
-        auto iter = this->scenes_.find(scene);
-        if ( iter != this->scenes_.end())
+        try{
             this->scenes_[scene]->update(position);
+        }
+        catch (const std::out_of_range& oor){
+            std::cerr << "Out of Range in GameGraphics setImage " << oor.what() << '\n';
+        }
     } 
     SDL_RenderPresent(this->renderer_);
 }
