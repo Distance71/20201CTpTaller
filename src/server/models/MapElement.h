@@ -116,7 +116,7 @@ class MapElement {
         Id getIdElement();
         bool leftScreen();
         bool checkCollision(MapElement* mapElement);
-        void attackTo(MapElement* mapElement);
+        bool attackTo(MapElement* mapElement);
         /*void checkPlayerProyectileToEnemiesCollisions(unordered_map<Id, MapElement*> mapElements, MapElement* projectile);
         void checkEnemyToPlayersCollisions(unordered_map<string, MapElement*> players);
         void checkEnemyProyectileToPlayersCollisions(unordered_map<string, MapElement*> players, MapElement* projectile);

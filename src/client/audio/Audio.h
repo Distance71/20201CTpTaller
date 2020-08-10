@@ -10,15 +10,29 @@ class Audio {
 
 private:
 	//The sound effects that will be used
-	Mix_Chunk *explosion = NULL;
-	Mix_Chunk *laser1 = NULL;
-	Mix_Chunk *laser2 = NULL;
+	Mix_Chunk *explosionEnemy = NULL;
+	Mix_Chunk *shotImpacts = NULL;
+	Mix_Chunk *enemyShot = NULL;
+
+	Mix_Chunk *playerShot = NULL;
+	Mix_Chunk *explosionPlayer = NULL;
+	Mix_Chunk *shotImpactsPlayer = NULL;
+
+	Mix_Chunk *explosionBoss = NULL;
+	Mix_Chunk *bossShot = NULL;
+	Mix_Chunk *shotImpactsBoss = NULL;
+
+	// Mix_Chunk *stageOne = NULL;
+	// Mix_Chunk *stageTwo = NULL;
+	// Mix_Chunk *stageThree = NULL;
+	// Mix_Chunk *stageFour = NULL;
 
 	static Audio* instance;
 	Mix_Music* mixMusicSDL;
 	bool isPaused = false;
 	bool isInitMusic = false;
-	static const int VOLUME_DEFAULT = 80;
+	static const int VOLUME_DEFAULT = 60;
+	static const int VOLUME_SOUNDS_DEFAULT = 110;
 
 	Audio(int volumen);
 
@@ -26,7 +40,7 @@ public:
 	static Audio* getInstance();
 	void setSong(const std::string& path);
 	void playMusic();
-	void playEffect(soundType_t soundType);
+	void playEffect(musicType_t musicType);
 	void pause();
 	void stop();
 	void gradualStop(int milisegundos);

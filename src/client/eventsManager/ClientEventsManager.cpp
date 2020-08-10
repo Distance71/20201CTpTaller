@@ -122,15 +122,12 @@ static void * detectPlayerEvents(void* arg){
         if (godMode && canBeGod)
         {
             client->sendMessage(new MessageUserChangeMode());
-            //client->sendMessage(new Messagexxx());
             canBeGod = false;
         }  
 
         if (shoot && canShoot){
             client->sendMessage(new MessageUserShoot());
             canShoot = false;
-            //TODO es prueba no va aca (todos los player tienen q escuchar el sonido)
-            Audio::getInstance()->playEffect(LASER_1); 
         }
 
         // Si Space no esta presionada, le habilitamos poder dispara en proximo ciclo
@@ -156,22 +153,6 @@ void ClientEventsManager::RunDetectPlayerEventsThread(){
     pthread_t detect_player_events_thread;
     pthread_create(&detect_player_events_thread, NULL, detectPlayerEvents, this);
 }
-
-
-/*static void* processEvents(void * arg){
-    ClientEventsManager* eventsManager = (ClientEventsManager*) arg;
-    Client * client = eventsManager->getClient();
-    while(client->isConnected()){
-        Event* event = eventsManager->getEvent();
-        if (event){
-            event->setContext(client);
-            event->update();
-            delete event;
-        }
-    }
-    return nullptr;
-}*/
-
 
 void ClientEventsManager::RunProcessEventsThread(){
     Logger::getInstance()->log(DEBUG, "Se inicializa hilo de proceso de eventos");

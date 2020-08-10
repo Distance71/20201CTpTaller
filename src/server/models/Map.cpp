@@ -300,13 +300,14 @@ void Stage::updateBackground(Game *game, stage_t stage){
 void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
     size_t actualStep = currentStep.step;
     updateBackground(game, currentStep.stage);
+    //game->sendEvent(new EventMusicUpdate((musicType_t) currentStep.stage));
     steps_[actualStep]->update(game, players);
 }
 
 void Step::update(Game *game, unordered_map<string, MapElement*> players){
     vector <Id> enemiesDead;
     vector <Id> projectilesDead;
-    
+
     //Actualizo posiciones de los jugadores
     for(auto player : players){
 
@@ -360,6 +361,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         for(auto enemy :this->mapElements_){
             bool isCollision = player.second->checkCollision(enemy.second);
             if(isCollision){
+                game->sendEvent(new EventMusicUpdate(EXPLOSION_ENEMY));
                 killElementWithExplosion(game,enemy.second);
                 killElementWithExplosion(game,player.second);
                 enemiesDead.push_back(enemy.first);
@@ -367,6 +369,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                 player.second->quitLives();
 
                 if (player.second->isDead()){
+                    game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                     killElementWithExplosion(game,player.second);
 
                     game->sendEventToUser(player.first, new EventGameOver());
@@ -445,13 +448,14 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
            for (auto projectile: projectiles){
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
-                    
+                    game->sendEvent(new EventMusicUpdate(SHOT_IMPACTS_PLAYER));
                     projectilesDead.push_back(projectile.first);
                 
                     // Le quitamos vida a player
                     enemy.second->attackTo(player.second);
 
                     if (player.second->isDead()){
+                        game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                         killElementWithExplosion(game,player.second);
                         game->sendEventToUser(player.first, new EventGameOver());
                     }
@@ -479,13 +483,14 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                 
                 bool collision =enemy.second->checkCollision(projectile.second);
                 if (collision){
-                    
+                    game->sendEvent(new EventMusicUpdate(SHOT_IMPACTS));
                     projectilesDead.push_back(projectile.first);
 
                     // Le quitamos vida a enemy y suma puntajes al player
                     player.second->attackTo(enemy.second);
 
                     if (enemy.second->isDead()){
+                        game->sendEvent(new EventMusicUpdate(EXPLOSION_ENEMY));
                         enemiesDead.push_back(enemy.first);
                         killElementWithExplosion(game,enemy.second);
                     }
@@ -762,12 +767,15 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
             bool isBossDead = finalBoss->reduceHealth(50);
 
             if (isBossDead){
+                game->sendEvent(new EventMusicUpdate(EXPLOSION_BOSS));
                 killElementWithExplosion(game, finalBoss);
+                usleep(2000000);
             }
 
             player.second->quitLives();
 
             if (player.second->isDead()){
+                game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                 killElementWithExplosion(game,player.second);
                 game->sendEventToUser(player.first, new EventGameOver());
             }
@@ -831,11 +839,13 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
                     projectilesDead.push_back(projectile.first);
+                    game->sendEvent(new EventMusicUpdate(SHOT_IMPACTS_BOSS));
                 
                     // Le quitamos vida a player
                     finalBoss->attackTo(player.second);
 
                     if (player.second->isDead()){
+                        game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                         killElementWithExplosion(game,player.second);
                         game->sendEventToUser(player.first, new EventGameOver());
                     }
@@ -856,10 +866,18 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
         for (auto projectile : projectiles){
             bool collision = finalBoss->checkCollision(projectile.second);
             if (collision){
+                game->sendEvent(new EventMusicUpdate(SHOT_IMPACTS));
                 projectilesDead.push_back(projectile.first);
 
                 // Le quitamos vida al jefe y suma puntajes al player
-                player.second->attackTo(finalBoss);
+                bool isBossDead = player.second->attackTo(finalBoss);
+
+                // Como resolver que pasa con el Jefe Final
+                if (isBossDead){
+                    game->sendEvent(new EventMusicUpdate(EXPLOSION_BOSS));
+                    killElementWithExplosion(game, finalBoss);
+                    usleep(2000000);
+                }
             }
         }
 

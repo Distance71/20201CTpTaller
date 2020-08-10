@@ -20,6 +20,7 @@
 #include "../../models/messages/MessageUserMovement.h"
 #include "../../models/messages/MessageUserChangeMode.h"
 #include "../../models/messages/MessageBackgroundUpdate.h"
+#include "../../models/messages/MessageMusicUpdate.h"
 #include "../../models/messages/MessageScoreUpdate.h"
 #include "../../models/messages/MessageGameOver.h"
 
@@ -47,6 +48,7 @@ class MessageDeserializer {
         response_t getEventBackgroundUpdate(Socket *socket, Event* &event);
         response_t getEventUserShoot(Socket *socket, Event *event);
         response_t getEventUserChangeMode(Socket *socket, Event *event);
+        response_t getEventMusicUpdate(Socket *socket, Event *&event);
         response_t getEventScoreUpdate(Socket *socket, Event *event);
         response_t getEventGameOver(Socket *socket, Event* &event);
         
@@ -61,6 +63,7 @@ class MessageDeserializer {
         response_t getElementType(Socket *socket, elementType_t &elementType);
         response_t getLayer(Socket *socket, layer_t &layer);
         response_t getStage(Socket *socket, stage_t &stage);
+        response_t getMusicType(Socket *socket, musicType_t &musicType);
     public:
         response_t getReceivedMessage(Socket *socket, Event* &event);
 };

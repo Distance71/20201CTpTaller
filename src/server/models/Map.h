@@ -14,6 +14,7 @@
 #include "PlayerController.h"
 #include "../../common/types.h"
 #include "MapElementBackground.h"
+#include "../../common/models/events/EventMusicUpdate.h"
 
 #include "../../common/services/RandomGenerate.h"
 #include "../../common/models/events/Event.h"

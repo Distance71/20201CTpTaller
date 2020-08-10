@@ -157,6 +157,20 @@ response_t MessageSerializer::sendMessageUserChangeMode(Socket *socket, Message 
     return this->_handleSuccess(); 
 };
 
+response_t MessageSerializer::sendMessageMusicUpdate(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje MusicUpdate.");
+    musicType_t musicType = ((MessageMusicUpdate *) message)->getMusicType();
+
+    response_t responseMusic = this->sendMusicType(socket, musicType);
+
+    if(!responseMusic.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en musicUpdate.");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se envio musicUpdate con exito.");
+    return this->_handleSuccess();
+}
+
 response_t MessageSerializer::sendMessageScoreUpdate(Socket *socket, Message *message){
 
     Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje ScoreUpdate.");
@@ -192,6 +206,21 @@ response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t 
 
     if (socket->sendMessage(s, sizeof(responseStatus_t)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de integer.");
+        return this->_handleErrorStatus();
+    }
+
+    return this->_handleSuccess();
+}
+
+response_t MessageSerializer::sendMusicType(Socket *socket, musicType_t &type){
+    stringstream s;
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje musicType.");
+
+    s << type;
+
+    if (socket->sendMessage(s, sizeof(musicType_t)) <= 0){
+        Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el mensaje de musicType.");
         return this->_handleErrorStatus();
     }
 
@@ -367,7 +396,6 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
     response_t response = this->sendMessageType(socket, type);
 
     if(!response.ok){
-    
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el tipo de mensaje");
     }
 
@@ -404,6 +432,9 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
 
         case USER_CHANGE_MODE:
             return this->sendMessageUserChangeMode(socket, message);
+
+        case MUSIC_UPDATE:
+            return this->sendMessageMusicUpdate(socket, message);
 
         case SCORE_UPDATE:
             return this->sendMessageScoreUpdate(socket, message);

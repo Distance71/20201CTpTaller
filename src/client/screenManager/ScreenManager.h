@@ -15,6 +15,7 @@
 #include "graphics/GameGraphics.h"
 #include "../common/types.h"
 #include "../common/models/Sprite.h"
+#include "../audio/Audio.h"
 
 class Client;
 class GraphicsMenu;
@@ -45,6 +46,7 @@ class ScreenManager{
         bool initializeGraphics();
         void viewLogin();
         void updateEntity(elementType_t type, position_t position);
+        void updateMusic(musicType_t type);
         void updateBackgroundLayer(layer_t layer, stage_t stage, int step);
         void setImage(sceneScreen_t scene);
         void setLoginResponse(responseStatus_t response);
