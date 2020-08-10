@@ -51,6 +51,9 @@ class MapElement {
 
         int score_;
 
+        bool isTemporaryImmune_;
+        int countImmune_;
+
         gameMode_t gameMode_;
 
         vector<Action *> getActions();
@@ -59,6 +62,9 @@ class MapElement {
         void shootNormal(projectile_t projectileData);
         void shootBoss(projectile_t projectileData);
         
+        bool isImmune();
+        void setTemporaryImmunity();
+        void quitTemporaryImmunity();
 
     public:
         MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y, int health, int lives=1);
@@ -81,6 +87,8 @@ class MapElement {
         int getSizeX();
         int getSizeY();
         bool isDead();
+        bool isDisconnected();
+        bool shouldGraphed();
 
         int getDamage();
         int getScoreWhenKilled();

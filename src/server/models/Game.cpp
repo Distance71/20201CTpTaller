@@ -66,7 +66,8 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     this->sendStartStage(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
-
+    this->map_->cleanStage();
+    
     Logger::getInstance()->log(DEBUG, "Se comienza el stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantitySteps; i++){
         actualStep.step = i;
@@ -159,9 +160,13 @@ void Game::sendStageCleared(stage_t stage){
             break;
     }
 
-    Event* event = new EventSceneAnimation(sceneScreen);
-    this->sendEvent(event);
+    Event* event1 = new EventSceneAnimation(sceneScreen);
+    this->sendEvent(event1);
     usleep(3000000);//3 seg;
+
+    Event* event2 = new EventSceneAnimation(SCORE_TABLE);
+    this->sendEvent(event2);
+    usleep(5000000);
     
 }
 
@@ -181,6 +186,10 @@ void Game::sendEvent(Event *event){
     this->serverOwn_->sendToAllUsers(event);
 }
 
+void Game::sendEventToUser(string username, Event* event){
+    this->serverOwn_->sendToUserForUsername(username, event);
+}
+
 void Game::informDisconnection(string username){
     Logger::getInstance()->log(DEBUG, "Se informa desconexion en Game");
     this->map_->informDisconnection(username);
@@ -190,3 +199,4 @@ void Game::informConnection(string username){
     Logger::getInstance()->log(DEBUG, "Se informa conexion en Game");
     this->map_->informConnection(username);
 }
+

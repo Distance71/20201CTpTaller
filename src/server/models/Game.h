@@ -48,6 +48,7 @@ class Game {
     void changeGameModePlayer(string user);
     void shootPlayer(string user);
     void sendEvent(Event *event);
+    void sendEventToUser(string username, Event* event);
     Map* getMap();
 
     void informDisconnection(string user); 

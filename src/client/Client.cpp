@@ -131,6 +131,11 @@ void Client::endGame(){
     this->disconnect();
 }
 
+void Client::gameOver(){
+    this->endGame_ = true;
+    this->screenManager_->setImage(GAME_OVER_ANIMATION);
+    this->disconnect();
+}
 
 void Client::processEvent(Event* event){
     this->eventsManager_->pushBackEvent(event);
@@ -147,4 +152,8 @@ void Client::ServerDisconnection(){
 
 void Client::runDetectEventThread(){
     this->eventsManager_-> RunDetectPlayerEventsThread();
+}
+
+void Client::updateScore(elementType_t player,unsigned int lives,int health,int score){
+    this->screenManager_->updateScore(player,lives,health,score);
 }

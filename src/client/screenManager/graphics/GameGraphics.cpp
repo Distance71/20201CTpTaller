@@ -7,7 +7,6 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->createElements();
     this->createScenes();
     this->createScenarios();
-    this->graphicsQueue_ = new BlockingQueue<elementToGraphic_t>();
     this->scoreBoard_ = new GraphicsScoreBoard();
 }
 
@@ -19,6 +18,8 @@ GameGraphics::~GameGraphics(){
         delete this->image_;
     for(auto element:this->elements_)
         delete element.second;
+
+    delete this->scoreBoard_;
 
     Logger::getInstance()->log(INFO, "Se liberan los recursos utilizados para los gŕaficos del juego");
 }
@@ -101,6 +102,7 @@ void GameGraphics::createScenes(){
     this->scenes_[END_GAME_ANIMATION] = new GraphicsMapElement(informationScreen.endGame, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[WAITING_PLAYERS] = new GraphicsMapElement(informationScreen.waitingPlayers, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[SERVER_DISCONNECTION] = new GraphicsMapElement(informationScreen.disconnection, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
+    this->scenes_[GAME_OVER_ANIMATION] = new GraphicsMapElement(informationScreen.gameOver, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
 
 }
 
@@ -151,13 +153,17 @@ void GameGraphics::setImage(sceneScreen_t scene){
     position.axis_x= 0;
     position.axis_y= 0;
     position.orientation= FRONT;
- 
-    auto iter = this->scenes_.find(scene);
-    if ( iter != this->scenes_.end()){
-        this->scenes_[scene]->update(position);
-        SDL_RenderPresent(this->renderer_);
-    }
     
+    if (scene == SCORE_TABLE){
+        this->scoreBoard_->showScores();
+    }   
+    
+    else{
+        auto iter = this->scenes_.find(scene);
+        if ( iter != this->scenes_.end())
+            this->scenes_[scene]->update(position);
+    } 
+    SDL_RenderPresent(this->renderer_);
 }
 
 void GameGraphics::setAudio(sceneScreen_t scene){
@@ -184,4 +190,8 @@ void GameGraphics::setAudio(sceneScreen_t scene){
     default:
         break;
     }
+}
+
+void GameGraphics::updateScore(elementType_t player,unsigned int lives,int health,int score){
+    this->scoreBoard_->updateScore(player,lives,health,score);
 }

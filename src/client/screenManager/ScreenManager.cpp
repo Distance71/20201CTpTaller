@@ -23,6 +23,11 @@ ScreenManager::~ScreenManager(){
         Logger::getInstance()->log(DEBUG, "Se destruye el menu");
         delete this->menu_;
     }
+    if (this->gameGraphics_){
+        Logger::getInstance()->log(DEBUG, "Se destruyen los graficos");
+        delete this->gameGraphics_;
+    }
+
 }
 
 
@@ -229,10 +234,12 @@ void ScreenManager::viewLogin(){
     pthread_create(&viewLogin, NULL, viewLoginThread, this);
 }
 
-
-
 void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage(END_GAME_ANIMATION);
+}
+
+void ScreenManager::viewGameOverScreen(){
+    this->gameGraphics_->setImage(GAME_OVER_ANIMATION);
 }
 
 Client* ScreenManager::getClient(){
@@ -246,4 +253,8 @@ SDL_Renderer* ScreenManager::getRenderer(){
 
 void ScreenManager::ServerDisconnection(){
     this->gameGraphics_->setImage(SERVER_DISCONNECTION);
+}
+
+void ScreenManager::updateScore(elementType_t player,unsigned int lives,int health,int score){
+    this->gameGraphics_->updateScore(player,lives,health,score);
 }

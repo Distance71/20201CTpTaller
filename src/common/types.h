@@ -57,6 +57,7 @@ typedef enum message {
     USER_SHOOT = 9,
     USER_CHANGE_MODE = 10,
     SCORE_UPDATE = 11,
+    GAME_OVER = 12,
 } message_t;
 
 typedef enum {
@@ -216,7 +217,8 @@ typedef enum {
     END_GAME_ANIMATION = 10,
     WAITING_PLAYERS = 11,
     SERVER_DISCONNECTION = 12,
-    GAME_OVER = 13 
+    GAME_OVER_ANIMATION = 13,
+    SCORE_TABLE = 14,
 } sceneScreen_t;
 
 typedef size_t Id;
@@ -317,5 +319,12 @@ typedef struct {
     int yInit;
     int yEnd;
 }gameZone_t;
+
+typedef struct{
+    elementType_t playerImage;
+    unsigned int lives;
+    int health;
+    int score;
+} playerState_t;
 
 #endif

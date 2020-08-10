@@ -29,6 +29,7 @@ class UsersManager {
         void processEvent(Event* event);
         void sendEventToNotLoggedUser(Id id, Event* event);
         void sendEventToAllLogged(Event* event);
+        void sendEventToOneUserLogged(string username, Event* event);
         responseStatus_t loginRequest(Id id,string username,string password);
         void runAcceptUsersThread();  
         void acceptUser();
@@ -37,6 +38,7 @@ class UsersManager {
         void informConnection(string user);
         BlockingQueue <Message*> * getQueue();
         void sendToAll(Message* message);
+        
 };
 
 #endif 

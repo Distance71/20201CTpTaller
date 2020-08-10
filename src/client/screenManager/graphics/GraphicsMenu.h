@@ -44,6 +44,7 @@ class GraphicsMenu {
         void update(int x,int y, bool update);
         void sendCredentialsMessage();
         
+        
 };
 
 #endif

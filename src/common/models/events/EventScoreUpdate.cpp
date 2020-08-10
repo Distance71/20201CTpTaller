@@ -10,8 +10,8 @@ void EventScoreUpdate::update(){
     }
     else{
       Client * client = (Client*) Event::context_;
-      std::cout << "PLAYER " << this->typePlayer_ << " - LIVES: " << this->lives_ << " - HEALTH: " << this->health_ << " - SCORE: " << this->score_ << std::endl;
-      
+      client->updateScore(this->typePlayer_,this->lives_,this->health_, this->score_);
+   
       //client ->updateBackgroundLayer(this->lives_, this->health_);
       Logger::getInstance()->log(DEBUG, "Se ejecutó el evento ScoreUpdate");
     }

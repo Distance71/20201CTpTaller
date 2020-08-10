@@ -35,6 +35,7 @@ class ScreenManager{
         bool initGraphicsMenu();
         bool initSDL();
         bool initGameGraphics();
+        
 
 
     public:
@@ -49,10 +50,12 @@ class ScreenManager{
         void setLoginResponse(responseStatus_t response);
         void stopWaiting();
         void viewEndGameScreen();
+        void viewGameOverScreen();
         Client* getClient();
         SDL_Renderer* getRenderer();
         void ServerDisconnection();
         GraphicsMenu* getGraphicsMenu();
+        void updateScore(elementType_t player,unsigned int lives,int health,int score);
 };
 
 #endif

@@ -49,6 +49,11 @@ response_t MessageSerializer::sendMessageGameInit(Socket *socket, Message *messa
     return this->_handleSuccess();
 }
 
+response_t MessageSerializer::sendMessageGameOver(Socket *socket, Message *message){
+    Logger::getInstance()->log(DEBUG, "Se envio GameOver con exito.");
+    return this->_handleSuccess();
+}
+
 response_t MessageSerializer::sendMessageLog(Socket *socket, Message *message){
     Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje Log.");
     size_t level = ((MessageLog *) message)->getLevel();
@@ -322,7 +327,7 @@ response_t MessageSerializer::sendUInt(Socket *socket, unsigned int size){
 
     Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje unsigned entero");
 
-    cout << "El valor que se va a pasar " << size << endl;
+    //cout << "El valor que se va a pasar " << size << endl;
 
     s << size;
 
@@ -400,6 +405,9 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
 
         case SCORE_UPDATE:
             return this->sendMessageScoreUpdate(socket, message);
+
+        case GAME_OVER:
+            return this->sendMessageGameOver(socket, message);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");
