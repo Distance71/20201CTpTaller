@@ -10,7 +10,7 @@ void EventScoreUpdate::update(){
     }
     else{
       Client * client = (Client*) Event::context_;
-      client->updateScore(this->typePlayer_,this->lives_,this->health_, this->scoreCurrent_,this->scoreAcc_);
+      client->updateScore(this->typePlayer_,this->lives_,this->health_, this->scoreCurrent_ * 500,this->scoreAcc_ * 500);
       Logger::getInstance()->log(DEBUG, "Se ejecutó el evento ScoreUpdate");
     }
 }
