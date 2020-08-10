@@ -66,7 +66,8 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     this->sendStartStage(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
-
+    this->map_->cleanStage();
+    
     Logger::getInstance()->log(DEBUG, "Se comienza el stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantitySteps; i++){
         actualStep.step = i;
@@ -88,7 +89,7 @@ void Game::runStep(currentStep_t actualStep){
     srand(time(NULL));
     map_->setTargetsForStep(actualStep, this);
 
-    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep)){
+    while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep) && this->map_->playerAlive()){
         updateState(actualStep);
         usleep(18000);
     }
@@ -102,7 +103,7 @@ void Game::runFinal(){
 
     Logger::getInstance()->log(DEBUG, "Se comienza round con Boss");
 
-    while(GameProvider::getStatus().normalStatus && !this->map_->endFinal()){
+    while(GameProvider::getStatus().normalStatus && !this->map_->endFinal() && this->map_->playerAlive()){
         map_->updateFinal(this);
         usleep(18000);
     }
@@ -179,6 +180,10 @@ void Game::shootPlayer(string user){
 
 void Game::sendEvent(Event *event){
     this->serverOwn_->sendToAllUsers(event);
+}
+
+void Game::sendEventToUser(string username, Event* event){
+    this->serverOwn_->sendToUserForUsername(username, event);
 }
 
 void Game::informDisconnection(string username){

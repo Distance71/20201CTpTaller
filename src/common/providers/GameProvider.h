@@ -52,6 +52,7 @@ namespace GameProvider {
     void setQuantityPlayers(size_t quantityPlayers);
     size_t getWidth();
     size_t getHeight();
+    gameZone_t getGameZone();
     size_t getQuantityPlayers();
     float getElaptedTimeFPS();
     unordered_map<layer_t, size_t> getLayersSpeeds(); //Possible refactor if add more levels

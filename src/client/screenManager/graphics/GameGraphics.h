@@ -15,7 +15,7 @@
 #include "../../../common/services/Logger.h"
 #include "../../../common/models/BlockingQueue.h"
 #include "../../audio/Audio.h"
-
+#include "GraphicsScoreBoard.h"
 
 class GameGraphics {
 
@@ -27,6 +27,8 @@ class GameGraphics {
         GraphicsMapElement* image_;
         std::mutex mutex;
         BlockingQueue<elementToGraphic_t>* graphicsQueue_;
+        GraphicsScoreBoard* scoreBoard_;
+        
 
         void createScenes();
         void createElements();

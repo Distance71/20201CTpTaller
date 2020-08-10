@@ -23,7 +23,7 @@ void BossIA::update(unordered_map<string, State *> states_){
     int new_yp;
 
     // Si todavia no aparece completo en pantalla, se setea nueva posicion en X, si no no hace nada en el eje X
-    if (xp > (GameProvider::getWidth() - this->owner_->getSizeX())){
+    if (xp > (GameProvider::getWidth() - this->owner_->getSizeX() - 230)){
         new_xp = xp - xs;
         position->setX(new_xp);
     }

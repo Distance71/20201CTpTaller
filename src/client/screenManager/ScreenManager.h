@@ -11,13 +11,13 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_mixer.h"
-#include "loginMenu/Menu.h"
+#include "graphics/GraphicsMenu.h"
 #include "graphics/GameGraphics.h"
 #include "../common/types.h"
 #include "../common/models/Sprite.h"
 
 class Client;
-class Menu;
+class GraphicsMenu;
 
 class ScreenManager{
    
@@ -28,11 +28,11 @@ class ScreenManager{
         int screenHeight_;
         SDL_Window* window_;
         SDL_Renderer* renderer_;
-        Menu* menu_;
+        GraphicsMenu* menu_;
         GameGraphics* gameGraphics_;
         Sprite* loading_;
 
-        bool initMenu();
+        bool initGraphicsMenu();
         bool initSDL();
         bool initGameGraphics();
 
@@ -44,16 +44,17 @@ class ScreenManager{
         bool initializeGraphics();
         void viewLogin();
         void updateEntity(elementType_t type, position_t position);
-        void updateMusic(soundType_t type);
+        void updateMusic(musicType_t type);
         void updateBackgroundLayer(layer_t layer, stage_t stage, int step);
         void setImage(sceneScreen_t scene);
         void setLoginResponse(responseStatus_t response);
         void stopWaiting();
         void viewEndGameScreen();
+        void viewGameOverScreen();
         Client* getClient();
         SDL_Renderer* getRenderer();
         void ServerDisconnection();
-        Menu* getMenu();
+        GraphicsMenu* getGraphicsMenu();
 };
 
 #endif

@@ -71,6 +71,21 @@ response_t MessageDeserializer::getEventGameInit(Socket *socket, Event* &event){
     return this->_handleSuccess();
 };
 
+response_t MessageDeserializer::getEventGameOver(Socket *socket, Event* &event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento GameOver en Deserializer");
+
+    MessageGameOver *message = new MessageGameOver();
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento GameOver");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento GameOver en Deserializer");
+
+    return this->_handleSuccess();
+}
+
 response_t MessageDeserializer::getEventLog(Socket *socket, Event* &event){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un evento Log en Deserializer");
     size_t level;
@@ -221,13 +236,13 @@ response_t MessageDeserializer::getEventUserChangeMode(Socket *socket, Event *ev
 
 response_t MessageDeserializer::getEventMusicUpdate(Socket *socket, Event *event){
     Logger::getInstance()->log(DEBUG, "Se va a recibir un evento MusicUpdate en Deserializer");
-    soundType_t musicType;
+    musicType_t musicType;
 
     this->getMusicType(socket, musicType);
 
     Message *message = new MessageMusicUpdate(musicType);
     event = message->deSerialize();
-    
+
     if(!event){
         Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento MusicUpdate");
         return this->_handleErrorStatus();
@@ -236,6 +251,30 @@ response_t MessageDeserializer::getEventMusicUpdate(Socket *socket, Event *event
     Logger::getInstance()->log(DEBUG, "Se ha recibido un evento MusicUpdate en Deserializer");
     return this->_handleSuccess();
 }
+
+response_t MessageDeserializer::getEventScoreUpdate(Socket *socket, Event *event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento ScoreUpdate en Deserializer");
+    
+    elementType_t type;
+    unsigned int lives;
+    int health, score;
+
+    this->getElementType(socket, type);
+    this->getUInteger(socket, lives);
+    this->getInteger(socket, health);
+    this->getInteger(socket, score);
+    
+    Message *message = new MessageScoreUpdate(type, lives, health, score);
+    event = message->deSerialize();
+    
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento ScoreUpdate");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se recibio un evento ScoreUpdate en Deserializer");
+
+    return this->_handleSuccess();
+};
 
 response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     stringstream s;
@@ -414,18 +453,18 @@ response_t MessageDeserializer::getStage(Socket *socket, stage_t &stage){
     stage = (stage_t) atoi(msg.c_str());
 };
 
-response_t MessageDeserializer::getMusicType(Socket *socket, soundType_t &soundType){
+response_t MessageDeserializer::getMusicType(Socket *socket, musicType_t &soundType){
     stringstream s;
 
     Logger::getInstance()->log(DEBUG, "Se va a recibir un tipo de mensaje musicType");
 
-    if (socket->receiveMessage(s, sizeof(soundType_t)) <= 0){
+    if (socket->receiveMessage(s, sizeof(musicType_t)) <= 0){
         Logger::getInstance()->log(ERROR, "Se ha producido un error al recibir el mensaje de musicType.");
         return this->_handleErrorStatus();
     }
 
     string msg = s.str();
-    soundType = (soundType_t) atoi(msg.c_str());
+    soundType = (musicType_t) atoi(msg.c_str());
 };
 
 response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event){
@@ -478,11 +517,28 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
             Message *message = new MessageUserChangeMode();
             event = message->deSerialize();
             return this->_handleSuccess();
-            // return this->getEventUserShoot(socket, event);
         }
 
         case MUSIC_UPDATE:
             return this->getEventMusicUpdate(socket, event);
+
+        case SCORE_UPDATE:{
+            elementType_t type;
+            unsigned int lives;
+            int health, score;
+
+            this->getElementType(socket, type);
+            this->getUInteger(socket, lives);
+            this->getInteger(socket, health);
+            this->getInteger(socket, score);
+            
+            Message *message = new MessageScoreUpdate(type, lives, health, score);
+            event = message->deSerialize();
+            return this->_handleSuccess();
+        }
+
+        case GAME_OVER:
+            return this->getEventGameOver(socket, event);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");

@@ -57,6 +57,8 @@ typedef enum message {
     USER_SHOOT = 9,
     USER_CHANGE_MODE = 10,
     MUSIC_UPDATE = 11,
+    SCORE_UPDATE = 12,
+    GAME_OVER = 13,
 } message_t;
 
 typedef enum {
@@ -156,6 +158,10 @@ typedef enum {
     EXPLOSION_ANIMATION_9 = 24,
     EXPLOSION_ANIMATION_10 = 25,
     EXPLOSION_ANIMATION_11 = 26,
+    PLAYER_1_G = 27,
+    PLAYER_2_G = 28,
+    PLAYER_3_G = 29,
+    PLAYER_4_G = 30,
 } elementType_t;
 
 typedef enum {
@@ -166,7 +172,7 @@ typedef enum {
     EXPLOSION = 4,
     PLAYER_SHOT = 5,
     SHOT_IMPACTS = 6,
-} soundType_t;
+} musicType_t;
 
 typedef enum {
     MODE_NORMAL_GAME = 0,
@@ -215,7 +221,7 @@ typedef enum {
     END_GAME_ANIMATION = 10,
     WAITING_PLAYERS = 11,
     SERVER_DISCONNECTION = 12,
-    GAME_OVER = 13 
+    GAME_OVER_ANIMATION = 13 
 } sceneScreen_t;
 
 typedef size_t Id;
@@ -308,5 +314,12 @@ typedef struct {
     bool ok;
     responseStatus_t status;
 } response_t;
+
+typedef struct {
+    int xInit;
+    int xEnd;
+    int yInit;
+    int yEnd;
+}gameZone_t;
 
 #endif

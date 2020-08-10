@@ -8,6 +8,7 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->createScenes();
     this->createScenarios();
     this->graphicsQueue_ = new BlockingQueue<elementToGraphic_t>();
+    this->scoreBoard_ = new GraphicsScoreBoard();
 }
 
 
@@ -97,6 +98,7 @@ void GameGraphics::createScenes(){
     this->scenes_[END_GAME_ANIMATION] = new GraphicsMapElement(informationScreen.endGame, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[WAITING_PLAYERS] = new GraphicsMapElement(informationScreen.waitingPlayers, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
     this->scenes_[SERVER_DISCONNECTION] = new GraphicsMapElement(informationScreen.disconnection, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
+    this->scenes_[GAME_OVER_ANIMATION] = new GraphicsMapElement(informationScreen.gameOver, GameProvider::getWidth(), GameProvider::getHeight(), 0, 0, FRONT);
 
 }
 
@@ -119,6 +121,7 @@ void GameGraphics::createScenarios(){
 
 void GameGraphics::updateEntity(elementType_t type, position_t position){
    if (type == END_GRAPHIC){
+        this->scoreBoard_->update();
         SDL_RenderPresent(this->renderer_);
         SDL_RenderClear(this->renderer_);
     }

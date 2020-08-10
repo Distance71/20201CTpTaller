@@ -14,11 +14,9 @@ TextBox::TextBox(int _xpos, int _ypos ,int _button_width,int _button_height,cons
 }
 
 
-
 TextBox::~TextBox(){
     TTF_CloseFont(font);
 }
-
 
 
 void TextBox::setFont(const char* font_path,int size){
@@ -51,6 +49,14 @@ void TextBox::readInput(SDL_Event* e){
             text += e->text.text;
             substitution += "*";
         }
+    }
+}
+
+void TextBox::setText(string newtext){
+    this->text = newtext;
+    substitution= "";
+    for (int i=0; i<newtext.length();i++){
+        substitution += "*";
     }
 }
 

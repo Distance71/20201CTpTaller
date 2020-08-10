@@ -44,16 +44,18 @@ add_executable(tp1taller
         src/client/screenManager/graphics/GraphicsMapElement.h
         src/client/screenManager/graphics/GameGraphics.cpp
         src/client/screenManager/graphics/GameGraphics.h
+        src/client/screenManager/graphics/GraphicsScoreBoard.h
+        src/client/screenManager/graphics/GraphicsScoreBoard.cpp
         src/client/screenManager/ScreenManager.cpp
         src/client/screenManager/ScreenManager.h
-        src/client/screenManager/loginMenu/Button.h
-        src/client/screenManager/loginMenu/Button.cpp
-        src/client/screenManager/loginMenu/Menu.h
-        src/client/screenManager/loginMenu/Menu.cpp
-        src/client/screenManager/loginMenu/TextBox.h
-        src/client/screenManager/loginMenu/TextBox.cpp
-        src/client/screenManager/loginMenu/MenuElement.h
-        src/client/screenManager/loginMenu/MenuElement.cpp
+        src/client/screenManager/graphics/GraphicsMenu.h
+        src/client/screenManager/graphics/GraphicsMenu.cpp
+        src/client/screenManager/graphics/graphicElements/Button.h
+        src/client/screenManager/graphics/graphicElements/Button.cpp
+        src/client/screenManager/graphics/graphicElements/TextBox.h
+        src/client/screenManager/graphics/graphicElements/TextBox.cpp
+        src/client/screenManager/graphics/graphicElements/Image.h
+        src/client/screenManager/graphics/graphicElements/Image.cpp
 
         src/common/models/messages/Message.h
         src/common/models/messages/MessageGameInit.cpp
@@ -80,6 +82,10 @@ add_executable(tp1taller
         src/common/models/messages/MessageBackgroundUpdate.h
         src/common/models/messages/MessageMusicUpdate.cpp
         src/common/models/messages/MessageMusicUpdate.h
+        src/common/models/messages/MessageScoreUpdate.cpp
+        src/common/models/messages/MessageScoreUpdate.h
+        src/common/models/messages/MessageGameOver.cpp
+        src/common/models/messages/MessageGameOver.h
 
         src/common/models/Orientation.cpp
 		src/common/models/Orientation.h
@@ -123,6 +129,10 @@ add_executable(tp1taller
         src/common/models/events/EventEndGame.h
         src/common/models/events/EventMusicUpdate.cpp
         src/common/models/events/EventMusicUpdate.h
+        src/common/models/events/EventScoreUpdate.cpp
+        src/common/models/events/EventScoreUpdate.h
+        src/common/models/events/EventGameOver.cpp
+        src/common/models/events/EventGameOver.h
 
         src/common/providers/GameProvider.cpp
         src/common/providers/GameProvider.h

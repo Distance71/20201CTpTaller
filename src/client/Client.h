@@ -49,9 +49,10 @@ class Client {
         int waitForPlayers();
         void initGame(int Xsize, int Ysize);
         void endGame();
+        void gameOver();
         void ServerDisconnection();
         
-        //menu methods
+        //GraphicsGraphicsMe
         void setLoginResponse(responseStatus_t response);
         void setLoggedInStatus();
         bool isLoggedIn();
@@ -66,7 +67,7 @@ class Client {
         void setImage(sceneScreen_t scene);
         void setScreenSizes(int Xsize, int Ysize);
         void runDetectEventThread();
-        void updateMusic(soundType_t type);
+        void updateMusic(musicType_t type);
     };
 
 #endif

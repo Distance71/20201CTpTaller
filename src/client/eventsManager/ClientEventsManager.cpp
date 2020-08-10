@@ -157,22 +157,6 @@ void ClientEventsManager::RunDetectPlayerEventsThread(){
     pthread_create(&detect_player_events_thread, NULL, detectPlayerEvents, this);
 }
 
-
-/*static void* processEvents(void * arg){
-    ClientEventsManager* eventsManager = (ClientEventsManager*) arg;
-    Client * client = eventsManager->getClient();
-    while(client->isConnected()){
-        Event* event = eventsManager->getEvent();
-        if (event){
-            event->setContext(client);
-            event->update();
-            delete event;
-        }
-    }
-    return nullptr;
-}*/
-
-
 void ClientEventsManager::RunProcessEventsThread(){
     Logger::getInstance()->log(DEBUG, "Se inicializa hilo de proceso de eventos");
      while(this->clientOwn_->isConnected()){
@@ -180,7 +164,7 @@ void ClientEventsManager::RunProcessEventsThread(){
         if (event){
             event->setContext(this->clientOwn_);
             event->update();
-            delete event;
+            //delete event;
         }
     }
 }

@@ -14,10 +14,10 @@ using namespace std;
 class EventMusicUpdate: public Event {
 
 	private:
-		soundType_t elementType_;
+		musicType_t musicType_;
 
     public:
-    	EventMusicUpdate(soundType_t elementType): elementType_(elementType) {}
+    	EventMusicUpdate(musicType_t musicType): musicType_(musicType) {}
 
         Message* serialize();
         void update();

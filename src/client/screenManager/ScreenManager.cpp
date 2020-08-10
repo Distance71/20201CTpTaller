@@ -21,7 +21,7 @@ ScreenManager::~ScreenManager(){
     }
     if (this->menu_){
         Logger::getInstance()->log(DEBUG, "Se destruye el menu");
-        delete menu_;
+        delete this->menu_;
     }
 }
 
@@ -52,7 +52,7 @@ void ScreenManager::setScreenSizes(int Xsize, int Ysize){
 bool ScreenManager::initializeGraphics(){
     Logger::getInstance()->log(DEBUG, "Se inicializarán los graficos del juego con las dimensiones de pantalla preestablecidas");
     bool r1 = initSDL();
-    bool r2 = initMenu();
+    bool r2 = initGraphicsMenu();
     bool r3 = initGameGraphics();
     
     if(r1 && r2 && r3){
@@ -118,18 +118,18 @@ bool ScreenManager::initSDL(){
 }
 
 
-bool ScreenManager::initMenu(){
+bool ScreenManager::initGraphicsMenu(){
     
-    Logger::getInstance()->log(INFO, "Se creará el menu del juego");
+    Logger::getInstance()->log(INFO, "Se creará el Menu del juego");
 
-    this->menu_ = new Menu(this->clientOwn_);
+    this->menu_ = new GraphicsMenu(this->clientOwn_);
 
     if(!this->menu_){
-         Logger::getInstance()->log(ERROR, "No se pudo inicializar el menu.");
+         Logger::getInstance()->log(ERROR, "No se pudo inicializar el Menu.");
          return false;
     }
     else{
-        Logger::getInstance()->log(DEBUG, "El menu se creó correctamente.");
+        Logger::getInstance()->log(DEBUG, "El Menu se creó correctamente.");
     }
 
     return true;
@@ -163,8 +163,8 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
     }
 }
 
-void ScreenManager::updateMusic(soundType_t type){
-    Audio::getInstance()->playEffect(type);
+void ScreenManager::updateMusic(musicType_t type){
+    //Audio::getInstance()->playEffect(type);
 }
 
 void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
@@ -195,18 +195,18 @@ void ScreenManager::setLoginResponse(responseStatus_t response){
         this->menu_->setLoginResponse(response);
     }
     else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido cargar la respuesta en el menu, no se han inicializado graficos");
+        Logger::getInstance()->log(DEBUG, "No se ha podido cargar la respuesta en el GraphicsMenu, no se han inicializado graficos");
     } 
 }
 
-Menu* ScreenManager::getMenu(){
+GraphicsMenu* ScreenManager::getGraphicsMenu(){
     return this->menu_;
 }
 
 static void* viewLoginThread(void* arg){
     ScreenManager* screenManager = (ScreenManager*) arg;
     Client* client = screenManager->getClient();
-    Menu* menu = screenManager->getMenu();
+    GraphicsMenu* menu = screenManager->getGraphicsMenu();
     SDL_Event e;
     while (!client->isLoggedIn() && client->isConnected()){
         while (SDL_PollEvent(&e)){
@@ -233,10 +233,12 @@ void ScreenManager::viewLogin(){
     pthread_create(&viewLogin, NULL, viewLoginThread, this);
 }
 
-
-
 void ScreenManager::viewEndGameScreen(){
     this->gameGraphics_->setImage(END_GAME_ANIMATION);
+}
+
+void ScreenManager::viewGameOverScreen(){
+    this->gameGraphics_->setImage(GAME_OVER_ANIMATION);
 }
 
 Client* ScreenManager::getClient(){

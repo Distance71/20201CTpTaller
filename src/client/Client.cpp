@@ -76,8 +76,8 @@ void Client::updateEntity(elementType_t type, position_t position){
     this->screenManager_->updateEntity(type, position); 
 }
 
-void Client::updateMusic(soundType_t type){
-    this->screenManager_->updateMusic(type); 
+void Client::updateMusic(musicType_t type){
+    //this->screenManager_->updateMusic(type); 
 }
 
 void Client::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
@@ -135,6 +135,11 @@ void Client::endGame(){
     this->disconnect();
 }
 
+void Client::gameOver(){
+    this->endGame_ = true;
+    this->screenManager_->setImage(GAME_OVER_ANIMATION);
+    this->disconnect();
+}
 
 void Client::processEvent(Event* event){
     this->eventsManager_->pushBackEvent(event);

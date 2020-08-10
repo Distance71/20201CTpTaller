@@ -81,6 +81,7 @@ class MapElement {
         int getSizeX();
         int getSizeY();
         bool isDead();
+        bool isDisconnected();
 
         int getDamage();
         int getScoreWhenKilled();
@@ -93,6 +94,7 @@ class MapElement {
 
         void moveTo(orientation_t oneOrientation); 
         void changeGameMode();
+        void setGameMode(gameMode_t newGameMode);
         gameMode_t getGameMode();
 
         unordered_map<Id,MapElement*> getShoots();   

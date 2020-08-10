@@ -13,15 +13,15 @@ using namespace std;
 class MessageMusicUpdate: public Message {
 
 	private:
-		soundType_t elementType_;
+		musicType_t musicType_;
         const message_t type_ = MUSIC_UPDATE;
 
     public:
-    	explicit MessageMusicUpdate(soundType_t elementType): elementType_(elementType) {}
+    	explicit MessageMusicUpdate(musicType_t musicType): musicType_(musicType) {}
     	message_t getType();
         Event* deSerialize();
 
-        soundType_t getMusicType();
+        musicType_t getMusicType();
         responseStatus_t serialize();
 };
 

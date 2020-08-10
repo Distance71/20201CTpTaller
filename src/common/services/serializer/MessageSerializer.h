@@ -18,6 +18,8 @@
 #include "../../models/messages/MessageUserShoot.h"
 #include "../../models/messages/MessageUserChangeMode.h"
 #include "../../models/messages/MessageMusicUpdate.h"
+#include "../../models/messages/MessageScoreUpdate.h"
+#include "../../models/messages/MessageGameOver.h"
 
 using namespace std;
 
@@ -38,6 +40,8 @@ class MessageSerializer {
         response_t sendMessageUserShoot(Socket *socket, Message *message);
         response_t sendMessageUserChangeMode(Socket *socket, Message *message);
         response_t sendMessageMusicUpdate(Socket *socket, Message *message);
+        response_t sendMessageScoreUpdate(Socket *socket, Message *message);
+        response_t sendMessageGameOver(Socket *socket, Message *message);
 
         response_t sendResponseType(Socket *socket, responseStatus_t value);
 
@@ -51,7 +55,7 @@ class MessageSerializer {
         response_t sendElementType(Socket *socket, elementType_t elementType);
         response_t sendSceneScreen(Socket *socket, sceneScreen_t scene);
         response_t sendStage(Socket *socket, stage_t &stage);
-        response_t sendSoundType(Socket *socket, soundType_t type);
+        response_t sendMusicType(Socket *socket, musicType_t type);
 
     public:
         response_t sendSerializedEvent(Socket *socket, Message *message);

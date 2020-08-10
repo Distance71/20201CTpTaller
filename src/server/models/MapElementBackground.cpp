@@ -15,6 +15,7 @@ void MapElementBackground::update(){
 
     int xp = this->position_->getX();
     int xs = this->speed_->getX();
+    
     int new_xp;
 
     new_xp = xp + xs;

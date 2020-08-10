@@ -7,8 +7,8 @@
 #include <stdbool.h>
 #include "Button.h"
 #include <string>
-#include "../../../common/providers/GameProvider.h"
-#include "../../../common/services/Logger.h"
+#include "../../../../common/providers/GameProvider.h"
+#include "../../../../common/services/Logger.h"
 
 using namespace std;
 
@@ -23,6 +23,7 @@ class TextBox : public Button{
         void hideText(bool _hidetext);
         void setCenteringParameters(int left,int right,int up,int down);
         void update(int x, int y,bool click);
+        void setText(string newText);
         const char* getText();
         
 

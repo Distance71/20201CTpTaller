@@ -129,4 +129,14 @@ namespace GameProvider {
                 oneUser.id = idUser;
         }
     }
+
+    gameZone_t getGameZone(){
+        gameZone_t zone;
+        zone.xInit = 0;
+        zone.xEnd = (int) screenWidth_;
+        zone.yInit = 200;
+        zone.yEnd = (int) screenHeight_;
+        return zone;
+    }
 }
+

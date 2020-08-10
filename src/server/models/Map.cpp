@@ -160,26 +160,31 @@ bool Step::endStep(){
 
 position_t Step::getPosition(int sizeMapElement_x, int sizeMapElement_y){
     position_t positionMapElement;
+    gameZone_t zone = GameProvider::getGameZone();
+
     int minPosX, maxPosX;
-    int minPosY = 0;
-    int maxPosY = GameProvider::getHeight() - sizeMapElement_y;
-    
+
     int orientationRand = rand() % 2;
 
     if (orientationRand == 0){
-        positionMapElement.orientation = BACK;//FRONT
-        minPosX = GameProvider::getWidth();
-        maxPosX = minPosX * 2;
+        positionMapElement.orientation = BACK;
+        minPosX = zone.xEnd;
+        maxPosX = zone.xEnd * 2;        
         positionMapElement.axis_x = minPosX + rand()%(maxPosX + 1 - minPosX);
+
     } else {
-        positionMapElement.orientation = FRONT;//BACK
-        minPosX = 0 + sizeMapElement_x;
-        maxPosX = GameProvider::getWidth();
+        positionMapElement.orientation = FRONT;
+        minPosX = zone.xInit + sizeMapElement_x;
+        maxPosX = zone.xEnd;  
         positionMapElement.axis_x = -1 * (minPosX + rand()%(maxPosX + 1 - minPosX));
     } 
 
-    positionMapElement.axis_y = minPosY + rand()%(maxPosY + 1 - minPosY);
+    positionMapElement.axis_y  = zone.yInit + rand()%(zone.yEnd + 1 - zone.yInit);
     
+    if (positionMapElement.axis_y > zone.yEnd -  sizeMapElement_y){
+        positionMapElement.axis_y = zone.yEnd -  sizeMapElement_y;
+    }
+
     return positionMapElement;
 }
 
@@ -263,6 +268,8 @@ void Map::update(currentStep_t currentStep, Game *game){
     levels_[actualLevel]->update(currentStep, game, this->players);
     position_t aux;
     game->sendEvent(new EventMapElementUpdate(END_GRAPHIC, aux)); 
+
+    this->sendScorePlayers(game);
 }
 
 void Level::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
@@ -291,7 +298,7 @@ void Stage::updateBackground(Game *game, stage_t stage){
 void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
     size_t actualStep = currentStep.step;
     updateBackground(game, currentStep.stage);
-    game->sendEvent(new EventMusicUpdate((soundType_t) currentStep.stage));
+    //game->sendEvent(new EventMusicUpdate((musicType_t) currentStep.stage));
     steps_[actualStep]->update(game, players);
 }
 
@@ -299,10 +306,12 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     vector <Id> enemiesDead;
     vector <Id> projectilesDead;
 
-    
-    
     //Actualizo posiciones de los jugadores
     for(auto player : players){
+
+        if (player.second->isDead())
+            continue;
+
         position_t actualPosition = player.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -335,7 +344,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             delete deadEnemy;
         }
         catch(const std::out_of_range& oor){
-
+            continue;
         }
     }
 
@@ -344,9 +353,14 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
     //Se revisan colisiones entre jugadores y enemigos
     for(auto player : players){
+
+        if (player.second->isDead() || player.second->isDisconnected())
+            continue;
+
         for(auto enemy :this->mapElements_){
             bool isCollision = player.second->checkCollision(enemy.second);
             if(isCollision){
+                game->sendEvent(new EventMusicUpdate(EXPLOSION));
                 killElementWithExplosion(game,enemy.second);
                 killElementWithExplosion(game,player.second);
                 enemiesDead.push_back(enemy.first);
@@ -355,6 +369,8 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
                 if (player.second->isDead()){
                     killElementWithExplosion(game,player.second);
+
+                    game->sendEventToUser(player.first, new EventGameOver());
                 }
             }
         }
@@ -366,7 +382,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             this->mapElements_.erase(IdDead);
             delete deadEnemy;
         } catch(const std::out_of_range& oor){
-        
+            continue;
         }
     }
     
@@ -399,7 +415,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
     //Actualizo proyectiles de los enemigos
     for(auto enemy :this->mapElements_){
         unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
-         for (auto projectile: projectiles){
+        for (auto projectile: projectiles){
             projectile.second->update();
             if(!projectile.second->leftScreen()){
                 position_t actualPositionProjectile = projectile.second->getActualPosition();
@@ -423,12 +439,13 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
         unordered_map <Id,MapElement*> projectiles = enemy.second->getShoots();
         for (auto player:players){
 
-           if (player.second->isDead())
+           if (player.second->isDead() || player.second->isDisconnected())
             continue;
 
            for (auto projectile: projectiles){
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
+                    game->sendEvent(new EventMusicUpdate(SHOT_IMPACTS));
                     projectilesDead.push_back(projectile.first);
                 
                     // Le quitamos vida a player
@@ -436,6 +453,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
                     if (player.second->isDead()){
                         killElementWithExplosion(game,player.second);
+                        game->sendEventToUser(player.first, new EventGameOver());
                     }
 
                 }
@@ -456,9 +474,12 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
 
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
         for (auto enemy : this->mapElements_){
+            
             for (auto projectile: projectiles){
+                
                 bool collision =enemy.second->checkCollision(projectile.second);
                 if (collision){
+                    game->sendEvent(new EventMusicUpdate(SHOT_IMPACTS));
                     projectilesDead.push_back(projectile.first);
 
                     // Le quitamos vida a enemy y suma puntajes al player
@@ -505,8 +526,11 @@ void Map::movePlayer(string user, orientation_t orientation){
         Logger::getInstance()->log(ERROR, "No se encontro el jugador para mover.");
         return;
     }
-    onePlayer->moveTo(orientation);
-    Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+
+    if (!onePlayer->isDead()){
+        onePlayer->moveTo(orientation);
+        Logger::getInstance()->log(DEBUG, "Se mueve el jugador .");
+    }
 }
 
 void Map::changeGameModePlayer(string user){
@@ -517,9 +541,10 @@ void Map::changeGameModePlayer(string user){
         return;
     }
     
-    onePlayer->changeGameMode();
-    
-    Logger::getInstance()->log(DEBUG, "Se cambia modo de juego del jugador.");
+    if (!onePlayer->isDead()){
+        onePlayer->changeGameMode();
+        Logger::getInstance()->log(DEBUG, "Se cambia modo de juego del jugador.");
+    }
 }
 
 void Map::shootPlayer(string user){
@@ -530,8 +555,32 @@ void Map::shootPlayer(string user){
         return;
     }
     
-    onePlayer->shoot();
-    Logger::getInstance()->log(DEBUG, "Se efectua disparo del jugador.");
+    if (!onePlayer->isDead()) {
+        onePlayer->shoot();
+        Logger::getInstance()->log(DEBUG, "Se efectua disparo del jugador.");
+    }
+}
+
+bool Map::playerAlive(){
+
+    for (auto player : this->players)
+        if (!player.second->isDead())
+            return true;
+
+    return false;
+}
+
+void Map::sendScorePlayers(Game *game){
+
+    for (auto player : this->players){
+        elementType_t typePlayer = player.second->getType();
+        unsigned int lives = player.second->getLives();
+        int health = player.second->getHealth();
+        int score = player.second->getScore();
+
+        Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, score);
+        game->sendEvent(eventScoreUpdate);
+    }
 }
 
 void Map::informDisconnection(string username){   
@@ -552,13 +601,15 @@ void Map::informDisconnection(string username){
             break;
     }
     this->players[username]->setType(NEW_TYPE);
+    this->players[username]->setGameMode(MODE_TEST_GAME);
 }
 
 position_t Map::getInitialPosition(){
     position_t position;
     position.orientation = FRONT;
-    position.axis_y = this->loggedPlayers_ * 100 + 50;
-    position.axis_x = 50;
+    gameZone_t zone = GameProvider::getGameZone();
+    position.axis_y = this->loggedPlayers_ * 100 + 50 + zone.yInit;
+    position.axis_x = 250;
 
     return position;
 }
@@ -598,6 +649,7 @@ void Map::informConnection(string username){
             break;
     }
     this->players[username]->setType(NEW_TYPE);
+    this->players[username]->setGameMode(MODE_NORMAL_GAME);
 }
 
 void Map::initializeStep(currentStep_t currentStep, Game *game){
@@ -646,6 +698,8 @@ void Map::updateFinal(Game* game){
 
     position_t aux;
     game->sendEvent(new EventMapElementUpdate(END_GRAPHIC, aux)); 
+
+    this->sendScorePlayers(game);
 }
 
 void Level::updateFinal(Game* game, unordered_map<string, MapElement*> players, MapElement* finalBoss){
@@ -667,6 +721,10 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
 
     //Actualizo posiciones de los jugadores
     for(auto player : players){
+
+        if (player.second->isDead())
+            continue;
+
         position_t actualPosition = player.second->getActualPosition();
         Event *eventUpdate = new EventMapElementUpdate(player.second->getType(), actualPosition);
         game->sendEvent(eventUpdate);
@@ -688,14 +746,31 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
 
     //Reviso colisiones entre jugadores y el jefe
     for (auto player : players){
+
+        if (player.second->isDead() || player.second->isDisconnected())
+            continue;
+
         bool isCollision = player.second->checkCollision(finalBoss);
         if (isCollision){
             // Como resolver que pasa con el Jefe Final
+            bool isBossDead = finalBoss->reduceHealth(50);
+
+            if (isBossDead){
+                killElementWithExplosion(game, finalBoss);
+            }
+
+            player.second->quitLives();
+
+            if (player.second->isDead()){
+                killElementWithExplosion(game,player.second);
+                game->sendEventToUser(player.first, new EventGameOver());
+            }
         }
     }
 
     //Actualizo proyectiles de los jugadores
     for(auto player: players){
+        
         unordered_map <Id,MapElement*> projectiles = player.second->getShoots();
         for (auto projectile : projectiles){
             projectile.second->update();
@@ -738,10 +813,14 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
         projectilesDead.clear(); 
     }    
 
-    //Reviso si alguna bala de de los enemigos le pega a un jugador
+    //Reviso si alguna bala del jefe le pega a un jugador
     if (finalBoss != NULL){
        unordered_map <Id,MapElement*> projectiles = finalBoss->getShoots();
         for (auto player:players){
+
+            if (player.second->isDead() || player.second->isDisconnected())
+                continue;
+
            for (auto projectile: projectiles){
                 bool collision = player.second->checkCollision(projectile.second);
                 if (collision){
@@ -749,6 +828,11 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
                 
                     // Le quitamos vida a player
                     finalBoss->attackTo(player.second);
+
+                    if (player.second->isDead()){
+                        killElementWithExplosion(game,player.second);
+                        game->sendEventToUser(player.first, new EventGameOver());
+                    }
                 }
             }
         }
