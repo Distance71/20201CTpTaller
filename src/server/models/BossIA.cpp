@@ -23,14 +23,14 @@ void BossIA::update(unordered_map<string, State *> states_){
     int new_yp;
 
     // Si todavia no aparece completo en pantalla, se setea nueva posicion en X, si no no hace nada en el eje X
-    if (xp > (GameProvider::getWidth() - this->owner_->getSizeX() - 230)){
+    if (xp > (GameProvider::getWidth() - this->owner_->getSizeX() - 40)){
         new_xp = xp - xs;
         position->setX(new_xp);
     }
 
     new_yp = doMovement(yp, ys);
     
-    if (new_yp < 0) new_yp = 0;
+    if (new_yp < this->owner_->getSizeY()/2) new_yp = this->owner_->getSizeY()/2;
     if (new_yp > (screenHeight - this->owner_->getSizeY())) new_yp = screenHeight - this->owner_->getSizeY();
 
     position->setY(new_yp);
@@ -49,40 +49,47 @@ void BossIA::randomShoot(){
     {
        this->owner_->shoot();
        this->timeShoot = 0;
-       this->timeLimitShoot = 70 + RandomGenerate::generate(FRECUENCIA);
+       this->timeLimitShoot = 50 + RandomGenerate::generate(FRECUENCIA);
     }
 }
 
 int BossIA::doMovement(int yp, int ys){
 
-    if (RandomGenerate::generate(10) < 5)
+    //if (RandomGenerate::generate(10) < 5)
         return this->searchPlayers(yp, ys);
 
-    return this->randomMovement(yp, ys);
+    //return this->randomMovement(yp, ys);
 }
 
 int BossIA::searchPlayers(int yp, int ys){
+    //tal vez no deberia pasar nunca este caso
+    if (this->targets_.size() == 0) return yp;
     
-    if (this->targets_.size() == 0) return this->randomMovement(yp, ys);
-
     int sumPosY = 0,
+        nTargets = 0,
         avgPosY = GameProvider::getWidth() / 2,
         randomMovement = RandomGenerate::generate(5);
 
     for (auto onePlayer : this->targets_){
-        position_t position = onePlayer->getActualPosition();
-        sumPosY += position.axis_y;
+        if (onePlayer->getLives() != 0) {
+            position_t position = onePlayer->getActualPosition();
+            sumPosY += position.axis_y;
+            nTargets++;
+        }
     }
 
     if (sumPosY)
-        avgPosY = sumPosY / this->targets_.size();
+        avgPosY = (sumPosY / nTargets) - (this->owner_->getSizeY()/2) ;
 
+    if (yp == avgPosY) return yp; //si ya esta centrado q no le agarre epilepsia
     if (yp < avgPosY)
-        return yp + randomMovement * ys;
+        return yp + ys;
 
-    return yp - randomMovement * ys;
+    return yp - ys;
 }
 
+
+//NO USAR
 int BossIA::randomMovement(int yp, int ys){
     
     unsigned int screenHeight = GameProvider::getHeight();

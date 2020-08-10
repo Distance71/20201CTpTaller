@@ -162,6 +162,7 @@ typedef enum {
     PLAYER_2_G = 28,
     PLAYER_3_G = 29,
     PLAYER_4_G = 30,
+    PROJECTILE_BOSS = 31,
 } elementType_t;
 
 typedef enum {
@@ -286,6 +287,7 @@ typedef struct {
     vector<user_t> playersParams;
     loginScreen_t loginScreen;
     projectile_t commonProjectile;
+    projectile_t bossProjectile;
     enemy_t finalBoss;
 } gameParams_t;
 

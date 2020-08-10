@@ -30,13 +30,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 8,
+                        "quantity": 5,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100				  
                     },
                     {
-                        "quantity": 8,
+                        "quantity": 5,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200	
@@ -46,13 +46,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 15,
+                        "quantity": 5,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100				  
                     },
                     {
-                        "quantity": 10,
+                        "quantity": 5,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200	
@@ -62,13 +62,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 15,
+                        "quantity": 5,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100				  
                     },
                     {
-                        "quantity": 10,
+                        "quantity": 5,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200	
@@ -78,13 +78,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 15,
+                        "quantity": 5,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100				  
                     },
                     {
-                        "quantity": 10,
+                        "quantity": 5,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200	
@@ -96,9 +96,13 @@
             "sizeX": 33,
             "sizeY": 14
         },
+        "projectilesBoss": {
+            "sizeX": 88,
+            "sizeY": 36
+        },
         "finalBoss":{
-            "sizeX": 178,
-            "sizeY": 180,
+            "sizeX": 400,
+            "sizeY": 300,
             "health": 1000
         },
         "users": [

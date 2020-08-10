@@ -19,7 +19,7 @@ class BossIA: public MovementHandler {
 		unsigned long timeShoot;
 		unsigned long timeLimitShoot;
 
-		const unsigned long FRECUENCIA = 150;
+		const unsigned long FRECUENCIA = 100;
 
 		void randomShoot();
 		int doMovement(int yp, int ys);

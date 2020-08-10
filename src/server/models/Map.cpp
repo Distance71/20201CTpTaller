@@ -259,6 +259,7 @@ void Step::setTargetsForStep(Game *game){
 void Map::cleanStage(){
     for (auto onePlayer : this->players){
         onePlayer.second->cleanShoots();
+        onePlayer.second->cleanCurrentScore();
     }
 }
 
@@ -579,9 +580,11 @@ void Map::sendScorePlayers(Game *game){
         elementType_t typePlayer = player.second->getType();
         unsigned int lives = player.second->getLives();
         int health = player.second->getHealth();
-        int score = player.second->getScore();
+        
+        int scoreActual = player.second->getCurrentScore();
+        int scoreAcc = player.second->getScoreAcc();
 
-        Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, score);
+        Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, scoreActual, scoreAcc);
         game->sendEvent(eventScoreUpdate);
     }
 }
@@ -611,7 +614,7 @@ position_t Map::getInitialPosition(){
     position_t position;
     position.orientation = FRONT;
     gameZone_t zone = GameProvider::getGameZone();
-    position.axis_y = this->loggedPlayers_ * 100 + 50 + zone.yInit;
+    position.axis_y = this->loggedPlayers_ * 100 + 100 + zone.yInit;
     position.axis_x = 250;
 
     return position;

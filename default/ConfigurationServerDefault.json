@@ -96,10 +96,15 @@
             "sizeX": 33,
             "sizeY": 14
         },
+        "projectilesBoss": {
+            "sizeX": 88,
+            "sizeY": 36,
+            "sprite": "assets/Projectile/projectileBoss.png" 
+        },
         "finalBoss":{
-            "sizeX": 178,
-            "sizeY": 180,
-            "health": 1000
+            "sizeX": 400,
+            "sizeY": 300,
+            "sprite": "assets/Enemies/EnemyBoss.png"
         },
         "users": [
             {

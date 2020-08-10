@@ -497,6 +497,9 @@ void ConfigurationHandler::initializeDataServer(){
     this->gameData.commonProjectile = commonProjectile;
 
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del enemigo final.");
+
+    projectile_t bossProjectile = getBossProjectile();
+    this->gameData.bossProjectile = bossProjectile;
     
     enemy_t finalBoss = getBoss();
     this->gameData.finalBoss = finalBoss;
@@ -621,6 +624,9 @@ void ConfigurationHandler::initializeDataClient(){
     this->gameData.commonProjectile = commonProjectile;
 
     Logger::getInstance()->log(DEBUG, "Se comienza a analizar la configuracion del enemigo final.");
+
+    projectile_t bossProjectile = getBossProjectile();
+    this->gameData.bossProjectile = bossProjectile;
     
     enemy_t finalBoss = getBoss();
     this->gameData.finalBoss = finalBoss;
@@ -733,6 +739,52 @@ string ConfigurationHandler::getPathCommonProjectile(string paramProjectile){
     return PATH_ROJECTILE + paramProjectile;
 }
 
+string ConfigurationHandler::getPathBossProjectile(string paramProjectile){
+    return PATH_ROJECTILE_BOSS + paramProjectile;
+}
+
+projectile_t ConfigurationHandler::getBossProjectile(){
+
+    projectile_t oneProjectile;
+
+    unsigned int sizeScreenX = GameProvider::getWidth();
+    unsigned int sizeScreenY = GameProvider::getHeight();
+
+    string pathProjectileSizeX = getPathBossProjectile("sizeX");
+    int sizeXProjectile = this->parserJson->getUnsignedInt(pathProjectileSizeX);
+
+    if (sizeXProjectile >= 0){
+        oneProjectile.size_x = sizeXProjectile;
+    } else {
+        oneProjectile.size_x = DEFAULT_SIZE_X;
+    }
+
+    if (sizeXProjectile > sizeScreenX){
+        Logger::getInstance()->log(ERROR, "El largo del proyectil supera el largo de la pantalla. Se settea este ultimo como su largo");
+        oneProjectile.size_x = sizeScreenX;
+    }
+
+    string pathProjectileSizeY = getPathBossProjectile("sizeY");
+    int sizeYProjectile = this->parserJson->getUnsignedInt(pathProjectileSizeY);
+    if (sizeYProjectile >= 0){
+        oneProjectile.size_y = sizeYProjectile;
+    } else {
+        oneProjectile.size_y = DEFAULT_SIZE_Y;
+    }
+
+    if (sizeYProjectile > sizeScreenY){
+        Logger::getInstance()->log(ERROR, "El ancho del proyectil supera el ancho de la pantalla. Se settea este ultimo como su ancho");
+        oneProjectile.size_y = sizeScreenY;
+    }   
+
+    if (!this->isServer_){
+        string pathProjectileSprite = getPathBossProjectile("sprite");
+        oneProjectile.sprite = this->parserJson->getString(pathProjectileSprite); 
+    }
+
+    return oneProjectile;    
+}
+
 projectile_t ConfigurationHandler::getCommonProjectile(){
 
     projectile_t oneProjectile;
@@ -777,4 +829,7 @@ projectile_t ConfigurationHandler::getCommonProjectile(){
 
 projectile_t ConfigurationHandler::getProjectileData(){
     return this->gameData.commonProjectile;
+}
+projectile_t ConfigurationHandler::getProjectileBossData(){
+    return this->gameData.bossProjectile;
 }
