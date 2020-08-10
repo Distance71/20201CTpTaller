@@ -62,7 +62,7 @@ Audio::Audio(int volumen){
 	if ( (this->shotImpactsBoss = Mix_LoadWAV("assets/Sounds/impacto3.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto3.wav'" );		
 	}
-	Mix_VolumeChunk(this->shotImpactsBoss, VOLUME_SOUNDS_DEFAULT);
+	Mix_VolumeChunk(this->shotImpactsBoss, VOLUME_SOUNDS_DEFAULT+10);
 
 
 	// if ( (this->stageOne = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
