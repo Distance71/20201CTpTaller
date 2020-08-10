@@ -160,9 +160,13 @@ void Game::sendStageCleared(stage_t stage){
             break;
     }
 
-    Event* event = new EventSceneAnimation(sceneScreen);
-    this->sendEvent(event);
+    Event* event1 = new EventSceneAnimation(sceneScreen);
+    this->sendEvent(event1);
     usleep(3000000);//3 seg;
+
+    Event* event2 = new EventSceneAnimation(SCORE_TABLE);
+    this->sendEvent(event2);
+    usleep(5000000);
     
 }
 
@@ -195,3 +199,4 @@ void Game::informConnection(string username){
     Logger::getInstance()->log(DEBUG, "Se informa conexion en Game");
     this->map_->informConnection(username);
 }
+

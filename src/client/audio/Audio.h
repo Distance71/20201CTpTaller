@@ -13,10 +13,10 @@ private:
 	Mix_Chunk *explosion = NULL;
 	Mix_Chunk *playerShot = NULL;
 	Mix_Chunk *shotImpacts = NULL;
-	Mix_Chunk *stageOne = NULL;
-	Mix_Chunk *stageTwo = NULL;
-	Mix_Chunk *stageThree = NULL;
-	Mix_Chunk *stageFour = NULL;
+	// Mix_Chunk *stageOne = NULL;
+	// Mix_Chunk *stageTwo = NULL;
+	// Mix_Chunk *stageThree = NULL;
+	// Mix_Chunk *stageFour = NULL;
 
 	static Audio* instance;
 	Mix_Music* mixMusicSDL;

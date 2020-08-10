@@ -27,30 +27,30 @@ Audio::Audio(int volumen){
 	}
 	Mix_VolumeChunk(this->playerShot, volumen);
 
-	if ( (this->shotImpacts = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	if ( (this->shotImpacts = Mix_LoadWAV("assets/Sounds/impacto.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto.wav'" );		
 	}
 	Mix_VolumeChunk(this->shotImpacts, volumen);
 
-	if ( (this->stageOne = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	}
-	Mix_VolumeChunk(this->stageOne, volumen);
+	// if ( (this->stageOne = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	// }
+	// Mix_VolumeChunk(this->stageOne, volumen);
 
-	if ( (this->stageTwo = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	}
-	Mix_VolumeChunk(this->stageTwo, volumen);
+	// if ( (this->stageTwo = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	// }
+	// Mix_VolumeChunk(this->stageTwo, volumen);
 
-	if ( (this->stageThree = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	}
-	Mix_VolumeChunk(this->stageThree, volumen);
+	// if ( (this->stageThree = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	// }
+	// Mix_VolumeChunk(this->stageThree, volumen);
 
-	if ( (this->stageFour = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	}
-	Mix_VolumeChunk(this->stageFour, volumen);
+	// if ( (this->stageFour = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
+	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
+	// }
+	// Mix_VolumeChunk(this->stageFour, volumen);
 
 
 	this->isPaused = false;
@@ -63,12 +63,12 @@ void Audio::setSong(const std::string& path){
 }
 
 void Audio::playMusic(){
-	//if (!this->isPaused) {
+	if (!this->isPaused) {
 		if (Mix_PlayMusic(this->mixMusicSDL, -1) == -1){
 			Logger::getInstance()->log(ERROR,"Error al reproducir la musica");
 		}
 		this->isInitMusic = true;
-	//}
+	}
 }
 
 void Audio::playEffect(musicType_t soundType){
@@ -85,20 +85,20 @@ void Audio::playEffect(musicType_t soundType){
 			if(this->shotImpacts) Mix_PlayChannel(-1, this->shotImpacts, 0);
 			break;
 		
-		case SOUND_STAGE_ONE:
-			if(this->stageOne) Mix_PlayChannel(-1, this->stageOne, 0);
-			break;
-		case SOUND_STAGE_TWO:
-			if(this->stageTwo) Mix_PlayChannel(-1, this->stageTwo, 0);
-			break;
+		// case SOUND_STAGE_ONE:
+		// 	if(this->stageOne) Mix_PlayChannel(-1, this->stageOne, 0);
+		// 	break;
+		// case SOUND_STAGE_TWO:
+		// 	if(this->stageTwo) Mix_PlayChannel(-1, this->stageTwo, 0);
+		// 	break;
 		
-		case SOUND_STAGE_THREE:
-			if(this->stageThree) Mix_PlayChannel(-1, this->stageThree, 0);
-			break;
+		// case SOUND_STAGE_THREE:
+		// 	if(this->stageThree) Mix_PlayChannel(-1, this->stageThree, 0);
+		// 	break;
 		
-		case SOUND_STAGE_FOUR:
-			if(this->stageFour) Mix_PlayChannel(-1, this->stageFour, 0);
-			break;
+		// case SOUND_STAGE_FOUR:
+		// 	if(this->stageFour) Mix_PlayChannel(-1, this->stageFour, 0);
+		// 	break;
 
 		default:
 			break;
@@ -161,16 +161,16 @@ Audio::~Audio(){
 	if (this->shotImpacts){
 		Mix_FreeChunk(this->shotImpacts);
 	}
-	if (this->stageOne){
-		Mix_FreeChunk(this->stageOne);
-	}
-	if (this->stageTwo){
-		Mix_FreeChunk(this->stageTwo);
-	}
-	if (this->stageThree){
-		Mix_FreeChunk(this->stageThree);
-	}
-	if (this->stageFour){
-		Mix_FreeChunk(this->stageFour);
-	}
+	// if (this->stageOne){
+	// 	Mix_FreeChunk(this->stageOne);
+	// }
+	// if (this->stageTwo){
+	// 	Mix_FreeChunk(this->stageTwo);
+	// }
+	// if (this->stageThree){
+	// 	Mix_FreeChunk(this->stageThree);
+	// }
+	// if (this->stageFour){
+	// 	Mix_FreeChunk(this->stageFour);
+	// }
 }

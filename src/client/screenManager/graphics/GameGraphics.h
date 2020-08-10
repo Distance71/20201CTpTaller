@@ -26,7 +26,6 @@ class GameGraphics {
         unordered_map <stage_t, GraphicsScenario*> scenaries_;
         GraphicsMapElement* image_;
         std::mutex mutex;
-        BlockingQueue<elementToGraphic_t>* graphicsQueue_;
         GraphicsScoreBoard* scoreBoard_;
         
 
@@ -43,6 +42,8 @@ class GameGraphics {
         void setBackground(stage_t level);
         void setImage(sceneScreen_t scene);
         void setAudio(sceneScreen_t scene);
+
+        void updateScore(elementType_t player,unsigned int lives,int health,int score);
 };
 
 #endif

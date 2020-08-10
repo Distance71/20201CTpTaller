@@ -165,13 +165,13 @@ typedef enum {
 } elementType_t;
 
 typedef enum {
-    SOUND_STAGE_ONE = 0,
-    SOUND_STAGE_TWO = 1,
-    SOUND_STAGE_THREE = 2,
-    SOUND_STAGE_FOUR = 3,
-    EXPLOSION = 4,
-    PLAYER_SHOT = 5,
-    SHOT_IMPACTS = 6,
+    // SOUND_STAGE_ONE = 0,
+    // SOUND_STAGE_TWO = 1,
+    // SOUND_STAGE_THREE = 2,
+    // SOUND_STAGE_FOUR = 3,
+    EXPLOSION = 0,
+    PLAYER_SHOT = 1,
+    SHOT_IMPACTS = 2,
 } musicType_t;
 
 typedef enum {
@@ -221,7 +221,8 @@ typedef enum {
     END_GAME_ANIMATION = 10,
     WAITING_PLAYERS = 11,
     SERVER_DISCONNECTION = 12,
-    GAME_OVER_ANIMATION = 13 
+    GAME_OVER_ANIMATION = 13,
+    SCORE_TABLE = 14,
 } sceneScreen_t;
 
 typedef size_t Id;
@@ -321,5 +322,12 @@ typedef struct {
     int yInit;
     int yEnd;
 }gameZone_t;
+
+typedef struct{
+    elementType_t playerImage;
+    unsigned int lives;
+    int health;
+    int score;
+} playerState_t;
 
 #endif

@@ -23,6 +23,11 @@ ScreenManager::~ScreenManager(){
         Logger::getInstance()->log(DEBUG, "Se destruye el menu");
         delete this->menu_;
     }
+    if (this->gameGraphics_){
+        Logger::getInstance()->log(DEBUG, "Se destruyen los graficos");
+        delete this->gameGraphics_;
+    }
+
 }
 
 
@@ -164,7 +169,7 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
 }
 
 void ScreenManager::updateMusic(musicType_t type){
-    //Audio::getInstance()->playEffect(type);
+    Audio::getInstance()->playEffect(EXPLOSION);
 }
 
 void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
@@ -252,4 +257,8 @@ SDL_Renderer* ScreenManager::getRenderer(){
 
 void ScreenManager::ServerDisconnection(){
     this->gameGraphics_->setImage(SERVER_DISCONNECTION);
+}
+
+void ScreenManager::updateScore(elementType_t player,unsigned int lives,int health,int score){
+    this->gameGraphics_->updateScore(player,lives,health,score);
 }

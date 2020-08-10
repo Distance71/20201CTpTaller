@@ -10,9 +10,8 @@ void EventMusicUpdate::update() {
 	  Logger::getInstance()->log(DEBUG, "No hay contexto para el evento EventMusicUpdate");
   }
   else{
-    cout << "sii" << endl;
-    //Client* client = (Client*) Event::context_;
-    //client->updateMusic(this->elementType_);
+    Client* client = (Client*) Event::context_;
+    client->updateMusic(this->musicType_);
     Logger::getInstance()->log(DEBUG, "Se ejecutó el evento EventMusicUpdate");
   }
 }

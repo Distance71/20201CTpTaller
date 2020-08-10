@@ -130,7 +130,7 @@ static void * detectPlayerEvents(void* arg){
             client->sendMessage(new MessageUserShoot());
             canShoot = false;
             //TODO es prueba no va aca (todos los player tienen q escuchar el sonido)
-            //Audio::getInstance()->playEffect(LASER_1); 
+            //Audio::getInstance()->playEffect(PLAYER_SHOT); 
         }
 
         // Si Space no esta presionada, le habilitamos poder dispara en proximo ciclo
@@ -164,7 +164,7 @@ void ClientEventsManager::RunProcessEventsThread(){
         if (event){
             event->setContext(this->clientOwn_);
             event->update();
-            //delete event;
+            delete event;
         }
     }
 }

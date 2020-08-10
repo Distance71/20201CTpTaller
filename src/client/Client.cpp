@@ -77,7 +77,7 @@ void Client::updateEntity(elementType_t type, position_t position){
 }
 
 void Client::updateMusic(musicType_t type){
-    //this->screenManager_->updateMusic(type); 
+    this->screenManager_->updateMusic(type); 
 }
 
 void Client::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
@@ -156,4 +156,8 @@ void Client::ServerDisconnection(){
 
 void Client::runDetectEventThread(){
     this->eventsManager_-> RunDetectPlayerEventsThread();
+}
+
+void Client::updateScore(elementType_t player,unsigned int lives,int health,int score){
+    this->screenManager_->updateScore(player,lives,health,score);
 }

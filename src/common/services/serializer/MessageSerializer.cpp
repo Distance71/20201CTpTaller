@@ -356,7 +356,7 @@ response_t MessageSerializer::sendUInt(Socket *socket, unsigned int size){
 
     Logger::getInstance()->log(DEBUG, "Se va a enviar un tipo de mensaje unsigned entero");
 
-    cout << "El valor que se va a pasar " << size << endl;
+    //cout << "El valor que se va a pasar " << size << endl;
 
     s << size;
 
@@ -394,7 +394,6 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
     response_t response = this->sendMessageType(socket, type);
 
     if(!response.ok){
-    
         Logger::getInstance()->log(ERROR, "Se ha producido un error al enviar el tipo de mensaje");
     }
 

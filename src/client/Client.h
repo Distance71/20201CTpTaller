@@ -52,10 +52,11 @@ class Client {
         void gameOver();
         void ServerDisconnection();
         
-        //GraphicsGraphicsMe
+        //GameGraphics
         void setLoginResponse(responseStatus_t response);
         void setLoggedInStatus();
         bool isLoggedIn();
+        void updateScore(elementType_t player,unsigned int lives,int health,int score);
         
         //transmition methods
         void sendMessage(Message* message);

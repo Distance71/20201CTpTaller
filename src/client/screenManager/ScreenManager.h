@@ -15,6 +15,7 @@
 #include "graphics/GameGraphics.h"
 #include "../common/types.h"
 #include "../common/models/Sprite.h"
+#include "../audio/Audio.h"
 
 class Client;
 class GraphicsMenu;
@@ -35,6 +36,7 @@ class ScreenManager{
         bool initGraphicsMenu();
         bool initSDL();
         bool initGameGraphics();
+        
 
 
     public:
@@ -55,6 +57,7 @@ class ScreenManager{
         SDL_Renderer* getRenderer();
         void ServerDisconnection();
         GraphicsMenu* getGraphicsMenu();
+        void updateScore(elementType_t player,unsigned int lives,int health,int score);
 };
 
 #endif
