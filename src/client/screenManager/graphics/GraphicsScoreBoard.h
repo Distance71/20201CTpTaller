@@ -24,7 +24,7 @@ class GraphicsScoreBoard {
     public:  
         GraphicsScoreBoard();
         ~GraphicsScoreBoard();
-        void updateScore(elementType_t playerImage,unsigned int lives,int health,int score);
+        void updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore);
         void update();
         void showScores();
 };

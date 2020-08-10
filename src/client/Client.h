@@ -56,7 +56,7 @@ class Client {
         void setLoginResponse(responseStatus_t response);
         void setLoggedInStatus();
         bool isLoggedIn();
-        void updateScore(elementType_t player,unsigned int lives,int health,int score);
+        void updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore);
         
         //transmition methods
         void sendMessage(Message* message);

@@ -324,7 +324,8 @@ typedef struct{
     elementType_t playerImage;
     unsigned int lives;
     int health;
-    int score;
+    int levelScore;
+    int totalScore;
 } playerState_t;
 
 #endif

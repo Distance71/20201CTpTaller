@@ -192,6 +192,6 @@ void GameGraphics::setAudio(sceneScreen_t scene){
     }
 }
 
-void GameGraphics::updateScore(elementType_t player,unsigned int lives,int health,int score){
-    this->scoreBoard_->updateScore(player,lives,health,score);
+void GameGraphics::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
+    this->scoreBoard_->updateScore(playerImage,lives,health,levelScore,totalScore);
 }
