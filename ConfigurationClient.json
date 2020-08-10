@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "DEBUG"
+            "level": "INFO"
         },
         "screen":{
             "width": 1280,

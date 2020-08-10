@@ -180,6 +180,7 @@ void Game::changeGameModePlayer(string user){
 
 void Game::shootPlayer(string user){
     this->map_->shootPlayer(user);
+    this->sendEvent(new EventMusicUpdate(PLAYER_SHOT));
 }
 
 void Game::sendEvent(Event *event){

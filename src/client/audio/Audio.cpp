@@ -20,17 +20,17 @@ Audio::Audio(int volumen){
 	if ( (this->explosion = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'explosion.wav'" );		
 	}
-	Mix_VolumeChunk(this->explosion, volumen);
+	Mix_VolumeChunk(this->explosion, VOLUME_SOUNDS_DEFAULT+10);
 
 	if ( (this->playerShot = Mix_LoadWAV("assets/Sounds/playerShot.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'playerShot.wav'" );		
 	}
-	Mix_VolumeChunk(this->playerShot, volumen);
+	Mix_VolumeChunk(this->playerShot, VOLUME_SOUNDS_DEFAULT);
 
 	if ( (this->shotImpacts = Mix_LoadWAV("assets/Sounds/impacto.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto.wav'" );		
 	}
-	Mix_VolumeChunk(this->shotImpacts, volumen);
+	Mix_VolumeChunk(this->shotImpacts, VOLUME_SOUNDS_DEFAULT);
 
 	// if ( (this->stageOne = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
 	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
@@ -63,12 +63,12 @@ void Audio::setSong(const std::string& path){
 }
 
 void Audio::playMusic(){
-	if (!this->isPaused) {
+	//if (!this->isPaused) {
 		if (Mix_PlayMusic(this->mixMusicSDL, -1) == -1){
 			Logger::getInstance()->log(ERROR,"Error al reproducir la musica");
 		}
 		this->isInitMusic = true;
-	}
+	//}
 }
 
 void Audio::playEffect(musicType_t soundType){
