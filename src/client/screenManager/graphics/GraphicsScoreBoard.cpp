@@ -26,10 +26,14 @@ GraphicsScoreBoard::GraphicsScoreBoard(){
     this->lives_->emplace(1,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts1.png"));
     this->lives_->emplace(2,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts2.png"));
     this->lives_->emplace(3,new Image(heartsW, heartsH,"assets/scoreBoard/hearts/hearts3.png"));
+    this->lives_->emplace(-1,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts1G.png"));
+    this->lives_->emplace(-2,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts2G.png"));
+    this->lives_->emplace(-3,new Image(heartsW, heartsH,"assets/scoreBoard/hearts/hearts3G.png"));
 
     this->health_ = new unordered_map <int, Image*>();
     int energyW = 400;
     int energyH = 20;
+    
     this->health_->emplace(0,new Image(energyW,energyH,"assets/scoreBoard/energy/energy0.png"));
     this->health_->emplace(1,new Image(energyW,energyH,"assets/scoreBoard/energy/energy1.png"));
     this->health_->emplace(2,new Image(energyW,energyH,"assets/scoreBoard/energy/energy2.png"));
@@ -41,10 +45,22 @@ GraphicsScoreBoard::GraphicsScoreBoard(){
     this->health_->emplace(8,new Image(energyW,energyH,"assets/scoreBoard/energy/energy8.png"));
     this->health_->emplace(9,new Image(energyW,energyH,"assets/scoreBoard/energy/energy9.png"));
     this->health_->emplace(10,new Image(energyW,energyH,"assets/scoreBoard/energy/energy10.png"));
-    this->health_->emplace(11,new Image(energyW,energyH,"assets/scoreBoard/energy/energyBar.png"));
+
+    this->health_->emplace(-1,new Image(energyW,energyH,"assets/scoreBoard/energy/energy1G.png"));
+    this->health_->emplace(-2,new Image(energyW,energyH,"assets/scoreBoard/energy/energy2G.png"));
+    this->health_->emplace(-3,new Image(energyW,energyH,"assets/scoreBoard/energy/energy3G.png"));
+    this->health_->emplace(-4,new Image(energyW,energyH,"assets/scoreBoard/energy/energy4G.png"));
+    this->health_->emplace(-5,new Image(energyW,energyH,"assets/scoreBoard/energy/energy5G.png"));
+    this->health_->emplace(-6,new Image(energyW,energyH,"assets/scoreBoard/energy/energy6G.png"));
+    this->health_->emplace(-7,new Image(energyW,energyH,"assets/scoreBoard/energy/energy7G.png"));
+    this->health_->emplace(-8,new Image(energyW,energyH,"assets/scoreBoard/energy/energy8G.png"));
+    this->health_->emplace(-9,new Image(energyW,energyH,"assets/scoreBoard/energy/energy9G.png"));
+    this->health_->emplace(-10,new Image(energyW,energyH,"assets/scoreBoard/energy/energy10G.png"));
 
     this->scores_ = new unordered_map <elementType_t,TextBox*>();
+    
     string path = "assets/scoreBoard/scoreButton.png";
+    
     this->scores_->emplace(PLAYER_1, new TextBox(300,20,300,50,path.c_str(),path.c_str()));
     this->scores_->emplace(PLAYER_2, new TextBox(300,105,300,50,path.c_str(),path.c_str()));
     this->scores_->emplace(PLAYER_3, new TextBox(910,20,300,50,path.c_str(),path.c_str()));
@@ -168,56 +184,96 @@ void GraphicsScoreBoard::update(){
 
     //********Actualizo el jugador 1**********
     playerState_t player1 = this->players_->at(PLAYER_1);
+ 
     //imagen 
     this->playerImages_->at(player1.playerImage)->renderCopy(35,20);
     //vida
-    this->lives_->at(player1.lives)->renderCopy(190,20);
+    if (player1.playerImage == PLAYER_1)
+         this->lives_->at(player1.lives)->renderCopy(190,20);
+    else
+        this->lives_->at(player1.lives * -1)->renderCopy(190,20);
+   
    //puntaje
     this->setScore(PLAYER_1,player1.totalScore);
     this->scores_->at(PLAYER_1)->update(0,0,false);
+    
     //salud
     int healthImage1 = this->getHealthImageNumber(player1.health);
-    this-> health_->at(healthImage1)->renderCopy(190,75);
+
+    if (player1.playerImage == PLAYER_1)
+        this->health_->at(healthImage1)->renderCopy(190,75);
+    else
+        this->health_->at(healthImage1*-1)->renderCopy(190,75);
+   
 
     //********Actualizo el jugador 2**********
     playerState_t player2 = this->players_->at(PLAYER_2);
+    
     //imagen 
     this->playerImages_->at(player2.playerImage)->renderCopy(35,105);
+
     //vida
-    this->lives_->at(player2.lives)->renderCopy(190,105);
+    if ( player2.playerImage == PLAYER_2)
+        this->lives_->at(player2.lives)->renderCopy(190,105);
+    else
+        this->lives_->at(player2.lives * -1)->renderCopy(190,105);
+    
     //puntaje
     this->setScore(PLAYER_2,player2.totalScore);
     this->scores_->at(PLAYER_2)->update(0,0,false);
+    
     //salud
     int healthImage2 = this->getHealthImageNumber(player2.health);
-    this-> health_->at(healthImage2)->renderCopy(190,160);
+    if ( player2.playerImage == PLAYER_2)
+        this-> health_->at(healthImage2)->renderCopy(190,160);
+    else 
+        this-> health_->at(healthImage2 * -1)->renderCopy(190,160);
 
     //********Actualizo el jugador 3**********
     playerState_t player3 = this->players_->at(PLAYER_3);
     //imagen 
     this->playerImages_->at(player3.playerImage)->renderCopy(650,20);
+    
     //vida
-    this->lives_->at(player3.lives)->renderCopy(800,20);
+    if (player3.playerImage == PLAYER_3)
+        this->lives_->at(player3.lives)->renderCopy(800,20);
+    else
+        this->lives_->at(player3.lives * -1)->renderCopy(800,20);
+    
     //puntaje
     this->setScore(PLAYER_3,player3.totalScore);
     this->scores_->at(PLAYER_3)->update(0,0,false);
     //salud
     int healthImage3 = this->getHealthImageNumber(player3.health);
-    this-> health_->at(healthImage3)->renderCopy(800,75);
+    
+    if (player3.playerImage == PLAYER_3)
+        this-> health_->at(healthImage3)->renderCopy(800,75);
+    else
+        this-> health_->at(healthImage3 * -1)->renderCopy(800,75);
+
     
     //********Actualizo el jugador 4**********
     playerState_t player4 = this->players_->at(PLAYER_4);
     //imagen 
     this->playerImages_->at(player4.playerImage)->renderCopy(650,105);
+    
     //vida
-    this->lives_->at(player4.lives)->renderCopy(800,110);
+    if (player4.playerImage == PLAYER_4)
+        this->lives_->at(player4.lives)->renderCopy(800,110);
+    else
+        this->lives_->at(player4.lives *-1)->renderCopy(800,110);
+    
     //puntaje
     this->setScore(PLAYER_4,player4.totalScore);
     this->scores_->at(PLAYER_4)->update(0,0,false);
+    
     //salud
     int healthImage4 = this->getHealthImageNumber(player4.health);
-    this->health_->at(healthImage4)->renderCopy(800,160);
-
+    
+    if (player4.playerImage == PLAYER_4)
+        this->health_->at(healthImage4)->renderCopy(800,160);
+    else
+        this->health_->at(healthImage4 * -1)->renderCopy(800,160);
 }
 
 void GraphicsScoreBoard::showScores(){
