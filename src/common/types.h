@@ -163,6 +163,10 @@ typedef enum {
     PLAYER_3_G = 29,
     PLAYER_4_G = 30,
     PROJECTILE_BOSS = 31,
+    PLAYER_1_DEAD = 27,
+    PLAYER_2_DEAD = 28,
+    PLAYER_3_DEAD = 29,
+    PLAYER_4_DEAD = 30,
 } elementType_t;
 
 typedef enum {
@@ -329,7 +333,8 @@ typedef struct{
     elementType_t playerImage;
     unsigned int lives;
     int health;
-    int score;
+    int levelScore;
+    int totalScore;
 } playerState_t;
 
 #endif

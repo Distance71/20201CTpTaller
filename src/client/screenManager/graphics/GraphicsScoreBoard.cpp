@@ -4,8 +4,8 @@ GraphicsScoreBoard::GraphicsScoreBoard(){
     this->bar_ = new Image(GameProvider::getWidth(),200,"assets/scoreBoard/bar.png");
 
     this-> playerImages_ = new unordered_map < elementType_t, Image*> ();
-    int playerImagesW = 140;
-    int playerImagesH = 80;
+    int playerImagesW = 100;
+    int playerImagesH = 70;
     this-> playerImages_->emplace(PLAYER_1,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player1.jpg"));
     this-> playerImages_->emplace(PLAYER_1_OUT,new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player1_D.jpg"));
     this-> playerImages_->emplace(PLAYER_1_G, new Image(playerImagesW,playerImagesH,"assets/scoreBoard/players/player1_G.jpg"));
@@ -26,10 +26,14 @@ GraphicsScoreBoard::GraphicsScoreBoard(){
     this->lives_->emplace(1,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts1.png"));
     this->lives_->emplace(2,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts2.png"));
     this->lives_->emplace(3,new Image(heartsW, heartsH,"assets/scoreBoard/hearts/hearts3.png"));
+    this->lives_->emplace(-1,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts1G.png"));
+    this->lives_->emplace(-2,new Image(heartsW, heartsH ,"assets/scoreBoard/hearts/hearts2G.png"));
+    this->lives_->emplace(-3,new Image(heartsW, heartsH,"assets/scoreBoard/hearts/hearts3G.png"));
 
     this->health_ = new unordered_map <int, Image*>();
     int energyW = 400;
-    int energyH = 30;
+    int energyH = 20;
+    
     this->health_->emplace(0,new Image(energyW,energyH,"assets/scoreBoard/energy/energy0.png"));
     this->health_->emplace(1,new Image(energyW,energyH,"assets/scoreBoard/energy/energy1.png"));
     this->health_->emplace(2,new Image(energyW,energyH,"assets/scoreBoard/energy/energy2.png"));
@@ -41,14 +45,26 @@ GraphicsScoreBoard::GraphicsScoreBoard(){
     this->health_->emplace(8,new Image(energyW,energyH,"assets/scoreBoard/energy/energy8.png"));
     this->health_->emplace(9,new Image(energyW,energyH,"assets/scoreBoard/energy/energy9.png"));
     this->health_->emplace(10,new Image(energyW,energyH,"assets/scoreBoard/energy/energy10.png"));
-    this->health_->emplace(11,new Image(energyW,energyH,"assets/scoreBoard/energy/energyBar.png"));
+
+    this->health_->emplace(-1,new Image(energyW,energyH,"assets/scoreBoard/energy/energy1G.png"));
+    this->health_->emplace(-2,new Image(energyW,energyH,"assets/scoreBoard/energy/energy2G.png"));
+    this->health_->emplace(-3,new Image(energyW,energyH,"assets/scoreBoard/energy/energy3G.png"));
+    this->health_->emplace(-4,new Image(energyW,energyH,"assets/scoreBoard/energy/energy4G.png"));
+    this->health_->emplace(-5,new Image(energyW,energyH,"assets/scoreBoard/energy/energy5G.png"));
+    this->health_->emplace(-6,new Image(energyW,energyH,"assets/scoreBoard/energy/energy6G.png"));
+    this->health_->emplace(-7,new Image(energyW,energyH,"assets/scoreBoard/energy/energy7G.png"));
+    this->health_->emplace(-8,new Image(energyW,energyH,"assets/scoreBoard/energy/energy8G.png"));
+    this->health_->emplace(-9,new Image(energyW,energyH,"assets/scoreBoard/energy/energy9G.png"));
+    this->health_->emplace(-10,new Image(energyW,energyH,"assets/scoreBoard/energy/energy10G.png"));
 
     this->scores_ = new unordered_map <elementType_t,TextBox*>();
+    
     string path = "assets/scoreBoard/scoreButton.png";
-    this->scores_->emplace(PLAYER_1, new TextBox(300,10,300,50,path.c_str(),path.c_str()));
-    this->scores_->emplace(PLAYER_2, new TextBox(300,110,300,50,path.c_str(),path.c_str()));
-    this->scores_->emplace(PLAYER_3, new TextBox(910,10,300,50,path.c_str(),path.c_str()));
-    this->scores_->emplace(PLAYER_4, new TextBox(910,110,300,50,path.c_str(),path.c_str()));
+    
+    this->scores_->emplace(PLAYER_1, new TextBox(300,20,300,50,path.c_str(),path.c_str()));
+    this->scores_->emplace(PLAYER_2, new TextBox(300,105,300,50,path.c_str(),path.c_str()));
+    this->scores_->emplace(PLAYER_3, new TextBox(910,20,300,50,path.c_str(),path.c_str()));
+    this->scores_->emplace(PLAYER_4, new TextBox(910,105,300,50,path.c_str(),path.c_str()));
 
     this->scores_->at(PLAYER_1)->setCenteringParameters(50,10,5,5);
     this->scores_->at(PLAYER_2)->setCenteringParameters(50,10,5,5);
@@ -70,28 +86,32 @@ GraphicsScoreBoard::GraphicsScoreBoard(){
     player1.playerImage = PLAYER_1_G;
     player1.lives = 3;
     player1.health = 100;
-    player1.score = 0;
+    player1.levelScore = 0;
+    player1.totalScore = 0;
     this->players_->emplace(PLAYER_1,player1);
 
     playerState_t player2;
     player2.playerImage = PLAYER_2_G;
     player2.lives = 3;
     player2.health = 100;
-    player2.score = 0;
+    player2.levelScore = 0;
+    player2.totalScore = 0;
     this->players_->emplace(PLAYER_2,player2);
 
     playerState_t player3;
     player3.playerImage = PLAYER_3_G;
     player3.lives = 3;
     player3.health = 100;
-    player3.score = 0;
+    player3.levelScore = 0;
+    player3.totalScore = 0;
     this->players_->emplace(PLAYER_3,player3);
 
     playerState_t player4;
     player4.playerImage = PLAYER_4_G;
     player4.lives = 3;
     player4.health = 100;
-    player4.score = 0;
+    player4.levelScore = 0;
+    player4.totalScore = 0;
     this->players_->emplace(PLAYER_4,player4);
 
 }
@@ -103,12 +123,14 @@ void GraphicsScoreBoard::setScore(elementType_t player, int score){
     scores_->at(player)->setText(cadena);
 }
 
-void GraphicsScoreBoard::updateScore(elementType_t playerImage,unsigned int lives,int health,int score){
+void GraphicsScoreBoard::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
+    
     playerState_t player;
     player.playerImage = playerImage;
     player.lives= lives;
     player.health = health;
-    player.score = score;
+    player.levelScore = levelScore;
+    player.totalScore = totalScore;
     
     if (playerImage == PLAYER_1 || playerImage == PLAYER_1_OUT){
         this->players_->erase(PLAYER_1);
@@ -133,7 +155,6 @@ void GraphicsScoreBoard::updateScore(elementType_t playerImage,unsigned int live
 
 
 int GraphicsScoreBoard::getHealthImageNumber(int health){
-    cout<<health<<endl;
     if (health == 0)
         return 0;
     else if (0 < health && health < 15)
@@ -163,106 +184,167 @@ void GraphicsScoreBoard::update(){
 
     //********Actualizo el jugador 1**********
     playerState_t player1 = this->players_->at(PLAYER_1);
+ 
     //imagen 
     this->playerImages_->at(player1.playerImage)->renderCopy(35,20);
     //vida
-    this->lives_->at(player1.lives)->renderCopy(190,20);
+    if (player1.playerImage == PLAYER_1)
+         this->lives_->at(player1.lives)->renderCopy(190,20);
+    else
+        this->lives_->at(player1.lives * -1)->renderCopy(190,20);
+   
    //puntaje
-    this->setScore(PLAYER_1,player1.score);
+    this->setScore(PLAYER_1,player1.totalScore);
     this->scores_->at(PLAYER_1)->update(0,0,false);
+    
     //salud
     int healthImage1 = this->getHealthImageNumber(player1.health);
-    cout <<healthImage1<< endl;
-    this-> health_->at(healthImage1)->renderCopy(190,60);
+
+    if (player1.playerImage == PLAYER_1)
+        this->health_->at(healthImage1)->renderCopy(190,75);
+    else
+        this->health_->at(healthImage1*-1)->renderCopy(190,75);
+   
 
     //********Actualizo el jugador 2**********
     playerState_t player2 = this->players_->at(PLAYER_2);
+    
     //imagen 
-    this->playerImages_->at(player2.playerImage)->renderCopy(35,110);
+    this->playerImages_->at(player2.playerImage)->renderCopy(35,105);
+
     //vida
-    this->lives_->at(player2.lives)->renderCopy(190,110);
+    if ( player2.playerImage == PLAYER_2)
+        this->lives_->at(player2.lives)->renderCopy(190,105);
+    else
+        this->lives_->at(player2.lives * -1)->renderCopy(190,105);
+    
     //puntaje
-    this->setScore(PLAYER_2,player2.score);
+    this->setScore(PLAYER_2,player2.totalScore);
     this->scores_->at(PLAYER_2)->update(0,0,false);
+    
     //salud
     int healthImage2 = this->getHealthImageNumber(player2.health);
-    this-> health_->at(healthImage2)->renderCopy(190,160);
+    if ( player2.playerImage == PLAYER_2)
+        this-> health_->at(healthImage2)->renderCopy(190,160);
+    else 
+        this-> health_->at(healthImage2 * -1)->renderCopy(190,160);
 
     //********Actualizo el jugador 3**********
     playerState_t player3 = this->players_->at(PLAYER_3);
     //imagen 
     this->playerImages_->at(player3.playerImage)->renderCopy(650,20);
+    
     //vida
-    this->lives_->at(player3.lives)->renderCopy(800,20);
+    if (player3.playerImage == PLAYER_3)
+        this->lives_->at(player3.lives)->renderCopy(800,20);
+    else
+        this->lives_->at(player3.lives * -1)->renderCopy(800,20);
+    
     //puntaje
-    this->setScore(PLAYER_3,player3.score);
+    this->setScore(PLAYER_3,player3.totalScore);
     this->scores_->at(PLAYER_3)->update(0,0,false);
     //salud
     int healthImage3 = this->getHealthImageNumber(player3.health);
-    this-> health_->at(healthImage3)->renderCopy(800,60);
+    
+    if (player3.playerImage == PLAYER_3)
+        this-> health_->at(healthImage3)->renderCopy(800,75);
+    else
+        this-> health_->at(healthImage3 * -1)->renderCopy(800,75);
+
     
     //********Actualizo el jugador 4**********
     playerState_t player4 = this->players_->at(PLAYER_4);
     //imagen 
-    this->playerImages_->at(player4.playerImage)->renderCopy(650,110);
+    this->playerImages_->at(player4.playerImage)->renderCopy(650,105);
+    
     //vida
-    this->lives_->at(player4.lives)->renderCopy(800,110);
+    if (player4.playerImage == PLAYER_4)
+        this->lives_->at(player4.lives)->renderCopy(800,110);
+    else
+        this->lives_->at(player4.lives *-1)->renderCopy(800,110);
+    
     //puntaje
-    this->setScore(PLAYER_4,player4.score);
+    this->setScore(PLAYER_4,player4.totalScore);
     this->scores_->at(PLAYER_4)->update(0,0,false);
+    
     //salud
     int healthImage4 = this->getHealthImageNumber(player4.health);
-    this->health_->at(healthImage4)->renderCopy(800,160);
-
+    
+    if (player4.playerImage == PLAYER_4)
+        this->health_->at(healthImage4)->renderCopy(800,160);
+    else
+        this->health_->at(healthImage4 * -1)->renderCopy(800,160);
 }
 
 void GraphicsScoreBoard::showScores(){
-    cout << "entro"<<endl;
     
     string path = "assets/scoreBoard/scoreButton.png";
     
     this->scoreTable_->renderCopy(0,0);
 
-    TextBox score1 = TextBox(550,300,400,80,path.c_str(),path.c_str());
-    TextBox score2 = TextBox(550,400,400,80,path.c_str(),path.c_str());
-    TextBox score3 = TextBox(550,500,400,80,path.c_str(),path.c_str());
-    TextBox score4 = TextBox(550,600,400,80,path.c_str(),path.c_str());
+    TextBox levelScore1 = TextBox(470,350,220,60,path.c_str(),path.c_str());
+    TextBox levelScore2 = TextBox(470,430,220,60,path.c_str(),path.c_str());
+    TextBox levelScore3 = TextBox(470,510,220,60,path.c_str(),path.c_str());
+    TextBox levelScore4= TextBox (470,590,220,60,path.c_str(),path.c_str());
 
-    score1.setCenteringParameters(50,10,5,5);
-    score2.setCenteringParameters(50,10,5,5);
-    score3.setCenteringParameters(50,10,5,5);
-    score4.setCenteringParameters(50,10,5,5);
+    levelScore1.setCenteringParameters(50,10,5,5);
+    levelScore2.setCenteringParameters(50,10,5,5);
+    levelScore3.setCenteringParameters(50,10,5,5);
+    levelScore4.setCenteringParameters(50,10,5,5);
     
-    score1.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
-    score2.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
-    score3.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
-    score4.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+    levelScore1.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+    levelScore2.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+    levelScore3.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+    levelScore4.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+
+    TextBox totalScore1 = TextBox(720,350,220,60,path.c_str(),path.c_str());
+    TextBox totalScore2 = TextBox(720,430,220,60,path.c_str(),path.c_str());
+    TextBox totalScore3 = TextBox(720,510,220,60,path.c_str(),path.c_str());
+    TextBox totalScore4= TextBox(720,590,220,60,path.c_str(),path.c_str());
+
+    totalScore1.setCenteringParameters(50,10,5,5);
+    totalScore2.setCenteringParameters(50,10,5,5);
+    totalScore3.setCenteringParameters(50,10,5,5);
+    totalScore4.setCenteringParameters(50,10,5,5);
+    
+    totalScore1.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+    totalScore2.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+    totalScore3.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
+    totalScore4.setFont("assets/Fonts/open-sans/OpenSans-Bold.ttf",40);
 
 
     //Player1
     playerState_t player1 = this->players_->at(PLAYER_1);
-    this->playerImages_->at(player1.playerImage)->renderCopy(350,300);
-    score1.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player1.score))->str());
-    score1.update(0,0,false);
+    this->playerImages_->at(player1.playerImage)->renderCopy(350,350);
+    levelScore1.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player1.levelScore))->str());
+    levelScore1.update(0,0,false);
+    totalScore1.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player1.totalScore))->str());
+    totalScore1.update(0,0,false);
     
     //player2
     playerState_t player2 = this->players_->at(PLAYER_2);
-    this->playerImages_->at(player2.playerImage)->renderCopy(350,400);
-    score2.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player2.score))->str());
-    score2.update(0,0,false);
+    this->playerImages_->at(player2.playerImage)->renderCopy(350,430);
+    levelScore2.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player2.levelScore))->str());
+    levelScore2.update(0,0,false);
+    totalScore2.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player2.totalScore))->str());
+    totalScore2.update(0,0,false);
     
     
     //player3
     playerState_t player3 = this->players_->at(PLAYER_3);
-    this->playerImages_->at(player3.playerImage)->renderCopy(350,500);
-    score3.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player3.score))->str());
-    score3.update(0,0,false);
+    this->playerImages_->at(player3.playerImage)->renderCopy(350,510);
+    levelScore3.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player3.levelScore))->str());
+    levelScore3.update(0,0,false);
+    totalScore3.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player3.totalScore))->str());
+    totalScore3.update(0,0,false);
 
     //player4
     playerState_t player4 = this->players_->at(PLAYER_4);
-    this->playerImages_->at(player4.playerImage)->renderCopy(350,600);
-    score4.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player4.score))->str());
-    score4.update(0,0,false);
+    this->playerImages_->at(player4.playerImage)->renderCopy(350,590);
+    levelScore4.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player4.levelScore))->str());
+    levelScore4.update(0,0,false);
+    totalScore4.setText(static_cast<std::ostringstream*>(&(std::ostringstream() << player4.totalScore))->str());
+    totalScore4.update(0,0,false);
 
 }
 

@@ -158,6 +158,6 @@ void Client::runDetectEventThread(){
     this->eventsManager_-> RunDetectPlayerEventsThread();
 }
 
-void Client::updateScore(elementType_t player,unsigned int lives,int health,int score){
-    this->screenManager_->updateScore(player,lives,health,score);
+void Client::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
+    this->screenManager_->updateScore(playerImage,lives,health,levelScore,totalScore);
 }

@@ -259,6 +259,6 @@ void ScreenManager::ServerDisconnection(){
     this->gameGraphics_->setImage(SERVER_DISCONNECTION);
 }
 
-void ScreenManager::updateScore(elementType_t player,unsigned int lives,int health,int score){
-    this->gameGraphics_->updateScore(player,lives,health,score);
+void ScreenManager::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
+    this->gameGraphics_->updateScore(playerImage,lives,health,levelScore,totalScore);
 }

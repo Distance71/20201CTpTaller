@@ -293,6 +293,7 @@ void Stage::updateBackground(Game *game, stage_t stage){
         }
     } 
     catch(const std::out_of_range& oor){
+        std::cerr << "Out of Range error in map UpdateBackground: " << oor.what() << '\n';
     }
 }
 
@@ -347,7 +348,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             delete deadEnemy;
         }
         catch(const std::out_of_range& oor){
-            continue;
+            std::cerr << "Out of Range error in step update " << oor.what() << '\n';
         }
     }
 
@@ -385,7 +386,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             this->mapElements_.erase(IdDead);
             delete deadEnemy;
         } catch(const std::out_of_range& oor){
-            continue;
+            std::cerr << "Out of Range error: " << oor.what() << '\n';
         }
     }
     
@@ -511,7 +512,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
             this->mapElements_.erase(IdDead);
             delete deadEnemy;
         } catch(const std::out_of_range& oor) {
-
+            std::cerr << "Out of Range error in step update: " << oor.what() << '\n';
         }
         
     }
@@ -581,8 +582,8 @@ void Map::sendScorePlayers(Game *game){
         unsigned int lives = player.second->getLives();
         int health = player.second->getHealth();
         
-        int scoreActual = player.second->getCurrentScore();
-        int scoreAcc = player.second->getScoreAcc();
+        int scoreActual = player.second->getCurrentScore() / 500;
+        int scoreAcc = player.second->getScoreAcc() / 500;
 
         Event *eventScoreUpdate = new EventScoreUpdate(typePlayer, lives, health, scoreActual, scoreAcc);
         game->sendEvent(eventScoreUpdate);
@@ -605,6 +606,10 @@ void Map::informDisconnection(string username){
         case PLAYER_4:
             NEW_TYPE = PLAYER_4_OUT;
             break;
+       default:
+            NEW_TYPE = PLAYER_X;
+            break;
+            
     }
     this->players[username]->setType(NEW_TYPE);
     this->players[username]->setGameMode(MODE_TEST_GAME);

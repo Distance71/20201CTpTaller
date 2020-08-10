@@ -152,12 +152,31 @@ void MapElement::quitLives(){
     if (this->lives_ <= 0) {
         this->lives_ = 0;
         this->health_ = 0;
+        this->setTypeDead();
     } else {
         this->health_ = maxHealth_;
     }
 
     if ((this->type == PLAYER_1) || (this->type == PLAYER_2) || (this->type == PLAYER_3) || (this->type == PLAYER_4)){
         this->setTemporaryImmunity();
+    }
+}
+
+void  MapElement::setTypeDead(){
+
+    switch (this->type){
+        case PLAYER_1:
+            this->setType(PLAYER_1_DEAD);
+            break;
+        case PLAYER_2:
+            this->setType(PLAYER_2_DEAD);
+            break;
+        case PLAYER_3:
+            this->setType(PLAYER_3_DEAD);
+            break;
+        case PLAYER_4:
+            this->setType(PLAYER_4_DEAD);
+            break;
     }
 }
 
@@ -247,7 +266,7 @@ position_t MapElement::getActualPosition(){
         actualPosition.orientation = (orientation_t) orientation->getX();
     }
     catch(const std::out_of_range& oor) {
-        cout << "Error getActualPosition" << endl;    
+        std::cerr << "Out of Range error in MapElement getActualPosition: " << oor.what() << '\n'; 
     }
     return actualPosition;
 }
@@ -402,6 +421,7 @@ unordered_map<Id,MapElement*> MapElement::getShoots(){
 };
 
 void MapElement::eraseProjectile(Id id){
+    
     try {
         MapElement* deadProjectile = this->projectiles_.at(id);
         this->projectiles_.erase(id);
@@ -409,7 +429,7 @@ void MapElement::eraseProjectile(Id id){
     }
     
     catch (const std::out_of_range& oor){
-        cout << "se levanta violacion de segmento al eliminar projectil con id"<<id << endl;
+        std::cerr << "Out of Range error in MapElement eraseProjectile: " << oor.what() << '\n';
     }
 }
 
