@@ -708,6 +708,9 @@ void Map::informConnection(string username){
         case PLAYER_4_OUT:
             NEW_TYPE = PLAYER_4;
             break;
+       default:
+            NEW_TYPE = PLAYER_X;
+            break;
     }
     this->players[username]->setType(NEW_TYPE);
     this->players[username]->setGameMode(MODE_NORMAL_GAME);
