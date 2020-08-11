@@ -22,10 +22,7 @@ private:
 	Mix_Chunk *bossShot = NULL;
 	Mix_Chunk *shotImpactsBoss = NULL;
 
-	// Mix_Chunk *stageOne = NULL;
-	// Mix_Chunk *stageTwo = NULL;
-	// Mix_Chunk *stageThree = NULL;
-	// Mix_Chunk *stageFour = NULL;
+	Mix_Chunk *reconexionPlayer = NULL;
 
 	static Audio* instance;
 	Mix_Music* mixMusicSDL;
