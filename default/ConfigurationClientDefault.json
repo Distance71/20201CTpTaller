@@ -87,14 +87,14 @@
                 "layer7": "assets/Stage/Level2/layer_7.png",
                 "enemies": [
                     {
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "sprite": "assets/Enemies/enemigo1.png"				  
+                        "sizeX": 82,
+                        "sizeY": 41,
+                        "sprite": "assets/Enemies/enemigo8.png"				  
                     },
                     {
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "sprite": "assets/Enemies/enemigo2.png"
+                        "sizeX": 90,
+                        "sizeY": 56,
+                        "sprite": "assets/Enemies/enemigo6.png"
                     }
                 ]
             },
@@ -110,13 +110,36 @@
                 "layer7": "assets/Stage/Level3/layer_7.png",
                 "enemies": [
                     {
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "sprite": "assets/Enemies/enemigo6.png"				  
+                        "sizeX": 82,
+                        "sizeY": 41,
+                        "sprite": "assets/Enemies/enemigo8.png"				  
                     },
                     {
-                        "sizeX": 100,
-                        "sizeY": 70,
+                        "sizeX": 93,
+                        "sizeY": 59,
+                        "sprite": "assets/Enemies/enemigo9.png"
+                    }
+                ]
+            },
+            {
+                "transitionInit": "assets/TransitionScreens/Stage4.JPG",
+                "transitionEnd": "assets/TransitionScreens/Stage4Cleared.JPG",
+                "layer1": "assets/Stage/Level4/layer_1.png",
+                "layer2": "",
+                "layer3": "assets/Stage/Level4/layer_2.png",
+                "layer4": "assets/Stage/Level4/layer_3.png",
+                "layer5": "assets/Stage/Level4/layer_4.png",
+                "layer6": "",
+                "layer7": "",
+                "enemies": [
+                    {
+                        "sizeX": 90,
+                        "sizeY": 56,
+                        "sprite": "assets/Enemies/enemigo6.png"               
+                    },
+                    {
+                        "sizeX": 93,
+                        "sizeY": 59,
                         "sprite": "assets/Enemies/enemigo9.png"
                     }
                 ]

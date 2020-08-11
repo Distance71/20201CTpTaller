@@ -100,7 +100,7 @@ class ConfigurationHandler {
         informationScreen_t getinformationScreen();
         gameParams_t getGameParams();
         player_t getPlayerParam(int numberPlayer);
-        enemy_t getEnemyData(int numberTypeEnemy);
+        enemy_t getEnemyData(int numberStage, int numberTypeEnemy);
         transitionScreen_t getTransitionScreenForStage(int oneStage);
         enemy_t getFinalBoss();
         projectile_t getProjectileData();

@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "INFO"
+            "level": "ERROR"
         },
         "screen":{
             "width": 1280,
@@ -33,65 +33,65 @@
                         "quantity": 5,
                         "sizeX": 120,
                         "sizeY": 80,
-                        "health": 100				  
+                        "health": 100                 
                     },
                     {
                         "quantity": 5,
                         "sizeX": 100,
                         "sizeY": 70,
-                        "health": 200	
+                        "health": 200   
                     }
                 ]
             },
             {
                 "enemies": [
                     {
-                        "quantity": 5,
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "health": 100				  
+                        "quantity": 6,
+                        "sizeX": 82,
+                        "sizeY": 41,
+                        "health": 100                 
                     },
                     {
-                        "quantity": 5,
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "health": 200	
+                        "quantity": 6,
+                        "sizeX": 90,
+                        "sizeY": 56,
+                        "health": 200   
                     }
                 ]
             },
             {
                 "enemies": [
                     {
-                        "quantity": 5,
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "health": 100				  
+                        "quantity": 7,
+                        "sizeX": 82,
+                        "sizeY": 41,
+                        "health": 100                 
                     },
                     {
-                        "quantity":5,
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "health": 200	
+                        "quantity": 6,
+                        "sizeX": 93,
+                        "sizeY": 59,
+                        "health": 200   
                     }
                 ]
             },
             {
                 "enemies": [
                     {
-                        "quantity":5,
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "health": 100				  
+                        "quantity": 7,
+                        "sizeX": 90,
+                        "sizeY": 56,
+                        "health": 100                 
                     },
                     {
-                        "quantity": 5,
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "health": 200	
+                        "quantity": 7,
+                        "sizeX": 93,
+                        "sizeY": 59,
+                        "health": 200   
                     }
                 ]
             }
-        ],    
+        ],     
         "projectiles": {
             "sizeX": 33,
             "sizeY": 14

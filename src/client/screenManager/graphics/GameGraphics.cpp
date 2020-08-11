@@ -33,8 +33,14 @@ void GameGraphics::createElements(){
         players.push_back(onePlayer);
     }
 
-    enemy_t enemy1 = GameProvider::getConfig()->getEnemyData(0);
-    enemy_t enemy2 = GameProvider::getConfig()->getEnemyData(1);
+    enemy_t enemy1A = GameProvider::getConfig()->getEnemyData(0, 0);
+    enemy_t enemy2A = GameProvider::getConfig()->getEnemyData(0, 1);
+    enemy_t enemy1B = GameProvider::getConfig()->getEnemyData(1, 0);
+    enemy_t enemy2B = GameProvider::getConfig()->getEnemyData(1, 1);
+    enemy_t enemy1C = GameProvider::getConfig()->getEnemyData(2, 0);
+    enemy_t enemy2C = GameProvider::getConfig()->getEnemyData(2, 1);
+    enemy_t enemy1D = GameProvider::getConfig()->getEnemyData(3, 0);
+    enemy_t enemy2D = GameProvider::getConfig()->getEnemyData(3, 1);
 
     enemy_t finalBoss = GameProvider::getConfig()->getFinalBoss();
     projectile_t projectile = GameProvider::getConfig()->getProjectileData();
@@ -62,8 +68,16 @@ void GameGraphics::createElements(){
     this->elements_[PLAYER_2_OUT] = new GraphicsMapElement(players[1].spriteDisconnected, players[1].size_x, players[1].size_y, 0, 0, FRONT);
     this->elements_[PLAYER_3_OUT] = new GraphicsMapElement(players[2].spriteDisconnected, players[2].size_x, players[2].size_y, 0, 0, FRONT);
     this->elements_[PLAYER_4_OUT] = new GraphicsMapElement(players[3].spriteDisconnected, players[3].size_x, players[3].size_y, 0, 0, FRONT);
-    this->elements_[ENEMY_1] = new GraphicsMapElement(enemy1.sprite, enemy1.size_x, enemy1.size_y, 0, 0, FRONT);
-    this->elements_[ENEMY_2] = new GraphicsMapElement(enemy2.sprite, enemy2.size_x, enemy2.size_y, 0, 0, FRONT);
+    
+    this->elements_[ENEMY_1_A] = new GraphicsMapElement(enemy1A.sprite, enemy1A.size_x, enemy1A.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_2_A] = new GraphicsMapElement(enemy2A.sprite, enemy2A.size_x, enemy2A.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_1_B] = new GraphicsMapElement(enemy1B.sprite, enemy1B.size_x, enemy1B.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_2_B] = new GraphicsMapElement(enemy2B.sprite, enemy2B.size_x, enemy2B.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_1_C] = new GraphicsMapElement(enemy1C.sprite, enemy1C.size_x, enemy1C.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_2_C] = new GraphicsMapElement(enemy2C.sprite, enemy2C.size_x, enemy2C.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_1_D] = new GraphicsMapElement(enemy1D.sprite, enemy1D.size_x, enemy1D.size_y, 0, 0, FRONT);
+    this->elements_[ENEMY_2_D] = new GraphicsMapElement(enemy2D.sprite, enemy2D.size_x, enemy2D.size_y, 0, 0, FRONT);
+
     this->elements_[BOSS_ENEMY] = new GraphicsMapElement(finalBoss.sprite, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
     this->elements_[PROJECTILE] = new GraphicsMapElement(projectile.sprite, projectile.size_x, projectile.size_y, 0, 0, FRONT);
     this->elements_[PROJECTILE_BOSS] = new GraphicsMapElement(projectileBoss.sprite, projectileBoss.size_x, projectileBoss.size_y, 0, 0, FRONT);

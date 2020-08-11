@@ -7,7 +7,7 @@
             "width": 1280,
             "height": 800
         },
-        "quantityPlayers": 2,
+        "quantityPlayers": 1,
         "players": [
             {
                 "sizeX": 95,
@@ -30,13 +30,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 15,
+                        "quantity": 5,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100				  
                     },
                     {
-                        "quantity": 10,
+                        "quantity": 5,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200	
@@ -46,48 +46,48 @@
             {
                 "enemies": [
                     {
-                        "quantity": 15,
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "health": 100				  
+                        "quantity": 6,
+                        "sizeX": 82,
+                        "sizeY": 41,
+                        "health": 100                 
                     },
                     {
-                        "quantity": 10,
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "health": 200	
+                        "quantity": 6,
+                        "sizeX": 90,
+                        "sizeY": 56,
+                        "health": 200   
                     }
                 ]
             },
             {
                 "enemies": [
                     {
-                        "quantity": 15,
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "health": 100				  
+                        "quantity": 7,
+                        "sizeX": 82,
+                        "sizeY": 41,
+                        "health": 100                 
                     },
                     {
-                        "quantity": 10,
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "health": 200	
+                        "quantity": 6,
+                        "sizeX": 93,
+                        "sizeY": 59,
+                        "health": 200   
                     }
                 ]
             },
             {
                 "enemies": [
                     {
-                        "quantity": 15,
-                        "sizeX": 120,
-                        "sizeY": 80,
-                        "health": 100				  
+                        "quantity": 7,
+                        "sizeX": 90,
+                        "sizeY": 56,
+                        "health": 100                 
                     },
                     {
-                        "quantity": 10,
-                        "sizeX": 100,
-                        "sizeY": 70,
-                        "health": 200	
+                        "quantity": 7,
+                        "sizeX": 93,
+                        "sizeY": 59,
+                        "health": 200   
                     }
                 ]
             }
@@ -98,13 +98,12 @@
         },
         "projectilesBoss": {
             "sizeX": 88,
-            "sizeY": 36,
-            "sprite": "assets/Projectile/projectileBoss.png" 
+            "sizeY": 36
         },
         "finalBoss":{
             "sizeX": 400,
             "sizeY": 300,
-            "sprite": "assets/Enemies/EnemyBoss.png"
+            "health": 1000
         },
         "users": [
             {

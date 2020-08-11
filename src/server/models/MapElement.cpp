@@ -16,13 +16,13 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->lives_ = lives;
     this->gameMode_ = MODE_NORMAL_GAME;
 
-    if(type == ENEMY_1){
+    if(this->isEnemyType1()){
         EnemyIA* enemyia = new EnemyIA(this);
         addAction("EnemyIA", enemyia);
         this->damage_ = DAMAGE_ENEMY_1;
         this->scoreWhenKilled_ = SCORE_KILLED_ENEMY_1;
 
-    } else if(type == ENEMY_2){
+    } else if(this->isEnemyType2()){
         EnemyIA* enemyia = new EnemyIA(this);
         addAction("EnemyIA", enemyia);
         this->damage_ = DAMAGE_ENEMY_2;
@@ -55,8 +55,20 @@ MapElement::MapElement(elementType_t type, position_t position_, int x_speed, in
     this->isTemporaryImmune_ = false;
 }
 
+bool MapElement::isEnemy(){
+    return (isEnemyType1() || isEnemyType2());
+}
+
+bool MapElement::isEnemyType1(){
+    return ((type == ENEMY_1_A) || (type == ENEMY_1_B) || (type == ENEMY_1_C) || (type == ENEMY_1_D));
+}
+
+bool MapElement::isEnemyType2(){
+    return ((type == ENEMY_2_A) || (type == ENEMY_2_B) || (type == ENEMY_2_C) || (type == ENEMY_2_D));
+}
+
 void MapElement::setTarget(MapElement* target) {
-    if(type == ENEMY_1 || type == ENEMY_2){
+    if(this->isEnemy()){
         EnemyIA* enemyia = this->getAction<EnemyIA>("EnemyIA");
         enemyia->setTarget(target);
     }
@@ -71,7 +83,7 @@ void MapElement::setTarget(MapElement* target) {
 }
 
 void MapElement::setGame(Game* game) {
-    if(type == ENEMY_1 || type == ENEMY_2){
+    if(this->isEnemy()){
         EnemyIA* enemyia = this->getAction<EnemyIA>("EnemyIA");
         enemyia->setGame(game);
     }

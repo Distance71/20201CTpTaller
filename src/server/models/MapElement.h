@@ -71,6 +71,10 @@ class MapElement {
         void quitTemporaryImmunity();
         void setTypeDead();
 
+        bool isEnemy();
+        bool isEnemyType1();
+        bool isEnemyType2();
+
     public:
         MapElement(elementType_t type, position_t position_, int x_speed, int y_speed, int size_x, int size_y, int health, int lives=1);
         ~MapElement(); 

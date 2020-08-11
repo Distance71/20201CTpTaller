@@ -426,10 +426,46 @@ void ConfigurationHandler::initializeDataServer(){
             
                 enemy_t oneEnemy;
 
-                elementType_t typeEnemy = ENEMY_1;
+                elementType_t typeEnemy = ENEMY_1_A;
+                bool isEnemyType1 = (numberEnemy == 0);
 
-                if (numberEnemy > 0)
-                    typeEnemy = ENEMY_2;
+                switch (numberStage){
+                    case 0:
+
+                        if (isEnemyType1)
+                            typeEnemy = ENEMY_1_A;
+                        else
+                            typeEnemy = ENEMY_2_A;
+
+                        break;
+
+                    case 1:
+
+                        if (isEnemyType1)
+                            typeEnemy = ENEMY_1_B;
+                        else
+                            typeEnemy = ENEMY_2_B;
+
+                        break;
+
+                    case 2:
+
+                        if (isEnemyType1)
+                            typeEnemy = ENEMY_1_C;
+                        else
+                            typeEnemy = ENEMY_2_C;
+
+                        break;
+
+                    case 3:
+
+                        if (isEnemyType1)
+                            typeEnemy = ENEMY_1_D;
+                        else
+                            typeEnemy = ENEMY_2_D;
+
+                        break;
+                }
 
                 oneEnemy.type = typeEnemy;
 
@@ -723,12 +759,17 @@ player_t ConfigurationHandler::getPlayerParam(int numberPlayer){
     return onePlayer;
 }
 
-enemy_t ConfigurationHandler::getEnemyData(int numberTypeEnemy){
+enemy_t ConfigurationHandler::getEnemyData(int numberStage, int numberTypeEnemy){
 
     enemy_t enemy;
 
-    if (this->gameData.levelParams[0].stagesParams[0].totalEnemies.size() > numberTypeEnemy){
-        enemy = this->gameData.levelParams[0].stagesParams[0].totalEnemies[numberTypeEnemy];
+    enemy.size_x = 0;
+    enemy.size_y = 0;
+    enemy.sprite = "";
+
+    if (numberStage < this->gameData.levelParams[0].stagesParams.size()){
+        if (numberTypeEnemy < this->gameData.levelParams[0].stagesParams[numberStage].totalEnemies.size())
+            enemy = this->gameData.levelParams[0].stagesParams[numberStage].totalEnemies[numberTypeEnemy];
     }
 
     return enemy;
