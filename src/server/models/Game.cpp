@@ -176,6 +176,7 @@ void Game::movePlayer(string user, orientation_t orientation){
 
 void Game::changeGameModePlayer(string user){
     this->map_->changeGameModePlayer(user);
+    this->sendEvent(new EventMusicUpdate(RECONEXION_PLAYER));
 }
 
 void Game::shootPlayer(string user){
