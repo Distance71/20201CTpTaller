@@ -6,6 +6,7 @@ Game::Game(Server *server){
 }
 
 Game::~Game(){
+    delete this->map_;
 }
 
 Map* Game::getMap(){

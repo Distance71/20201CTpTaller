@@ -45,6 +45,7 @@ class Map {
     public:    
     Map();
     Map(gameParams_t &gameSettings);
+    ~Map();
     void update(currentStep_t currentStep, Game *game);
     void addLevel(Level *level);
     vector<Level *> getLevels();
@@ -78,6 +79,7 @@ class Level: public Map {
     public:
     Level();
     Level(levelParams_t &params);
+    ~Level();
     void addStage(Stage *stage);
     vector<Stage *> getStages();
     void setTargetsForStep(currentStep_t actualStep, Game *game);
@@ -101,6 +103,7 @@ class Stage: public Level {
     
     Stage();
     Stage(stageParams_t &params);
+    ~Stage();
     void addStep(Step *step);
     vector<Step *> getSteps();
     void setTargetsForStep(currentStep_t actualStep, Game *game);
@@ -122,7 +125,7 @@ class Step: public Stage{
     public:
     Step();
     Step(stepParams_t params);
-
+    ~Step();
     void setTargetsForStep(Game *game);
     void update(Game *game, unordered_map<string, MapElement*> players);
     void initializeStep(Game *game);

@@ -52,7 +52,10 @@ void killBossWithExplosion(Game *game, MapElement *mapElement){
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_11, actualPosition));
 }
 
-Map::Map(){}
+Map::~Map(){
+     this->players.clear();
+     delete this->finalBoss_;
+}
 
 Map::Map(gameParams_t &gameSettings){
     size_t nLevels = gameSettings.levelParams.size();
@@ -67,11 +70,17 @@ Map::Map(gameParams_t &gameSettings){
     this->initializeFinalBoss(gameSettings);
 }
 
+Map::Map(){}
+
 bool Map::endStep(currentStep_t currentStep){
     return this->levels_[currentStep.level]->endStep(currentStep.stage, currentStep.step);
 }
 
 Level::Level(){}
+
+Level::~Level(){
+    this->stages_.clear();
+}
 
 Level::Level(levelParams_t &params){
     size_t nStages = params.stagesParams.size();
@@ -95,6 +104,17 @@ Stage::Stage(stageParams_t &params){
     for(size_t i = 0; i < quantitySteps; i++) {
         Step *step = new Step(params.stepsParams[i]);
         this->addStep(step);
+    }
+}
+
+Stage::~Stage(){
+    this->steps_.clear();
+    
+    for (auto vector :  stagesBackground_){
+        vector.second->clear();
+    
+    this->stagesBackground_.clear();
+    
     }
 }
 
@@ -179,6 +199,10 @@ Step::Step(stepParams_t params) {
 
     this->updateShift_ = 1;
 }
+Step::~Step(){
+    this->mapElements_.clear();
+}
+
 
 bool Step::endStep(){
     return (this->mapElements_.empty());
