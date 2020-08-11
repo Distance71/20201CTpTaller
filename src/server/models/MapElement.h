@@ -17,6 +17,7 @@
 #include "ProjectileIA.h"
 #include "BossIA.h"
 #include "CollisionRectangle.h"
+#include "Game.h"
 
 // Al Config?
 #define DAMAGE_ENEMY_1 15
@@ -30,6 +31,8 @@
 #define SCORE_KILLED_PLAYER 0 // No influiria este valor
 
 using namespace std;
+
+class Game;
 
 class MapElement {
 
@@ -79,6 +82,7 @@ class MapElement {
         
         void update();
         void setTarget(MapElement* target);
+        void setGame(Game* game);
         position_t getActualPosition();
         string getImageSource();
         

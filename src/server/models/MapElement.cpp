@@ -70,6 +70,16 @@ void MapElement::setTarget(MapElement* target) {
 
 }
 
+void MapElement::setGame(Game* game) {
+    if(type == ENEMY_1 || type == ENEMY_2){
+        EnemyIA* enemyia = this->getAction<EnemyIA>("EnemyIA");
+        enemyia->setGame(game);
+    }
+
+    if (type == BOSS_ENEMY) 
+        this->getAction<BossIA>("BossIA")->setGame(game);
+}
+
 MapElement::~MapElement() {
     
     for (auto oneState : this->states_){

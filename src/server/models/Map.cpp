@@ -253,6 +253,7 @@ void Step::setTargetsForStep(Game *game){
     for(auto mapElement : this->mapElements_) {
         MapElement *target = getRandomTarget(game);
         mapElement.second->setTarget(target);
+        mapElement.second->setGame(game);
     }
 }
 
@@ -701,6 +702,7 @@ void Map::updateFinal(Game* game){
 
     if (!this->hasSetTargetFinal){
         this->hasSetTargetFinal = true;
+        this->finalBoss_->setGame(game);
         for (auto player : this->players)
             this->finalBoss_->setTarget(player.second);
     }
