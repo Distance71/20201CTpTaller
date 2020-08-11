@@ -80,6 +80,7 @@ void Audio::setSong(const std::string& path){
 }
 
 void Audio::playMusic(){
+	//si llega a ser necesario se puede usar Mix_SetMusicPosition
 	//if (!this->isPaused) {
 		if (Mix_PlayMusic(this->mixMusicSDL, -1) == -1){
 			Logger::getInstance()->log(ERROR,"Error al reproducir la musica");

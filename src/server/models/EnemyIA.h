@@ -19,7 +19,7 @@ class EnemyIA: public MovementHandler {
 		unsigned long timeShoot;
 		unsigned long timeLimitShoot;
 
-		const unsigned long FRECUENCIA = 160;
+		const unsigned long FRECUENCIA = 140;
 
 		int randomMovement(int yp, int ys);
 		void randomShoot();
