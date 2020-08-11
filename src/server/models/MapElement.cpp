@@ -383,7 +383,17 @@ CollisionRectangle* MapElement::getCollisionRectangle(){
 bool MapElement::checkCollision(MapElement* mapElement){
     CollisionRectangle* myRectangle = this->getCollisionRectangle();
     CollisionRectangle* otherRectangle = mapElement->getCollisionRectangle();
-    bool result = myRectangle->isCollision(otherRectangle);
+    bool result = false;
+
+
+    if (mapElement->type == BOSS_ENEMY){
+
+        if (!this->isImmune())
+            result = myRectangle->isCollisionWithBoss(otherRectangle);
+    } else {
+        result = myRectangle->isCollision(otherRectangle);
+    }
+
     delete myRectangle;
     delete otherRectangle;
     return result;

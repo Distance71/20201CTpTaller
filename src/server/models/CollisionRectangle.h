@@ -16,6 +16,7 @@ public:
 	CollisionRectangle(int Xstart, int Ystart, int Xend, int Yend);
 	void setOffset(int x, int y);
 	bool isCollision(CollisionRectangle* other);
+	bool isCollisionWithBoss(CollisionRectangle* other);
 	int getXstart();
 	int getYstart();
 	int getXend();
