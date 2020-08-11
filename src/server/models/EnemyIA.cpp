@@ -10,6 +10,10 @@ void EnemyIA::setTarget(MapElement* target){
     target_ = target;
 }
 
+void EnemyIA::setGame(Game *game){
+    this->game_ = game;
+}
+
 void EnemyIA::update(unordered_map<string, State *> states_){
     Logger::getInstance()->log(DEBUG, "Entro al update de Enemy IA");
     State* position = states_.at("Position");
@@ -90,6 +94,7 @@ void EnemyIA::randomShoot(){
        this->owner_->shoot();
        this->timeShoot = 0;
        this->timeLimitShoot = 70 + RandomGenerate::generate(FRECUENCIA);
+       this->game_->sendEvent(new EventMusicUpdate(ENEMY_SHOT));
     }
 }
 

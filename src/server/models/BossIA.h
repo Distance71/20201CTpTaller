@@ -10,11 +10,13 @@
 #include "../../common/services/RandomGenerate.h"
 
 class MapElement;
+class Game;
 
 class BossIA: public MovementHandler {
 	private:
 		MapElement* owner_;
 		vector<MapElement *> targets_;
+		Game* game_;
 
 		unsigned long timeShoot;
 		unsigned long timeLimitShoot;
@@ -30,6 +32,7 @@ class BossIA: public MovementHandler {
 		BossIA(MapElement* owner);
 		void update(unordered_map<string, State *> states_);
 		void addTarget(MapElement* target);
+		void setGame(Game *game);
 };
 
 #endif

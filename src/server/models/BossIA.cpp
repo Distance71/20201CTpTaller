@@ -42,6 +42,10 @@ void BossIA::addTarget(MapElement* target){
     this->targets_.push_back(target);
 }
 
+void BossIA::setGame(Game *game){
+    this->game_ = game;
+}
+
 void BossIA::randomShoot(){
     this->timeShoot++;
     
@@ -50,6 +54,7 @@ void BossIA::randomShoot(){
        this->owner_->shoot();
        this->timeShoot = 0;
        this->timeLimitShoot = 50 + RandomGenerate::generate(FRECUENCIA);
+       this->game_->sendEvent(new EventMusicUpdate(BOSS_SHOT));
     }
 }
 

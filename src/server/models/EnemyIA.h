@@ -9,11 +9,13 @@
 #include "../../common/services/RandomGenerate.h"
 
 class MapElement;
+class Game;
 
 class EnemyIA: public MovementHandler {
 	private:
 		MapElement* target_;
 		MapElement* owner_;
+		Game* game_;
 		unsigned long timeShoot;
 		unsigned long timeLimitShoot;
 
@@ -26,6 +28,7 @@ class EnemyIA: public MovementHandler {
 		EnemyIA(MapElement* owner);
 		void setTarget(MapElement* target);
 		void update(unordered_map<string, State *> states_);
+		void setGame(Game *game);
 };
 
 #endif
