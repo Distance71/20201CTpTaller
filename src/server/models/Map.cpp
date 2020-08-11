@@ -218,7 +218,7 @@ vector<Step *> Stage::getSteps(){
 MapElement* Map::getRandomTarget(Game *game){
     unsigned int target = RandomGenerate::generate(GameProvider::getQuantityPlayers()+1);
     //cout << "player target: "<< target << endl;
-    if (target == 5)  return nullptr;
+    if (target == GameProvider::getQuantityPlayers()+1)  return nullptr;
 
     unsigned int count = 0;
     unordered_map<string, MapElement*>::iterator it = game->getMap()->players.begin();

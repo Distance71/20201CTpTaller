@@ -63,6 +63,7 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
 
+    this->sendEvent(new EventMusicUpdate((musicType_t) actualStep.stage));
     this->sendStartStage(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
@@ -71,7 +72,7 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     Logger::getInstance()->log(DEBUG, "Se comienza el stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantitySteps; i++){
         actualStep.step = i;
-        runStep(actualStep);
+        runStep(actualStep);        
     }
 
     if (isFinalStage)
@@ -87,7 +88,6 @@ void Game::runStep(currentStep_t actualStep){
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     srand(time(NULL));
     map_->setTargetsForStep(actualStep, this);
-    this->sendEvent(new EventMusicUpdate((musicType_t) actualStep.stage));
 
     while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep) && this->map_->playerAlive()){
         updateState(actualStep);

@@ -174,7 +174,7 @@ void GameGraphics::setImage(sceneScreen_t scene){
 
 void GameGraphics::setAudio(musicType_t scene){
 
-    Audio::getInstance()->gradualStop(1200);
+    //Audio::getInstance()->gradualStop(1200);
     switch (scene)
     {
     case MUSIC_STAGE_ONE:

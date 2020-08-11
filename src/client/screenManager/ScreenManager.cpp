@@ -191,7 +191,11 @@ void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step
 void ScreenManager::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en ScreenManager");
     if(this->gameGraphics_){
-        this->gameGraphics_->setImage(scene);
+        if (scene == END_STAGE_1 || scene == END_STAGE_2 || scene == END_STAGE_3 || scene == END_STAGE_4){
+            Audio::getInstance()->gradualStop(1200);
+        }
+        
+        this->gameGraphics_->setImage(scene);        
         //this->gameGraphics_->setAudio(scene); se cambia por otra forma
     }
     else{
