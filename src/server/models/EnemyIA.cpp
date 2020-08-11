@@ -88,7 +88,7 @@ void EnemyIA::update(unordered_map<string, State *> states_){
 
 void EnemyIA::randomShoot(){
     this->timeShoot++;
-    //cout<<"contador "<<this->timeShoot<< endl;
+    
     if (this->timeShoot > this->timeLimitShoot)
     {
        this->owner_->shoot();

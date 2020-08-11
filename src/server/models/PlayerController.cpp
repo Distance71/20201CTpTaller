@@ -5,7 +5,7 @@ PlayerController::PlayerController(Sprite* sprite_){
 }
 
 void PlayerController::update(unordered_map<string, State *> states_){
-    cout <<"entro"<<endl;
+    
     Logger::getInstance()->log(DEBUG, "Entro a player controller");
 
     const Uint8 *keystate = SDL_GetKeyboardState(NULL);  //Me da un arreglo con el estado de todas las teclas (1 presionada, 0 no presionada)
@@ -34,9 +34,8 @@ void PlayerController::update(unordered_map<string, State *> states_){
     
     if (up && !down && !right && !left){ //arriba
         new_yp=yp-ys;
-        cout <<zone.xInit<<endl;
+
         if (new_yp>=zone.yInit){
-            cout <<zone.xInit<<endl;
             position->setY(new_yp);
         }
     }

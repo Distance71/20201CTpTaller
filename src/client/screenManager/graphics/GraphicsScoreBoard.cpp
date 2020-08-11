@@ -128,7 +128,6 @@ void GraphicsScoreBoard::setScore(elementType_t player, int score){
 }
 
 void GraphicsScoreBoard::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
-    cout<<"tipo de imagen:"<<playerImage<<endl;
     
     playerState_t player;
     player.playerImage = playerImage;
