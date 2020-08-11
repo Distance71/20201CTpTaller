@@ -800,7 +800,8 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
         finalBoss->update();
 
         if (finalBoss->isDead()){
-            killElementWithExplosion(game, finalBoss);
+            killBossWithExplosion(game, finalBoss);
+            return;
             // delete FInalBoss
         } else {
             position_t position = finalBoss->getActualPosition();
@@ -808,6 +809,7 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
             game->sendEvent(eventUpdateBoss);
         }
     }
+
 
     //Reviso colisiones entre jugadores y el jefe
     for (auto player : players){
@@ -820,18 +822,19 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
             // Como resolver que pasa con el Jefe Final
             bool isBossDead = finalBoss->reduceHealth(50);
 
-            if (isBossDead){
-                game->sendEvent(new EventMusicUpdate(EXPLOSION_BOSS));
-                killElementWithExplosion(game, finalBoss);
-                usleep(2000000);
-            }
-
             player.second->quitLives();
 
             if (player.second->isDead()){
                 game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                 killElementWithExplosion(game,player.second);
                 game->sendEventToUser(player.first, new EventGameOver());
+            }
+
+            if (isBossDead){
+                game->sendEvent(new EventMusicUpdate(EXPLOSION_BOSS));
+                killBossWithExplosion(game, finalBoss);
+                return;
+                //usleep(2000000);
             }
         }
     }
@@ -930,6 +933,7 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
                 if (isBossDead){
                     game->sendEvent(new EventMusicUpdate(EXPLOSION_BOSS));
                     killBossWithExplosion(game, finalBoss);
+                    return;
                     //usleep(2000000);
                 }
             }
