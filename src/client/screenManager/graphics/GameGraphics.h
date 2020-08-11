@@ -42,7 +42,7 @@ class GameGraphics {
         
         void setBackground(stage_t level);
         void setImage(sceneScreen_t scene);
-        void setAudio(sceneScreen_t scene);
+        void setAudio(musicType_t scene);
 
         void updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore);
 };

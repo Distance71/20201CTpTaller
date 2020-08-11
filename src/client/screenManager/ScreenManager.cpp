@@ -169,7 +169,12 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
 }
 
 void ScreenManager::updateMusic(musicType_t type){
-    Audio::getInstance()->playEffect(type);
+    if (type < 4){
+        this->gameGraphics_->setAudio(type);
+    }
+    else {
+        Audio::getInstance()->playEffect(type);
+    }
 }
 
 void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step){
@@ -187,7 +192,7 @@ void ScreenManager::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en ScreenManager");
     if(this->gameGraphics_){
         this->gameGraphics_->setImage(scene);
-        this->gameGraphics_->setAudio(scene);
+        //this->gameGraphics_->setAudio(scene); se cambia por otra forma
     }
     else{
         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,  no se han inicializado graficos");
@@ -226,6 +231,7 @@ static void* viewLoginThread(void* arg){
         menu->checkStatus();
         menu->show();
     }
+    Audio::getInstance()->gradualStop(1200);
     
     SDL_RenderClear(GameProvider::getRenderer());  
     client->runDetectEventThread();

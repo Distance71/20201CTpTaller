@@ -87,6 +87,7 @@ void Game::runStep(currentStep_t actualStep){
     Logger::getInstance()->log(DEBUG, "Se comienza el step " + to_string(actualStep.step) + " del stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     srand(time(NULL));
     map_->setTargetsForStep(actualStep, this);
+    this->sendEvent(new EventMusicUpdate((musicType_t) actualStep.stage));
 
     while(GameProvider::getStatus().normalStatus && !this->map_->endStep(actualStep) && this->map_->playerAlive()){
         updateState(actualStep);

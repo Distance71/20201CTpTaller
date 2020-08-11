@@ -172,24 +172,24 @@ void GameGraphics::setImage(sceneScreen_t scene){
     SDL_RenderPresent(this->renderer_);
 }
 
-void GameGraphics::setAudio(sceneScreen_t scene){
+void GameGraphics::setAudio(musicType_t scene){
 
     Audio::getInstance()->gradualStop(1200);
     switch (scene)
     {
-    case INIT_STAGE_1:
+    case MUSIC_STAGE_ONE:
         Audio::getInstance()->setSong("assets/Music/stage_1.mp3");   
         Audio::getInstance()->playMusic(); 
         break;
-    case INIT_STAGE_2:
+    case MUSIC_STAGE_TWO:
         Audio::getInstance()->setSong("assets/Music/stage_2.mp3");   
         Audio::getInstance()->playMusic(); 
         break;
-    case INIT_STAGE_3:
+    case MUSIC_STAGE_THREE:
         Audio::getInstance()->setSong("assets/Music/stage_3.mp3");   
         Audio::getInstance()->playMusic(); 
         break;
-    case INIT_STAGE_4:
+    case MUSIC_STAGE_FOUR:
         Audio::getInstance()->setSong("assets/Music/stage_boss.mp3");   
         Audio::getInstance()->playMusic(); 
         break;

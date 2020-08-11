@@ -300,7 +300,6 @@ void Stage::updateBackground(Game *game, stage_t stage){
 void Stage::update(currentStep_t currentStep, Game *game, unordered_map<string, MapElement*> players){
     size_t actualStep = currentStep.step;
     updateBackground(game, currentStep.stage);
-    //game->sendEvent(new EventMusicUpdate((musicType_t) currentStep.stage));
     steps_[actualStep]->update(game, players);
 }
 
