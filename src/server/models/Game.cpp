@@ -109,6 +109,7 @@ void Game::runFinal(){
         usleep(18000);
     }
 
+    usleep(1500000); 
 }
 
 void Game::sendStartStage(stage_t stage){
