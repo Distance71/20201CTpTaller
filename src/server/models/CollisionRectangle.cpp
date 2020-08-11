@@ -17,6 +17,20 @@ bool CollisionRectangle::isCollision(CollisionRectangle* other) {
 	return false;
 }
 
+bool CollisionRectangle::isCollisionWithBoss(CollisionRectangle* other){
+
+	if ( (this->Xstart_ >= other->getXstart() && this->Xstart_<= other->getXend() )|| (this->Xend_ >= other->getXstart() && this->Xend_ <= other->getXend())){
+
+		if (other->getYstart() <= this->Ystart_ && other->getYend() >= this->Ystart_)
+			return true;
+
+		if ((other->getYstart() >= this->Ystart_ && other->getYstart() <=this->Yend_ )||(other->getYend() >= this->Ystart_ && other->getYend()  <=this->Yend_)){
+			return true;
+		}
+	}
+	
+	return false;
+}
 
 int CollisionRectangle::getXstart() {
 	return this->Xstart_;
