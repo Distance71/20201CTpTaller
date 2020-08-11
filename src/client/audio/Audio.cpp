@@ -65,26 +65,10 @@ Audio::Audio(int volumen){
 	Mix_VolumeChunk(this->shotImpactsBoss, VOLUME_SOUNDS_DEFAULT+10);
 
 
-	// if ( (this->stageOne = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	// }
-	// Mix_VolumeChunk(this->stageOne, volumen);
-
-	// if ( (this->stageTwo = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	// }
-	// Mix_VolumeChunk(this->stageTwo, volumen);
-
-	// if ( (this->stageThree = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	// }
-	// Mix_VolumeChunk(this->stageThree, volumen);
-
-	// if ( (this->stageFour = Mix_LoadWAV("assets/Sounds/explosion.wav")) == NULL ){
-	// 	Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'laser2.wav'" );		
-	// }
-	// Mix_VolumeChunk(this->stageFour, volumen);
-
+	if ( (this->reconexionPlayer = Mix_LoadWAV("assets/Sounds/reconexion.wav")) == NULL ){
+		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'reconexion.wav'" );		
+	}
+	Mix_VolumeChunk(this->reconexionPlayer, volumen);
 
 	this->isPaused = false;
 	this->isInitMusic = false;
@@ -138,21 +122,9 @@ void Audio::playEffect(musicType_t soundType){
 			if(this->shotImpactsBoss) Mix_PlayChannel(-1, this->shotImpactsBoss, 0);
 			break;
 
-		// case SOUND_STAGE_ONE:
-		// 	if(this->stageOne) Mix_PlayChannel(-1, this->stageOne, 0);
-		// 	break;
-		// case SOUND_STAGE_TWO:
-		// 	if(this->stageTwo) Mix_PlayChannel(-1, this->stageTwo, 0);
-		// 	break;
-		
-		// case SOUND_STAGE_THREE:
-		// 	if(this->stageThree) Mix_PlayChannel(-1, this->stageThree, 0);
-		// 	break;
-		
-		// case SOUND_STAGE_FOUR:
-		// 	if(this->stageFour) Mix_PlayChannel(-1, this->stageFour, 0);
-		// 	break;
-
+		case RECONEXION_PLAYER:
+		 	if(this->reconexionPlayer) Mix_PlayChannel(-1, this->reconexionPlayer, 0);
+		 	break;
 		default:
 			break;
 		}
@@ -236,16 +208,8 @@ Audio::~Audio(){
 		Mix_FreeChunk(this->shotImpactsBoss);
 	}
 
-	// if (this->stageOne){
-	// 	Mix_FreeChunk(this->stageOne);
-	// }
-	// if (this->stageTwo){
-	// 	Mix_FreeChunk(this->stageTwo);
-	// }
-	// if (this->stageThree){
-	// 	Mix_FreeChunk(this->stageThree);
-	// }
-	// if (this->stageFour){
-	// 	Mix_FreeChunk(this->stageFour);
-	// }
+	if (this->reconexionPlayer){
+	 	Mix_FreeChunk(this->reconexionPlayer);
+	}
+	
 }

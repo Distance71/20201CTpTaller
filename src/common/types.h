@@ -195,6 +195,7 @@ typedef enum {
     SHOT_IMPACTS = 10,
     SHOT_IMPACTS_PLAYER = 11,
     SHOT_IMPACTS_BOSS = 12,
+    RECONEXION_PLAYER = 13,
 } musicType_t;
 
 typedef enum {
