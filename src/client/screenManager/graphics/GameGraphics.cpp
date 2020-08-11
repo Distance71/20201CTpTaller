@@ -80,6 +80,17 @@ void GameGraphics::createElements(){
     this->elements_[EXPLOSION_ANIMATION_10] = new GraphicsMapElement(sourceExplosionAnimation10, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
     this->elements_[EXPLOSION_ANIMATION_11] = new GraphicsMapElement(sourceExplosionAnimation11, GameProvider::getElementsSize(), GameProvider::getElementsSize(), 0, 0, FRONT);
 
+    this->elements_[EXPLOSION_ANIMATION_BOSS_1] = new GraphicsMapElement(sourceExplosionAnimation1, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_2] = new GraphicsMapElement(sourceExplosionAnimation2, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_3] = new GraphicsMapElement(sourceExplosionAnimation3, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_4] = new GraphicsMapElement(sourceExplosionAnimation4, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_5] = new GraphicsMapElement(sourceExplosionAnimation5, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_6] = new GraphicsMapElement(sourceExplosionAnimation6, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_7] = new GraphicsMapElement(sourceExplosionAnimation7, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_8] = new GraphicsMapElement(sourceExplosionAnimation8, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_9] = new GraphicsMapElement(sourceExplosionAnimation9, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_10] = new GraphicsMapElement(sourceExplosionAnimation10, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);
+    this->elements_[EXPLOSION_ANIMATION_BOSS_11] = new GraphicsMapElement(sourceExplosionAnimation11, finalBoss.size_x, finalBoss.size_y, 0, 0, FRONT);   
 }
 
 void GameGraphics::createScenes(){

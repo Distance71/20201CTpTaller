@@ -26,6 +26,32 @@ void killElementWithExplosion(Game *game, MapElement *mapElement){
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_11, actualPosition));
 }
 
+void killBossWithExplosion(Game *game, MapElement *mapElement){
+    position_t actualPosition = mapElement->getActualPosition();
+    
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_1, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_2, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_3, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_4, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_5, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_6, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_7, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_8, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_9, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_10, actualPosition));
+    usleep(20000);
+    game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_BOSS_11, actualPosition));
+}
+
 Map::Map(){}
 
 Map::Map(gameParams_t &gameSettings){
@@ -879,8 +905,8 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
                 // Como resolver que pasa con el Jefe Final
                 if (isBossDead){
                     game->sendEvent(new EventMusicUpdate(EXPLOSION_BOSS));
-                    killElementWithExplosion(game, finalBoss);
-                    usleep(2000000);
+                    killBossWithExplosion(game, finalBoss);
+                    //usleep(2000000);
                 }
             }
         }
