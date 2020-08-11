@@ -422,7 +422,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                     game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                     killElementWithExplosion(game,player.second);
 
-                    game->sendEventToUser(player.first, new EventGameOver());
+                    //game->sendEventToUser(player.first, new EventGameOver());
                 }
             }
         }
@@ -507,7 +507,7 @@ void Step::update(Game *game, unordered_map<string, MapElement*> players){
                     if (player.second->isDead()){
                         game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                         killElementWithExplosion(game,player.second);
-                        game->sendEventToUser(player.first, new EventGameOver());
+                        //game->sendEventToUser(player.first, new EventGameOver());
                     }
 
                 }
@@ -830,7 +830,7 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
             if (player.second->isDead()){
                 game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                 killElementWithExplosion(game,player.second);
-                game->sendEventToUser(player.first, new EventGameOver());
+                //game->sendEventToUser(player.first, new EventGameOver());
             }
 
             if (isBossDead){
@@ -907,7 +907,7 @@ void Stage::updateFinal(Game* game, unordered_map<string, MapElement*> players, 
                     if (player.second->isDead()){
                         game->sendEvent(new EventMusicUpdate(EXPLOSION_PLAYER));
                         killElementWithExplosion(game,player.second);
-                        game->sendEventToUser(player.first, new EventGameOver());
+                        //game->sendEventToUser(player.first, new EventGameOver());
                     }
                 }
             }
