@@ -70,7 +70,7 @@
                     },
                     {
                         "sizeX": 100,
-                        "sizeY": 70,
+                        "sizeY": 80,
                         "sprite": "assets/Enemies/enemigo2.png"
                     }
                 ]
@@ -88,13 +88,13 @@
                 "enemies": [
                     {
                         "sizeX": 82,
-                        "sizeY": 41,
-                        "sprite": "assets/Enemies/enemigo8.png"               
+                        "sizeY": 60,
+                        "sprite": "assets/Enemies/enemigo3.png"               
                     },
                     {
                         "sizeX": 90,
                         "sizeY": 56,
-                        "sprite": "assets/Enemies/enemigo6.png"
+                        "sprite": "assets/Enemies/enemigo4.png"
                     }
                 ]
             },
@@ -111,13 +111,13 @@
                 "enemies": [
                     {
                         "sizeX": 82,
-                        "sizeY": 41,
-                        "sprite": "assets/Enemies/enemigo8.png"               
+                        "sizeY": 61,
+                        "sprite": "assets/Enemies/enemigo5.png"               
                     },
                     {
                         "sizeX": 93,
                         "sizeY": 59,
-                        "sprite": "assets/Enemies/enemigo9.png"
+                        "sprite": "assets/Enemies/enemigo6.png"
                     }
                 ]
             },
@@ -133,14 +133,14 @@
                 "layer7": "",
                 "enemies": [
                     {
-                        "sizeX": 90,
-                        "sizeY": 56,
-                        "sprite": "assets/Enemies/enemigo6.png"               
+                        "sizeX": 110,
+                        "sizeY": 60,
+                        "sprite": "assets/Enemies/enemigo7.png"               
                     },
                     {
-                        "sizeX": 93,
-                        "sizeY": 59,
-                        "sprite": "assets/Enemies/enemigo9.png"
+                        "sizeX": 110,
+                        "sizeY": 60,
+                        "sprite": "assets/Enemies/enemigo8.png"
                     }
                 ]
             }
