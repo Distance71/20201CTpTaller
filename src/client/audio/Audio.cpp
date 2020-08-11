@@ -52,7 +52,7 @@ Audio::Audio(int volumen){
 	if ( (this->explosionBoss = Mix_LoadWAV("assets/Sounds/explosion_boss2.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'explosion_boss2.wav'" );		
 	}
-	Mix_VolumeChunk(this->explosionBoss, VOLUME_SOUNDS_DEFAULT);
+	Mix_VolumeChunk(this->explosionBoss, VOLUME_SOUNDS_DEFAULT+12);
 
 	if ( (this->bossShot = Mix_LoadWAV("assets/Sounds/disparo_boss.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'disparo_boss.wav'" );		
