@@ -169,7 +169,7 @@ void ScreenManager::updateEntity(elementType_t type, position_t position){
 }
 
 void ScreenManager::updateMusic(musicType_t type){
-    if (type < 4){
+    if (type < 4){ //hasta MUSIC_STAGE_FOUR
         this->gameGraphics_->setAudio(type);
     }
     else {
@@ -191,12 +191,33 @@ void ScreenManager::updateBackgroundLayer(layer_t layer, stage_t stage, int step
 void ScreenManager::setImage(sceneScreen_t scene){
     Logger::getInstance()->log(DEBUG, "Se va a cargar imagen de fondo en ScreenManager");
     if(this->gameGraphics_){
-        if (scene == END_STAGE_1 || scene == END_STAGE_2 || scene == END_STAGE_3 || scene == END_STAGE_4){
-            Audio::getInstance()->gradualStop(1200);
+        //primero controlo la musica
+        switch (scene)
+        {
+        case END_STAGE_1:
+        case END_STAGE_2:
+        case END_STAGE_3:
+        case END_STAGE_4:
+            Audio::getInstance()->gradualStop(1200); // en cualquiera de esos 4 casos
+            break;
+
+        case INIT_STAGE_1:
+            this->gameGraphics_->setAudio(MUSIC_STAGE_ONE);
+            break;
+        case INIT_STAGE_2:
+            this->gameGraphics_->setAudio(MUSIC_STAGE_TWO);
+            break;
+        case INIT_STAGE_3:
+            this->gameGraphics_->setAudio(MUSIC_STAGE_THREE);
+            break;
+        case INIT_STAGE_4:
+            this->gameGraphics_->setAudio(MUSIC_STAGE_FOUR);
+            break;
+        default:
+            break;
         }
         
-        this->gameGraphics_->setImage(scene);        
-        //this->gameGraphics_->setAudio(scene); se cambia por otra forma
+        this->gameGraphics_->setImage(scene);
     }
     else{
         Logger::getInstance()->log(DEBUG, "No se ha podido cargar la imagen,  no se han inicializado graficos");

@@ -1,13 +1,13 @@
 {
     "configuracion": {
         "log":{
-            "level": "ERROR"
+            "level": "INFO"
         },
         "screen":{
             "width": 1280,
             "height": 800
         },
-        "quantityPlayers": 1,
+        "quantityPlayers": 2,
         "players": [
             {
                 "sizeX": 95,

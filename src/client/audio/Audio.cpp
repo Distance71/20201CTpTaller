@@ -41,7 +41,7 @@ Audio::Audio(int volumen){
 	if ( (this->explosionPlayer = Mix_LoadWAV("assets/Sounds/explosion_player.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'explosion_player.wav'" );		
 	}
-	Mix_VolumeChunk(this->explosionPlayer, VOLUME_SOUNDS_DEFAULT);
+	Mix_VolumeChunk(this->explosionPlayer, VOLUME_SOUNDS_DEFAULT+10);
 
 	if ( (this->shotImpactsPlayer = Mix_LoadWAV("assets/Sounds/impacto4.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'impacto4.wav'" );		
@@ -68,7 +68,7 @@ Audio::Audio(int volumen){
 	if ( (this->reconexionPlayer = Mix_LoadWAV("assets/Sounds/reconexion.wav")) == NULL ){
 		Logger::getInstance()->log(ERROR,"Error al cargar el sonido 'reconexion.wav'" );		
 	}
-	Mix_VolumeChunk(this->reconexionPlayer, volumen);
+	Mix_VolumeChunk(this->reconexionPlayer, volumen+10);
 
 	this->isPaused = false;
 	this->isInitMusic = false;
