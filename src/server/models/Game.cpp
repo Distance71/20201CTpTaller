@@ -30,7 +30,9 @@ void Game::run() {
 
     while ((i < quantityLevels) && (GameProvider::getStatus().normalStatus)){
         current.level = static_cast<level_t>(i); 
-        runLevel(current, levels[i]);
+
+        if (this->map_->playerAlive())
+            runLevel(current, levels[i]);
         i++;
     }
 }
@@ -52,7 +54,9 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
         actualStep.stage = static_cast<stage_t>(i);
 
         bool isFinalStage = (i == quantityStages - 1);
-        runStage(actualStep, stages[i], isFinalStage);  
+
+        if (this->map_->playerAlive())
+            runStage(actualStep, stages[i], isFinalStage);  
     }
 
     sendEvent(new EventEndGame());
@@ -81,8 +85,10 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     if (isFinalStage)
         this->runFinal();
 
-    this->sendStageCleared(actualStep.stage);
-    
+    if (this->map_->playerAlive())
+        this->sendStageCleared(actualStep.stage);
+    else
+        this->sendGameOver();
 }
 
 void Game::runStep(currentStep_t actualStep){
@@ -171,6 +177,17 @@ void Game::sendStageCleared(stage_t stage){
     this->sendEvent(event2);
     usleep(5000000);
     
+}
+
+void Game::sendGameOver(){
+
+    Event* event = new EventSceneAnimation(SCORE_TABLE);
+    this->sendEvent(event);
+    usleep(5000000); 
+
+    this->sendEvent(new EventGameOver());
+    usleep(3000000);//3 seg;
+
 }
 
 void Game::movePlayer(string user, orientation_t orientation){

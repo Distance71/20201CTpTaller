@@ -37,6 +37,7 @@ class Game {
     void clearScene();
     void sendStartStage(stage_t stage);
     void sendStageCleared(stage_t stage);
+    void sendGameOver();
 
     void runFinal();
     public:
