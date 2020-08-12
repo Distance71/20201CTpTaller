@@ -73,7 +73,9 @@ void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     Logger::getInstance()->log(DEBUG, "Se comienza el stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantitySteps; i++){
         actualStep.step = i;
-        runStep(actualStep);        
+
+        if (this->map_->playerAlive())
+            runStep(actualStep);        
     }
 
     if (isFinalStage)
