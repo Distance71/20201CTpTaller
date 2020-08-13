@@ -277,6 +277,25 @@ response_t MessageDeserializer::getEventScoreUpdate(Socket *socket, Event *event
     return this->_handleSuccess();
 };
 
+response_t MessageDeserializer::getEventQuantityPlayers(Socket *socket, Event* &event){
+    Logger::getInstance()->log(DEBUG, "Se va a recibir un evento QuantityPlayers en Deserializer");
+
+    unsigned int quantityPlayers;
+
+    this->getUInteger(socket, quantityPlayers);
+
+    Message *message = new MessageQuantityPlayers(quantityPlayers);
+    event = message->deSerialize();
+
+    if(!event){
+        Logger::getInstance()->log(ERROR, "No se ha podido recibir un evento QuantityPlayers");
+        return this->_handleErrorStatus();
+    }
+
+    Logger::getInstance()->log(DEBUG, "Se ha recibido un evento QuantityPlayers en Deserializer");
+    return this->_handleSuccess();
+};
+
 response_t MessageDeserializer::getLongInteger(Socket *socket, size_t &value){
     stringstream s;
 

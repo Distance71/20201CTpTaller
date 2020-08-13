@@ -59,6 +59,7 @@ typedef enum message {
     MUSIC_UPDATE = 11,
     SCORE_UPDATE = 12,
     GAME_OVER = 13,
+    QUANTITY_PLAYERS = 14,
 } message_t;
 
 typedef enum {

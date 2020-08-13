@@ -197,6 +197,23 @@ response_t MessageSerializer::sendMessageScoreUpdate(Socket *socket, Message *me
     return this->_handleSuccess();  
 }
 
+response_t MessageSerializer::sendMessageQuantityPlayers(Socket *socket, Message *message){
+
+    Logger::getInstance()->log(DEBUG, "Se va a enviar un mensaje QuantityPlayers.");
+
+    unsigned int quantityPlayers = ((MessageQuantityPlayers *) message)->getQuantityPlayers();    
+    
+    response_t responseQuantityPlayers = this->sendUInt(socket, quantityPlayers);
+
+
+    if(!responseQuantityPlayers.ok) {
+        Logger::getInstance()->log(ERROR, "No se ha podido enviar un parametro en QuantityPlayers.");
+        return this->_handleErrorStatus();
+    }
+    Logger::getInstance()->log(DEBUG, "Se envio QuantityPlayers con exito.");
+    return this->_handleSuccess();  
+}
+
 response_t MessageSerializer::sendResponseType(Socket *socket, responseStatus_t value){
     stringstream s;
 
@@ -439,6 +456,9 @@ response_t MessageSerializer::sendSerializedEvent(Socket *socket, Message *messa
 
         case GAME_OVER:
             return this->sendMessageGameOver(socket, message);
+
+        case QUANTITY_PLAYERS:
+            return this->sendMessageQuantityPlayers(socket, message);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");
