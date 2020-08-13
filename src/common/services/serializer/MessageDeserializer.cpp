@@ -560,6 +560,9 @@ response_t MessageDeserializer::getReceivedMessage(Socket *socket, Event* &event
 
         case GAME_OVER:
             return this->getEventGameOver(socket, event);
+
+        case QUANTITY_PLAYERS:
+            return this->getEventQuantityPlayers(socket, event);
     }
 
     Logger::getInstance()->log(ERROR, "No se ha recibido un tipo de mensaje conocido.");
