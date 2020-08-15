@@ -4,6 +4,8 @@ EnemyIA::EnemyIA(MapElement* owner){
     owner_ = owner;
     timeShoot = 0;
     timeLimitShoot = 70 + RandomGenerate::generate(FRECUENCIA);
+    timeLimitRandomMovement = 40 + RandomGenerate::generate(FRECUENCIA);
+    lastMovement = 2;
 }
 
 void EnemyIA::setTarget(MapElement* target){
@@ -31,6 +33,7 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     bool abort = false;
 
     //TODO check si target esta muerto o se desconecto
+
     //si perdio el objetivo:
     if (this->target_ == nullptr) {
         if (orientation->getX() == FRONT){
@@ -45,7 +48,7 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     }
 
     //si tiene objetivo:
-    auto ubicacion = this->target_->getActualPosition();
+    position_t ubicacion = this->target_->getActualPosition();
 
     // eje x siempre constante
     if (orientation->getX() == FRONT){
@@ -62,10 +65,10 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     position->setX(new_xp);
 
     // Si no esta en la pantalla q no dispare y no persiga 
-    if (xp < this->owner_->getSizeX() ||zone.xEnd < xp) return;    
+    if (xp < this->owner_->getSizeX() || zone.xEnd < xp) return;    
 
     //eje y persigue al target hasta sobrepasarlo
-    if (!abort) {
+/*     if (!abort) {
         if (yp < ubicacion.axis_y){
             new_yp = yp + ys;
         } else {
@@ -76,9 +79,10 @@ void EnemyIA::update(unordered_map<string, State *> states_){
     } else {
         // habria q agregarle el factor tiempo para mejorar el comportamiento (vale la pena?)
         //new_yp = randomMovement(yp, ys);
-    }        
+    }     */    
 
     randomShoot();
+    new_yp = randomMovement(yp, ys, ubicacion);
     
     // si no hubo cambios en el eje Y o se quiere salir de la pantalla evita actualizar el eje Y
     if ((abort && new_yp == yp) || new_yp < zone.yInit || new_yp > zone.yEnd - this->owner_->getSizeY()) { return;}  
@@ -98,21 +102,52 @@ void EnemyIA::randomShoot(){
     }
 }
 
-int EnemyIA::randomMovement(int yp, int ys){
+int EnemyIA::randomMovement(int yp, int ys, position_t ubicacion){
 
-    switch (RandomGenerate::generate(100))
+    int opcion = this->lastMovement;
+
+    this->timeRandomMovement++;
+    
+    if (this->timeRandomMovement > this->timeLimitRandomMovement)
     {
-    case 1 ... 20:
+        switch (RandomGenerate::generate(100))
+        {
+        case 1 ... 25:
+            opcion = 0;
+            break;
+        case 75 ... 100:
+            opcion = 1;
+            break;
+        
+        default:
+            opcion = 2;
+            break;
+        }
+        this->lastMovement = opcion;
+        this->timeRandomMovement = 0;
+        this->timeLimitRandomMovement = 40 + RandomGenerate::generate(FRECUENCIA);
+    }
+
+    switch(opcion)
+    {
+    case 0:
         return yp + ys;
         break;
-    case 80 ... 100:
-         return yp - ys;
+    case 1:
+        return yp - ys;
+        break;
+    case 2:
+        if (yp < ubicacion.axis_y){
+            return yp + ys;
+        } else {
+            if (yp > ubicacion.axis_y){
+                return yp - ys;
+            }
+        }
         break;
     
     default:
         return yp;
         break;
     }
-
-
 }
