@@ -157,6 +157,10 @@ void Client::runDetectEventThread(){
     this->eventsManager_-> RunDetectPlayerEventsThread();
 }
 
+void Client::setQuantityPlayer(unsigned int quantityPlayer){
+    this->screenManager_->setQuantityPlayer(quantityPlayer);
+}
+
 void Client::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
     this->screenManager_->updateScore(playerImage,lives,health,levelScore,totalScore);
 }

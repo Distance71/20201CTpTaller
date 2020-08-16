@@ -44,6 +44,7 @@ class Client {
         void reconnect();
         size_t getPort();
         string getIpHost();
+        void setQuantityPlayer(unsigned int quantityPlayer);
 
         //Screen methods
         int waitForPlayers();
