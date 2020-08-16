@@ -11,17 +11,13 @@ using namespace std;
 class Image {
     
     public:  
-    Image(int _width,int _height,const char* image_path);
+    Image(const char* image_path);
     ~Image();
-    void renderCopy(int xpos,int ypos);
+    void renderCopy(int xpos,int ypos,int width,int height);
 
     private:
     SDL_Renderer* gRenderer; 
     Sprite* sprite;
-    
-    int width;
-    int height;
-
 };
 
 #endif

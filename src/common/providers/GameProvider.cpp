@@ -131,10 +131,16 @@ namespace GameProvider {
     }
 
     gameZone_t getGameZone(){
+
         gameZone_t zone;
         zone.xInit = 0;
         zone.xEnd = (int) screenWidth_;
-        zone.yInit = 200;
+        
+        if (quantityPlayers_ <= 2) 
+            zone.yInit = 110;
+        else
+            zone.yInit = 200;
+        
         zone.yEnd = (int) screenHeight_;
         return zone;
     }

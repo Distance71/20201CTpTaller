@@ -1,10 +1,8 @@
 #include "Image.h"
 
-Image::Image(int _width,int _height,const char* image_path){
+Image::Image(const char* image_path){
     gRenderer = GameProvider::getRenderer();
     sprite = new Sprite(image_path);
-    width = _width;
-    height = _height;
 }
 
 
@@ -14,7 +12,7 @@ Image::~Image(){
 }
 
 
-void Image::renderCopy(int xpos,int ypos){
+void Image::renderCopy(int xpos,int ypos,int width,int height){
     if (width>0 && height>0){
         SDL_Rect rect = {xpos,ypos,width,height};
         SDL_RenderCopy(gRenderer,sprite->getTexture(),NULL,&rect);

@@ -462,7 +462,7 @@ void MapElement::eraseProjectile(Id id){
     }
     
     catch (const std::out_of_range& oor){
-        std::cerr << "Out of Range error in MapElement eraseProjectile: " << oor.what() << '\n';
+        //std::cerr << "Out of Range error in MapElement eraseProjectile: " << oor.what() << '\n';
     }
 }
 

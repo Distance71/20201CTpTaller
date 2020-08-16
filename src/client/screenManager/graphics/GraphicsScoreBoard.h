@@ -21,8 +21,9 @@ class GraphicsScoreBoard {
         unordered_map <elementType_t,playerState_t> * players_;
         int getHealthImageNumber(int health);
         Image* scoreTable_;
+        int  playersNumber_;
     public:  
-        GraphicsScoreBoard();
+        GraphicsScoreBoard(int n);
         ~GraphicsScoreBoard();
         void updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore);
         void update();

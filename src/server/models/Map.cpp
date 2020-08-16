@@ -4,25 +4,25 @@ void killElementWithExplosion(Game *game, MapElement *mapElement){
     position_t actualPosition = mapElement->getActualPosition();
     
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_1, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_2, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_3, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_4, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_5, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_6, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_7, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_8, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_9, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_10, actualPosition));
-    usleep(3000);
+    usleep(1000);
     game->sendEvent(new EventMapElementUpdate(EXPLOSION_ANIMATION_11, actualPosition));
 }
 

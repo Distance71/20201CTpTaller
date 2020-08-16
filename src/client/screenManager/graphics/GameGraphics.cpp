@@ -7,7 +7,7 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->createElements();
     this->createScenes();
     this->createScenarios();
-    this->scoreBoard_ = new GraphicsScoreBoard();
+    this->scoreBoard_ = new GraphicsScoreBoard(2);
 }
 
 

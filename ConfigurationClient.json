@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "INFO"
+            "level": "ERROR"
         },
         "screen":{
             "width": 1280,
@@ -10,25 +10,25 @@
         "players": [
             {
                 "sizeX": 95,
-                "sizeY": 74,
+                "sizeY": 60,
                 "sprite": "assets/Players/player1Reducido.png",
                 "spriteDisconnected": "assets/Players/player1Reducido_Out.png"
             },
             {
                 "sizeX": 95,
-                "sizeY": 36,
+                "sizeY": 60,
                 "sprite": "assets/Players/player2Reducido.png",
                 "spriteDisconnected": "assets/Players/player2Reducido_Out.png"
             },
             {
                 "sizeX": 95,
-                "sizeY": 68,
+                "sizeY": 60,
                 "sprite": "assets/Players/player3Reducido.png",
                 "spriteDisconnected": "assets/Players/player3Reducido_Out.png"
             },
             {
                 "sizeX": 95,
-                "sizeY": 53,
+                "sizeY": 60,
                 "sprite": "assets/Players/player4Reducido.png",
                 "spriteDisconnected": "assets/Players/player4Reducido_Out.png"
             }

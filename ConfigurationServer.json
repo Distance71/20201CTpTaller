@@ -1,7 +1,7 @@
 {
     "configuracion": {
         "log":{
-            "level": "INFO"
+            "level": "ERROR"
         },
         "screen":{
             "width": 1280,
@@ -30,13 +30,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 5,
+                        "quantity": 10,
                         "sizeX": 120,
                         "sizeY": 80,
                         "health": 100                 
                     },
                     {
-                        "quantity": 5,
+                        "quantity": 10,
                         "sizeX": 100,
                         "sizeY": 70,
                         "health": 200   
@@ -46,13 +46,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 6,
+                        "quantity": 10,
                         "sizeX": 82,
                         "sizeY": 41,
                         "health": 100                 
                     },
                     {
-                        "quantity": 6,
+                        "quantity": 10,
                         "sizeX": 90,
                         "sizeY": 56,
                         "health": 200   
@@ -62,13 +62,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 7,
+                        "quantity": 10,
                         "sizeX": 82,
                         "sizeY": 41,
                         "health": 100                 
                     },
                     {
-                        "quantity": 6,
+                        "quantity": 10,
                         "sizeX": 93,
                         "sizeY": 59,
                         "health": 200   
@@ -78,13 +78,13 @@
             {
                 "enemies": [
                     {
-                        "quantity": 7,
+                        "quantity": 10,
                         "sizeX": 90,
                         "sizeY": 56,
                         "health": 100                 
                     },
                     {
-                        "quantity": 7,
+                        "quantity": 10,
                         "sizeX": 93,
                         "sizeY": 59,
                         "health": 200   

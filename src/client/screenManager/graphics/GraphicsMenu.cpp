@@ -8,19 +8,19 @@ GraphicsMenu::GraphicsMenu(Client* clientOwn){
     
     loginScreen_t loginScreen = GameProvider::getLoginScreen();
     
-    Image* background = new Image(-1,-1,loginScreen.background.c_str());
+    Image* background = new Image(loginScreen.background.c_str());
     addImage("BACKGROUND",background);
     
-    Image* normal_box = new Image(525,325,loginScreen.normalBox.c_str());
+    Image* normal_box = new Image(loginScreen.normalBox.c_str());
     addImage("NORMAL BOX",normal_box);
    
-    Image* invalid_credentials_box = new Image(525,325,loginScreen.invalidCredentialsBox.c_str());
+    Image* invalid_credentials_box = new Image(loginScreen.invalidCredentialsBox.c_str());
     addImage("INVALID CREDENTIALS BOX",invalid_credentials_box);
 
-    Image* full_game_box = new Image(525,325,loginScreen.fullGameBox.c_str());
+    Image* full_game_box = new Image(loginScreen.fullGameBox.c_str());
     addImage("FULL GAME BOX",full_game_box);
 
-    Image* already_login_box = new Image(525,325,loginScreen.alreadyLoggedIn.c_str());
+    Image* already_login_box = new Image(loginScreen.alreadyLoggedIn.c_str());
     addImage("ALREADY LOGIN BOX", already_login_box);
     
     TextBox* username = new TextBox(80,110,375,60,loginScreen.username1.c_str(),loginScreen.username2.c_str());
@@ -69,19 +69,19 @@ void GraphicsMenu::update(int x, int y,bool click){
     
     SDL_RenderClear(gRenderer);
     
-    this-> menuImages_["BACKGROUND"]->renderCopy(0,0);
+    this-> menuImages_["BACKGROUND"]->renderCopy(0,0,-1,-1);
     
     if (this->response_ == NOT_RESPONSE || this->response_ == OK) {
-        menuImages_["NORMAL BOX"]->renderCopy(20,50);
+        menuImages_["NORMAL BOX"]->renderCopy(20,50,525,325);
     }
     else if(this->response_ == ERROR_WRONG_CREDENTIALS){
-        menuImages_["INVALID CREDENTIALS BOX"]->renderCopy(20,50);
+        menuImages_["INVALID CREDENTIALS BOX"]->renderCopy(20,50,525,325);
     }
     else if(this->response_ == ERROR_FULL_GAME){
-        menuImages_["FULL GAME BOX"]->renderCopy(20,50);
+        menuImages_["FULL GAME BOX"]->renderCopy(20,50,525,325);
     }
     else if (this->response_ == ERROR_ALREADY_LOGGED_IN)
-        menuImages_["ALREADY LOGIN BOX"]->renderCopy(20,50);
+        menuImages_["ALREADY LOGIN BOX"]->renderCopy(20,50,525,325);
 
     for(auto button : buttons){
         button.second->update(x,y,click,false);
