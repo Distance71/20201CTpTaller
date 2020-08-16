@@ -290,6 +290,15 @@ void ScreenManager::ServerDisconnection(){
     this->gameGraphics_->setImage(SERVER_DISCONNECTION);
 }
 
+void ScreenManager::setQuantityPlayer(unsigned int quantityPlayer){
+    if(this->gameGraphics_){
+        this->gameGraphics_->createScoreBoard(quantityPlayer);
+    }
+    else{
+        Logger::getInstance()->log(DEBUG, "No se ha podido crear el tablero de puntajes, no se han inicializado graficos");
+    } 
+}
+
 void ScreenManager::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
     this->gameGraphics_->updateScore(playerImage,lives,health,levelScore,totalScore);
 }

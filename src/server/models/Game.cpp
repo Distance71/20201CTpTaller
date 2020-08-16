@@ -220,9 +220,5 @@ void Game::informDisconnection(string username){
 void Game::informConnection(string username){
     Logger::getInstance()->log(DEBUG, "Se informa conexion en Game");
     this->map_->informConnection(username);
-
-    unsigned int quantityPlayers = GameProvider::getQuantityPlayers();
-    Event* event = new EventQuantityPlayers(quantityPlayers);
-    this->sendEventToUser(username, event);
 }
 

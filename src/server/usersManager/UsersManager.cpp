@@ -95,7 +95,7 @@ responseStatus_t UsersManager::loginRequest(Id id,string username,string passwor
     User* user;
     User* exuser;
     
-    
+
     //juego lleno
     if(this->isFullGame()){
         
@@ -217,6 +217,11 @@ void UsersManager::informDisconnection(string username){
     this->serverOwn_->informDisconnection(username);
 }
 
-void UsersManager::informConnection(string username){
+void UsersManager::informConnection(string username){    
+
+    unsigned int quantityPlayers = GameProvider::getQuantityPlayers();
+    Event* event = new EventQuantityPlayers(quantityPlayers);
+    this->sendEventToOneUserLogged(username, event);    
+    
     this->serverOwn_->informConnection(username);
 }

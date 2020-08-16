@@ -57,6 +57,8 @@ class ScreenManager{
         SDL_Renderer* getRenderer();
         void ServerDisconnection();
         GraphicsMenu* getGraphicsMenu();
+
+        void setQuantityPlayer(unsigned int quantityPlayer);
         void updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore);
 };
 

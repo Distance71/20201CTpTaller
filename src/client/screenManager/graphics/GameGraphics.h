@@ -44,6 +44,7 @@ class GameGraphics {
         void setImage(sceneScreen_t scene);
         void setAudio(musicType_t scene);
 
+        void createScoreBoard(unsigned int quantityPlayer);
         void updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore);
 };
 

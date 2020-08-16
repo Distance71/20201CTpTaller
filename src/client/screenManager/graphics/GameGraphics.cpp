@@ -222,6 +222,10 @@ void GameGraphics::setAudio(musicType_t scene){
     }
 }
 
+void GameGraphics::createScoreBoard(unsigned int quantityPlayer){
+    this->scoreBoard_ = new GraphicsScoreBoard(quantityPlayer);
+};
+
 void GameGraphics::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
     this->scoreBoard_->updateScore(playerImage,lives,health,levelScore,totalScore);
 }

@@ -10,9 +10,8 @@ void EventQuantityPlayers::update(){
     }
     else{
       Client * client = (Client*) Event::context_;
-
-      cout << "Cantidad de Jugadores: " << this->quantityPlayers_ << endl;
-
+      client->setQuantityPlayer(this->quantityPlayers_);
+      
       Logger::getInstance()->log(DEBUG, "Se ejecutó el evento QuantityPlayers");
     }
 }
