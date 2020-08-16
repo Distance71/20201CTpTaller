@@ -23,6 +23,7 @@
 #include "../../models/messages/MessageMusicUpdate.h"
 #include "../../models/messages/MessageScoreUpdate.h"
 #include "../../models/messages/MessageGameOver.h"
+#include "../../models/messages/MessageQuantityPlayers.h"
 
 class Event;
 using namespace std;
@@ -51,6 +52,7 @@ class MessageDeserializer {
         response_t getEventMusicUpdate(Socket *socket, Event *&event);
         response_t getEventScoreUpdate(Socket *socket, Event *event);
         response_t getEventGameOver(Socket *socket, Event* &event);
+        response_t getEventQuantityPlayers(Socket *socket, Event* &event);
         
         response_t getInteger(Socket *socket, int &value);
         response_t getUInteger(Socket *socket, unsigned int &value);

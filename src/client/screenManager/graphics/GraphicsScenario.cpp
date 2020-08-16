@@ -48,7 +48,6 @@ void GraphicsScenario::update(layer_t layer, int step){
         
         SDL_Rect auxParallax = {step, 0,gameZone.xEnd-gameZone.xInit, height};
 
-        cout<<gameZone.yInit<<endl;
         SDL_Rect screenLimits = {gameZone.xInit,gameZone.yInit,gameZone.xEnd-gameZone.xInit,gameZone.yEnd-gameZone.yInit};
         SDL_RenderCopy(renderer, layerTexture, &auxParallax, &screenLimits);        
     }

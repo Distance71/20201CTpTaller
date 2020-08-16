@@ -20,6 +20,7 @@
 #include "../../models/messages/MessageMusicUpdate.h"
 #include "../../models/messages/MessageScoreUpdate.h"
 #include "../../models/messages/MessageGameOver.h"
+#include "../../models/messages/MessageQuantityPlayers.h"
 
 using namespace std;
 
@@ -42,6 +43,7 @@ class MessageSerializer {
         response_t sendMessageMusicUpdate(Socket *socket, Message *message);
         response_t sendMessageScoreUpdate(Socket *socket, Message *message);
         response_t sendMessageGameOver(Socket *socket, Message *message);
+        response_t sendMessageQuantityPlayers(Socket *socket, Message *message);
 
         response_t sendResponseType(Socket *socket, responseStatus_t value);
 
