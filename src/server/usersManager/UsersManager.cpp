@@ -193,7 +193,7 @@ void UsersManager::acceptUser(){
     Event* event = new EventQuantityPlayers(quantityPlayers);
     this->sendEventToNotLoggedUser(idUser, event);    
 
-    usleep(500000);
+    //usleep(500000);
 
     Logger::getInstance()->log(INFO, "Se ha conectado un usuario");
 }
