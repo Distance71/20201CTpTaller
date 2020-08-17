@@ -188,6 +188,11 @@ void UsersManager::acceptUser(){
     newUser->runReceivingMessagesThread();
     this->notLoggedInUsers_.emplace(idUser,newUser);
     this->lastId_ ++;
+
+    unsigned int quantityPlayers = GameProvider::getQuantityPlayers();
+    Event* event = new EventQuantityPlayers(quantityPlayers);
+    this->sendEventToNotLoggedUser(idUser, event);    
+
     Logger::getInstance()->log(INFO, "Se ha conectado un usuario");
 }
 
@@ -218,10 +223,5 @@ void UsersManager::informDisconnection(string username){
 }
 
 void UsersManager::informConnection(string username){    
-
-    unsigned int quantityPlayers = GameProvider::getQuantityPlayers();
-    Event* event = new EventQuantityPlayers(quantityPlayers);
-    this->sendEventToOneUserLogged(username, event);    
-    
     this->serverOwn_->informConnection(username);
 }
