@@ -42,17 +42,29 @@ int Client::run(){
     
     setScreenSizes(1280,800);
     
+    if (!this->connectWithServer()){
+        Logger::getInstance()->log(ERROR, "No se pudo conectar con el servidor, juego finalizado");
+        return EXIT_FAILURE;
+    }
+
+    usleep(100000);
+
+    Event* event = this->eventsManager_->getEvent();
+
+    while(!event) {
+        event = this->eventsManager_->getEvent();
+    }
+
+    event->setContext(this);
+    event->update();
+    delete event; 
+
     if (!this->screenManager_->initializeGraphics()){
         Logger::getInstance()->log(ERROR, "No se pudieron inicializar los gráficos, juego finalizado");
         return EXIT_FAILURE;
     };
 
     Logger::getInstance()->log(INFO, "Se inicializaron los graficos");
-
-    if (!this->connectWithServer()){
-        Logger::getInstance()->log(ERROR, "No se pudo conectar con el servidor, juego finalizado");
-        return EXIT_FAILURE;
-    }
 
     Logger::getInstance()->log(INFO, "Se estableció conexión con el servidor");
     cout << "Se estableció conexión con el servidor " << endl;
@@ -158,7 +170,7 @@ void Client::runDetectEventThread(){
 }
 
 void Client::setQuantityPlayer(unsigned int quantityPlayer){
-    this->screenManager_->setQuantityPlayer(quantityPlayer);
+    GameProvider::setQuantityPlayers(quantityPlayer);
 }
 
 void Client::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
