@@ -23,7 +23,7 @@ class GraphicsScoreBoard {
         Image* scoreTable_;
         int  playersNumber_;
     public:  
-        GraphicsScoreBoard(int n);
+        GraphicsScoreBoard();
         ~GraphicsScoreBoard();
         void updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore);
         void update();

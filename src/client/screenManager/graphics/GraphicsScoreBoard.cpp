@@ -1,7 +1,7 @@
 #include "GraphicsScoreBoard.h"
 
-GraphicsScoreBoard::GraphicsScoreBoard(int n){
-    GameProvider::setQuantityPlayers(n);
+GraphicsScoreBoard::GraphicsScoreBoard(){
+    int n = GameProvider::getQuantityPlayers();
 
     this-> playersNumber_ = n;
     

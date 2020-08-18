@@ -7,7 +7,7 @@ GameGraphics::GameGraphics(SDL_Renderer* renderer){
     this->createElements();
     this->createScenes();
     this->createScenarios();
-    this->scoreBoard_ = nullptr;
+    this->scoreBoard_ = new GraphicsScoreBoard();
 }
 
 
@@ -221,11 +221,6 @@ void GameGraphics::setAudio(musicType_t scene){
         break;
     }
 }
-
-void GameGraphics::createScoreBoard(unsigned int quantityPlayer){
-    this->scoreBoard_ = new GraphicsScoreBoard(quantityPlayer);
-    usleep(1000000);
-};
 
 void GameGraphics::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
     this->scoreBoard_->updateScore(playerImage,lives,health,levelScore,totalScore);

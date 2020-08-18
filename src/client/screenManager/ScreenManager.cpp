@@ -146,6 +146,12 @@ bool ScreenManager::initGameGraphics(){
     Logger::getInstance()->log(DEBUG, "Se crea el la estructura gameGraphics");
     
     this->gameGraphics_ = new GameGraphics(this->renderer_);
+    /*try {
+        
+    } catch (std::exception& e){
+        cout << "initGG" << endl;   
+    }*/
+    
     
     if (!gameGraphics_){
         Logger::getInstance()->log(ERROR," No se pudo crear la estructura gameGraphics");
@@ -288,15 +294,6 @@ SDL_Renderer* ScreenManager::getRenderer(){
 
 void ScreenManager::ServerDisconnection(){
     this->gameGraphics_->setImage(SERVER_DISCONNECTION);
-}
-
-void ScreenManager::setQuantityPlayer(unsigned int quantityPlayer){
-    if(this->gameGraphics_){
-        this->gameGraphics_->createScoreBoard(quantityPlayer);
-    }
-    else{
-        Logger::getInstance()->log(DEBUG, "No se ha podido crear el tablero de puntajes, no se han inicializado graficos");
-    } 
 }
 
 void ScreenManager::updateScore(elementType_t playerImage,unsigned int lives,int health,int levelScore,int totalScore){
