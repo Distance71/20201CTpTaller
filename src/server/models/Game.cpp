@@ -66,14 +66,14 @@ void Game::runLevel(currentStep_t actualStep, Level *level){
 
 void Game::runStage(currentStep_t actualStep, Stage *stage, bool isFinalStage){
     auto gameSettings = GameProvider::getConfig()->getGameParams();
-    size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.step].stepsParams.size();
+    size_t quantitySteps = gameSettings.levelParams[actualStep.level].stagesParams[actualStep.stage].stepsParams.size();
 
     //this->sendEvent(new EventMusicUpdate((musicType_t) actualStep.stage)); lo paso al cliente
     this->sendStartStage(actualStep.stage);
 
     vector<Step *> steps = stage->getSteps();
     this->map_->cleanStage();
-    
+
     Logger::getInstance()->log(DEBUG, "Se comienza el stage " + to_string(actualStep.stage) + " del nivel " + to_string(actualStep.level));
     for(size_t i = 0; i < quantitySteps; i++){
         actualStep.step = i;
