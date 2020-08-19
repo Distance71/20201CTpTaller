@@ -27,7 +27,9 @@ void Game::run() {
 
     vector<Level *> levels =  map_->getLevels();    
     size_t i = 0;
-
+    
+    usleep(2000000);
+    
     while ((i < quantityLevels) && (GameProvider::getStatus().normalStatus)){
         current.level = static_cast<level_t>(i); 
 
@@ -44,6 +46,9 @@ void Game::initializeGameParams(){
 }
 
 void Game::runLevel(currentStep_t actualStep, Level *level){
+    
+    
+    
     auto gameSettings = GameProvider::getConfig()->getGameParams();
     size_t quantityStages = gameSettings.levelParams[actualStep.level].stagesParams.size();
 
