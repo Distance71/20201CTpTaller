@@ -20,10 +20,10 @@
 ## Formas de Ejecución
 
 #### Modo Server:
-./tp1taller -c../ConfigurationServer.json -p 6000 -m SERVER
+- ./tp1taller -c../ConfigurationServer.json -p 6000 -m SERVER
 
 #### Modo Cliente:
-./tp1taller -c../ConfigurationClient.json -p 6000 -i 127.0.0.1 -m CLIENT
+- ./tp1taller -c../ConfigurationClient.json -p 6000 -i 127.0.0.1 -m CLIENT
 
 Tanto para el puerto (_-p_) como para la dirección IP a conectarse (_-i_) puede variar según los requerimientos propios.
 
